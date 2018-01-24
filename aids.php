@@ -1,11 +1,21 @@
+<?php
+error_reporting(E_ALL);
+?>
+
 <!doctype html>
 <html>
 <head>
 <meta charset="utf-8">
 <title>\[T]/</title>
+<link rel="stylesheet" href="layout.css" type="text/css" media="screen" />
 </head>
 
 <body>
+
+<div class="container">
+<div class="content">
+	
+<h5>Roll a dice to get <a href="https://youtu.be/uA-MoS9FZHQ?t=9s"> (((AAAAIIIIIIDDDSSSSS)))</a> <span style="font-size: 40%">in Dark Souls</span></h5>
 	
 <h1>MOBS</h1>
 
@@ -15,6 +25,7 @@ function randomWeapon () {
 	unset ($weaponRNG);
 	$weaponRNG   = rand (0, 19);
 	$weaponDice  = $weaponRNG + 1;
+	$arrlength   = count($weaponArray); // TODO
 	$weaponArray = array("Gyrm Axe",
 						 "Flamberge",
 						 "Bluemoon",
@@ -38,10 +49,21 @@ function randomWeapon () {
 				 		);
 	echo "(" . $weaponArray[$weaponRNG] . ")";
 }
+	
+	
+function displayDice ($diceValue) {
+	echo '<img src="dice/'.$diceValue.'.png" width="100" height="100" alt=""/>';
+	echo "<br>";
+}
+
+function aids ($positive) {
+	echo $positive;
+}
+	
+
 
 /* MOBS */
 $mobsRNG  = rand (0, 19);
-// $mobsRNG  = 17; //debug 
 $mobsDice = $mobsRNG + 1;
 $mobsAids = array("Ohne Schild",
 				  "Ohne Flask",
@@ -65,12 +87,14 @@ $mobsAids = array("Ohne Schild",
 				  "Zufällig gewürfelte Waffe: "				  
 				 );
 
-echo "MobsWürfel: " . $mobsDice . "<br>" . $mobsAids[$mobsRNG];
+	
+displayDice($mobsDice);
+//echo $mobsAids[$mobsRNG];
+aids($mobsAids[$mobsRNG]);
 
 // MOBS random weapon
 if ($mobsRNG > 15) randomWeapon();
 ?>
-
 
 <h1>BOSS</h1>
 
@@ -86,14 +110,16 @@ $bossAids = array("Ohne Schild",
 				  "Waffe linke Hand",
 				  "Nur RT",
 				  "Lumbe",
-				  "Normal (Effigy)",
+				  "Normal",
 				  "Ohne Ringe",
 				  "Ohne Alles",
 				  "Crap Ringe"		  
 				 );
 	
-echo "BossWürfel: " . $bossDice . "<br>" . $bossAids[$bossRNG];
-
+	
+displayDice($bossDice);
+//echo $bossAids[$bossRNG];
+aids($bossAids[$bossRNG]);
 
 // BOSS random weapon
 if ($bossRNG == 4) randomWeapon();
@@ -104,9 +130,23 @@ if ($bossRNG == 4) randomWeapon();
 <p>&nbsp;</p>
 <p>&nbsp;</p>
 <p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
 
 <input type="button" value="Reroll" onClick="window.location.reload()">
 
+
+	
+<section>
+  <div class="floatleft">Left</div>
+  <div class="floatright">Right</div>
+</section>
+
+	
+</div><!-- EOF Content -->
+</div><!-- EOF Container -->
+	
 </body>
 </html>
 
