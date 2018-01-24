@@ -20,7 +20,9 @@ error_reporting(E_ALL);
 <h1>MOBS</h1>
 
 <?php
-/* WEAPON FUNCTION */
+/*
+Random Weapon
+*/
 function randomWeapon () {
 	unset ($weaponRNG);
 	$weaponRNG   = rand (0, 19);
@@ -50,12 +52,17 @@ function randomWeapon () {
 	echo "(" . $weaponArray[$weaponRNG] . ")";
 }
 	
-	
+/*
+Display rolled dice value as image
+*/
 function displayDice ($diceValue) {
 	echo '<img src="dice/'.$diceValue.'.png" width="100" height="100" alt=""/>';
 	echo "<br>";
 }
 
+/*
+Display which aids was rolled
+*/
 function aids ($positive) {
 	echo $positive;
 }
