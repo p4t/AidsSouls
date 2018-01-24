@@ -7,7 +7,18 @@ error_reporting(E_ALL);
 <head>
 <meta charset="utf-8">
 <title>\[T]/</title>
+
 <link rel="stylesheet" href="layout.css" type="text/css" media="screen" />
+
+<link rel="stylesheet"
+	  href="https://fonts.googleapis.com/css?family=Tangerine">
+<style>
+  body {
+	font-family: 'Lato', sans-serif;
+	font-size: 48px;
+  }
+</style>	
+
 </head>
 
 <body>
@@ -57,7 +68,7 @@ Display rolled dice value as image
 */
 function displayDice ($diceValue) {
 	echo '<img src="dice/'.$diceValue.'.png" width="100" height="100" alt=""/>';
-	echo "<br>";
+	//echo "<br>";
 }
 
 /*
@@ -65,6 +76,15 @@ Display which aids was rolled
 */
 function aids ($positive) {
 	echo $positive;
+}
+
+function displayAidsArray ($value) {
+	$arrlength = count($value);
+
+	for($x = 0; $x < $arrlength; $x++) {
+		echo $value[$x];
+		echo "<br>";
+	}	
 }
 	
 
@@ -136,21 +156,28 @@ if ($bossRNG == 4) randomWeapon();
 
 <p>&nbsp;</p>
 <p>&nbsp;</p>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
 
 <input type="button" value="Reroll" onClick="window.location.reload()">
 
+<p>&nbsp;</p>
 
-	
 <section>
-  <div class="floatleft">Left</div>
-  <div class="floatright">Right</div>
+	<div class="floatleft"><?php displayAidsArray($mobsAids); ?></div>
+	<div class="floatright"><?php displayAidsArray($bossAids); ?></div>
+	<div class ="clearfloat">&nbsp;</div>
 </section>
 
+
 	
+<h4>TEST</h4>
+<?php
+foreach ($mobsAids as $key => $value) {
+	echo $key." has the value: ". $value;
+	echo "<br>";
+
+}
+?>
+
 </div><!-- EOF Content -->
 </div><!-- EOF Container -->
 	
