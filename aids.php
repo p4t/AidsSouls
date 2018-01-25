@@ -15,7 +15,7 @@ error_reporting(E_ALL);
 <style>
   body {
 	font-family: 'Lato', sans-serif;
-	font-size: 48px;
+	font-size: 24px;
   }
 </style>	
 
@@ -25,6 +25,7 @@ error_reporting(E_ALL);
 
 <div class="container">
 <div class="content">
+<div class="aidscontent">
 	
 <h5>Roll a dice to get <a href="https://youtu.be/uA-MoS9FZHQ?t=9s"> (((AAAAIIIIIIDDDSSSSS)))</a> <span style="font-size: 40%">in Dark Souls</span></h5>
 	
@@ -38,7 +39,6 @@ function randomWeapon () {
 	unset ($weaponRNG);
 	$weaponRNG   = rand (0, 19);
 	$weaponDice  = $weaponRNG + 1;
-	$arrlength   = count($weaponArray); // TODO
 	$weaponArray = array("Gyrm Axe",
 						 "Flamberge",
 						 "Bluemoon",
@@ -79,12 +79,11 @@ function aids ($positive) {
 }
 
 function displayAidsArray ($value) {
-	$arrlength = count($value);
-
-	for($x = 0; $x < $arrlength; $x++) {
-		echo $value[$x];
+	foreach ($value as $key => $value) {
+		$key = $key + 1;
+		echo $key . ": ". $value;
 		echo "<br>";
-	}	
+	}
 }
 	
 
@@ -114,13 +113,18 @@ $mobsAids = array("Ohne Schild",
 				  "Zufällig gewürfelte Waffe: "				  
 				 );
 
-	
-displayDice($mobsDice);
-//echo $mobsAids[$mobsRNG];
-aids($mobsAids[$mobsRNG]);
 
-// MOBS random weapon
-if ($mobsRNG > 15) randomWeapon();
+echo '<section>';
+echo '<div class="floatleft">';
+displayDice ($mobsDice); // diplay rolled dice value as image
+echo '</div>';
+echo '<div class="floatright">';
+aids ($mobsAids[$mobsRNG]); // display rolled Aids (Handicap)
+if ($mobsRNG > 15) randomWeapon(); // display random weapon if corresponding Aids was rolled
+echo '</div>';
+echo '<div class ="clearfloat">&nbsp';
+echo '</div>';
+echo '</section>';
 ?>
 
 <h1>BOSS</h1>
@@ -142,40 +146,44 @@ $bossAids = array("Ohne Schild",
 				  "Ohne Alles",
 				  "Crap Ringe"		  
 				 );
-	
-	
-displayDice($bossDice);
-//echo $bossAids[$bossRNG];
-aids($bossAids[$bossRNG]);
 
-// BOSS random weapon
-if ($bossRNG == 4) randomWeapon();
+	
+echo '<section>';
+echo '<div class="floatleft">';
+displayDice($bossDice); // diplay rolled dice value as image
+echo '</div>';
+echo '<div class="floatright">';
+aids($bossAids[$bossRNG]); // display rolled Aids (Handicap)
+if ($bossRNG == 4) randomWeapon(); // display random weapon if corresponding Aids was rolled
+echo '</div>';
+echo '<div class ="clearfloat">&nbsp';
+echo '</div>';
+echo '</section>';
 
 ?>
 
-
-<p>&nbsp;</p>
 <p>&nbsp;</p>
 
-<input type="button" value="Reroll" onClick="window.location.reload()">
+<button class="button" onClick="window.location.reload()"><span>Reroll </span></button>
 
-<p>&nbsp;</p>
+</div><!-- EOF aidscontent -->
 
-<section>
-	<div class="floatleft"><?php displayAidsArray($mobsAids); ?></div>
-	<div class="floatright"><?php displayAidsArray($bossAids); ?></div>
+<section class="aidsListing">
+	<div class="floatleft">Mobs: <br><?php displayAidsArray($mobsAids); ?></div>
+	<div class="floatright">Boss: <br><?php displayAidsArray($bossAids); ?></div>
 	<div class ="clearfloat">&nbsp;</div>
 </section>
-
 
 	
 <h4>TEST</h4>
 <?php
+/*
 foreach ($mobsAids as $key => $value) {
 	echo $key." has the value: ". $value;
 	echo "<br>";
 
 }
+*/
 ?>
 
 </div><!-- EOF Content -->
@@ -191,11 +199,19 @@ foreach ($mobsAids as $key => $value) {
 
 
 /*
-$arrlength = count($mobsAids);
+$arrlength = count ($mobsAids);
 
-for($x = 0; $x < $arrlength; $x++) {
+for ($x = 0; $x < $arrlength; $x++) {
     echo $mobsAids[$x];
     echo "<br>";
 }
 */
+
+	/*
+	$arrlength = count($value);
+	for($x = 0; $x < $arrlength; $x++) {
+		echo $value[$x];
+		echo "<br>";
+	}
+	*/
 ?>
