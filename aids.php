@@ -15,8 +15,8 @@ const VERSION = '1.0';
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Tangerine">
 <style>
   body {
-	 font-family: 'Lato', sans-serif;
-	 font-size: 24px;
+    font-family: 'Lato', sans-serif;
+    font-size: 24px;
   }
 </style>	
 
@@ -27,9 +27,9 @@ const VERSION = '1.0';
 <div class="container">
 <div class="content">
 <div class="aidscontent">
-	
+
 <h5>Roll a dice to get <a href="https://youtu.be/uA-MoS9FZHQ?t=9s"> (((AAAAIIIIIIDDDSSSSS)))</a> <span style="font-size: 40%">in Dark Souls</span></h5>
-	
+
 <h1>MOBS</h1>
 
 <?php
@@ -38,11 +38,11 @@ Random Weapon
 */
 function randomWeapon ($weaponArray)
 {
-	unset ($weaponRNG);
-	$weaponRNG   = mt_rand (0, 19);
-	//$weaponRNG   = 19; // DEBUG
-	//return $weaponDice  = $weaponRNG + 1;
-	echo $weaponArray[$weaponRNG];
+  unset ($weaponRNG);
+  $weaponRNG   = mt_rand (0, 19);
+  //$weaponRNG   = 19; // DEBUG
+  //return $weaponDice  = $weaponRNG + 1;
+  echo $weaponArray[$weaponRNG];
 }
 	
 /*
@@ -50,8 +50,7 @@ Display rolled dice value as image
 */
 function displayDice ($diceValue)
 {
-	echo '<img src="dice/'.$diceValue.'.png" width="100" height="100" alt="'.$diceValue.'"/>';
-	//echo "<br>";
+  echo '<img src="dice/'.$diceValue.'.png" width="100" height="100" alt="'.$diceValue.'"/>';
 }
 
 /*
@@ -59,15 +58,15 @@ Display which aids was rolled
 */
 function aids ($positive)
 {
-	echo $positive;
+  echo $positive;
 }
 
 function displayAidsArray ($value)
 {
   foreach ($value as $key => $value) {
-		$key = $key + 1;
-		echo $key . ": ". $value;
-		echo "<br>";
+    $key = $key + 1;
+    echo $key . ": ". $value;
+    echo "<br>";
 	}
 }
 	
@@ -135,9 +134,9 @@ echo '</div>';
 echo '<div class="floatright">';
 aids ($mobsAids[$mobsRNG]); // display rolled Aids (Handicap)
 if ($mobsRNG > 15) {
-	echo ": (";
-	randomWeapon($weaponArray); // display random weapon if corresponding Aids was rolled
-	echo ")";
+  echo ": (";
+  randomWeapon($weaponArray); // display random weapon if corresponding Aids was rolled
+  echo ")";
 }
 echo '</div>';
 echo '<div class="clearfloat">&nbsp';
@@ -176,9 +175,9 @@ echo '</div>';
 echo '<div class="floatright">';
 aids($bossAids[$bossRNG]); // display rolled Aids (Handicap)
 if ($bossRNG == 4) {
-	echo ": (";
-	randomWeapon($weaponArray); // display random weapon if corresponding Aids was rolled
-	echo ")";
+  echo ": (";
+  randomWeapon($weaponArray); // display random weapon if corresponding Aids was rolled
+  echo ")";
 }
 echo '</div>';
 echo '<div class="clearfloat">&nbsp';
@@ -195,7 +194,7 @@ echo '</section>';
 
 <section class="aidsListing">
   <div class="floatleft"><h4>Mobs:</h4><?php displayAidsArray($mobsAids); ?></div>
-	<div class="floatright"><h4>Boss:</h4><?php displayAidsArray($bossAids); ?></div>
+  <div class="floatright"><h4>Boss:</h4><?php displayAidsArray($bossAids); ?></div>
   <div class="clearfloat">&nbsp;</div>
   <div class="floatleft"><h4>Weapons</h4><?php displayAidsArray($weaponArray); ?></div>
 </section>
