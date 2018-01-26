@@ -92,7 +92,6 @@ hr {
 }
 
 
-/* ~~ Dieser Container umschließt alle anderen div-Tags und weist ihnen ihre als Prozentwert definierte Breite zu. ~~ */
 
 .background { /* extra div für den blauen Hintergrund (100%) (.subheader) */
 	width: 100%;
@@ -103,61 +102,44 @@ hr {
 	max-width: 1260px;
 	min-width: 780px;
 	/* background-color: #fff; */
-	margin: 0 auto; 
-}
-
-
-.header {
-	width: 50%;
-	min-height: 101px;
-	min-width: 768px;
 	margin: 0 auto;
-
-}
-
-.subheader {
-	margin-top: 35px;
-	width: 100%;
-	height: 250px;
-	background-color: #027c9f;
-	background: url("../images/header_layer.jpg") repeat;
-	-moz-box-shadow: 0 0 15px 1px #888;
-	-webkit-box-shadow: 0 0 15px 1px #888;
-	box-shadow: 0 0 15px 1px #888;
 }
 
 
-/* ~~ Layoutinformationen. ~~ */
+
 .content {
 	width: 90%; /* 90% of .container */
 	margin: 0 auto;
 }
 
-/* ~~ Listen im .content-Bereich ~~ */
+
 .content ul, .content ol { 
 	padding: 0 15px 15px 40px; 
 }
 
 .aidscontent {
-	width: 50%; /* 90% of .container */
+	width: 60%; /* % of .container */
 	margin: 0 auto;
+	/* background-color: #fff; */
 }
 
-/* ~~ Fußzeile ~~ */
+
+.aidsListing {
+	width: 60%;
+	margin: 0 auto;
+  font-size: 18px;
+}
+
+
 .footer {
 	width: 100%;
 	margin: 0 auto;
 	padding: 10px 0;
 	text-align: center;	
 	/* clear: both; */
-
-}
-.aidsListing {
-	width: 75%;
-	margin: 0 auto;
 }
 
-/* ~~ Verschiedene float/clear-Klassen ~~ */
+
 .floatright {  
 	float: right;
 	text-align: left;
@@ -174,6 +156,7 @@ hr {
 	font-size: 1px;
 	line-height: 0px;
 }
+
 
 .button {
   border-radius: 4px;
