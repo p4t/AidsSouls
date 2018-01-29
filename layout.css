@@ -15,7 +15,7 @@ html, body {
 	-webkit-text-size-adjust: 100%;
   
 	background: rgb(238, 238, 238);
-	background: url("bg.png") repeat;
+	background: url('bg.png') repeat;
   
 	margin: 0;
 	padding: 0;
@@ -145,9 +145,30 @@ hr {
 }
 
 
+
+
+
+
+
+
+
+
+
+
 .content ul, .content ol { 
-	padding: 0 15px 15px 40px; 
+  padding: 0 15px 15px 40px; 
 }
+
+
+
+
+
+
+
+
+
+
+
 
 .aidscontent {
 	width: 60%; /* % of .container */
@@ -159,38 +180,6 @@ hr {
 
 .aidsListing {
   font-size: 1.1em;
-}
-
-.center {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  
-  /*
-  Nope =(
-  margin-left: -25%;
-  margin-top: -25%;
-  */
-
-  /* 
-  Yep!
-  */
-  transform: translate(-50%, -50%);
-  
-  /*
-  Not even necessary really. 
-  e.g. Height could be left out!
-  */
-  width: 40%;
-  height: 50%;
-}
-
-.footer {
-	width: 100%;
-	margin: 0 auto;
-	padding: 10px 0;
-	text-align: center;	
-	/* clear: both; */
 }
 
 

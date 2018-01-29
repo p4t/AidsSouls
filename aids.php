@@ -1,11 +1,40 @@
 <?php
-define("TIME", date("Y-m-d h:i:s"));
+define("TIME", date("Y-m-d H:i:s"));
 
 const VERSION = "";
 const IP      = "";
+
+// Set up DB and connect
+/*
+$host     = "127.0.0.1";
+$db       = "aids";
+$user     = "aids";
+$pass     = "kUk3t1%5";
+$charset  = "utf8mb4";
+
+$dsn = "mysql:host=$host;dbname=$db;charset=$charset";
+*/
+
+/*
+/*
+$opt = [
+    PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
+    PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+    PDO::ATTR_EMULATE_PREPARES   => false,
+];
+*/
+
+// $pdo = new PDO($dsn, $user, $pass);
+
+//$numberOfWeapons
+//mysql for mobs etc cms
+
+
+
 // const TIME    = "";
 // Declare number of mobs and boss aids items
 // namespace Vendor\Model;
+
 
 
 
@@ -18,21 +47,28 @@ const IP      = "";
 <meta charset="utf-8">
 <title>\[T]/</title>
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script>
-  /*
-  jQuery(document).ready(function(){
-   $('h1').mousemove(function(e){
-     var rXP = (e.pageX - this.offsetLeft-$(this).width()/2);
-     var rYP = (e.pageY - this.offsetTop-$(this).height()/2);
-     $('h1').css('text-shadow', +rYP/10+'px '+rXP/80+'px rgba(227,6,19,.8), '+rYP/8+'px '+rXP/60+'px rgba(255,237,0,1), '+rXP/70+'px '+rYP/12+'px rgba(0,159,227,.7)');
-   });
-  });
-  */
-</script>
-
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Tangerine">
 <link rel="stylesheet" href="layout.css" type="text/css" media="screen">
+  
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<script>
+  var myImages1 = new Array();
+  myImages1.push("dice/1.png");
+  myImages1.push("dice/2.png");
+  myImages1.push("dice/3.png");
+  myImages1.push("dice/4.png");
+  myImages1.push("dice/5.png");
+  myImages1.push("dice/6.png");
+
+  function getRandomInt(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+  }
+
+  function pickimg2() {
+    document.randimg.src = myImages1[getRandomInt(0, myImages1.length - 1)];
+  }
+</script>
 
 <style>  
   /* DEBUG
@@ -46,20 +82,21 @@ const IP      = "";
   
 </style>	
 
+
 </head>
 
 <body>
 
 <div class="container">
   <div class="header">
-    <img src="ds2_logo.png" alt="Dark Souls II Aids" width="630" height="80" class="headerImage">
+    <img src="img/ds2_logo.png" alt="Dark Souls II Aids" width="630" height="80" class="headerImage">
     <h4>mit verschärftem AIDS</h4>
   </div>
 
 <div class="content">
 <div class="aidscontent">
 
-<h2>MOBS</h1>
+<h2>MOBS</h2>
 
 <?php
 /*
@@ -81,8 +118,9 @@ function getRealIpAddr()
 
 
 /*
-Random Weapon
-*/
+ * Random Weapons
+ */
+
 function randomWeapon ($weaponArray)
 {
   unset ($weaponRNG);
@@ -92,9 +130,11 @@ function randomWeapon ($weaponArray)
   echo "&nbsp;" . "(" . $weaponArray[$weaponRNG] . ")";
 }
 	
+
 /*
-Display rolled dice value as image
-*/
+ * Display rolled dice value as image
+ */
+
 function displayDice ($diceValue)
 {
   echo '<img src="dice/'.$diceValue.'.png" width="100" height="100" alt="'.$diceValue.'"/>';
@@ -102,16 +142,17 @@ function displayDice ($diceValue)
 
 
 /*
-Display which aids was rolled
-*/
+ * Display which aids was rolled
+ */
 function aids ($positive)
 {
   echo "<strong>" . $positive . "</strong>";
 }
 
+
 /*
-Get Aids Name by ID (Rolled dice value)
-*/
+ * Get Aids Name by ID (Rolled dice value)
+ */
 function getAidsByID ()
 {
   // 
@@ -119,8 +160,8 @@ function getAidsByID ()
  
 
 /*
-Display and list content of a specific Aids array (Boss, Mobs, Weapons)
-*/
+ * Display and list content of a specific Aids array (Boss, Mobs, Weapons)
+ */
 function displayAidsArray ($value)
 {
   echo '<ul class="aidsListing">';
@@ -134,15 +175,24 @@ function displayAidsArray ($value)
 }
 
 
+
 /*
-Save 10 latest rolls
-*/
+ * Save 10 latest rolls
+ */
 function saveRolledAids () {
   // echo "Schniedel";
 }
 
 
+/*
+function query ($rowID, $rowName, $table) {
+  $stmt = $pdo->query('SELECT '.$rowID.', '.$rowName.' FROM '.$table.'');
+}
+*/
 
+  
+  
+  
 	
 /*******************
 * WEAPONS          *
@@ -213,7 +263,7 @@ $mobsAids = array("Ohne Schild",
 </div>
 
 
-<h2>BOSS</h1>
+<h2>BOSS</h2>
 
 <?php
 /*******************
@@ -375,7 +425,6 @@ file_put_contents($file, $current);
       <tr>
         <td class="emoji">
           🔥
-          <!-- <img src="bonfire_ascetic.png"> -->
         </td>
         <td><s>IIII</s></td>
         <td>IIII</td>
@@ -399,41 +448,74 @@ file_put_contents($file, $current);
   
 
   
+<?php
   
-<div id="flex-container">
-  <div class="flex-item"></div>
-  <div class="flex-item">16px Schniedel</div>
-  <div class="flex-item"></div>
+/*******************
+* Keep Weapon      *
+*******************/
+$keepWeaponRNG  = mt_rand (0, 5);
+$keepWeaponDice = $keepWeaponRNG + 1;
+?>
+
+<h2>Waffe behalten?</h2>
+<div id="flex-container" class="keepWeapon">
+  <div class="flex-item">&nbsp;</div>
+  <div class="flex-item">
+    <!-- JS Random Dice 1-6 -->
+    <a href="#" onClick="pickimg2();return false;">
+      <img src="dice/0.png" name="randimg" width="100px" height="100px">
+    </a> 
+  </div>
+  <div class="flex-item">&nbsp;</div>
 </div>
+
+  
+  
+  
+
+  
+
 
 </body>
 </html>
 
 <?php
 
-// Set up DB and connect
-$host     = "127.0.0.1";
-$db       = "aids";
-$user     = "aids";
-$pass     = "kUk3t1%5";
-$charset  = "utf8mb4";
-
-$dsn = "mysql:host=$host;dbname=$db;charset=$charset";
-$opt = "";
-/*
-$opt = [
-    PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
-    PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
-    PDO::ATTR_EMULATE_PREPARES   => false,
-];
-*/
-// $pdo = new PDO($dsn, $user, $pass, $opt);
 
 /*
-$stmt = $pdo->query('SELECT name FROM users');
+
+$stmt = $pdo->query('SELECT weaponID, weaponName FROM weapons');
 while ($row = $stmt->fetch())
 {
-    echo $row['name'] . "\n";
+    echo $row['weaponID'] . $row['weaponName'] . "<br>";
+}
+
+
+*/
+
+/////////////////// read in CSV FILE FOR AIDS
+
+
+
+
+
+
+
+
+
+
+/*
+$stmt = $pdo->query('SELECT mobsAidsID, mobsAidsName FROM mobsAids');
+while ($row = $stmt->fetch())
+{
+    echo $row['mobsAidsID'] . $row['mobsAidsName'] . "<br>";
+}
+
+
+$stmt = $pdo->query('SELECT bossAidsID, bossAidsName FROM bossAids');
+while ($row = $stmt->fetch())
+{
+    echo $row['bossAidsID'] . $row['bossAidsName'] . "<br>";
 }
 */
 
