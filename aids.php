@@ -457,7 +457,7 @@ $keepWeaponRNG  = mt_rand (0, 5);
 $keepWeaponDice = $keepWeaponRNG + 1;
 ?>
 
-<h2>Waffe behalten?</h2>
+<h2>W6</h2>
 <div id="flex-container" class="keepWeapon">
   <div class="flex-item">&nbsp;</div>
   <div class="flex-item">

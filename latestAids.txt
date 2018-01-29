@@ -1,0 +1,512 @@
+15Normal - 2Ohne Flask
+18Zufällig gewürfelte Waffe - 5Zufällig gewürfelte Waffe
+20Zufällig gewürfelte Waffe - 1Ohne Schild
+16Normal - 9Normal
+10Ohne Ringe - 8Lumbe
+12Crap Ringe - 6Waffe linke Hand
+4Fatroll - 3Ohne Rüstung
+19Zufällig gewürfelte Waffe - 12Crap Ringe
+9Crap Waffe - 8Lumbe
+13Normal - 4Fatroll
+3Ohne Rüstung - 10Ohne Ringe
+1Ohne Schild - 7Nur RT
+2Ohne Flask - 12Crap Ringe
+11Ohne Alles - 3Ohne Rüstung
+16Normal - 4Fatroll
+6Waffe linke Hand - 4Fatroll
+6Waffe linke Hand - 8Lumbe - 95.90.230.49
+5Parry if you can (Lumbe) - 10Ohne Ringe - 95.90.230.49
+14Normal - 6Waffe linke Hand - 95.90.230.49
+17Zufällig gewürfelte Waffe - 11Ohne Alles - 95.90.230.49
+20Zufällig gewürfelte Waffe - 2Ohne Flask - 91.66.249.29
+17Zufällig gewürfelte Waffe - 5Zufällig gewürfelte Waffe - 91.66.249.29
+15Normal - 8Lumbe - 2.247.253.73
+16Normal - 4Fatroll - 2.247.253.73
+14Normal - 2Ohne Flask - 95.90.230.49
+6Waffe linke Hand - 2Ohne Flask - 95.90.230.49
+6Waffe linke Hand - 2Ohne Flask - 95.90.230.49
+9Crap Waffe - 9Normal - 95.90.230.49
+14Normal - 6Waffe linke Hand - 95.90.230.49
+16Normal - 1Ohne Schild - 95.90.230.49
+11Ohne Alles - 6Waffe linke Hand - 95.90.230.49
+15Normal - 10Ohne Ringe - 95.90.230.49
+5Parry if you can (Lumbe) - 8Lumbe - 95.90.230.49
+4Fatroll - 11Ohne Alles - 95.90.230.49
+5Parry if you can (Lumbe) - 5Zufällig gewürfelte Waffe - 95.90.230.49
+5Parry if you can (Lumbe) - 11Ohne Alles - 95.90.230.49
+19Zufällig gewürfelte Waffe - 8Lumbe - 95.90.230.49
+10Ohne Ringe - 1Ohne Schild - 95.90.230.49
+4Fatroll - 10Ohne Ringe - 95.90.230.49
+5Parry if you can (Lumbe) - 5Zufällig gewürfelte Waffe - 95.90.230.49
+16Normal - 4Fatroll - 95.90.230.49
+11Ohne Alles - 8Lumbe - 95.90.230.49
+17Zufällig gewürfelte Waffe - 11Ohne Alles - 95.90.230.49
+15Normal - 4Fatroll - 95.90.230.49
+3Ohne Rüstung - 2Ohne Flask - 95.90.230.49
+15Normal - 1Ohne Schild - 95.90.230.49
+5Parry if you can (Lumbe) - 7Nur RT - 95.90.230.49
+17Zufällig gewürfelte Waffe - 3Ohne Rüstung - 95.90.230.49
+1Ohne Schild - 12Crap Ringe - 95.90.230.49
+5Parry if you can (Lumbe) - 11Ohne Alles - 95.90.230.49
+3Ohne Rüstung - 7Nur RT - 95.90.230.49
+20Zufällig gewürfelte Waffe - 10Ohne Ringe - 95.90.230.49
+19Zufällig gewürfelte Waffe - 5Zufällig gewürfelte Waffe - 95.90.230.49
+2Ohne Flask - 11Ohne Alles - 95.90.230.49
+20Zufällig gewürfelte Waffe - 2Ohne Flask - 95.90.230.49
+8Ohne Backstab, Riposte - 6Waffe linke Hand - 95.90.230.49
+17Zufällig gewürfelte Waffe - 10Ohne Ringe - 95.90.230.49
+1Ohne Schild - 7Nur RT - 95.90.230.49
+1Ohne Schild - 9Normal - 95.90.230.49
+5Parry if you can (Lumbe) - 7Nur RT - 95.90.230.49
+1Ohne Schild - 9Normal - 95.90.230.49
+8Ohne Backstab, Riposte - 8Lumbe - 95.90.230.49
+10Ohne Ringe - 4Fatroll - 95.90.230.49
+14Normal - 8Lumbe - 95.90.230.49
+18Zufällig gewürfelte Waffe - 3Ohne Rüstung - 95.90.230.49
+16Normal - 7Nur RT - 95.90.230.49
+15Normal - 12Crap Ringe - 95.90.230.49
+10Ohne Ringe - 9Normal - 95.90.230.49
+4Fatroll - 6Waffe linke Hand - 95.90.230.49
+5Parry if you can (Lumbe) - 8Lumbe - 95.90.230.49
+12Crap Ringe - 10Ohne Ringe - 95.90.230.49
+9Crap Waffe - 2Ohne Flask - 95.90.230.49
+2Ohne Flask - 6Waffe linke Hand - 95.90.230.49
+6Waffe linke Hand - 3Ohne Rüstung - 95.90.230.49
+13Normal - 1Ohne Schild - 95.90.230.49
+2Ohne Flask - 6Waffe linke Hand - 95.90.230.49
+14Normal - 3Ohne Rüstung - 95.90.230.49
+20Zufällig gewürfelte Waffe - 2Ohne Flask - 95.90.230.49
+1Ohne Schild - 4Fatroll - 95.90.230.49
+4Fatroll - 8Lumbe - 95.90.230.49
+15Normal - 12Crap Ringe - 95.90.230.49
+4Fatroll - 3Ohne Rüstung - 95.90.230.49
+18Zufällig gewürfelte Waffe - 5Zufällig gewürfelte Waffe - 95.90.230.49
+3Ohne Rüstung - 5Zufällig gewürfelte Waffe - 95.90.230.49
+18Zufällig gewürfelte Waffe - 7Nur RT - 95.90.230.49
+8Ohne Backstab, Riposte - 5Zufällig gewürfelte Waffe - 95.90.230.49
+17Zufällig gewürfelte Waffe - 11Ohne Alles - 95.90.230.49
+13Normal - 3Ohne Rüstung - 95.90.230.49
+16Normal - 5Zufällig gewürfelte Waffe - 95.90.230.49
+7Nur RT - 7Nur RT - 95.90.230.49
+18Zufällig gewürfelte Waffe - 3Ohne Rüstung - 95.90.230.49
+5Parry if you can (Lumbe) - 11Ohne Alles - 95.90.230.49
+9Crap Waffe - 2Ohne Flask - 95.90.230.49
+13Normal - 12Crap Ringe - 95.90.230.49
+20Zufällig gewürfelte Waffe - 9Normal - 95.90.230.49
+12Crap Ringe - 3Ohne Rüstung - 95.90.230.49
+10Ohne Ringe - 1Ohne Schild - 95.90.230.49
+5Parry if you can (Lumbe) - 9Normal - 95.90.230.49
+15Normal - 8Lumbe - 95.90.230.49
+4Fatroll - 3Ohne Rüstung - 95.90.230.49
+9Crap Waffe - 9Normal - 95.90.230.49
+18Zufällig gewürfelte Waffe - 2Ohne Flask - 95.90.230.49
+19Zufällig gewürfelte Waffe - 7Nur RT - 95.90.230.49
+10Ohne Ringe - 3Ohne Rüstung - 95.90.230.49
+5Parry if you can (Lumbe) - 3Ohne Rüstung - 95.90.230.49
+20Zufällig gewürfelte Waffe - 6Waffe linke Hand - 95.90.230.49
+5Parry if you can (Lumbe) - 4Fatroll - 95.90.230.49
+4Fatroll - 11Ohne Alles - 95.90.230.49
+13Normal - 5Zufällig gewürfelte Waffe - 95.90.230.49
+14Normal - 4Fatroll - 95.90.230.49
+20Zufällig gewürfelte Waffe - 10Ohne Ringe - 95.90.230.49
+10Ohne Ringe - 7Nur RT - 95.90.230.49
+14Normal - 4Fatroll - 95.90.230.49
+9Crap Waffe - 12Crap Ringe - 95.90.230.49
+1Ohne Schild - 2Ohne Flask - 95.90.230.49
+12Crap Ringe - 11Ohne Alles - 95.90.230.49
+19Zufällig gewürfelte Waffe - 11Ohne Alles - 95.90.230.49
+3Ohne Rüstung - 6Waffe linke Hand - 95.90.230.49
+16Normal - 9Normal - 95.90.230.49
+12Crap Ringe - 7Nur RT - 95.90.230.49
+8Ohne Backstab, Riposte - 9Normal - 95.90.230.49
+4Fatroll - 2Ohne Flask - 95.90.230.49
+10Ohne Ringe - 10Ohne Ringe - 95.90.230.49
+17Zufällig gewürfelte Waffe - 10Ohne Ringe - 95.90.230.49
+9Crap Waffe - 9Normal - 95.90.230.49
+1Ohne Schild - 5Zufällig gewürfelte Waffe - 95.90.230.49
+4Fatroll - 8Lumbe - 95.90.230.49
+19Zufällig gewürfelte Waffe - 6Waffe linke Hand - 95.90.230.49
+4Fatroll - 12Crap Ringe - 95.90.230.49
+18Zufällig gewürfelte Waffe - 5Zufällig gewürfelte Waffe - 95.90.230.49
+7Nur RT - 6Waffe linke Hand - 95.90.230.49
+18Zufällig gewürfelte Waffe - 7Nur RT - 95.90.230.49
+6Waffe linke Hand - 4Fatroll - 95.90.230.49
+4Fatroll - 5Zufällig gewürfelte Waffe - 95.90.230.49
+9Crap Waffe - 1Ohne Schild - 95.90.230.49
+18Zufällig gewürfelte Waffe - 4Fatroll - 95.90.230.49
+9Crap Waffe - 9Normal - 95.90.230.49
+20Zufällig gewürfelte Waffe - 5Zufällig gewürfelte Waffe - 95.90.230.49
+5Parry if you can (Lumbe) - 7Nur RT - 95.90.230.49
+7Nur RT - 4Fatroll - 95.90.230.49
+7Nur RT - 11Ohne Alles - 95.90.230.49
+12Crap Ringe - 7Nur RT - 95.90.230.49
+5Parry if you can (Lumbe) - 1Ohne Schild - 95.90.230.49
+10Ohne Ringe - 1Ohne Schild - 95.90.230.49
+3Ohne Rüstung - 8Lumbe - 95.90.230.49
+2Ohne Flask - 11Ohne Alles - 95.90.230.49
+4Fatroll - 10Ohne Ringe - 95.90.230.49
+19Zufällig gewürfelte Waffe - 11Ohne Alles - 95.90.230.49
+15Normal - 9Normal - 95.90.230.49
+1Ohne Schild - 5Zufällig gewürfelte Waffe - 95.90.230.49
+9Crap Waffe - 7Nur RT - 95.90.230.49
+7Nur RT - 8Lumbe - 95.90.230.49
+1Ohne Schild - 12Crap Ringe - 95.90.230.49
+12Crap Ringe - 6Waffe linke Hand - 95.90.230.49
+3Ohne Rüstung - 8Lumbe - 95.90.230.49
+20Zufällig gewürfelte Waffe - 3Ohne Rüstung - 95.90.230.49
+13Normal - 2Ohne Flask - 95.90.230.49
+3Ohne Rüstung - 2Ohne Flask - 95.90.230.49
+12Crap Ringe - 3Ohne Rüstung - 95.90.230.49
+15Normal - 7Nur RT - 95.90.230.49
+10Ohne Ringe - 2Ohne Flask - 95.90.230.49
+20Zufällig gewürfelte Waffe - 7Nur RT - 95.90.230.49
+19Zufällig gewürfelte Waffe - 6Waffe linke Hand - 95.90.230.49
+1Ohne Schild - 1Ohne Schild - 95.90.230.49
+3Ohne Rüstung - 6Waffe linke Hand - 95.90.230.49
+11Ohne Alles - 1Ohne Schild - 95.90.230.49
+7Nur RT - 6Waffe linke Hand - 95.90.230.49
+10Ohne Ringe - 11Ohne Alles - 95.90.230.49
+2Ohne Flask - 3Ohne Rüstung - 95.90.230.49
+8Ohne Backstab, Riposte - 5Zufällig gewürfelte Waffe - 95.90.230.49
+1Ohne Schild - 2Ohne Flask - 95.90.230.49
+7Nur RT - 6Waffe linke Hand - 95.90.230.49
+20Zufällig gewürfelte Waffe - 9Normal - 95.90.230.49
+8Ohne Backstab, Riposte - 5Zufällig gewürfelte Waffe - 95.90.230.49
+10Ohne Ringe - 10Ohne Ringe - 95.90.230.49
+2Ohne Flask - 1Ohne Schild - 95.90.230.49
+8Ohne Backstab, Riposte - 6Waffe linke Hand - 95.90.230.49
+17Zufällig gewürfelte Waffe - 8Lumbe - 95.90.230.49
+18Zufällig gewürfelte Waffe - 11Ohne Alles - 95.90.230.49
+6Waffe linke Hand - 6Waffe linke Hand - 95.90.230.49
+14Normal - 5Zufällig gewürfelte Waffe - 95.90.230.49
+16Normal - 3Ohne Rüstung - 95.90.230.49
+5Parry if you can (Lumbe) - 12Crap Ringe - 95.90.230.49
+3Ohne Rüstung - 1Ohne Schild - 95.90.230.49
+18Zufällig gewürfelte Waffe - 11Ohne Alles - 95.90.230.49
+13Normal - 5Zufällig gewürfelte Waffe - 95.90.230.49
+3Ohne Rüstung - 9Normal - 95.90.230.49
+10Ohne Ringe - 7Nur RT - 95.90.230.49
+18Zufällig gewürfelte Waffe - 12Crap Ringe - 95.90.230.49
+14Normal - 2Ohne Flask - 95.90.230.49
+16Normal - 12Crap Ringe - 95.90.230.49
+5Parry if you can (Lumbe) - 7Nur RT - 95.90.230.49
+9Crap Waffe - 12Crap Ringe - 95.90.230.49
+5Parry if you can (Lumbe) - 12Crap Ringe - 95.90.230.49
+8Ohne Backstab, Riposte - 11Ohne Alles - 95.90.230.49
+19Zufällig gewürfelte Waffe - 2Ohne Flask - 95.90.230.49
+16Normal - 6Waffe linke Hand - 95.90.230.49
+20Zufällig gewürfelte Waffe - 3Ohne Rüstung - 95.90.230.49
+3Ohne Rüstung - 4Fatroll - 95.90.230.49
+2Ohne Flask - 12Crap Ringe - 95.90.230.49
+5Parry if you can (Lumbe) - 4Fatroll - 95.90.230.49
+8Ohne Backstab, Riposte - 4Fatroll - 95.90.230.49
+14Normal - 7Nur RT - 95.90.230.49
+5Parry if you can (Lumbe) - 7Nur RT - 95.90.230.49
+5Parry if you can (Lumbe) - 12Crap Ringe - 95.90.230.49
+13Normal - 11Ohne Alles - 95.90.230.49
+2Ohne Flask - 12Crap Ringe - 95.90.230.49
+3Ohne Rüstung - 4Fatroll - 95.90.230.49
+19Zufällig gewürfelte Waffe - 3Ohne Rüstung - 95.90.230.49
+5Parry if you can (Lumbe) - 2Ohne Flask - 95.90.230.49
+10Ohne Ringe - 8Lumbe - 95.90.230.49
+20Zufällig gewürfelte Waffe - 5Zufällig gewürfelte Waffe - 95.90.230.49
+7Nur RT - 10Ohne Ringe - 95.90.230.49
+15Normal - 7Nur RT - 95.90.230.49
+10Ohne Ringe - 4Fatroll - 95.90.230.49
+14Normal - 2Ohne Flask - 95.90.230.49
+15Normal - 3Ohne Rüstung - 95.90.230.49
+20Zufällig gewürfelte Waffe - 6Waffe linke Hand - 95.90.230.49
+19Zufällig gewürfelte Waffe - 9Normal - 95.90.230.49
+7Nur RT - 8Lumbe - 95.90.230.49
+11Ohne Alles - 12Crap Ringe - 95.90.230.49
+18Zufällig gewürfelte Waffe - 6Waffe linke Hand - 95.90.230.49
+15Normal - 3Ohne Rüstung - 95.90.230.49
+1Ohne Schild - 8Lumbe - 95.90.230.49
+14Normal - 4Fatroll - 95.90.230.49
+17Zufällig gewürfelte Waffe - 7Nur RT - 95.90.230.49
+20Zufällig gewürfelte Waffe - 7Nur RT - 95.90.230.49
+20Zufällig gewürfelte Waffe - 9Normal - 95.90.230.49
+18Zufällig gewürfelte Waffe - 11Ohne Alles - 95.90.230.49
+12Crap Ringe - 4Fatroll - 95.90.230.49
+4Fatroll - 9Normal - 95.90.230.49
+6Waffe linke Hand - 8Lumbe - 95.90.230.49
+14Normal - 2Ohne Flask - 95.90.230.49
+14Normal - 9Normal - 95.90.230.49
+18Zufällig gewürfelte Waffe - 6Waffe linke Hand - 95.90.230.49
+17Zufällig gewürfelte Waffe - 10Ohne Ringe - 95.90.230.49
+16Normal - 11Ohne Alles - 95.90.230.49
+7Nur RT - 6Waffe linke Hand - 95.90.230.49
+17Zufällig gewürfelte Waffe - 7Nur RT - 95.90.230.49
+12Crap Ringe - 12Crap Ringe - 95.90.230.49
+20Zufällig gewürfelte Waffe - 4Fatroll - 95.90.230.49
+8Ohne Backstab, Riposte - 9Normal - 95.90.230.49
+14Normal - 3Ohne Rüstung - 95.90.230.49
+3Ohne Rüstung - 12Crap Ringe - 95.90.230.49
+1Ohne Schild - 2Ohne Flask - 95.90.230.49
+4Fatroll - 12Crap Ringe - 95.90.230.49
+18Zufällig gewürfelte Waffe - 9Normal - 95.90.230.49
+1Ohne Schild - 5Zufällig gewürfelte Waffe - 95.90.230.49
+4Fatroll - 7Nur RT - 95.90.230.49
+19Zufällig gewürfelte Waffe - 6Waffe linke Hand - 95.90.230.49
+5Parry if you can (Lumbe) - 11Ohne Alles - 95.90.230.49
+8Ohne Backstab, Riposte - 10Ohne Ringe - 95.90.230.49
+5Parry if you can (Lumbe) - 9Normal - 95.90.230.49
+18Zufällig gewürfelte Waffe - 8Lumbe - 95.90.230.49
+2Ohne Flask - 7Nur RT - 95.90.230.49
+19Zufällig gewürfelte Waffe - 2Ohne Flask - 95.90.230.49
+9Crap Waffe - 10Ohne Ringe - 95.90.230.49
+2Ohne Flask - 5Zufällig gewürfelte Waffe - 95.90.230.49
+7Nur RT - 1Ohne Schild - 95.90.230.49
+5Parry if you can (Lumbe) - 5Zufällig gewürfelte Waffe - 95.90.230.49
+6Waffe linke Hand - 10Ohne Ringe - 95.90.230.49
+9Crap Waffe - 11Ohne Alles - 95.90.230.49
+16Normal - 1Ohne Schild - 95.90.230.49
+8Ohne Backstab, Riposte - 7Nur RT - 95.90.230.49
+6Waffe linke Hand - 4Fatroll - 95.90.230.49
+6Waffe linke Hand - 5Zufällig gewürfelte Waffe - 95.90.230.49
+5Parry if you can (Lumbe) - 6Waffe linke Hand - 95.90.230.49
+4Fatroll - 3Ohne Rüstung - 95.90.230.49
+15Normal - 6Waffe linke Hand - 95.90.230.49
+5Parry if you can (Lumbe) - 10Ohne Ringe - 95.90.230.49
+10Ohne Ringe - 9Normal - 95.90.230.49
+6Waffe linke Hand - 4Fatroll - 95.90.230.49
+10Ohne Ringe - 4Fatroll - 95.90.230.49
+1Ohne Schild - 10Ohne Ringe - 95.90.230.49
+16Normal - 2Ohne Flask - 95.90.230.49
+1Ohne Schild - 5Zufällig gewürfelte Waffe - 95.90.230.49
+19Zufällig gewürfelte Waffe - 7Nur RT - 95.90.230.49
+5Parry if you can (Lumbe) - 1Ohne Schild - 95.90.230.49
+4Fatroll - 1Ohne Schild - 95.90.230.49
+13Normal - 9Normal - 95.90.230.49
+1Ohne Schild - 12Crap Ringe - 95.90.230.49
+12Crap Ringe - 3Ohne Rüstung - 95.90.230.49
+13Normal - 4Fatroll - 95.90.230.49
+16Normal - 9Normal - 95.90.230.49
+13Normal - 5Zufällig gewürfelte Waffe - 95.90.230.49
+6Waffe linke Hand - 5Zufällig gewürfelte Waffe - 95.90.230.49
+18Zufällig gewürfelte Waffe - 6Waffe linke Hand - 95.90.230.49
+8Ohne Backstab, Riposte - 5Zufällig gewürfelte Waffe - 95.90.230.49
+17Zufällig gewürfelte Waffe - 6Waffe linke Hand - 95.90.230.49
+17Zufällig gewürfelte Waffe - 7Nur RT - 95.90.230.49
+6Waffe linke Hand - 3Ohne Rüstung - 95.90.230.49
+10Ohne Ringe - 9Normal - 95.90.230.49
+7Nur RT - 10Ohne Ringe - 95.90.230.49
+12Crap Ringe - 1Ohne Schild - 95.90.230.49
+5Parry if you can (Lumbe) - 12Crap Ringe - 95.90.230.49
+14Normal - 5Zufällig gewürfelte Waffe - 95.90.230.49
+16Normal - 12Crap Ringe - 95.90.230.49
+17Zufällig gewürfelte Waffe - 3Ohne Rüstung - 95.90.230.49
+9Crap Waffe - 5Zufällig gewürfelte Waffe - 95.90.230.49
+9Crap Waffe - 11Ohne Alles - 95.90.230.49
+11Ohne Alles - 4Fatroll - 95.90.230.49
+14Normal - 8Lumbe - 95.90.230.49
+18Zufällig gewürfelte Waffe - 8Lumbe - 95.90.230.49
+3Ohne Rüstung - 4Fatroll - 95.90.230.49
+14Normal - 1Ohne Schild - 95.90.230.49
+19Zufällig gewürfelte Waffe - 9Normal - 95.90.230.49
+4Fatroll - 12Crap Ringe - 95.90.230.49
+5Parry if you can (Lumbe) - 12Crap Ringe - 95.90.230.49
+4Fatroll - 1Ohne Schild - 95.90.230.49
+4Fatroll - 5Zufällig gewürfelte Waffe - 95.90.230.49
+4Fatroll - 12Crap Ringe - 95.90.230.49
+11Ohne Alles - 6Waffe linke Hand - 95.90.230.49
+1Ohne Schild - 6Waffe linke Hand - 95.90.230.49
+18Zufällig gewürfelte Waffe - 5Zufällig gewürfelte Waffe - 95.90.230.49
+18Zufällig gewürfelte Waffe - 5Zufällig gewürfelte Waffe - 95.90.230.49
+16Normal - 2Ohne Flask - 95.90.230.49
+11Ohne Alles - 6Waffe linke Hand - 95.90.230.49
+8Ohne Backstab, Riposte - 10Ohne Ringe - 95.90.230.49
+11Ohne Alles - 5Zufällig gewürfelte Waffe - 95.90.230.49
+12Crap Ringe - 6Waffe linke Hand - 95.90.230.49
+6Waffe linke Hand - 2Ohne Flask - 95.90.230.49
+11Ohne Alles - 3Ohne Rüstung - 95.90.230.49
+2Ohne Flask - 11Ohne Alles - 95.90.230.49
+13Normal - 10Ohne Ringe - 95.90.230.49
+2Ohne Flask - 12Crap Ringe - 95.90.230.49
+6Waffe linke Hand - 8Lumbe - 95.90.230.49
+20Zufällig gewürfelte Waffe - 6Waffe linke Hand - 95.90.230.49
+20Zufällig gewürfelte Waffe - 4Fatroll - 95.90.230.49
+3Ohne Rüstung - 6Waffe linke Hand - 95.90.230.49
+6Waffe linke Hand - 10Ohne Ringe - 95.90.230.49
+19Zufällig gewürfelte Waffe - 3Ohne Rüstung - 95.90.230.49
+18Zufällig gewürfelte Waffe - 11Ohne Alles - 95.90.230.49
+9 - Crap Waffe - 5 - Zufällige Waffe - 95.90.230.49 - 2018-01-29 09:59:11
+9 - Crap Waffe - 1 - Ohne Schild - 95.90.230.49 - 2018-01-29 10:00:33
+9 - Crap Waffe - 6 - Waffe linke Hand - 95.90.230.49 - 2018-01-29 10:01:42
+19 - Zufällige Waffe - 4 - Fatroll - 95.90.230.49 - 2018-01-29 10:02:26
+6 - Waffe linke Hand - 1 - Ohne Schild - 95.90.230.49 - 2018-01-29 10:02:49
+15 - Normal - 8 - Lumbe - 95.90.230.49 - 2018-01-29 10:04:51
+17 - Zufällige Waffe - 10 - Ohne Ringe - 95.90.230.49 - 2018-01-29 10:05:12
+5 - Parry/Lumbe - 1 - Ohne Schild - 95.90.230.49 - 2018-01-29 10:07:09
+7 - Nur RT - 7 - Nur RT - 95.90.230.49 - 2018-01-29 10:15:47
+5 - Parry/Lumbe - 7 - Nur RT - 95.90.230.49 - 2018-01-29 10:15:47
+16 - Normal - 1 - Ohne Schild - 95.90.230.49 - 2018-01-29 10:15:48
+6 - Waffe linke Hand - 3 - Ohne Rüstung - 95.90.230.49 - 2018-01-29 11:05:44
+10 - Ohne Ringe - 9 - Normal - 95.90.230.49 - 2018-01-29 11:05:45
+8 - Ohne Backstab, Riposte - 1 - Ohne Schild - 95.90.230.49 - 2018-01-29 11:05:45
+2 - Ohne Flask - 9 - Normal - 95.90.230.49 - 2018-01-29 11:05:45
+9 - Crap Waffe - 9 - Normal - 95.90.230.49 - 2018-01-29 11:05:46
+19 - Zufällige Waffe - 9 - Normal - 95.90.230.49 - 2018-01-29 11:05:48
+15 - Normal - 10 - Ohne Ringe - 95.90.230.49 - 2018-01-29 11:18:19
+10 - Ohne Ringe - 11 - Ohne Alles - 95.90.230.49 - 2018-01-29 15:17:20
+10 - Ohne Ringe - 4 - Fatroll - 95.90.230.49 - 2018-01-29 15:34:50
+14 - Normal - 4 - Fatroll - 95.90.230.49 - 2018-01-29 15:44:16
+16 - Normal - 2 - Ohne Flask - 95.90.230.49 - 2018-01-29 15:44:18
+11 - Ohne Alles - 11 - Ohne Alles - 95.90.230.49 - 2018-01-29 15:44:19
+7 - Nur RT - 12 - Crap Ringe - 91.66.249.29 - 2018-01-29 16:04:03
+1 - Ohne Schild - 4 - Fatroll - 95.90.230.49 - 2018-01-29 16:29:43
+7 - Nur RT - 1 - Ohne Schild - 2a02:810b:c540:5fb4:80bf:9a0b:2cd3:1c96 - 2018-01-29 16:30:41
+15 - Normal - 12 - Crap Ringe - 91.66.249.29 - 2018-01-29 16:31:47
+4 - Fatroll - 2 - Ohne Flask - 95.90.230.49 - 2018-01-29 16:34:09
+17 - Zufällige Waffe - 5 - Zufällige Waffe - 95.90.230.49 - 2018-01-29 16:34:11
+11 - Ohne Alles - 7 - Nur RT - 95.90.230.49 - 2018-01-29 16:34:31
+1 - Ohne Schild - 5 - Zufällige Waffe - 95.90.230.49 - 2018-01-29 16:34:31
+8 - Ohne Backstab, Riposte - 4 - Fatroll - 95.90.230.49 - 2018-01-29 16:34:32
+13 - Normal - 10 - Ohne Ringe - 95.90.230.49 - 2018-01-29 16:34:32
+13 - Normal - 1 - Ohne Schild - 95.90.230.49 - 2018-01-29 16:34:32
+8 - Ohne Backstab, Riposte - 11 - Ohne Alles - 95.90.230.49 - 2018-01-29 16:35:30
+4 - Fatroll - 7 - Nur RT - 95.90.230.49 - 2018-01-29 16:35:32
+7 - Nur RT - 1 - Ohne Schild - 95.90.230.49 - 2018-01-29 16:35:33
+2 - Ohne Flask - 12 - Crap Ringe - 95.90.230.49 - 2018-01-29 16:35:33
+18 - Zufällige Waffe - 11 - Ohne Alles - 95.90.230.49 - 2018-01-29 16:35:33
+12 - Crap Ringe - 11 - Ohne Alles - 95.90.230.49 - 2018-01-29 16:35:33
+9 - Crap Waffe - 5 - Zufällige Waffe - 95.90.230.49 - 2018-01-29 16:35:34
+12 - Crap Ringe - 11 - Ohne Alles - 95.90.230.49 - 2018-01-29 16:35:34
+14 - Normal - 2 - Ohne Flask - 95.90.230.49 - 2018-01-29 16:35:35
+18 - Zufällige Waffe - 8 - Lumbe - 95.90.230.49 - 2018-01-29 16:35:56
+12 - Crap Ringe - 9 - Normal - 95.90.230.49 - 2018-01-29 16:36:44
+8 - Ohne Backstab, Riposte - 1 - Ohne Schild - 95.90.230.49 - 2018-01-29 16:37:17
+3 - Ohne Rüstung - 10 - Ohne Ringe - 95.90.230.49 - 2018-01-29 16:37:18
+12 - Crap Ringe - 4 - Fatroll - 95.90.230.49 - 2018-01-29 16:37:18
+5 - Parry/Lumbe - 10 - Ohne Ringe - 95.90.230.49 - 2018-01-29 16:37:18
+5 - Parry/Lumbe - 5 - Zufällige Waffe - 95.90.230.49 - 2018-01-29 16:37:19
+10 - Ohne Ringe - 7 - Nur RT - 95.90.230.49 - 2018-01-29 16:37:19
+16 - Normal - 8 - Lumbe - 95.90.230.49 - 2018-01-29 16:37:20
+2 - Ohne Flask - 4 - Fatroll - 95.90.230.49 - 2018-01-29 16:37:50
+20 - Zufällige Waffe - 5 - Zufällige Waffe - 95.90.230.49 - 2018-01-29 16:37:54
+15 - Normal - 6 - Waffe linke Hand - 95.90.230.49 - 2018-01-29 16:40:28
+14 - Normal - 5 - Zufällige Waffe - 91.66.249.29 - 2018-01-29 16:48:09
+14 - Normal - 9 - Normal - 91.66.249.29 - 2018-01-29 16:48:26
+16 - Normal - 11 - Ohne Alles - 91.66.249.29 - 2018-01-29 16:48:27
+5 - Parry/Lumbe - 7 - Nur RT - 91.66.249.29 - 2018-01-29 16:48:35
+15 - Normal - 5 - Zufällige Waffe - 95.90.230.49 - 2018-01-29 16:56:02
+12 - Crap Ringe - 1 - Ohne Schild - 95.90.230.49 - 2018-01-29 17:05:35
+3 - Ohne Rüstung - 6 - Waffe linke Hand - 95.90.230.49 - 2018-01-29 17:05:36
+19 - Zufällige Waffe - 7 - Nur RT - 95.90.230.49 - 2018-01-29 17:05:37
+3 - Ohne Rüstung - 7 - Nur RT - 95.90.230.49 - 2018-01-29 17:17:02
+16 - Normal - 6 - Waffe linke Hand - 95.90.230.49 - 2018-01-29 17:17:03
+15 - Normal - 7 - Nur RT - 95.90.230.49 - 2018-01-29 17:17:04
+10 - Ohne Ringe - 10 - Ohne Ringe - 95.90.230.49 - 2018-01-29 17:17:05
+8 - Ohne Backstab, Riposte - 2 - Ohne Flask - 95.90.230.49 - 2018-01-29 17:17:06
+16 - Normal - 12 - Crap Ringe - 95.90.230.49 - 2018-01-29 17:17:08
+18 - Zufällige Waffe - 11 - Ohne Alles - 95.90.230.49 - 2018-01-29 17:17:11
+6 - Waffe linke Hand - 5 - Zufällige Waffe - 95.90.230.49 - 2018-01-29 17:47:00
+19 - Zufällige Waffe - 3 - Ohne Rüstung - 95.90.230.49 - 2018-01-29 17:47:13
+18 - Zufällige Waffe - 1 - Ohne Schild - 95.90.230.49 - 2018-01-29 17:47:50
+1 - Ohne Schild - 5 - Zufällige Waffe - 95.90.230.49 - 2018-01-29 17:48:21
+9 - Crap Waffe - 12 - Crap Ringe - 95.90.230.49 - 2018-01-29 17:49:21
+4 - Fatroll - 10 - Ohne Ringe - 95.90.230.49 - 2018-01-29 17:49:56
+12 - Crap Ringe - 3 - Ohne Rüstung - 95.90.230.49 - 2018-01-29 17:49:59
+4 - Fatroll - 6 - Waffe linke Hand - 95.90.230.49 - 2018-01-29 17:49:59
+5 - Parry/Lumbe - 1 - Ohne Schild - 95.90.230.49 - 2018-01-29 17:58:23
+7 - Nur RT - 12 - Crap Ringe - 95.90.230.49 - 2018-01-29 18:04:56
+6 - Waffe linke Hand - 1 - Ohne Schild - 95.90.230.49 - 2018-01-29 18:04:58
+3 - Ohne Rüstung - 7 - Nur RT - 95.90.230.49 - 2018-01-29 18:06:51
+1 - Ohne Schild - 6 - Waffe linke Hand - 95.90.230.49 - 2018-01-29 18:07:51
+1 - Ohne Schild - 6 - Waffe linke Hand - 95.90.230.49 - 2018-01-29 18:07:51
+16 - Normal - 11 - Ohne Alles - 95.90.230.49 - 2018-01-29 18:07:52
+10 - Ohne Ringe - 8 - Lumbe - 95.90.230.49 - 2018-01-29 18:07:52
+1 - Ohne Schild - 2 - Ohne Flask - 95.90.230.49 - 2018-01-29 18:07:52
+4 - Fatroll - 7 - Nur RT - 95.90.230.49 - 2018-01-29 18:07:53
+14 - Normal - 2 - Ohne Flask - 95.90.230.49 - 2018-01-29 18:08:56
+7 - Nur RT - 11 - Ohne Alles - 95.90.230.49 - 2018-01-29 18:08:57
+4 - Fatroll - 2 - Ohne Flask - 95.90.230.49 - 2018-01-29 18:08:59
+8 - Ohne Backstab, Riposte - 2 - Ohne Flask - 95.90.230.49 - 2018-01-29 18:10:32
+19 - Zufällige Waffe - 12 - Crap Ringe - 95.90.230.49 - 2018-01-29 18:10:50
+10 - Ohne Ringe - 2 - Ohne Flask - 95.90.230.49 - 2018-01-29 18:10:52
+16 - Normal - 2 - Ohne Flask - 95.90.230.49 - 2018-01-29 18:10:52
+16 - Normal - 7 - Nur RT - 95.90.230.49 - 2018-01-29 18:11:49
+15 - Normal - 4 - Fatroll - 95.90.230.49 - 2018-01-29 18:11:51
+2 - Ohne Flask - 11 - Ohne Alles - 95.90.230.49 - 2018-01-29 18:11:51
+2 - Ohne Flask - 7 - Nur RT - 95.90.230.49 - 2018-01-29 18:11:51
+9 - Crap Waffe - 12 - Crap Ringe - 95.90.230.49 - 2018-01-29 18:11:51
+1 - Ohne Schild - 2 - Ohne Flask - 95.90.230.49 - 2018-01-29 18:11:51
+7 - Nur RT - 2 - Ohne Flask - 95.90.230.49 - 2018-01-29 18:11:54
+3 - Ohne Rüstung - 2 - Ohne Flask - 95.90.230.49 - 2018-01-29 18:11:54
+18 - Zufällige Waffe - 2 - Ohne Flask - 95.90.230.49 - 2018-01-29 18:11:54
+17 - Zufällige Waffe - 8 - Lumbe - 95.90.230.49 - 2018-01-29 18:11:54
+15 - Normal - 6 - Waffe linke Hand - 95.90.230.49 - 2018-01-29 18:11:54
+5 - Parry/Lumbe - 9 - Normal - 95.90.230.49 - 2018-01-29 18:12:15
+3 - Ohne Rüstung - 5 - Zufällige Waffe - 95.90.230.49 - 2018-01-29 18:12:16
+9 - Crap Waffe - 1 - Ohne Schild - 95.90.230.49 - 2018-01-29 18:12:16
+4 - Fatroll - 6 - Waffe linke Hand - 95.90.230.49 - 2018-01-29 18:12:16
+1 - Ohne Schild - 3 - Ohne Rüstung - 95.90.230.49 - 2018-01-29 18:12:16
+3 - Ohne Rüstung - 7 - Nur RT - 95.90.230.49 - 2018-01-29 18:12:17
+4 - Fatroll - 2 - Ohne Flask - 95.90.230.49 - 2018-01-29 18:12:17
+2 - Ohne Flask - 3 - Ohne Rüstung - 95.90.230.49 - 2018-01-29 18:12:18
+1 - Ohne Schild - 10 - Ohne Ringe - 95.90.230.49 - 2018-01-29 18:12:19
+6 - Waffe linke Hand - 8 - Lumbe - 95.90.230.49 - 2018-01-29 18:12:20
+17 - Zufällige Waffe - 8 - Lumbe - 95.90.230.49 - 2018-01-29 18:13:29
+15 - Normal - 3 - Ohne Rüstung - 95.90.230.49 - 2018-01-29 18:13:29
+20 - Zufällige Waffe - 6 - Waffe linke Hand - 95.90.230.49 - 2018-01-29 18:13:29
+7 - Nur RT - 9 - Normal - 95.90.230.49 - 2018-01-29 18:13:30
+11 - Ohne Alles - 1 - Ohne Schild - 95.90.230.49 - 2018-01-29 18:14:37
+6 - Waffe linke Hand - 12 - Crap Ringe - 95.90.230.49 - 2018-01-29 18:14:39
+19 - Zufällige Waffe - 11 - Ohne Alles - 95.90.230.49 - 2018-01-29 18:14:42
+15 - Normal - 8 - Lumbe - 95.90.230.49 - 2018-01-29 18:14:43
+1 - Ohne Schild - 9 - Normal - 95.90.230.49 - 2018-01-29 18:16:13
+9 - Crap Waffe - 4 - Fatroll - 95.90.230.49 - 2018-01-29 18:16:31
+19 - Zufällige Waffe - 5 - Zufällige Waffe - 95.90.230.49 - 2018-01-29 18:16:33
+4 - Fatroll - 3 - Ohne Rüstung - 95.90.230.49 - 2018-01-29 18:19:24
+11 - Ohne Alles - 9 - Normal - 95.90.230.49 - 2018-01-29 18:19:27
+17 - Zufällige Waffe - 10 - Ohne Ringe - 95.90.230.49 - 2018-01-29 18:19:28
+4 - Fatroll - 7 - Nur RT - 128.30.52.72 - 2018-01-29 18:19:42
+1 - Ohne Schild - 10 - Ohne Ringe - 128.30.52.72 - 2018-01-29 18:19:43
+8 - Ohne Backstab, Riposte - 6 - Waffe linke Hand - 95.90.230.49 - 2018-01-29 18:21:31
+15 - Normal - 6 - Waffe linke Hand - 95.90.230.49 - 2018-01-29 18:21:38
+15 - Normal - 10 - Ohne Ringe - 95.90.230.49 - 2018-01-29 18:21:39
+4 - Fatroll - 4 - Fatroll - 95.90.230.49 - 2018-01-29 18:21:39
+10 - Ohne Ringe - 6 - Waffe linke Hand - 95.90.230.49 - 2018-01-29 18:21:40
+16 - Normal - 8 - Lumbe - 95.90.230.49 - 2018-01-29 18:21:41
+15 - Normal - 3 - Ohne Rüstung - 95.90.230.49 - 2018-01-29 18:21:41
+1 - Ohne Schild - 6 - Waffe linke Hand - 95.90.230.49 - 2018-01-29 18:21:42
+4 - Fatroll - 8 - Lumbe - 95.90.230.49 - 2018-01-29 18:21:42
+9 - Crap Waffe - 8 - Lumbe - 95.90.230.49 - 2018-01-29 18:21:43
+11 - Ohne Alles - 1 - Ohne Schild - 95.90.230.49 - 2018-01-29 18:21:43
+20 - Zufällige Waffe - 9 - Normal - 95.90.230.49 - 2018-01-29 18:21:44
+8 - Ohne Backstab, Riposte - 1 - Ohne Schild - 95.90.230.49 - 2018-01-29 18:39:57
+4 - Fatroll - 2 - Ohne Flask - 95.90.230.49 - 2018-01-29 18:39:59
+5 - Parry/Lumbe - 6 - Waffe linke Hand - 95.90.230.49 - 2018-01-29 18:40:01
+4 - Fatroll - 6 - Waffe linke Hand - 95.90.230.49 - 2018-01-29 18:40:01
+3 - Ohne Rüstung - 5 - Zufällige Waffe - 95.90.230.49 - 2018-01-29 18:40:02
+2 - Ohne Flask - 2 - Ohne Flask - 95.90.230.49 - 2018-01-29 18:40:02
+20 - Zufällige Waffe - 1 - Ohne Schild - 95.90.230.49 - 2018-01-29 18:40:03
+15 - Normal - 2 - Ohne Flask - 95.90.230.49 - 2018-01-29 18:50:55
+12 - Crap Ringe - 10 - Ohne Ringe - 95.90.230.49 - 2018-01-29 18:53:23
+9 - Crap Waffe - 3 - Ohne Rüstung - 95.90.230.49 - 2018-01-29 18:53:27
+7 - Nur RT - 1 - Ohne Schild - 95.90.230.49 - 2018-01-29 18:53:30
+11 - Ohne Alles - 3 - Ohne Rüstung - 91.66.249.29 - 2018-01-29 18:53:55
+1 - Ohne Schild - 8 - Lumbe - 95.90.230.49 - 2018-01-29 18:57:54
+6 - Waffe linke Hand - 11 - Ohne Alles - 95.90.230.49 - 2018-01-29 18:57:58
+9 - Crap Waffe - 1 - Ohne Schild - 95.90.230.49 - 2018-01-29 18:58:00
+18 - Zufällige Waffe - 1 - Ohne Schild - 95.90.230.49 - 2018-01-29 19:18:07
+19 - Zufällige Waffe - 1 - Ohne Schild - 95.90.230.49 - 2018-01-29 19:18:09
+2 - Ohne Flask - 9 - Normal - 95.90.230.49 - 2018-01-29 20:11:39
+18 - Zufällige Waffe - 8 - Lumbe - 95.90.230.49 - 2018-01-29 20:13:23
+13 - Normal - 3 - Ohne Rüstung - 95.90.230.49 - 2018-01-29 20:14:01
+7 - Nur RT - 5 - Zufällige Waffe - 95.90.230.49 - 2018-01-29 20:14:33
+20 - Zufällige Waffe - 11 - Ohne Alles - 95.90.230.49 - 2018-01-29 20:32:11
+1 - Ohne Schild - 3 - Ohne Rüstung - 95.90.230.49 - 2018-01-29 20:32:13
+17 - Zufällige Waffe - 3 - Ohne Rüstung - 95.90.230.49 - 2018-01-29 20:32:14
+17 - Zufällige Waffe - 10 - Ohne Ringe - 95.90.230.49 - 2018-01-29 20:32:14
+15 - Normal - 1 - Ohne Schild - 95.90.230.49 - 2018-01-29 20:33:39
+14 - Normal - 11 - Ohne Alles - 95.90.230.49 - 2018-01-29 20:34:52
+1 - Ohne Schild - 1 - Ohne Schild - 95.90.230.49 - 2018-01-29 20:34:53
+1 - Ohne Schild - 3 - Ohne Rüstung - 95.90.230.49 - 2018-01-29 20:34:53
+18 - Zufällige Waffe - 11 - Ohne Alles - 95.90.230.49 - 2018-01-29 20:37:15
+11 - Ohne Alles - 9 - Normal - 95.90.230.49 - 2018-01-29 20:46:01
+13 - Normal - 4 - Fatroll - 95.90.230.49 - 2018-01-29 20:46:10
+16 - Normal - 12 - Crap Ringe - 95.90.230.49 - 2018-01-29 20:46:11
+4 - Fatroll - 11 - Ohne Alles - 95.90.230.49 - 2018-01-29 20:46:13
+15 - Normal - 7 - Nur RT - 95.90.230.49 - 2018-01-29 21:02:13
+13 - Normal - 7 - Nur RT - 95.90.230.49 - 2018-01-29 21:11:15
