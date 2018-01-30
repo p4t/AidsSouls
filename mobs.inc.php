@@ -2,20 +2,19 @@
   <tbody>
     <tr>
       <th scope="col">ID</th>
-      <th scope="col">weaponName</th>
+      <th scope="col">mobsAidsName</th>
     </tr>
     <tr>
 <?php
 
     
-$sql = 'SELECT * FROM weapons';
+$sql = 'SELECT * FROM mobs';
 $stmt = $pdo->prepare($sql);
 $stmt->execute();
 $countRows = $stmt->rowCount();
       
 while ($row = $stmt->fetch()) { 
   // echo  $row[0] . " | " . $row[1] .  "<br/>";
-    
   echo '<tr>';
   
   echo '<td>';
@@ -23,8 +22,8 @@ while ($row = $stmt->fetch()) {
   echo '</td>';
   
   echo '<td>';
-  echo '<a href="edit.php?mode=weapons&ID='.$row["ID"].'">';
-  echo $row["weaponName"];
+  echo '<a href="edit.php?mode=mobs&ID='.$row["ID"].'">';
+  echo $row["name"];
   echo '</a>';
   echo '</td>';
 

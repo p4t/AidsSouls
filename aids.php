@@ -5,15 +5,14 @@ const VERSION = "";
 const IP      = "";
 
 // Set up DB and connect
-/*
 $host     = "127.0.0.1";
 $db       = "aids";
 $user     = "aids";
 $pass     = "kUk3t1%5";
-$charset  = "utf8mb4";
+$charset  = "utf8";
 
 $dsn = "mysql:host=$host;dbname=$db;charset=$charset";
-*/
+
 
 /*
 /*
@@ -24,7 +23,7 @@ $opt = [
 ];
 */
 
-// $pdo = new PDO($dsn, $user, $pass);
+$pdo = new PDO($dsn, $user, $pass);
 
 //$numberOfWeapons
 //mysql for mobs etc cms
@@ -121,13 +120,18 @@ function getRealIpAddr()
  * Random Weapons
  */
 
-function randomWeapon ($weaponArray)
+function randomWeapon ($pdo)
 {
+  
   unset ($weaponRNG);
-  $weaponRNG   = mt_rand (0, 19);
-  // $weaponRNG   = 19; // DEBUG
-  // return $weaponDice  = $weaponRNG + 1;
-  echo "&nbsp;" . "(" . $weaponArray[$weaponRNG] . ")";
+  $weaponRNG   = mt_rand (1, 20);
+  // $weaponRNG   = 1; // DEBUG  
+  
+  $stmt = $pdo->prepare('SELECT weaponName FROM weapons WHERE ID = '.$weaponRNG.' ');
+  $stmt->execute();
+  $row = $stmt->fetch(PDO::FETCH_ASSOC);
+  
+  echo "&nbsp;" . "(" . $row["weaponName"] . ")";
 }
 	
 
@@ -184,6 +188,37 @@ function saveRolledAids () {
 }
 
 
+function displaySQLContent ($pdo, $table) {
+    $sql = 'SELECT * FROM '.$table.'';
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute();
+    $countRows = $stmt->rowCount();
+
+    echo '<ul class="aidsListing">';
+
+    while ($row = $stmt->fetch()) { 
+      // echo  $row[0] . " | " . $row[1] .  "<br/>";
+
+      echo '<li>';
+        
+      echo $row[0];
+
+      echo ': ';
+      
+      echo '<a href="edit.php?mode='.$table.'&ID='.$row[0].'" target="_blank" rel="noopener noreferrer">';
+      echo $row[1];
+      echo '</a>';
+      
+      echo '</li>';
+
+
+
+
+    }
+    echo "<ul>";
+}
+
+
 /*
 function query ($rowID, $rowName, $table) {
   $stmt = $pdo->query('SELECT '.$rowID.', '.$rowName.' FROM '.$table.'');
@@ -197,56 +232,19 @@ function query ($rowID, $rowName, $table) {
 /*******************
 * WEAPONS          *
 *******************/
-$weaponArray = array("Gyrm Axe",
-                     "Flamberge",
-                     "Bluemoon",
-                     "Mastadon Greatsword",
-                     "Lucerne",
-                     "Sentier's Spear",
-                     "Battle Axe",
-                     "Craftman's Hammer",
-                     "Uschi",
-                     "Large Club",
-                     "Pat's Spear",
-                     "Old Knight halberd",
-                     "Murokumo",
-                     "Dark Scythe",
-                     "Old Knight Pike",
-                     "Royal Greatsword",
-                     "Malformed Skull",
-                     "Claws",
-                     "Great Scythe",
-                     "Black Knight Halberd"
-                    );
 
-
+  
+  
 /*******************
 * MOBS             *
 *******************/
-$mobsRNG  = mt_rand (0, 19);
-//$mobsRNG  = 19; // DEBUG to force display weapon
-$mobsDice = $mobsRNG + 1;
-$mobsAids = array("Ohne Schild",
-                  "Ohne Flask",
-                  "Ohne Rüstung",
-                  "Fatroll",
-                  "Parry/Lumbe",
-                  "Waffe linke Hand",
-                  "Nur RT",
-                  "Ohne Backstab, Riposte",
-                  "Crap Waffe",
-                  "Ohne Ringe",
-                  "Ohne Alles",
-                  "Crap Ringe",
-                  "Normal",
-                  "Normal",
-                  "Normal",
-                  "Normal",
-                  "Zufällige Waffe",
-                  "Zufällige Waffe",
-                  "Zufällige Waffe",
-                  "Zufällige Waffe"				  
-                 );
+$mobsRNG  = mt_rand (1, 20);
+// $mobsRNG  = 19; // DEBUG to force display weapon
+$mobsDice = $mobsRNG;
+  
+  $stmt = $pdo->prepare('SELECT name FROM mobs WHERE ID = '.$mobsRNG.' ');
+  $stmt->execute();
+  $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
 ?>
 
@@ -255,9 +253,10 @@ $mobsAids = array("Ohne Schild",
     <?= displayDice($mobsDice); ?>
   </div>
   <div class="flex-item-aids">
+    <?= $row["name"]; // display rolled Aids (Handicap) ?>
+    
     <?php
-      aids($mobsAids[$mobsRNG]); // display rolled Aids (Handicap)
-      if ($mobsRNG > 15) randomWeapon($weaponArray); // display random weapon if corresponding Aids was rolled
+      if ($mobsRNG > 16) randomWeapon($pdo); // display random weapon if corresponding Aids was rolled
     ?>
   </div>
 </div>
@@ -269,22 +268,14 @@ $mobsAids = array("Ohne Schild",
 /*******************
 * BOSS             *
 *******************/
-$bossRNG  = mt_rand (0, 11);
-//$bossRNG  = 4; // DEBUG to force display weapon
-$bossDice = $bossRNG + 1;
-$bossAids = array("Ohne Schild",
-                  "Ohne Flask",
-                  "Ohne Rüstung",
-                  "Fatroll",
-                  "Zufällige Waffe",
-                  "Waffe linke Hand",
-                  "Nur RT",
-                  "Lumbe",
-                  "Normal",
-                  "Ohne Ringe",
-                  "Ohne Alles",
-                  "Crap Ringe"		  
-                 );
+$bossRNG  = mt_rand (1, 12);
+// $bossRNG  = 5; // DEBUG to force display weapon
+$bossDice = $bossRNG;
+  
+  $stmt = $pdo->prepare('SELECT name FROM boss WHERE ID = '.$bossRNG.' ');
+  $stmt->execute();
+  $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
 ?>
 
 
@@ -293,9 +284,10 @@ $bossAids = array("Ohne Schild",
     <?= displayDice($bossDice); ?>
   </div>
   <div class="flex-item-aids">
+    <?= $row["name"]; // display rolled Aids (Handicap) ?>
+
     <?php
-      aids($bossAids[$bossRNG]); // display rolled Aids (Handicap)
-      if ($bossRNG == 4) randomWeapon($weaponArray); // display random weapon if corresponding Aids was rolled
+      if ($bossRNG == 5) randomWeapon($pdo); // display random weapon if corresponding Aids was rolled
     ?>
   </div>
 </div>
@@ -312,10 +304,14 @@ $bossAids = array("Ohne Schild",
 
 <hr>
 
+<?php
+  
+?>
+
 <div id="flex-container" class="aidsListing">
-  <div class="flex-item"><h3>Mobs:</h3><?= displayAidsArray($mobsAids); ?></div>
-  <div class="flex-item"><h3>Boss:</h3><?= displayAidsArray($bossAids); ?></div>
-  <div class="flex-item"><h3>Waffen:</h3><?= displayAidsArray($weaponArray); ?></div>
+  <div class="flex-item"><h3>Mobs:</h3><?= displaySQLContent($pdo, "mobs") ?></div>
+  <div class="flex-item"><h3>Boss:</h3><?= displaySQLContent($pdo, "boss") ?></div>
+  <div class="flex-item"><h3>Waffen:</h3><?= displaySQLContent($pdo, "weapons"); ?></div>
 </div>
 
 <hr>
@@ -341,11 +337,7 @@ $current = file_get_contents($file);
 // Append a new person to the file
 $current .= $mobsDice
           . " - "
-          . $mobsAids[$mobsRNG]
-          . " - "
           . $bossDice
-          . " - "
-          . $bossAids[$bossRNG]
           . " - "
           . getRealIpAddr()
           . " - "
@@ -357,91 +349,106 @@ $current .= $mobsDice
 file_put_contents($file, $current);
 ?>
   
-<div class="killedBosses">
+  <div class="killedBosses">
   <table>
     <thead>
       <tr>
         <th>Kaschber</th>
         <th>Joker</th>
         <th>Ausgegeben</th>
-        <th>Kills</th>
+        <th>Kills <span class="edit">[Edit]</span></th>
       </tr>
     </thead>
     <tbody>
+      
+      
+      
+<?php
+
+function replaceNameWithEmoji ($emoji) {
+  if (($emoji == "Biber")) $emoji = "🐻";
+  elseif (($emoji == "Katz")) $emoji = "🐱";
+  elseif (($emoji == "Pat")) $emoji = "💩";
+  return $emoji;
+}
+
+
+$sql = 'SELECT * FROM kills';
+$stmt = $pdo->prepare($sql);
+$stmt->execute();
+$countRows = $stmt->rowCount();
+      
+      
+      ////////////////////////// COUNT NUMBER OF ENTRY IN TEXTAREA reg MYSQL "bossNames" FOR KILLS/////////////////////////
+      
+while ($row = $stmt->fetch()) { 
+    
+  echo '<tr>';
+  
+  echo '<td class="emoji">';
+  echo '<a href="edit.php?mode=kills&ID='.$row["ID"].'" target="_blank" rel="noopener noreferrer">';
+  echo replaceNameWithEmoji($row["name"]);
+  echo '</a';
+  echo '</td>';
+  
+  echo '<td>';
+  
+  echo $row["joker"];
+  echo '</td>';
+  
+  echo '<td>';
+  echo $row["spent"];
+  echo '</td>';
+  
+  echo '<td>';
+  echo nl2br($row["bossNames"]);
+  echo '</td>';
+  
+  echo '</tr>';
+  
+}
+?>
+      
+      
+      
+      
+      
+      <!--
       <tr>
         <td class="emoji">
           🐻
         </td>
-        <td>IIII</td>
-        <td>IIII</td>
-        <td>
-          <ul class="killedBosses">
-            <li>The Last Giant</li>
-            <li>Old Dragonslayer</li>
-            <li>Flexible Sentry</li>
-            <li>Belfry Gargoyles</li>
-          </ul>
-        </td>
+        <td>5</td>
+        <td>5</td>
+        <td>Killed Boss</td>
       </tr>
       <tr>
         <td class="emoji">
           🐱
         </td>
-        <td><s>IIII</s> II</td>
-        <td>IIII</td>
-        <td>
-          <ul class="killedBosses">
-            <li>The Lost Sinner</li>
-            <li>Skeleton Lords</li>
-            <li>Covetous Demon</li>
-            <li>Royal Rat Authority</li>
-            <li>Dragonriderz</li>
-            <li>Demon of Song</li>
-            <li>Velstadt, the Royal Aegis</li>
-          </ul>
-        </td>
+        <td>5</td>
+        <td>5</td>
+        <td>KILLED BOSS</td>
       </tr>
       <tr>
         <td class="emoji">
           💩
         </td>
-        <td><s>IIII</s> <s>IIII</s></td>
-        <td><s>IIII</s> II</td>
-        <td>
-          <ul class="killedBosses">
-            <li>Dragonrider</li>
-            <li>The Pursuer</li>
-            <li>Ruin Sentinels (wegen Biber)</li>
-            <li>Scorpioness Najka</li>
-            <li>Mytha the Baneful Queen</li>
-            <li>Smelter Demon</li>
-            <li>Old Iron King</li>
-            <li>Prowling Magus &amp; Congregation</li>
-            <li>The Duke's Dear Freja</li>
-            <li>Looking Glass Knight</li>
-          </ul>
-        </td>
+        <td>5</td>
+        <td>5</td>
+        <td>KILLED BOSS</td>
       </tr>
-      <tr>
-        <td class="emoji">
-          🔥
-        </td>
-        <td><s>IIII</s></td>
-        <td>IIII</td>
-        <td>
-          <ul class="killedBosses">
-            <li>Rotten</li>
-            <li>+1</li>
-            <li>+2</li>
-            <li>+3</li>
-            <li>+4</li>
-          </ul>
-        </td>
-      </tr>
+      -->
+
+      
+      
+      
+      
+      
+      
     </tbody>
   </table>
 </div><!-- EOF killedBosses -->
-
 </div><!-- EOF Content -->
 </div><!-- EOF Container -->
 
@@ -469,55 +476,7 @@ $keepWeaponDice = $keepWeaponRNG + 1;
   <div class="flex-item">&nbsp;</div>
 </div>
 
-  
-  
-  
-
-  
 
 
 </body>
 </html>
-
-<?php
-
-
-/*
-
-$stmt = $pdo->query('SELECT weaponID, weaponName FROM weapons');
-while ($row = $stmt->fetch())
-{
-    echo $row['weaponID'] . $row['weaponName'] . "<br>";
-}
-
-
-*/
-
-/////////////////// read in CSV FILE FOR AIDS
-
-
-
-
-
-
-
-
-
-
-/*
-$stmt = $pdo->query('SELECT mobsAidsID, mobsAidsName FROM mobsAids');
-while ($row = $stmt->fetch())
-{
-    echo $row['mobsAidsID'] . $row['mobsAidsName'] . "<br>";
-}
-
-
-$stmt = $pdo->query('SELECT bossAidsID, bossAidsName FROM bossAids');
-while ($row = $stmt->fetch())
-{
-    echo $row['bossAidsID'] . $row['bossAidsName'] . "<br>";
-}
-*/
-
-
-?>
