@@ -9,29 +9,69 @@
 
 
 <style>  
-  /* DEBUG
+  /*
+  *  DEBUG BORDERBORDERBORDER
+  */
+  
+  /*
   * {
     border-style: groove;
     border-color: coral;
     border-width: 1px;
   }
   */
-/* MOBILE */
+
+
   
 </style>	
-
+  
+<script>
+  var time = null
+  function move() {
+    window.location = "edit.php";
+  }
+</script>
 
 </head>
 
 <body>
 
+  <h2>&raquo; <a href="aids.php">AIDS</a> &laquo;</h2>
 
 <?php
+
+/*
+* Sanitize Query
+*/
+function buildQuery( $get_var ) {
+    switch($get_var) {
+      case "weapons":
+        $tbl = 'weapons';
+      break;
+      case "mobs":
+        $tbl = 'mobs';
+      break;
+      case "boss":
+        $tbl = 'boss';
+      break;
+    }
+
+    $sql = "SELECT * FROM $tbl";
+}  
+
+
+function redirect($url, $statusCode) {
+  header('Location: ' . $url, true, $statusCode);
+  die();
+}
+
 // DEBUG
+  /*
 if ( isset($_GET["mode"])) {
   echo "Mode: " . $_GET["mode"] . "<br>";
 }
-
+*/
+  
 // Set up DB and connect
 $host     = "127.0.0.1";
 $db       = "aids";
@@ -52,174 +92,115 @@ $opt = [
 */
 
 $pdo = new PDO($dsn, $user, $pass);
+  
+  
+function pdoUpdateTable ($pdo, $table, $post, $ID) {
+  $sql = "UPDATE ".$table." SET name = :name WHERE ID = :ID";
+  $stmt = $pdo->prepare($sql);                                  
+  $stmt->bindParam(':name', $post, PDO::PARAM_STR);
+  $stmt->bindParam(':ID', $ID, PDO::PARAM_INT);
+  $stmt->execute();
+}
+  
+  
+  
+function displaySQLContentAsTable ($pdo, $table) {
+
+  echo '<div class="flex-item-edit">';
+  echo '<table border="1" cellspacing="1" cellpadding="1">';
+  echo '<tbody>';
+  echo '<tr>';
+  echo '<th scope="col">ID</th>';
+  echo '<th scope="col">Waffe</th>';
+  echo '</tr>';
+  echo '<tr>';
+
+  $sql = 'SELECT * FROM '.$table.'';
+  $stmt = $pdo->prepare($sql);
+  $stmt->execute();
+  $countRows = $stmt->rowCount();
+
+  while ($row = $stmt->fetch()) { 
+
+    echo '<tr>';
+
+    echo '<td>';
+    echo $row[0];
+    echo '</td>';
+
+    echo '<td>';
+    echo '<a href="edit.php?mode='.$table.'&ID='.$row[0].'">';
+    echo $row[1];
+    echo '</a>';
+    echo '</td>';
+
+    echo '</tr>';
+  }
+
+
+  echo '</tr>';
+  echo '</tbody>';
+  echo '</table>';
+  echo '</div>'; 
+}
+
 ?>
 
 
 
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
 <?php
 /*
- * WEAPON EDIT
+ * WEAPON, MOBS, BOSS EDIT
  *
  *
  *
  */
 
-if ( isset($_GET["mode"]) && ($_GET["mode"] == "weapons") ) {
-  if ( isset($_POST["newWeaponName"])) {
-    echo "Update erfolgreich!";
-    echo '<a href="edit.php">Zurück</s>';
-    
-    $sql = "UPDATE weapons SET weaponName = :weaponName WHERE ID = :ID";
-    $stmt = $pdo->prepare($sql);                                  
-    $stmt->bindParam(':weaponName', $_POST['newWeaponName'], PDO::PARAM_STR); 
-    $stmt->bindParam(':ID', $_GET['ID'], PDO::PARAM_INT);
-    $stmt->execute();
-    
-    exit;
-     
-  } else {
+// if ( isset($_GET["mode"]) && ($_GET["mode"] == "weapons") ) {
+  if ( !empty($_GET["mode"]) && ($_GET["mode"] == "weapons" || $_GET["mode"] == "mobs" || $_GET["mode"] == "boss") ) {
+    (STRING)$mode   = $_GET["mode"];
+    (STRING)$table  = $mode;
+    (INT)$ID        = $_GET["ID"];
   
-    $stmt = $pdo->prepare('SELECT weaponName FROM weapons WHERE ID = '.$_GET["ID"].' ');
-    $stmt->execute();
-    $row = $stmt->fetch(PDO::FETCH_ASSOC);
+    if ( isset($_POST["newName"]) ) {
+      (STRING)$post = $_POST["newName"];
+
+      // pdoUpdateTable($pdo, $table, $post, $ID);
+      
+      $sql = "UPDATE ".$table." SET name = :name WHERE ID = :ID";
+      $stmt = $pdo->prepare($sql);                                  
+      $stmt->bindParam(':name', $_POST['newName'], PDO::PARAM_STR);
+      $stmt->bindParam(':ID', $_GET['ID'], PDO::PARAM_INT);
+      $stmt->execute();
+
+      redirect("edit.php", $statusCode = 303);
+
+    } else {
+      
+      function pdoQuery (){
+        //
+      }
+      
+      $stmt = $pdo->prepare('SELECT name FROM '.$table.' WHERE ID = '.$_GET["ID"].' ');
+      $stmt->execute();
+      $row = $stmt->fetch(PDO::FETCH_ASSOC);
   }
 ?>
-
-<form action="edit.php?mode=weapons&ID=<?= $_GET["ID"] ?>" method="post">
-  <label>Waffe:</label>
-  <input type="text" name="newWeaponName" value="<?= $row["weaponName"]; ?>">
-  <input type="submit" value="Submit">
-</form>
-
+<div id="flex-container">
+  <div class="flex-item">&nbsp;</div>
+    <div class="flex-item">
+      <form action="edit.php?mode=<?= $mode ?>&ID=<?= $_GET["ID"] ?>" method="post">
+        <label>Entry:</label>
+        <input type="text" name="newName" value="<?= $row["name"]; ?>">
+        <input type="submit" value="Submit">
+      </form>
+    </div>
+  <div class="flex-item">&nbsp;</div>
+</div>
+  
 <?php
 }
 ?>
-
-
-
-
-  
-<?php
-/*
- * MOBS EDIT
- *
- *
- *
- */
-
-if ( isset($_GET["mode"]) && ($_GET["mode"] == "mobs") ) {
-  if ( isset($_POST["newMobsAidsName"])) {
-    echo "Update erfolgreich!";
-    echo '<a href="edit.php">Zurück</s>';
-    
-    $sql = "UPDATE mobs SET name = :name WHERE ID = :ID";
-    $stmt = $pdo->prepare($sql);                                  
-    $stmt->bindParam(':name', $_POST['newMobsAidsName'], PDO::PARAM_STR); 
-    $stmt->bindParam(':ID', $_GET['ID'], PDO::PARAM_INT);
-    $stmt->execute();
-    
-    exit;
-     
-  } else {
-  
-    $stmt = $pdo->prepare('SELECT name FROM mobs WHERE ID = '.$_GET["ID"].' ');
-    $stmt->execute();
-    $row = $stmt->fetch(PDO::FETCH_ASSOC);
-  }
-?>
-
-<form action="edit.php?mode=mobs&ID=<?= $_GET["ID"] ?>" method="post">
-  <label>Mobs:</label>
-  <input type="text" name="newMobsAidsName" value="<?= $row["name"]; ?>">
-  <input type="submit" value="Submit">
-</form>
-
-<?php
-}
-?>
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-<?php
-/*
- * BOSS EDIT
- *
- *
- *
- */
-
-if ( isset($_GET["mode"]) && ($_GET["mode"] == "boss") ) {
-  if ( isset($_POST["newBossAidsName"])) {
-    echo "Update erfolgreich!";
-    echo '<a href="edit.php">Zurück</s>';
-    
-    $sql = "UPDATE boss SET name = :name WHERE ID = :ID";
-    $stmt = $pdo->prepare($sql);                                  
-    $stmt->bindParam(':name', $_POST['newBossAidsName'], PDO::PARAM_STR); 
-    $stmt->bindParam(':ID', $_GET['ID'], PDO::PARAM_INT);
-    $stmt->execute();
-    
-    exit;
-     
-  } else {
-  
-    $stmt = $pdo->prepare('SELECT name FROM boss WHERE ID = '.$_GET["ID"].' ');
-    $stmt->execute();
-    $row = $stmt->fetch(PDO::FETCH_ASSOC);
-  }
-?>
-
-<form action="edit.php?mode=boss&ID=<?= $_GET["ID"] ?>" method="post">
-  <label>Boss:</label>
-  <input type="text" name="newBossAidsName" value="<?= $row["name"]; ?>">
-  <input type="submit" value="Submit">
-</form>
-
-<?php
-}
-?>
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-
-  
-  
-  
   
   
 <?php
@@ -231,9 +212,15 @@ if ( isset($_GET["mode"]) && ($_GET["mode"] == "boss") ) {
  */
 
 if ( isset($_GET["mode"]) && ($_GET["mode"] == "kills") ) {
+  (STRING)$mode       = $_GET["mode"];
+  (STRING)$table      = $mode;
+  (INT)$ID            = $_GET["ID"];
+  
   if ( isset($_POST["newJoker"])) {
-    echo "Update erfolgreich!";
-    echo '<a href="edit.php">Zurück</s>';
+    (INT)$postJoker   = $_POST["newJoker"];
+    (INT)$postSpent   = $_POST["newSpent"];
+    (STRING)$postName = $_POST["newName"];
+    (STRING)$postBoss = $_POST["newBossNames"];
     
     $sql = "UPDATE kills SET joker = :joker, spent = :spent, bossNames = :bossNames WHERE ID = :ID";
     $stmt = $pdo->prepare($sql);                                  
@@ -243,7 +230,7 @@ if ( isset($_GET["mode"]) && ($_GET["mode"] == "kills") ) {
     $stmt->bindParam(':ID', $_GET['ID'], PDO::PARAM_INT);
     $stmt->execute();
     
-    exit;
+    redirect("edit.php", $statusCode = 303);
      
   } else {
   
@@ -253,18 +240,24 @@ if ( isset($_GET["mode"]) && ($_GET["mode"] == "kills") ) {
   }
 ?>
 
-<form action="edit.php?mode=kills&ID=<?= $_GET["ID"] ?>" method="post">
-  <label>Joker:</label>
-  <input type="text" name="newJoker" value="<?= $row["joker"]; ?>">
-  
-  <label>Ausgegeben:</label>
-  <input type="text" name="newSpent" value="<?= $row["spent"]; ?>">
-  
-  <label>bossNames:</label>
-  <textarea rows="15" name="newBossNames" cols="50"><?= $row["bossNames"]; ?></textarea>
-  
-  <input type="submit" value="Submit">
-</form>
+<div id="flex-container">
+  <div class="flex-item">&nbsp;</div>
+    <div class="flex-item">
+      <form action="edit.php?mode=kills&ID=<?= $_GET["ID"] ?>" method="post">
+        <label>Joker:</label>
+        <input type="text" name="newJoker" value="<?= $row["joker"]; ?>">
+
+        <label>Ausgegeben:</label>
+        <input type="text" name="newSpent" value="<?= $row["spent"]; ?>">
+
+        <label>bossNames:</label>
+        <textarea rows="15" name="newBossNames" cols="50"><?= $row["bossNames"]; ?></textarea>
+
+        <input type="submit" value="Submit">
+      </form>
+    </div>
+  <div class="flex-item">&nbsp;</div>
+</div>
 
 <?php
 }
@@ -281,51 +274,38 @@ if ( isset($_GET["mode"]) && ($_GET["mode"] == "kills") ) {
   
   
 <div id="flex-container-edit" >
+  
+  <?php
+    /*
+   * DONT CHANGE
+   *
+   *
+   *
+   */
+  /* STANDARD ANSICHT WNEN NUR EDIT.PHP
+  * DISPLAY ALL TABLES WHERE TO EDIT FROM
+  */
+  if ( !isset($_GET["mode"]) ) {
 
-  
-  
-  <div class="flex-item-edit">
-  </div>
-  
+    displaySQLContentAsTable ($pdo, "weapons");
+    displaySQLContentAsTable ($pdo, "mobs");
+    displaySQLContentAsTable ($pdo, "boss");
+    include("kills.inc.php");
 
 
-<?php
-  /*
- * DONT CHANGE
- *
- *
- *
- */
-/* STANDARD ANSICHT WNEN NUR EDIT.PHP
-* DISPLAY ALL TABLES WHERE TO EDIT FROM
-*/
-if ( !isset($_GET["mode"]) ) {
+  }
+    // go to top    res db pdo an funktio übergeben name klick anstatt edit
   ?>
-  <div class="flex-item-edit">
-  <?php
-  include("weapons.inc.php");
-  ?>
-  </div>
-  <div class="flex-item-edit">
-  <?php
-  include("mobs.inc.php");
-  ?>
-  </div>
-  <div class="flex-item-edit">
-  <?php
-  include("boss.inc.php");
-  ?>
-  </div>
-  <div class="flex-item-edit">
-  <?php
-  include("kills.inc.php");
-  ?>
-  </div>
-  
-<?php
-}
-  // go to top    res db pdo an funktio übergeben name klick anstatt edit
-?>
+
 </div>
+  
+<div id="flex-container">
+  <div class="flex-item">&nbsp;</div>
+  <div class="flex-item">
+    <a href="#">^ top ^</a>
+  </div>
+  <div class="flex-item">&nbsp;</div>
+</div>
+
 </body>
 </html>
