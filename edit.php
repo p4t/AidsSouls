@@ -1,44 +1,13 @@
-<html>
-<head>
-<meta charset="utf-8">
-<title>\[T]/ Praise the Edit</title>
-
-
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Tangerine">
-<link rel="stylesheet" href="layout.css" type="text/css" media="screen">
-
-
-<style>  
-  /*
-  *  DEBUG BORDERBORDERBORDER
-  */
-  
-  /*
-  * {
-    border-style: groove;
-    border-color: coral;
-    border-width: 1px;
-  }
-  */
-
-
-  
-</style>	
-  
-<script>
-  var time = null
-  function move() {
-    window.location = "edit.php";
-  }
-</script>
-
-</head>
-
-<body>
-
-  <h2>&raquo; <a href="aids.php">AIDS</a> &laquo;</h2>
-
 <?php
+
+require_once("config.db.php");
+
+
+
+
+ 
+  //////////////////////////// FELD FÜR IDEEN AUF SEITE
+  ////////////////// NED ROLLE NED RENNE KEIN KREIS NUR LANGSAM LAUFE
 
 /*
 * Sanitize Query
@@ -71,27 +40,7 @@ if ( isset($_GET["mode"])) {
   echo "Mode: " . $_GET["mode"] . "<br>";
 }
 */
-  
-// Set up DB and connect
-$host     = "127.0.0.1";
-$db       = "aids";
-$user     = "aids";
-$pass     = "kUk3t1%5";
-$charset  = "utf8";
-
-$dsn = "mysql:host=$host;dbname=$db;charset=$charset";
-
-
-/*
-/*
-$opt = [
-    PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
-    PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
-    PDO::ATTR_EMULATE_PREPARES   => false,
-];
-*/
-
-$pdo = new PDO($dsn, $user, $pass);
+ 
   
   
 function pdoUpdateTable ($pdo, $table, $post, $ID) {
@@ -141,9 +90,88 @@ function displaySQLContentAsTable ($pdo, $table) {
   echo '</tr>';
   echo '</tbody>';
   echo '</table>';
+
+  /* <INPUT> FOR ADDING ENTRIES*/
+  echo '<form action="edit.php?mode='.$table.'&action=add" method="post">';
+  echo '<label>Add: </label>';
+  echo '<input type="text" name="addEntry" value="">';
+  echo '<input type="submit" value="Submit">';
+  echo '</form>';
+  
+  echo "TABLE?" . $table;
+  
+  
+  
+  
+  /*
+        <form action="edit.php?mode=<?= $mode ?>&ID=<?= $_GET["ID"] ?>" method="post">
+        <label>Entry:</label>
+        <input type="text" name="newName" value="<?= $row["name"]; ?>">
+        <input type="submit" value="Submit">
+  */
+  
+  
+  
+  
+  
   echo '</div>'; 
 }
 
+
+
+
+
+
+?>
+
+
+
+
+<html>
+<head>
+<meta charset="utf-8">
+<title>\[T]/ Praise the Edit</title>
+
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Tangerine">
+<link rel="stylesheet" href="layout.css" type="text/css" media="screen">
+
+
+<style>  
+  /*
+  *  DEBUG BORDERBORDERBORDER
+  */
+  
+  /*
+  * {
+    border-style: groove;
+    border-color: coral;
+    border-width: 1px;
+  }
+  */
+
+
+  
+</style>	
+  
+<script>
+  var time = null
+  function move() {
+    window.location = "edit.php";
+  }
+</script>
+
+</head>
+
+<body>
+  <div class="header_Edit">
+    <h2>&raquo; <a href="aids.php">AIDS</a> &laquo;</h2>
+  </div>
+
+<?php
+  
+  
+ 
 ?>
 
 
@@ -157,7 +185,7 @@ function displaySQLContentAsTable ($pdo, $table) {
  */
 
 // if ( isset($_GET["mode"]) && ($_GET["mode"] == "weapons") ) {
-  if ( !empty($_GET["mode"]) && ($_GET["mode"] == "weapons" || $_GET["mode"] == "mobs" || $_GET["mode"] == "boss") ) {
+  if ( !empty($_GET["mode"]) && (empty($_GET['action'])) && ($_GET["mode"] == "weapons" || $_GET["mode"] == "mobs" || $_GET["mode"] == "boss") ) {
     (STRING)$mode   = $_GET["mode"];
     (STRING)$table  = $mode;
     (INT)$ID        = $_GET["ID"];
@@ -269,6 +297,60 @@ if ( isset($_GET["mode"]) && ($_GET["mode"] == "kills") ) {
   
   
   
+  <?php
+  
+  /*
+ * WEAPON, MOBS, BOSS ADD
+ *
+ * TODO //////////////////////////////////////////////////////////////
+ *
+ */
+  if ( !empty($_GET["mode"]) && (!empty($_GET['action'])) && ($_GET["mode"] == "weapons" || $_GET["mode"] == "mobs" || $_GET["mode"] == "boss") ) {
+    
+   echo "Schniedel <br>";
+    
+    (STRING)$mode   = $_GET["mode"];
+    (STRING)$table  = $mode;
+    // (INT)$ID        = $_GET["ID"];
+  
+    if ( isset($_POST["addEntry"]) ) {
+      (STRING)$post = $_POST["addEntry"];
+
+      // pdoUpdateTable($pdo, $table, $post, $ID);
+      
+      $sql = "INSERT INTO ".$table." (name) VALUES (:name)";
+      $stmt = $pdo->prepare($sql);                                  
+      $stmt->bindParam(':name', $_POST['addEntry'], PDO::PARAM_STR);
+      // $stmt->bindParam(':ID', $_GET['ID'], PDO::PARAM_INT);
+      $stmt->execute();
+
+      redirect("edit.php", $statusCode = 303);
+
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+  }
+
+
+  
+  
+  
+  
+  ?>
+  
+  
+  
+  
+  
+  
+  
+  
   
   
   
@@ -300,9 +382,15 @@ if ( isset($_GET["mode"]) && ($_GET["mode"] == "kills") ) {
 </div>
   
 <div id="flex-container">
-  <div class="flex-item">&nbsp;</div>
   <div class="flex-item">
-    <a href="#">^ top ^</a>
+    <a href="javascript:history.back()">
+      Back
+    </a>
+  </div>
+  <div class="flex-item">
+    <a href="#">
+      <img src="arrow_icon.png" alt="Back to top" width="30" height="19">
+    </a>
   </div>
   <div class="flex-item">&nbsp;</div>
 </div>
