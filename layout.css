@@ -1,22 +1,29 @@
 @charset "utf-8";
 
-html, body {
+html {
 
   font-family: 'Lato', sans-serif;
   font-size: 100%;
+  /* line-height: 1.15; */
   /* font-weight: 400; */
   
   -webkit-font-smoothing: antialiased; /* Fix for webkit rendering */
-	-webkit-text-size-adjust: 100%;
-  
-	background: rgb(238, 238, 238);
-  background: url('img/bg.png') repeat;
-  
+	-webkit-text-size-adjust: 100%; 
+  -ms-text-size-adjust: 100%;
+
+	
+  background: rgb(238, 238, 238);
   /*
-  opacity: 0.8;
-  background: url('ds1remaster.jpg') fixed;
+  background: url('img/bg.png') repeat;
   */
   
+  /* background: url(img/ds2coverbg2onlydots.png) no-repeat center center fixed; */
+  background: url(img/ds1remastercover.png) no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+
 	margin: 0;
 	padding: 0;
 	
@@ -25,18 +32,39 @@ html, body {
   text-shadow: 0 1px 0 #fff;
   
   /* overflow: hidden; */
-  /*
-  background: url('bonfire-trans.gif');
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-  background-position: 50px 150px;
-  */
 }
 
- @font-face {
-    font-family: 'OptimusPrinceps';
-    src: url('OptimusPrinceps.ttf');
-  }
+
+
+body {
+  
+}
+
+
+article,
+aside,
+footer,
+header,
+nav,
+section {
+  display: block;
+}
+
+
+/* Dark Souls Font Style */
+
+@font-face {
+	font-family: 'OptimusPrinceps';
+	src: url('OptimusPrinceps.eot');
+	src: local('OptimusPrinceps'), url('OptimusPrinceps.woff') format('woff'), url('OptimusPrinceps.ttf') format('truetype');
+}
+/* use this class to attach this font to any element i.e. <p class="fontsforweb_fontid_1045">Text with this font applied</p> */
+.fontsforweb_fontid_1045 {
+	font-family: 'OptimusPrinceps' !important;
+}
+
+
+
 
 strong {
 	font-weight: bold; 
@@ -77,66 +105,45 @@ ul, ol, dl {
 	margin: 0;
 	border: 0;
   /* list-style: none outside; */
-  list-style: none;
+  list-style: none outside;
 }
 
 
 
 h1, h2, h3, h4, h5, h6 {
-	
-  /*
-  color: #027ea2;
-  */
   color: #efefef;
-  /*
-  -webkit-text-stroke-width: 3px;
-  -webkit-text-stroke-color: #dcbfae;
-  */
-	font-weight: 600; 
-  
-  
-	/* text-shadow: 3px 3px 0px #bb754d, 5px 5px 0px #7a4930; */
-  /* text-shadow: 1px 1px 5px #bb754d, 1px 1px 10px #7a4930; */
+	font-weight: bold; 
   text-shadow: 1px 1px 5px #bb754d, 1px 1px 10px #7a4930, -1px -1px 5px #bb754d, -1px -1px 10px #7a4930;
-
-
+  
+  margin: 0;
+  padding: 0;
 }
 
-h1 a, h2 a, h3 a, h4 a, h5 a, h6 a {
-	font-weight: inherit;
-}
-/*
-h1 { font-size: 50px; line-height: 50px; margin-bottom: 1px; }
-h2 { font-size: 44px; line-height: 44px; margin-bottom: 10px; text-align: center; }
-h3 { font-size: 28px; line-height: 34px; margin-bottom: 8px; margin-left: 35px; }
-h4 { font-size: 25px; line-height: 30px; margin-bottom: 4px; margin-top: -20px; }
-h5 { font-size: 17px; line-height: 24px; }
-h6 { font-size: 14px; line-height: 21px; }
-*/
-
-h1 { font-size: 3em; line-height: 1em; margin-bottom: 1px; }
-h2 { font-size: 1.9em; line-height: 1em; margin-bottom: 10px; text-align: center; }
-h3 { font-size: 1.7em; line-height: 1em; margin-bottom: 8px; margin-left: 35px; }
-h4 { font-size: 1.5em; line-height: 1em; margin-bottom: 4px; margin-top: -5px; }
+h1 { font-size: 3.0em; line-height: 1em; }
+h2 { font-size: 2.5em; line-height: 1em; }
+h3 { font-size: 1.7em; line-height: 1.5em; }
+h4 { font-size: 1.5em; line-height: 1em; }
 h5 { font-size: 1.2em; line-height: 1em; }
 h6 { font-size: 1.1em; line-height: 1em; }
 
-/* Dark Souls Font Style */
+
+h2 {
+  font-family: 'OptimusPrinceps';
+  text-align: center;
+}
+
 h4 {
   font-family: 'OptimusPrinceps';
 }
-h2 {
-  font-family: 'OptimusPrinceps';
-}
+
 
 img.headerImage {
-  margin-top: 10px;
+  /* margin-top: 0px; */
 }
-a img { 
+
+img, a img { 
 	border: none;
 }
-
-
 
 
 hr {
@@ -149,8 +156,7 @@ hr {
 }
 
 .background {
-  
-  background: url('img/ds2coverbg2onlydots.png') fixed;
+  /* background: url('img/ds2coverbg2onlydots.png') fixed; */
 }
 
 
@@ -160,10 +166,13 @@ hr {
 	min-width: 780px;
 	/* background-color: #fff; */
 	margin: 0 auto;
-  background: url('img/ds2coverbg2_onlybody.png');
-      background-repeat: no-repeat;
-    background-position: top;
-    background-attachment: fixed;
+  /* background: url('img/ds2coverbg2_onlybody.png'); */
+  /* background: url('img/ds3cover_onlybody_cut.png'); */
+  /*
+  background-repeat: no-repeat;
+  background-position: top;
+  background-attachment: fixed;
+  */
 }
 
 .header {
@@ -177,25 +186,28 @@ hr {
 .content {
 	width: 90%; /* 90% of .container */
 	margin: 0 auto;
+  padding-top: 50px;
   
 }
 
 
-
+/*
 .content ul, .content ol { 
   padding: 0 15px 15px 40px; 
 }
-
+*/
 
 
 
 .aidscontent {
-	width: 60%; /* % of .container */
+  width: 60%; /* % of .container !IMPORTANT */ 
+	/* max-width: 60%; */
 	margin: 0 auto;
-  font-size: 1.5em;
-	/* background-color: #fff; */
 }
 
+.killedBosses {
+  /*  */
+}
 
 .aidsListing {
   list-style: decimal;
@@ -204,26 +216,34 @@ hr {
 }
 
 .aidsText {
-  font-size: 1.2em;
+  font-size: 1.6em;
   font-weight: bold;
   text-shadow: 0px 2px 2px rgba(255, 255, 255, 0.4);
 }
 
+.weaponText {
+  font-size: 1.3em;
+  font-weight: bold;
+  text-shadow: 0px 2px 2px rgba(255, 255, 255, 0.4);
+}
 
 .button {
   border-radius: 4px;
-  /* background-color: #027ea2; */
-  background: url('img/button_bg.png');
+  background-color: #3F292B;
+  /* background-color: #434343; */
+  background: url('img/noise-diagonal-trans.png');
   border: none;
   
   color: #fefefe;
   text-shadow: 1px 1px 5px #bb754d, 1px 1px 10px #7a4930, -1px -1px 5px #bb754d, -1px -1px 10px #7a4930;
   
   text-align: center;
-  font-size: 1.15em;
+  font-size: 1.7em; /* Button Text Font Size */
   padding: 5px;
-  width: 190px;
-  height: 108px;
+
+  width: 170px;
+  height: 75px;
+  
   transition: all 0.5s;
   cursor: pointer;
   margin: 5px;
@@ -263,6 +283,7 @@ hr {
 .buttonFont {
   font-size: 1.5em;
 }
+
 
 .rerunFont {
   font-family: 'OptimusPrinceps';
@@ -313,13 +334,6 @@ td.emoji:hover:after {
   font-size: 1em;
   content: '+';  
 }
-
-
-
-
-
-
-
 
 th:after {
 	background: linear-gradient(rgba(255,255,255,0), rgba(255,255,255,.08));
@@ -406,10 +420,7 @@ tbody:hover tr:hover td a {
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: space-between;
-  
-  
-  
-  
+
   /*
   display: flex;
   flex-direction: row;
@@ -429,6 +440,20 @@ tbody:hover tr:hover td a {
   */
 }
 
+
+#flex-container-roll {
+  
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+
+  margin: 0 auto;
+  padding-top: 15px;
+  
+
+}
+
 .flex-item {
   /* width: 100px; */
   /* height: 200px; */
@@ -437,12 +462,7 @@ tbody:hover tr:hover td a {
 }
 
 .flex-item-aids {
-  /* width: 100px; */
-  /* height: 200px; */
-  /* border: 1px black solid; */
-  /* background: #369; */
   margin-top: 35px;
-  font-weight: 600;
 }
 
 .flex-item-footer {
@@ -459,8 +479,7 @@ tbody:hover tr:hover td a {
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: space-between;
-  /* width: 500px; */
-  /* border: 1px black solid; */
+
   margin: 0 auto;
   padding: 10px;
   
@@ -468,10 +487,6 @@ tbody:hover tr:hover td a {
 }
 
 .flex-item-edit {
-  /* width: 100px; */
-  /* height: 200px; */
-  /* border: 1px black solid; */
-  /* background: #369; */
   margin-top: 35px;
   font-weight: 400;
 }
@@ -489,3 +504,70 @@ tbody:hover tr:hover td a {
 
 
 
+
+
+
+
+/* TABS */
+
+.tab {
+    overflow: hidden;
+    border: 1px solid #ccc;
+    background-color: #f1f1f1;
+}
+
+/* Style the buttons that are used to open the tab content */
+.tab button {
+    background-color: inherit;
+    float: left;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 14px 16px;
+    transition: 0.3s;
+}
+
+/* Change background color of buttons on hover */
+.tab button:hover {
+    background-color: #ddd;
+}
+
+/* Create an active/current tablink class */
+.tab button.active {
+    background-color: #ccc;
+}
+
+/* Style the tab content */
+.tabcontent {
+    display: none;
+    padding: 6px 12px;
+    border: 1px solid #ccc;
+    border-top: none;
+}
+
+
+
+
+
+
+
+  /* DEBUG */
+  /*
+  * {
+    border-style: groove;
+    border-color: coral;
+    border-width: 1px;
+  }
+  */
+  
+  /* MOBILE */
+  /*
+  @media all and (max-width: 800px) {
+    html, body, aidsContent, aidsListing {
+      font-size: 1.2em;
+      border-style: groove;
+      border-color: coral;
+      border-width: 1px;
+    }
+  }
+  */
