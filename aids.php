@@ -9,7 +9,6 @@ print_r($_GET);
 echo "</pre>";
 */
 
-
 // $s = preg_replace('![^a-z]!', '', $s); 
 ?>
 
@@ -18,6 +17,7 @@ echo "</pre>";
 <head>
 <meta charset="utf-8">
 <meta name="theme-color" content="#3f292b">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>\[T]/</title>
 
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Tangerine">
@@ -28,26 +28,26 @@ echo "</pre>";
 
 <script>
   // Random image out of 12
-  var myImages = new Array();
-  myImages.push("dice/1.png");
-  myImages.push("dice/2.png");
-  myImages.push("dice/3.png");
-  myImages.push("dice/4.png");
-  myImages.push("dice/5.png");
-  myImages.push("dice/6.png");
-  myImages.push("dice/7.png");
-  myImages.push("dice/8.png");
-  myImages.push("dice/9.png");
-  myImages.push("dice/10.png");
-  myImages.push("dice/11.png");
-  myImages.push("dice/12.png");
+  var diceImages = new Array();
+  diceImages.push("dice/1.png");
+  diceImages.push("dice/2.png");
+  diceImages.push("dice/3.png");
+  diceImages.push("dice/4.png");
+  diceImages.push("dice/5.png");
+  diceImages.push("dice/6.png");
+  diceImages.push("dice/7.png");
+  diceImages.push("dice/8.png");
+  diceImages.push("dice/9.png");
+  diceImages.push("dice/10.png");
+  diceImages.push("dice/11.png");
+  diceImages.push("dice/12.png");
 
   function getRandomInt(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
   }
 
   function pickimg() {
-    document.randimgw12.src = myImages[getRandomInt(0, myImages.length - 1)];
+    document.getElementById("randimgw12").src = diceImages[getRandomInt(0, diceImages.length - 1)];
   } 
 </script>
   
@@ -70,19 +70,7 @@ echo "</pre>";
     } else {
       document.getElementById("rerunroll").innerHTML = "¯\\_(ツ)_/¯" + "<br>" + rnd;
     } 
-  }
-
-  /*
-  function toggleRerunDiv() {
-      var x = document.getElementById("myDIV");
-      if (x.style.display === "none") {
-          x.style.display = "block";
-      } else {
-          x.style.display = "none";
-      }
-  }
-  */
-  
+  }  
 </script> 
 
 </head>
@@ -97,6 +85,7 @@ echo "</pre>";
   </div>
 
 <div class="content">
+  
 <div class="aidscontent">
 
   
@@ -107,11 +96,11 @@ echo "</pre>";
 *******************/
 $section = "mobs";
 $mobsCount = pdoCount($pdo, $section);
-// echo "MobsCount: " . $mobsCount . "<br>";
-  
 $mobsRNG  = mt_rand (1, $mobsCount);
-// $mobsRNG  = 20; // DEBUG to force display weapon
 $mobsDice = $mobsRNG;
+
+// $mobsRNG  = 20; // DEBUG to force display weapon
+// echo "MobsCount: " . $mobsCount . "<br>";
   
 $stmt = $pdo->prepare('SELECT name FROM mobs WHERE ID = '.$mobsRNG.' ');
 $stmt->execute();
@@ -121,7 +110,7 @@ $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
 <div id="flex-container">
   <div class="flex-item">
-    <?= displayDice($mobsDice); ?>
+    <img src="dice/<?= $mobsDice ?>.png" width="100" height="100" alt="<?= $mobsDice ?>">
   </div>
 
   <div class="flex-item-aids">
@@ -145,20 +134,19 @@ $row = $stmt->fetch(PDO::FETCH_ASSOC);
 *******************/
 $section = "boss";
 $bossCount = pdoCount($pdo, $section);
-// echo "BossCount: " . $bossCount . "<br>";
-
 $bossRNG  = mt_rand (1, $bossCount);
-// $bossRNG  = 5; // DEBUG to force display weapon
 $bossDice = $bossRNG;
+// echo "BossCount: " . $bossCount . "<br>";
+// $bossRNG  = 5; // DEBUG to force display weapon
   
 $stmt = $pdo->prepare('SELECT name FROM boss WHERE ID = '.$bossRNG.' ');
 $stmt->execute();
 $row = $stmt->fetch(PDO::FETCH_ASSOC);
 ?>
 
-<div id="flex-container">
+<div id="flex-container-aids">
   <div class="flex-item">
-    <?= displayDice($bossDice); ?>
+    <img src="dice/<?= $bossDice ?>.png" width="100" height="100" alt="<?= $bossDice ?>">
   </div>
   <div class="flex-item-aids">
     <span class="aidsText">
@@ -185,7 +173,7 @@ $row = $stmt->fetch(PDO::FETCH_ASSOC);
   <!-- w12 -->
   <div class="flex-item">
     <a href="#" onClick="pickimg();return false;">
-      <img src="dice/0.png" name="randimgw12" width="100px" height="100px">
+      <img src="dice/0.png" id="randimgw12" width="100" height="100" alt="Dice 0">
     </a>  
   </div>
   <!-- Rerun? -->
@@ -210,7 +198,7 @@ $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
   
   
-<div id="flex-container" class="aidsListing">
+<div id="flex-container-aidsListing" class="aidsListing">
   <div class="flex-item"><h3>Mobs</h3><?= displaySQLContent($pdo, "mobs") ?></div>
   <div class="flex-item"><h3>Boss</h3><?= displaySQLContent($pdo, "boss") ?></div>
   <div class="flex-item"><h3>Waffen</h3><?= displaySQLContent($pdo, "weapons"); ?></div>
@@ -230,7 +218,7 @@ $row = $stmt->fetch(PDO::FETCH_ASSOC);
       <tr>
         <th>Kaschber</th>
         <th>Joker</th>
-        <th>Ausgegeben</th>
+        <th><s>-</s></th>
         <th>Kills</th>
       </tr>
     </thead>
@@ -292,19 +280,27 @@ while ($row = $stmt->fetch()) {
   
 <!-- BONFIRE -->
 
-<div id="flex-container">
+<div id="flex-container-footer">
   <div class="flex-item">&nbsp;</div>
   
   <div class="flex-item">
-    <a href="#">
-      <!-- <img src="img/bonfire-trans.gif" alt="Dark Souls Bonfire" width="672" height="824"> -->
-      <!-- <img src="img/ds3cover_onlybonfire.png" width="1136" height="1080" alt=""> -->
-      <img src="img/arrow_icon.png" width="30" height="19" alt="To Top">
-    </a>
+    
+    <a href="#"><img src="img/arrow_icon.png" width="30" height="19" alt="To Top"></a>
+    | <a href="edit.php">Edit</a> | 
+    <a href="#"><img src="img/arrow_icon.png" width="30" height="19" alt="To Top"></a>
+    
   </div>
   
   <div class="flex-item">&nbsp;</div>
 </div>
+
+<!--
+<div class="loader">
+    <span></span>
+    <span></span>
+    <span></span>
+</div>
+-->
 
   
 </div><!-- EOF Content -->
@@ -316,14 +312,14 @@ while ($row = $stmt->fetch()) {
 
 
 <?php
-/* save all aids to a file */
+/* save all aids to file and DB */
 
 $file = 'latestAids.txt';
 $date = date("Y-m-d H:i:s");
 $IP = getRealIpAddr();
-// Open the file to get existing content
+
 $current = file_get_contents($file);
-// Append a new person to the file
+
 $current .= $IP
           . " - "
           . $date
@@ -334,13 +330,11 @@ $current .= $IP
           . "\n"
           ;
 
-// Write the contents back to the file
+
 file_put_contents($file, $current);
 
 
 //////////////////////////////MYSQL//////////////////
-////////////////////////
-/////////////////////
 $sql = "INSERT INTO rolls (date, IP, mobs, boss) VALUES (:date, :IP, :mobs, :boss)";
 $stmt = $pdo->prepare($sql);                                  
 $stmt->bindParam(':date', $date, PDO::PARAM_STR);
@@ -350,5 +344,5 @@ $stmt->bindParam(':boss', $bossDice, PDO::PARAM_INT);
 // $stmt->bindParam(':ID', $_GET['ID'], PDO::PARAM_INT);
 $stmt->execute();
 
-
+// Table/Output in edit.php
 ?>

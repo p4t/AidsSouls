@@ -4,20 +4,20 @@
     <tbody>
       <tr>
         <th scope="col">ID</th>
-        <th scope="col">Name</th>
-        <th scope="col">Joker</th>
-        <th scope="col">Ausgegeben</th>
-        <th scope="col">Kills</th>
+        <th scope="col">Mobs</th>
+        <th scope="col">Boss</th>
+        <th scope="col">Zeit</th>
+        <th scope="col">IP</th>
       </tr>
       <tr>
   <?php
 
 
-  $sql = 'SELECT * FROM kills';
+  $sql = 'SELECT * FROM rolls ORDER BY ID DESC LIMIT 10'; // Only show latest 10 entries
   $stmt = $pdo->prepare($sql);
   $stmt->execute();
   $countRows = $stmt->rowCount();
-
+        
   while ($row = $stmt->fetch()) { 
     // echo  $row[0] . " | " . $row[1] .  "<br/>";
     echo '<tr>';
@@ -27,25 +27,19 @@
     echo '</td>';
 
     echo '<td>';
-    echo $row["name"];
+    echo $row["mobs"];
     echo '</td>';
 
     echo '<td>';
-    echo '<a href="edit.php?mode=kills&ID='.$row["ID"].'">';
-    echo $row["joker"];
-    echo '</a>';
+    echo $row["boss"];
     echo '</td>';
 
     echo '<td>';
-    echo '<a href="edit.php?mode=kills&ID='.$row["ID"].'">';
-    echo $row["spent"];
-    echo '</a>';
+    echo formatDate($row["date"]);
     echo '</td>';
 
     echo '<td>';
-    echo '<a href="edit.php?mode=kills&ID='.$row["ID"].'">';
-    echo nl2br($row["bossNames"]);
-    echo '</a>';
+    echo $row["IP"];
     echo '</td>';
 
     echo '</tr>';
