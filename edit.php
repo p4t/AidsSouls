@@ -1,5 +1,7 @@
 <?php
 
+//////////////// WARNING IF DICE ORDER IS NOT IN ORDER :-)
+
 // DEBUG
   /*
 if ( isset($_GET["mode"])) {
@@ -30,42 +32,49 @@ require_once("functions.inc.php");
 <body>
   
   <div class="header_Edit">
-    <h2>&raquo; <a href="aids.php">AIDS</a> &laquo;</h2>
+    <h1>&raquo; <a href="aids.php">AIDS</a> &laquo;</h1>
   </div>
 
 
 <?php
 /*
- * WEAPON, MOBS, BOSS EDIT
+ * EDIT MOBS, BOSS, WEAPONS
  */
 
-  if ( !empty($_GET["mode"]) && (empty($_GET['action'])) && ($_GET["mode"] == "weapons" || $_GET["mode"] == "mobs" || $_GET["mode"] == "boss") ) {
+  if ( !empty($_GET["mode"]) && (empty($_GET["action"])) && ($_GET["mode"] == "weapons" || $_GET["mode"] == "mobs" || $_GET["mode"] == "boss") ) {
     (STRING)$mode   = $_GET["mode"];
     (STRING)$table  = $mode;
-    (INT)$ID        = $_GET["ID"];
+    (INT)$ID        = $_GET["ID"];  
   
     if ( isset($_POST["newName"]) ) {
-      (STRING)$post = $_POST["newName"];
+      (STRING)$newName  = $_POST["newName"];
+      (INT)$newDice     = $_POST["newDice"];
 
       // pdoUpdateTable($pdo, $table, $post, $ID);
       
-      $sql = "UPDATE ".$table." SET name = :name WHERE ID = :ID";
+      $sql = "UPDATE $table SET name = :name, dice = :dice WHERE ID = :ID";
       $stmt = $pdo->prepare($sql);                                  
-      $stmt->bindParam(':name', $_POST['newName'], PDO::PARAM_STR);
-      $stmt->bindParam(':ID', $_GET['ID'], PDO::PARAM_INT);
+      $stmt->bindParam(":name", $_POST["newName"], PDO::PARAM_STR);
+      $stmt->bindParam(":dice", $_POST["newDice"], PDO::PARAM_INT);
+      $stmt->bindParam(":ID", $_GET["ID"], PDO::PARAM_INT);
       $stmt->execute();
+      
+      // UPDATE ID IF ID INPUT FIELD SHOWS DIFFERENT VALUE
+      /*
+      if ( $ID != $newID ) {
+        $sql = "UPDATE $table SET ID = :newID WHERE ID = :ID";
+        $stmt = $pdo->prepare($sql);
+        $stmt->bindParam(":newID", $_POST["newID"], PDO::PARAM_INT);
+        $stmt->bindParam(":ID", $_GET["ID"], PDO::PARAM_INT);
+        $stmt->execute();
+      }
+      */
 
       redirect("edit.php", $statusCode = 303);
 
     } else {
       
-      /*
-      function pdoQuery (){
-        //
-      }
-      */
-      
-      $stmt = $pdo->prepare('SELECT name FROM '.$table.' WHERE ID = '.$_GET["ID"].' ');
+      $stmt = $pdo->prepare("SELECT * FROM $table WHERE ID = ".$_GET["ID"]." ");
       $stmt->execute();
       $row = $stmt->fetch(PDO::FETCH_ASSOC);
   }
@@ -75,8 +84,12 @@ require_once("functions.inc.php");
     
   <div class="flex-item">
       <form action="edit.php?mode=<?= $mode ?>&ID=<?= $_GET["ID"] ?>" method="post">
+
+        <label>Dice:</label>
+        <input type="text" name="newDice" value="<?= $row["dice"]; ?>" required="required">
+        
         <label>Entry:</label>
-        <input type="text" name="newName" value="<?= $row["name"]; ?>">
+        <input type="text" name="newName" value="<?= $row["name"]; ?>" required="required">
         <input type="submit" value="Submit">
       </form>
     </div>
@@ -85,13 +98,13 @@ require_once("functions.inc.php");
 </div>
   
 <?php
-}
+} // ENDIF
 ?>
   
   
 <?php
 /*
- * KILLS EDIT
+ * EDIT KILLS
  */
 
 if ( isset($_GET["mode"]) && ($_GET["mode"] == "kills") ) {
@@ -144,7 +157,7 @@ if ( isset($_GET["mode"]) && ($_GET["mode"] == "kills") ) {
 </div>
 
 <?php
-}
+} // ENDIF
 ?>
   
   
@@ -153,12 +166,10 @@ if ( isset($_GET["mode"]) && ($_GET["mode"] == "kills") ) {
   
   
   
-  <?php
-  
+  <?php 
   /*
- * WEAPON, MOBS, BOSS ADD
+ * ADD MOBS, BOSS, WEAPONS
  *
- * TODO //////////////////////////////////////////////////////////////
  *
  */
   if ( !empty($_GET["mode"]) && (!empty($_GET['action'])) && ($_GET["mode"] == "weapons" || $_GET["mode"] == "mobs" || $_GET["mode"] == "boss") ) {
@@ -170,21 +181,28 @@ if ( isset($_GET["mode"]) && ($_GET["mode"] == "kills") ) {
     // (INT)$ID        = $_GET["ID"];
   
     if ( isset($_POST["addEntry"]) ) {
-      (STRING)$post = $_POST["addEntry"];
-
-      // pdoUpdateTable($pdo, $table, $post, $ID);
+      (STRING)$addEntry = $_POST["addEntry"];
+      (INT)$addDice     = $_POST["addDice"];
       
-      $sql = "INSERT INTO ".$table." (name) VALUES (:name)";
-      $stmt = $pdo->prepare($sql);                                  
+      if ( empty($_POST["addDice"]) ) { // if field for dice value wasn't filled
+        $stmt = $pdo->prepare("SELECT * FROM $table ORDER BY dice DESC LIMIT 1"); // get max value from field dice
+        $stmt->execute();
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        (INT)$addDice = $row["dice"] + 1; // +1 of max dice value
+      }      
+      
+      // CHECK IF DICE ALREADY EXISTS IN DB TODO
+      
+      $sql = "INSERT INTO ".$table." (dice, name) VALUES (:dice, :name)";
+      $stmt = $pdo->prepare($sql);          
+      $stmt->bindParam(':dice', $addDice, PDO::PARAM_INT);
       $stmt->bindParam(':name', $_POST['addEntry'], PDO::PARAM_STR);
-      // $stmt->bindParam(':ID', $_GET['ID'], PDO::PARAM_INT);
       $stmt->execute();
 
       redirect("edit.php", $statusCode = 303);
 
     }
-     
-    
+      
   }
 
   ?>
@@ -193,11 +211,27 @@ if ( isset($_GET["mode"]) && ($_GET["mode"] == "kills") ) {
   
   
   
-  
+  <?php
+/*
+ * DELETE 
+ *
+ *
+ */
 
-  
-  
-  
+  if ( !empty($_GET["action"]) && $_GET["action"] == "delete" ) {
+    (STRING)$mode   = $_GET["mode"];
+    (STRING)$table  = $mode;
+    (INT)$ID        = $_GET["ID"];
+    
+    $sql = "DELETE FROM $table WHERE ID = :ID";
+    $stmt = $pdo->prepare($sql);
+    $stmt->bindParam(':ID', $ID, PDO::PARAM_INT);
+    $stmt->execute();
+    echo "Schniedel";
+    redirect("edit.php", $statusCode = 303);
+  }
+
+  ?>
   
   
   
@@ -211,27 +245,59 @@ if ( isset($_GET["mode"]) && ($_GET["mode"] == "kills") ) {
 <div id="flex-container-edit" >
   
 
-  <?php
-    /*
-   * DONT CHANGE
-   *
-   *
-   *
-   */
-  /* STANDARD ANSICHT WNEN NUR EDIT.PHP
-  * DISPLAY ALL TABLES WHERE TO EDIT FROM
+<?php
+/* STANDARD ANSICHT WENN NUR EDIT.PHP
+* DISPLAY ALL TABLES WHERE TO EDIT FROM
+*/
+if ( empty($_GET["mode"]) ) {
+  /*
+  displaySQLContentAsTable ($pdo, "mobs");
+  displaySQLContentAsTable ($pdo, "boss");
+  displaySQLContentAsTable ($pdo, "weapons");
   */
-  if ( empty($_GET["mode"]) ) {
+$tables = array("mobs", "boss", "weapons");
 
-    displaySQLContentAsTable ($pdo, "weapons");
-    displaySQLContentAsTable ($pdo, "mobs");
-    displaySQLContentAsTable ($pdo, "boss");
+foreach($tables as $table) {
+  $stmt = $pdo->prepare("SELECT * FROM $table ORDER BY dice");
+  $stmt->execute();
+?>
+<table>
+  <tbody>
+    <tr>
+      <th scope="col">Dice</th>
+      <th scope="col"><?=ucfirst($table)?></th>
+      <th scope="col">Action</th>
+    </tr>
+    <?php while ($row = $stmt->fetch(PDO::FETCH_NUM)) { ?>
+    <tr>
+      <td><a href="edit.php?mode=<?=$table?>&ID=<?=$row[0]?>"><?=$row[1]?></a></td>
+      <td><a href="edit.php?mode=<?=$table?>&ID=<?=$row[0]?>"><?=$row[2]?></a></td>
+      <td>
+        <a href="edit.php?mode=<?=$table?>&ID=<?=$row[0]?>" data-tip="Edit">
+          <img src="img/edit-icon.png" width="024" height="024">
+        </a>
+        <a href="edit.php?mode=<?=$table?>&action=delete&ID=<?=$row[0]?>" onClick="return confirm('SICHER????????');" data-tip="Delete">
+          <img src="img/delete-icon.png" width="024" height="024">
+        </a>
+      </td>
+    </tr>
+    <?php } // ENDWHILE ?>
+    <tr>
+      <form action="edit.php?mode=<?=$table?>&action=add" method="post">
+        <td data-tip="Würfel"><input type="number" name="addDice" value="" min="1" max="99" autocomplete="off" placeholder="Zahl"</td>
+        <td data-tip="Name"><input type="text" name="addEntry" value="" autocomplete="off" placeholder="<?=$table?> Name" required="required"></td>
+        <td data-tip="Abschicken"><input type="submit" value="Submit"></td>
+      </form>
+    </tr>
+  </tbody>
+</table>
+<?php
+} // ENDIF
+
     include("kills.inc.php");
     include("rolls.inc.php");
 
-
-  }
-    // go to top    res db pdo an funktio übergeben name klick anstatt edit
+  } // EOF if ( empty($_GET["mode"]) ) {
   ?>
 
 </div>

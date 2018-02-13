@@ -3,14 +3,14 @@
 Get IP
 */
 function getRealIpAddr() {
-  if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
-    $ip = $_SERVER['HTTP_CLIENT_IP'];
+  if (!empty($_SERVER["HTTP_CLIENT_IP"])) {
+    $ip = $_SERVER["HTTP_CLIENT_IP"];
   }
-  elseif (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
-    $ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
+  elseif (!empty($_SERVER["HTTP_X_FORWARDED_FOR"])) {
+    $ip = $_SERVER["HTTP_X_FORWARDED_FOR"];
   }
   else {
-    $ip = $_SERVER['REMOTE_ADDR'];
+    $ip = $_SERVER["REMOTE_ADDR"];
   }
   return $ip;
 }
@@ -19,35 +19,34 @@ function getRealIpAddr() {
 /*
  * Random Weapons
  */
-function randomWeapon ($pdo) {
+function randomWeapon () {
+  global $pdo;
+  $section    = "weapons";
+  $count      = pdoCount($section);
+  $weaponRNG  = mt_rand (1, $count);
+  echo "(" . $weaponRNG . ")";
+  // $weaponRNG  = 21;
   
-  $section = "weapons";
-  $count = pdoCount($pdo, $section);
-  // echo "WeaponsCount: " . $count . "<br>";
-  
-  $weaponRNG   = mt_rand (1, $count);
-  // $weaponRNG   = 1; // DEBUG  
-  
-  $stmt = $pdo->prepare('SELECT name FROM weapons WHERE ID = '.$weaponRNG.' ');
+  $stmt = $pdo->prepare("SELECT * FROM weapons WHERE dice = $weaponRNG");
   $stmt->execute();
   $row = $stmt->fetch(PDO::FETCH_ASSOC);
   
-  echo "\n";
   echo $row["name"];
-  echo '&nbsp;';
-  echo '<img src="img/weapon_icon.png" width="41" height="40" alt="Weapon">'; // 71, 70
-  echo "\n";
+  echo "&nbsp;";
+  echo "<img src=\"img/weapon_icon.png\" width=\"41\" height=\"40\" alt=\"Weapon\">\n"; // 71, 70
   
   // return $weaponRNG;
 }
 	
+
+
 
 /*
  * Display rolled dice value as image
  */
 function displayDice ($diceValue) {
   // echo '<span data-balloon="'.$diceValue.'" data-balloon-pos="up">';
-  echo '<img src="dice/'.$diceValue.'.png" width="100" height="100" alt="'.$diceValue.'">';
+  echo "<img src=\"dice/".$diceValue.".png\" width=\"100\" height=\"100\" alt=\"".$diceValue."\">";
   // echo '</span>';
 }
 
@@ -66,57 +65,59 @@ function aids ($positive) {
  * Display and list content of a specific Aids array (Boss, Mobs, Weapons)
  */
 function displayAidsArray ($value) {
-  echo '<ul class="aidsListing">';
+  echo "<ul class=\"aidsListing\">";
   foreach ($value as $key => $value) {
-    echo '<li>';
+    echo "<li>";
     $key = $key + 1;
     echo $key . ": ". $value;
-    echo '</li>';
+    echo "</li>";
 	}
-  echo '</ul>';
+  echo "</ul>";
 }
 
 
 /*
  * Get Content from SQL, query
  */
-function displaySQLContent ($pdo, $table) {
-    $sql = 'SELECT * FROM '.$table.'';
-    $stmt = $pdo->prepare($sql);
-    $stmt->execute();
-    
+function displaySQLContent ($table) {
+  global $pdo;
+  $sql = "SELECT * FROM $table ORDER BY dice";
+  $stmt = $pdo->prepare($sql);
+  $stmt->execute();
+
+  /*
+  $stmt = $pdo->prepare('SELECT name FROM weapons WHERE ID = '.$weaponRNG.' ');
+  $stmt->execute();
+  $row = $stmt->fetch(PDO::FETCH_ASSOC);
+  */
+
+  // $countRows = $stmt->rowCount();
+
+  echo "\n";
+  echo "<ul class=\"aidsListing\">";
+  echo "\n";
+
+  while ($row = $stmt->fetch(PDO::FETCH_NUM)) { 
+
+    echo "<li>";
+
+    /* Either use deicmal list via MySQL or list-style CSS */
     /*
-    $stmt = $pdo->prepare('SELECT name FROM weapons WHERE ID = '.$weaponRNG.' ');
-    $stmt->execute();
-    $row = $stmt->fetch(PDO::FETCH_ASSOC);
+    echo $row[0];
+    echo ': ';
     */
-  
-    // $countRows = $stmt->rowCount();
 
-    echo "\n";
-    echo '<ul class="aidsListing">';
+    echo "<a href=\"edit.php?mode=".$table."&ID=".$row[0]."\" target=\"_blank\" rel=\"noopener noreferrer\">";
+    // echo $row[1];
+    echo $row[2];
+    echo "</a>";
+
+    echo "</li>";
     echo "\n";
 
-    while ($row = $stmt->fetch(PDO::FETCH_NUM)) { 
-      
-      echo '<li>';
-      
-      /* Either use deicmal list via MySQL or list-style CSS */
-      /*
-      echo $row[0];
-      echo ': ';
-      */
-        
-      echo '<a href="edit.php?mode='.$table.'&ID='.$row[0].'" target="_blank" rel="noopener noreferrer">';
-      echo $row[1];
-      echo '</a>';
-      
-      echo '</li>';
-      echo "\n";
-
-    }
-    echo "</ul>";
-    echo "\n";
+  }
+  echo "</ul>";
+  echo "\n";
 }
 
   
@@ -127,7 +128,7 @@ function replaceNameWithEmoji ($emoji) {
   if ($emoji == "Biber") $emoji = "🐻";
   elseif ($emoji == "Katz") $emoji = "🐱";
   elseif ($emoji == "Pat") $emoji = "💩";
-  elseif ($emoji == "Bonfire") $emoji = "🔥";
+  elseif ($emoji == "\[T]/") $emoji = "🔥";
   return $emoji;
 }
 
@@ -146,15 +147,26 @@ function replaceCheeseWithEmoji ($text) {
 /*
  * Count rows from Database for mt_rand(MAX)
  */
-function pdoCount ($pdo, $table) {
-  return $pdo->query("SELECT count(ID) FROM $table")->fetchColumn();
+function pdoCount ($table) {
+  global $pdo;
+  // return $pdo->query("SELECT count(ID) FROM $table")->fetchColumn();
+  return $pdo->query("SELECT count(dice) FROM $table")->fetchColumn();
 }
 
+
 /*
-function query ($rowID, $rowName, $table) {
-  $stmt = $pdo->query('SELECT '.$rowID.', '.$rowName.' FROM '.$table.'');
+ * Simple Query for Aids
+ */
+function pdoAidsQuery ($section, $RNG) {
+  global $pdo;
+  
+  $stmt = $pdo->prepare("SELECT name FROM $section WHERE dice = $RNG");
+  $stmt->execute();
+  $row = $stmt->fetch(PDO::FETCH_ASSOC); 
+  
+  return $row;
+  
 }
-*/
 
 
 
@@ -283,23 +295,6 @@ function formatDate ($date) {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 /***************************
 *
 * EDIT.PHP
@@ -340,7 +335,7 @@ function clean_string ($string) {
 * redirect back to given URL, statuscode = 303
 */
 function redirect($url, $statusCode) {
-  header('Location: ' . $url, true, $statusCode);
+  header("Location: " . $url, true, $statusCode);
   die();
 }
 
@@ -349,11 +344,13 @@ function redirect($url, $statusCode) {
 /*
 * Update MySQL Table via PDO (mobs, boss, weapons)
 */  
-function pdoUpdateTable ($pdo, $table, $post, $ID) {
-  $sql = "UPDATE ".$table." SET name = :name WHERE ID = :ID";
+function pdoUpdateTable ($table, $post, $ID) {
+  global $pdo;
+  
+  $sql = "UPDATE $table SET name = :name WHERE ID = :ID";
   $stmt = $pdo->prepare($sql);                                  
-  $stmt->bindParam(':name', $post, PDO::PARAM_STR);
-  $stmt->bindParam(':ID', $ID, PDO::PARAM_INT);
+  $stmt->bindParam(":name", $post, PDO::PARAM_STR);
+  $stmt->bindParam(":ID", $ID, PDO::PARAM_INT);
   $stmt->execute();
 }
   
@@ -361,70 +358,109 @@ function pdoUpdateTable ($pdo, $table, $post, $ID) {
 /*
 * Display given table as HTML <table>
 */
-function displaySQLContentAsTable ($pdo, $table) {
+function displaySQLContentAsTable ($table) {
+  global $pdo;  
+  $table_output = ucfirst($table);
 
-  echo '<div class="flex-item-edit">';
-  echo '<table>';
-  echo '<tbody>';
-  echo '<tr>';
-  echo '<th scope="col">ID</th>';
-  echo '<th scope="col">'.ucfirst($table).'</th>';
-  echo '</tr>';
-  echo '<tr>';
+  echo "<div class=\"flex-item-edit\">\n";
+  echo "<table>\n";
+  echo "<tbody>\n";
+  echo "<tr>\n";
+  
+  /* echo "<th scope=\"col\">ID</th>\n"; */
+  echo "<th scope=\"col\">Dice</th>\n";
+  echo "<th scope=\"col\">".ucfirst($table)."</th>\n";
+  echo "<th scope=\"col\">Action</th>\n";
 
-  $sql = 'SELECT * FROM '.$table.'';
-  $stmt = $pdo->prepare($sql);
+  echo "</tr>\n";
+
+ //  echo "<tr>\n";
+
+  $stmt = $pdo->prepare("SELECT * FROM $table ORDER BY dice");
   $stmt->execute();
-  // $countRows = $stmt->rowCount();
 
   while ($row = $stmt->fetch(PDO::FETCH_NUM)) { 
 
-    echo '<tr>';
+    echo "<tr>";
 
-    echo '<td>';
+    /*
+    echo "<td>";
+    echo "<span class=\"edit_ID\">";
     echo $row[0];
-    echo '</td>';
-
-    echo '<td>';
-    echo '<a href="edit.php?mode='.$table.'&ID='.$row[0].'">';
+    echo "</td>";
+    */
+    
+    echo "<td>";
+    echo "<strong>";
     echo $row[1];
-    echo '</a>';
-    echo '</td>';
-
-    echo '</tr>';
+    echo "</strong>";
+    echo "</td>";
+    
+    echo "<td>";
+    echo "<a href=\"edit.php?mode=".$table."&ID=".$row[0]."\">";
+    // echo $row[1];
+    echo $row[2];
+    echo "</a>";
+    echo "</td>";
+    
+    echo "<td style=\"text-align: center;\">";
+    
+    // EDIT ICON
+    echo "<a href=\"edit.php?mode=".$table."&ID=".$row[0]."\" data-tip=\"Edit\">";
+    echo "<img src=\"img/edit-icon.png\" width=\"024\" height=\"024\"";
+    echo "</a>";
+    
+    // SPACE
+    
+    // DELETE ICON
+    echo "<a href=\"edit.php?mode=".$table."&action=delete&ID=".$row[0]."\" onClick=\"return confirm('SICHER????????');\" data-tip=\"Delete\">";
+    echo "<img src=\"img/delete-icon.png\" width=\"024\" height=\"024\"";
+    echo "</a>";
+    echo "</td>";
+    
+    echo "</tr>\n";
   }
   
+  echo "<form action=\"edit.php?mode=$table&action=add\" method=\"post\">\n";
+  /*
+  echo "<td>";
+  echo "<label><strong>Add:</strong></label>";
+  echo "</td>";
+  */
   
-  echo '<td>';
-  echo '<label>Add: </label>';
-  echo '</td>';
-  
-  echo '<td>';
+  echo "<td data-tip=\"{$table_output} Dice\">";
+  echo "<input type=\"number\" name=\"addDice\" value=\"\" min=\"1\" max=\"99\" autocomplete=\"off\" placeholder=\"Zahl\">\n";
+  echo "</td>";
+
+  echo "\n<td data-tip=\"{$table_output} Name\">\n";
   
   /* <INPUT> FOR ADDING ENTRIES*/
-  echo '<form action="edit.php?mode='.$table.'&action=add" method="post">';
+
+  echo "<input type=\"text\" name=\"addEntry\" value=\"\" autocomplete=\"off\" placeholder=\"{$table_output} Name\" required=\"required\">\n";
+
+  echo "</td>\n";
   
-  echo '<input type="text" name="addEntry" value="">';
-  echo '<br>';
-  echo '<input type="submit" value="Submit">';
-  echo '</form>';
+  echo "<td data-tip=\"Abschicken\">";
+  echo "<input type=\"submit\" value=\"Submit\">\n";
+  echo "</td>";
   
-  echo '</td>';
+  echo "</form>\n";
+  echo "</tr>\n";
+  echo "</tbody>\n";
+  echo "</table>\n";
 
+  echo "</div>\n"; 
 
-  echo '</tr>';
-  echo '</tbody>';
-  echo '</table>';
-
-  echo '</div>'; 
 }
 
 
 /*
 * Delete single entry from Database
 */
-function pdoDelete ($pdo, $table, $post, $ID) {
-  $sql = "UPDATE ".$table." SET name = :name WHERE ID = :ID";
+function pdoDelete ($table, $post, $ID) {
+  global $pdo;
+  
+  $sql = "UPDATE $table SET name = :name WHERE ID = :ID";
   $stmt = $pdo->prepare($sql);                                  
   $stmt->bindParam(':name', $post, PDO::PARAM_STR);
   $stmt->bindParam(':ID', $ID, PDO::PARAM_INT);

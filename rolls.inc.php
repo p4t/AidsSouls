@@ -1,4 +1,4 @@
-<div class="flex-item-edit">
+<!-- <div class="flex-item-edit"> -->
 
   <table>
     <tbody>
@@ -20,29 +20,39 @@
         
   while ($row = $stmt->fetch()) { 
     // echo  $row[0] . " | " . $row[1] .  "<br/>";
-    echo '<tr>';
+    echo "\n<tr>\n";
 
-    echo '<td>';
+    echo "<td>";
     echo $row["ID"];
-    echo '</td>';
+    echo "</td>";
+    
+    echo "\n";
 
-    echo '<td>';
+    echo "<td>";
     echo $row["mobs"];
-    echo '</td>';
+    echo "</td>";
+    
+    echo "\n";
 
-    echo '<td>';
+    echo "<td>";
     echo $row["boss"];
-    echo '</td>';
+    echo "</td>";
 
-    echo '<td>';
+    echo "\n";
+    
+    echo "<td>";
     echo formatDate($row["date"]);
-    echo '</td>';
+    echo "</td>";
+    
+    echo "\n";
 
-    echo '<td>';
+    echo "<td>";
     echo $row["IP"];
-    echo '</td>';
+    echo "</td>";
+    
+    echo "\n";
 
-    echo '</tr>';
+    echo "</tr>\n";
   }
 
   ?>
@@ -50,4 +60,4 @@
       </tr>
     </tbody>
   </table>
-</div>
+<!-- </div> -->
