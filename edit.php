@@ -1,5 +1,4 @@
 <?php
-
 //////////////// WARNING IF DICE ORDER IS NOT IN ORDER :-)
 
 // DEBUG
@@ -18,14 +17,28 @@ require_once("functions.inc.php");
 ?>
 
 
+<!doctype html>
 <html>
 <head>
+  
 <meta charset="utf-8">
-<meta name="theme-color" content="#3f292b">
-<title>\[T]/ Praise the Edit</title>
+<meta name="theme-color" content="#3f292b"> 
 
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Tangerine">
-<link rel="stylesheet" href="layout.css" type="text/css" media="screen">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+  
+<title>\[T]/</title>
+
+<link rel="stylesheet" href="css/layout.css" type="text/css" media="screen">
+<link rel="stylesheet" href="css/flex.css" type="text/css" media="screen">
+<link rel="stylesheet" href="css/button.css" type="text/css" media="screen">
+<link rel="stylesheet" href="css/table.css" type="text/css" media="screen">
+<link rel="stylesheet" href="css/datatip.css" type="text/css" media="screen">
+<link rel="stylesheet" href="css/mobile.css" type="text/css" media="screen">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/balloon-css/0.5.0/balloon.min.css">
+  
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
  
 </head>
 
@@ -86,7 +99,8 @@ require_once("functions.inc.php");
       <form action="edit.php?mode=<?= $mode ?>&ID=<?= $_GET["ID"] ?>" method="post">
 
         <label>Dice:</label>
-        <input type="text" name="newDice" value="<?= $row["dice"]; ?>" required="required">
+        <!-- <input type="text" name="newDice" value="<?php //$row["dice"]; ?>" required="required"> -->
+        <input type="number" name="newDice" value="<?= $row["dice"]; ?>" min="1" max="99" autocomplete="off" placeholder="Würfel" required="required">
         
         <label>Entry:</label>
         <input type="text" name="newName" value="<?= $row["name"]; ?>" required="required">
@@ -189,11 +203,20 @@ if ( isset($_GET["mode"]) && ($_GET["mode"] == "kills") ) {
         $stmt->execute();
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
         (INT)$addDice = $row["dice"] + 1; // +1 of max dice value
-      }      
+      } else {
+        // cherck if dice alrerady exists
+        $stmt = $pdo->prepare("SELECT dice FROM $table WHERE dice = $addDice"); // get max value from field dice
+        $stmt->execute();
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        
+        if ($row["dice"] != NULL ) die("Dice Wert schon vergeben!");
+      }
       
-      // CHECK IF DICE ALREADY EXISTS IN DB TODO
       
-      $sql = "INSERT INTO ".$table." (dice, name) VALUES (:dice, :name)";
+      // CHECK IF DICE VALUE ALREADY EXISTS
+        
+      $sql = "INSERT INTO $table (dice, name) VALUES (:dice, :name)";
+      // $sql = "INSERT INTO $table (dice, name) VALUES (:dice, :name) ON DUPLICATE KEY INSERT (dice, name) VALUES (:dice, :name)";
       $stmt = $pdo->prepare($sql);          
       $stmt->bindParam(':dice', $addDice, PDO::PARAM_INT);
       $stmt->bindParam(':name', $_POST['addEntry'], PDO::PARAM_STR);
@@ -236,31 +259,21 @@ if ( isset($_GET["mode"]) && ($_GET["mode"] == "kills") ) {
   
   
   
-  
-  
-  
-  
-  
-  
-<div id="flex-container-edit" >
+<div id="flex-container-edit">
   
 
 <?php
 /* STANDARD ANSICHT WENN NUR EDIT.PHP
 * DISPLAY ALL TABLES WHERE TO EDIT FROM
 */
-if ( empty($_GET["mode"]) ) {
-  /*
-  displaySQLContentAsTable ($pdo, "mobs");
-  displaySQLContentAsTable ($pdo, "boss");
-  displaySQLContentAsTable ($pdo, "weapons");
-  */
-$tables = array("mobs", "boss", "weapons");
+if ( empty($_GET["mode"]) ) :
+  $tables = array("mobs", "boss", "weapons");
 
-foreach($tables as $table) {
-  $stmt = $pdo->prepare("SELECT * FROM $table ORDER BY dice");
-  $stmt->execute();
+  foreach($tables as $table) :
+    $stmt = $pdo->prepare("SELECT * FROM $table ORDER BY dice");
+    $stmt->execute();
 ?>
+<form action="edit.php?mode=<?=$table?>&action=add" method="post">
 <table>
   <tbody>
     <tr>
@@ -268,37 +281,48 @@ foreach($tables as $table) {
       <th scope="col"><?=ucfirst($table)?></th>
       <th scope="col">Action</th>
     </tr>
-    <?php while ($row = $stmt->fetch(PDO::FETCH_NUM)) { ?>
+    <?php while ($row = $stmt->fetch(PDO::FETCH_NUM)) : ?>
     <tr>
       <td><a href="edit.php?mode=<?=$table?>&ID=<?=$row[0]?>"><?=$row[1]?></a></td>
       <td><a href="edit.php?mode=<?=$table?>&ID=<?=$row[0]?>"><?=$row[2]?></a></td>
       <td>
         <a href="edit.php?mode=<?=$table?>&ID=<?=$row[0]?>" data-tip="Edit">
-          <img src="img/edit-icon.png" width="024" height="024">
+          <img src="img/edit-icon.png" width="024" height="024" alt="Edit">
         </a>
         <a href="edit.php?mode=<?=$table?>&action=delete&ID=<?=$row[0]?>" onClick="return confirm('SICHER????????');" data-tip="Delete">
-          <img src="img/delete-icon.png" width="024" height="024">
+          <img src="img/delete-icon.png" width="024" height="024" alt="Delete">
         </a>
       </td>
     </tr>
-    <?php } // ENDWHILE ?>
+    <?php ENDWHILE ?>
     <tr>
-      <form action="edit.php?mode=<?=$table?>&action=add" method="post">
-        <td data-tip="Würfel"><input type="number" name="addDice" value="" min="1" max="99" autocomplete="off" placeholder="Zahl"</td>
-        <td data-tip="Name"><input type="text" name="addEntry" value="" autocomplete="off" placeholder="<?=$table?> Name" required="required"></td>
-        <td data-tip="Abschicken"><input type="submit" value="Submit"></td>
-      </form>
+      <!-- <form action="edit.php?mode=<?=$table?>&action=add" method="post"> -->  <!-- MOVED -->
+        <td data-tip="Keine Zahl überspringen, Feld freilassen für auto Dice +1. Keine doppelten Werte!">
+          <input type="number" name="addDice" value="" min="1" max="99" autocomplete="off" placeholder="Würfel">
+        </td>
+        <td data-tip="Name">
+          <input type="text" name="addEntry" value="" autocomplete="off" placeholder="<?=$table?> Name" required="required">
+        </td>
+        <td data-tip="Abschicken"><input type="submit" value="Submit">
+          &nbsp;
+        </td>
+      <!-- </form> --> <!-- MOVED -->
     </tr>
   </tbody>
 </table>
+</form>
 <?php
-} // ENDIF
+  ENDFOREACH
+?>
 
+  <?php
     include("kills.inc.php");
     include("rolls.inc.php");
-
-  } // EOF if ( empty($_GET["mode"]) ) {
   ?>
+
+<?php
+ENDIF // EOF if ( empty($_GET["mode"]) )
+?>
 
 </div>
   

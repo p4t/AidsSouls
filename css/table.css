@@ -1,0 +1,195 @@
+@charset "utf-8";
+
+
+/* ~~~ Table ~~~ */
+
+table {
+	/* background: #f5f5f5; */
+  /* background: #3F292B; */ /*BG*/
+  /* background: url("/img/ds3-asset-bg.png") center repeat-y; */
+
+  border: 50px solid transparent;
+  border-image: url("/img/border.png") 30 round;
+  background: url("/img/ds3-asset-bg.png") no-repeat center center scroll;
+  
+	border-collapse: separate;
+	/* box-shadow: inset 0 1px 0 #3F292B; */
+	font-size: 1em;
+	line-height: 24px;
+	margin: 30px auto;
+	text-align: left;
+
+}	
+
+th {
+	/* background: url(noise-diagonal.png), linear-gradient(#69302c, #bb754d); */
+  background: url("/img/noise-diagonal.png"), linear-gradient(#A37B73, #3F292B);
+	/*
+  border-left: 1px solid #555;
+	border-right: 1px solid #777;
+	border-top: 1px solid #555;
+	border-bottom: 1px solid #333;
+  */
+	box-shadow: inset 0 1px 0 #3F292B;
+	color: #fff;
+  font-weight: bold;
+	padding: 10px 15px;
+	position: relative;
+	text-shadow: 0 1px 0 #DB7F67;
+  
+  font-size: 1.2em;
+  
+  
+}
+
+
+
+th:after {
+	background: linear-gradient(rgba(255,255,255,0), rgba(255,255,255,.08));
+	content: '';
+	display: block;
+	height: 25%;
+	left: 0;
+	margin: 1px 0 0 0;
+	position: absolute;
+	top: 25%;
+	width: 100%;
+}
+
+th:first-child {
+	/* border-left: 1px solid #777;	*/
+	box-shadow: inset 1px 1px 0 #3F292B;
+}
+
+th:last-child {
+	box-shadow: inset -1px 1px 0 #3F292B;
+}
+
+td {
+  /*
+	border-right: 1px solid #fff;
+	border-left: 1px solid #e8e8e8;
+	border-top: 1px solid #fff;
+	border-bottom: 1px solid #e8e8e8;
+  */
+	padding: 10px 15px;
+	position: relative;
+	transition: all 300ms;
+    
+  font-size: 1.1em;
+}
+
+td.emoji {
+  font-size: 4.5em;
+  width: 100px;
+  height: 75px; /* min height for style if no or few bosses were killed*/
+  text-align: center;
+  
+  
+  /* text-replace: "Biber" "🐻" "Katz" "🐱" "Pat" "💩" "Bonfire" "🔥"; */
+}
+
+/*
+td.emoji a,
+td.emoji a:link,
+td.emoji a:active,
+td.emoji a:focus
+{
+  color: transparent;
+  text-shadow: 0 0 3px #000;
+}
+*/
+
+
+
+@keyframes bounce {
+	0%, 20%, 60%, 100% {
+		-webkit-transform: translateY(0);
+		transform: translateY(0);
+	}
+
+	40% {
+		-webkit-transform: translateY(-20px);
+		transform: translateY(-20px);
+	}
+
+	80% {
+		-webkit-transform: translateY(-10px);
+		transform: translateY(-10px);
+	}
+}
+
+
+
+td.emoji:hover {
+  /*
+  font-size: 1em;
+  content: '+';
+  */
+  animation: bounce 1s
+}
+
+
+
+
+
+
+td:first-child {
+	box-shadow: inset 1px 0 0 #000;
+}	
+
+td:last-child {
+	/* border-right: 1px solid #e8e8e8; */
+	box-shadow: inset -1px 0 0 #000;
+}	
+
+tr {
+	background: url("/img/noise-diagonal.png");	
+}
+
+tr:nth-child(odd) td {
+	/* background: #f1f1f1 url("/img/noise-diagonal.png");	*/
+  /* background: #A37B73 url("/img/noise-diagonal.png"); */ /*BG*/
+}
+
+tr:last-of-type td {
+	box-shadow: inset 0 -1px 0 #000; 
+}
+
+tr:last-of-type td:first-child {
+	box-shadow: inset 1px -1px 0 #000;
+}	
+
+tr:last-of-type td:last-child {
+	box-shadow: inset -1px -1px 0 #000;
+}	
+
+
+tbody:hover td,
+tbody:hover td a {
+	color: transparent;
+  text-shadow: 0 0 3px #aaa;
+  /* text-shadow: 1px 1px 1px #bb754d, 1px 1px 1px #7a4930, -1px -1px 1px #bb754d, -1px -1px 1px #7a4930; */  /*BROWN UGLY HOVER*/
+}
+
+tbody:hover tr:hover td,
+tbody:hover tr:hover td a {
+	color: #fff;
+	/* text-shadow: 0 1px 0 #fff; */
+    text-shadow: 1px 1px 5px #bb754d, 1px 1px 10px #7a4930, -1px -1px 5px #bb754d, -1px -1px 10px #7a4930;
+}
+
+
+/* differrent transparent color hover for emojis */
+tbody:hover td.emoji,
+tbody:hover td.emoji a {
+	color: transparent;
+  text-shadow: 0 0 3px #000;
+  opacity: 0.5;
+  /* text-shadow: 1px 1px 1px #bb754d, 1px 1px 1px #7a4930, -1px -1px 1px #bb754d, -1px -1px 1px #7a4930; */  /*BROWN UGLY HOVER*/
+}
+
+tbody:hover td.emoji,
+tbody:hover td.emoji a:hover {
+  opacity: 1.0;
+} 

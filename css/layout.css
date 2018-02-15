@@ -1,0 +1,292 @@
+@charset "utf-8";
+
+@font-face {
+	font-family: "Trajan";
+	src: url("/fonts/TrajanProRegular.ttf");
+	src: local("Trajan"), url("/fonts/TrajanProRegular.ttf") format("truetype");
+}
+
+html {
+  font-family: "Trajan", sans-serif;
+  font-size: 100%;
+  
+  -webkit-font-smoothing: antialiased; /* Fix for webkit rendering */
+	-webkit-text-size-adjust: 100%; 
+  -ms-text-size-adjust: 100%;
+  
+  background: url("/img/ds3bg/shrine2.jpg") no-repeat center center fixed;
+  /* background: url("/img/ds1remaster.jpg") no-repeat center center fixed; */
+  
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+
+	margin: 0;
+	padding: 0;
+	
+  color: #fff;
+  text-shadow: 0 1px 0 #fff;
+  
+  /* overflow: hidden; */
+}
+
+body {
+  
+}
+
+article,
+aside,
+footer,
+header,
+nav,
+section {
+  display: block;
+}
+
+/* Dark Souls Font Style */
+@font-face {
+	font-family: "OptimusPrinceps";
+	src: url("/fonts/OptimusPrinceps.ttf");
+	src: local("OptimusPrinceps"), url("/fonts/OptimusPrinceps.woff") format("woff"), url("/fonts/OptimusPrinceps.ttf") format("truetype");
+}
+/* use this class to attach this font to any element i.e. <p class="fontsforweb_fontid_1045">Text with this font applied</p> */
+.fontsforweb_fontid_1045 {
+	font-family: "OptimusPrinceps" !important;
+}
+
+strong {
+	font-weight: bold; 
+}
+
+
+em {
+	font-style: italic; 
+}
+
+
+s {
+  /* color: red; */
+}
+
+
+a, a:link, a:visited {
+  color: inherit;
+	text-decoration: none;
+  text-shadow: 1px 1px 2px #000; /* FOR EMOJI IMAGES IN TABLE */
+  
+}
+
+
+a:hover, a:focus, a:active {
+	/* color: #78110f; */
+  color: #fff;
+  text-shadow: 1px 1px 5px #bb754d, 1px 1px 10px #7a4930, -1px -1px 5px #bb754d, -1px -1px 10px #7a4930;
+}
+
+
+ul, ol, dl {
+	padding: 0;
+	margin: 0;
+	border: 0;
+  list-style: none outside;
+}
+
+
+h1, h2, h3, h4, h5, h6 {
+  color: #efefef;
+	font-weight: bold; 
+  text-shadow: 1px 1px 5px #bb754d, 1px 1px 10px #7a4930, -1px -1px 5px #bb754d, -1px -1px 10px #7a4930;
+  
+  margin: 0;
+  padding: 0;
+}
+
+
+h1 { font-size: 3.0em; line-height: 1em; }
+h2 { font-size: 2.5em; line-height: 2em; }
+h3 { font-size: 1.7em; line-height: 1.5em; }
+h4 { font-size: 1.5em; line-height: 1em; }
+h5 { font-size: 2.5em; line-height: 1em; }
+h6 { font-size: 1.1em; line-height: 1em; }
+
+
+h1, h2, h4, h5 {
+  font-family: "OptimusPrinceps";
+}
+
+
+h1, h5 {
+  text-align: center;
+}
+
+
+img, a img { 
+	border: none;
+}
+
+
+hr {
+  background: url("/img/hr2.png") round;
+  height: 20px;
+  border: 0;
+}
+
+.container {
+	width: 95%;
+	max-width: 1260px;
+	min-width: 780px;
+
+	margin: 0 auto;
+}
+
+header {
+  text-align: center;
+}
+
+.content {
+	width: 90%; /* 90% of .container */
+	margin: 0 auto;
+  margin-top: 10px;
+}
+
+.header_Edit {
+  margin-top: 10px;
+}
+
+footer {
+  align-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+
+
+
+div.aidscontent, div.aidsListing {
+  width: 70%; /* % of .container !IMPORTANT */ 
+	/* max-width: 60%; */
+	margin: 0 auto;
+  
+}
+
+div.aidscontent, div.aidsListing {
+  
+  border: 25px solid transparent;
+  padding: 15px;
+  
+  border-image: url("/img/border.png") 30 round;
+  background: url("/img/ds3-asset-bg.png") no-repeat center center scroll;
+  
+  /*
+  background: url("/img/ds3-bg-border-book.png") no-repeat center center scroll;
+  background-size: cover;
+  padding-left: 30px;
+  padding-right: 30px;
+  */
+  
+  /* border-radius: 25px; */
+  /* padding: 10px; */
+}
+
+
+.bonfire:hover:after {
+  content: '\25BA';
+}
+
+
+/* Reroll Fade-In */
+.aidscontent, .rerunroll {
+  -webkit-animation: fade-in 2s ease;
+  -moz-animation: fade-in ease-in-out 2s both;
+  -ms-animation: fade-in ease-in-out 2s both;
+  -o-animation: fade-in ease-in-out 2s both;
+  animation: fade-in 2s ease;
+  visibility: visible;
+  -webkit-backface-visibility: hidden;
+}
+
+@-webkit-keyframes fade-in{0%{opacity:0;} 100%{opacity:1;}}
+@-moz-keyframes fade-in{0%{opacity:0} 100%{opacity:1}}
+@-o-keyframes fade-in{0%{opacity:0} 100%{opacity:1}}
+@keyframes fade-in{0%{opacity:0} 100%{opacity:1}}
+
+
+
+
+.rerunFont {
+  /* font-family: "OptimusPrinceps"; */
+  font-size: 3em;
+  font-weight: 600;
+  text-align: center;
+}
+
+
+ul.aidsList {
+  list-style: decimal inside;
+  display: table;
+  font-size: 1.1em;
+}
+
+ul.aidsList > li {
+  /*
+  padding-left: 5px;
+  padding-right: 5px;
+  */
+}
+
+li.noListStyle {
+  list-style: none;
+}
+
+
+
+.aidsText {
+  font-size: 1.6em;
+  line-height: 2em;
+  
+  font-weight: bold;
+  text-shadow: 0px 2px 2px rgba(255, 255, 255, 0.4);
+}
+
+.weaponText {
+  font-size: 1.3em;
+  font-weight: bold;
+  text-shadow: 0px 2px 2px rgba(255, 255, 255, 0.4);
+}
+
+
+.edit_ID {
+  color: #6F6B6B;
+  opacity: 0.2;
+}
+
+#w12 {
+  /* height: 236px; */
+}
+
+.dice {
+  height: 236px;
+}
+
+
+img.dice {
+  /* filter:blur(5px); */
+  /* filter:invert(100%); */
+  filter: contrast(0) sepia(100%) hue-rotate(200deg) brightness(1.4) saturate(0.28);
+
+  width: 100px;
+  height: 100px;
+}
+
+
+  /* DEBUG */
+  
+/*
+  * {
+    border-style: groove;
+    border-color: chartreuse;
+    border-width: 1px;
+  }
+    
+*/

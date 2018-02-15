@@ -1,0 +1,47 @@
+@charset "utf-8";
+
+
+/* MOBILE*/
+@media all and (max-width: 600px) {
+  /*
+  html {
+    background: green;
+  }
+  */
+  
+  .aidsText {
+    font-size: 2em;
+  }
+  
+  h1 { font-size: 3.5em; line-height: 1em; }
+  h2 { font-size: 3em; line-height: 1em; }
+  h3 { font-size: 2.1em; line-height: 1.5em; }
+  h4 { font-size: 2em; line-height: 1em; }
+  h5 { font-size: 1.7em; line-height: 1em; }
+  h6 { font-size: 1.6em; line-height: 1em; }
+  
+  ul.aidsList {
+    /* font-size: 1.3em; */
+    /* margin-right: 50px; */
+  }
+  
+  ul.aidsList > li {
+    font-size: 1.5em;
+  }
+  
+  
+  
+  th {
+    font-size: 2em;
+  }
+  td {
+    font-size: 1.5em;
+    line-height: 1.2em;
+  }
+  div.aidscontent, div.aidsListing {
+    width: 99%;
+  }
+  
+  /*BACKGROUND*/
+
+} /* EOF @media */

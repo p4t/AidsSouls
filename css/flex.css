@@ -1,0 +1,104 @@
+@charset "utf-8";
+
+#flex-container, #flex-container-footer {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+
+  margin: 0 auto; 
+}
+
+#flex-container-aids { /* bg for dice, aidstext */
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  align-items: center;
+
+  /* margin: auto; */
+  margin: 0 auto;
+  padding: 5px;
+  height: 236px;
+}
+
+
+#flex-container-aids-text {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  align-items: center;
+
+  /* margin: 0 auto; */
+  margin: auto; 
+}
+
+#flex-container-aidsListing {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  align-items: stretch;
+
+  /* margin: 0 auto; */
+  margin: auto; 
+}
+
+
+
+#flex-container-roll {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+
+  margin: 0 auto;
+  padding-top: 15px;
+
+}
+
+.flex-item, .flex-item-aids {
+  /* width: 100px; */
+  /* height: 200px; */
+  /* border: 1px black solid; */
+  /* background: #369; */
+}
+
+.flex-item-aids-bonfire {
+  /*
+  width: 172px;
+  height: 236px;
+  */
+}
+
+.flex-item-aids-left {
+  text-align: left;
+}
+.flex-item-aids-right {
+  text-align: right;
+}
+
+
+
+
+
+
+
+
+#flex-container-edit {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+
+  margin: 0 auto;
+
+   
+}
+
+.flex-item-edit {
+  margin-top: 5px;
+  font-weight: 400;
+}
+

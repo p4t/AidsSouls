@@ -9,7 +9,6 @@
         <th scope="col">Zeit</th>
         <th scope="col">IP</th>
       </tr>
-      <tr>
   <?php
 
 
@@ -57,7 +56,6 @@
 
   ?>
 
-      </tr>
     </tbody>
   </table>
 <!-- </div> -->

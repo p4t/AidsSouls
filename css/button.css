@@ -1,0 +1,61 @@
+@charset "utf-8";
+
+
+.button {
+  border-radius: 4px;
+  background-color: #3F292B;
+  /* background-color: #434343; */
+  /* background: url("/img/noise-diagonal-trans.png"); */
+  background: url("/img/button_bg.png");
+  border: none;
+  
+  font-family: "OptimusPrinceps";
+  color: #fefefe;
+  text-shadow: 1px 1px 5px #bb754d, 1px 1px 10px #7a4930, -1px -1px 5px #bb754d, -1px -1px 10px #7a4930;
+  
+  text-align: center;
+  font-size: 1.7em; /* Button Text Font Size */
+  padding: 5px;
+  
+  width: 120px;
+  height: 68px;
+  
+  /*
+  width: 120px;
+  height: 75px;
+  */
+  
+  transition: all 0.5s;
+  cursor: pointer;
+  margin: 5px;
+}
+
+.button span {
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+  transition: 0.5s;
+}
+
+.button span:after {
+  /* content: '\00bb'; */
+  content: '🎲';
+  position: absolute;
+  opacity: 0;
+  top: 0;
+  right: -20px;
+  margin-right: -10px;
+  transition: 0.5s;
+}
+
+.button:hover span {
+  padding-right: 25px;
+  text-shadow: 1px 1px 5px #bb754d;
+}
+
+.button:hover span:after {
+  opacity: 1;
+  right: 0;
+}
+
+

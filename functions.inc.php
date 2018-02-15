@@ -1,4 +1,11 @@
 <?php
+/***************************
+*
+* AIDS.PHP
+*
+*****************************/
+
+
 /*
 Get IP
 */
@@ -24,7 +31,7 @@ function randomWeapon () {
   $section    = "weapons";
   $count      = pdoCount($section);
   $weaponRNG  = mt_rand (1, $count);
-  echo "(" . $weaponRNG . ")";
+  // echo "(" . $weaponRNG . ")";
   // $weaponRNG  = 21;
   
   $stmt = $pdo->prepare("SELECT * FROM weapons WHERE dice = $weaponRNG");
@@ -40,85 +47,6 @@ function randomWeapon () {
 	
 
 
-
-/*
- * Display rolled dice value as image
- */
-function displayDice ($diceValue) {
-  // echo '<span data-balloon="'.$diceValue.'" data-balloon-pos="up">';
-  echo "<img src=\"dice/".$diceValue.".png\" width=\"100\" height=\"100\" alt=\"".$diceValue."\">";
-  // echo '</span>';
-}
-
-
-/*
- * Display which aids was rolled
- */
-function aids ($positive) {
-  echo "<strong>" . $positive . "</strong>";
-  echo "\n";
-}
-
-
-
-/*
- * Display and list content of a specific Aids array (Boss, Mobs, Weapons)
- */
-function displayAidsArray ($value) {
-  echo "<ul class=\"aidsListing\">";
-  foreach ($value as $key => $value) {
-    echo "<li>";
-    $key = $key + 1;
-    echo $key . ": ". $value;
-    echo "</li>";
-	}
-  echo "</ul>";
-}
-
-
-/*
- * Get Content from SQL, query
- */
-function displaySQLContent ($table) {
-  global $pdo;
-  $sql = "SELECT * FROM $table ORDER BY dice";
-  $stmt = $pdo->prepare($sql);
-  $stmt->execute();
-
-  /*
-  $stmt = $pdo->prepare('SELECT name FROM weapons WHERE ID = '.$weaponRNG.' ');
-  $stmt->execute();
-  $row = $stmt->fetch(PDO::FETCH_ASSOC);
-  */
-
-  // $countRows = $stmt->rowCount();
-
-  echo "\n";
-  echo "<ul class=\"aidsListing\">";
-  echo "\n";
-
-  while ($row = $stmt->fetch(PDO::FETCH_NUM)) { 
-
-    echo "<li>";
-
-    /* Either use deicmal list via MySQL or list-style CSS */
-    /*
-    echo $row[0];
-    echo ': ';
-    */
-
-    echo "<a href=\"edit.php?mode=".$table."&ID=".$row[0]."\" target=\"_blank\" rel=\"noopener noreferrer\">";
-    // echo $row[1];
-    echo $row[2];
-    echo "</a>";
-
-    echo "</li>";
-    echo "\n";
-
-  }
-  echo "</ul>";
-  echo "\n";
-}
 
   
 /*
@@ -166,6 +94,21 @@ function pdoAidsQuery ($section, $RNG) {
   
   return $row;
   
+}
+
+
+/*
+ * Simple Query for everything
+ */
+function pdoQuery ($query, $mode) {
+  global $pdo;
+  if ( empty($mode) ) $mode = "PDO::FETCH_ASSOC";
+  
+  $stmt = $pdo->prepare("$query");
+  $stmt->execute();
+  $row = $stmt->fetch($mode); 
+  
+  return $row; 
 }
 
 
@@ -354,104 +297,6 @@ function pdoUpdateTable ($table, $post, $ID) {
   $stmt->execute();
 }
   
-
-/*
-* Display given table as HTML <table>
-*/
-function displaySQLContentAsTable ($table) {
-  global $pdo;  
-  $table_output = ucfirst($table);
-
-  echo "<div class=\"flex-item-edit\">\n";
-  echo "<table>\n";
-  echo "<tbody>\n";
-  echo "<tr>\n";
-  
-  /* echo "<th scope=\"col\">ID</th>\n"; */
-  echo "<th scope=\"col\">Dice</th>\n";
-  echo "<th scope=\"col\">".ucfirst($table)."</th>\n";
-  echo "<th scope=\"col\">Action</th>\n";
-
-  echo "</tr>\n";
-
- //  echo "<tr>\n";
-
-  $stmt = $pdo->prepare("SELECT * FROM $table ORDER BY dice");
-  $stmt->execute();
-
-  while ($row = $stmt->fetch(PDO::FETCH_NUM)) { 
-
-    echo "<tr>";
-
-    /*
-    echo "<td>";
-    echo "<span class=\"edit_ID\">";
-    echo $row[0];
-    echo "</td>";
-    */
-    
-    echo "<td>";
-    echo "<strong>";
-    echo $row[1];
-    echo "</strong>";
-    echo "</td>";
-    
-    echo "<td>";
-    echo "<a href=\"edit.php?mode=".$table."&ID=".$row[0]."\">";
-    // echo $row[1];
-    echo $row[2];
-    echo "</a>";
-    echo "</td>";
-    
-    echo "<td style=\"text-align: center;\">";
-    
-    // EDIT ICON
-    echo "<a href=\"edit.php?mode=".$table."&ID=".$row[0]."\" data-tip=\"Edit\">";
-    echo "<img src=\"img/edit-icon.png\" width=\"024\" height=\"024\"";
-    echo "</a>";
-    
-    // SPACE
-    
-    // DELETE ICON
-    echo "<a href=\"edit.php?mode=".$table."&action=delete&ID=".$row[0]."\" onClick=\"return confirm('SICHER????????');\" data-tip=\"Delete\">";
-    echo "<img src=\"img/delete-icon.png\" width=\"024\" height=\"024\"";
-    echo "</a>";
-    echo "</td>";
-    
-    echo "</tr>\n";
-  }
-  
-  echo "<form action=\"edit.php?mode=$table&action=add\" method=\"post\">\n";
-  /*
-  echo "<td>";
-  echo "<label><strong>Add:</strong></label>";
-  echo "</td>";
-  */
-  
-  echo "<td data-tip=\"{$table_output} Dice\">";
-  echo "<input type=\"number\" name=\"addDice\" value=\"\" min=\"1\" max=\"99\" autocomplete=\"off\" placeholder=\"Zahl\">\n";
-  echo "</td>";
-
-  echo "\n<td data-tip=\"{$table_output} Name\">\n";
-  
-  /* <INPUT> FOR ADDING ENTRIES*/
-
-  echo "<input type=\"text\" name=\"addEntry\" value=\"\" autocomplete=\"off\" placeholder=\"{$table_output} Name\" required=\"required\">\n";
-
-  echo "</td>\n";
-  
-  echo "<td data-tip=\"Abschicken\">";
-  echo "<input type=\"submit\" value=\"Submit\">\n";
-  echo "</td>";
-  
-  echo "</form>\n";
-  echo "</tr>\n";
-  echo "</tbody>\n";
-  echo "</table>\n";
-
-  echo "</div>\n"; 
-
-}
 
 
 /*

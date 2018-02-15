@@ -17,13 +17,30 @@ echo "</pre>";
 <head>
   
 <meta charset="utf-8">
-<meta name="theme-color" content="#3f292b">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
+
+<!-- <meta http-equiv="Cache-Control" content="no-store" /> -->
+  
+  
+<link rel="apple-touch-icon" sizes="180x180" href="/img/favico/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/img/favico/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/img/favico/favicon-16x16.png">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="mask-icon" href="/img/favico/safari-pinned-tab.svg" color="#5bbad5">
+
+<meta name="msapplication-TileColor" content="#3f292b">
+<meta name="theme-color" content="#3f292b">  
+
+<!-- <meta name="viewport" content="width=device-width,initial-scale=1.0"> -->
   
 <title>\[T]/</title>
 
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Tangerine">
-<link rel="stylesheet" href="layout.css" type="text/css" media="screen">
+<link rel="stylesheet" href="css/layout.css" type="text/css" media="screen">
+<link rel="stylesheet" href="css/flex.css" type="text/css" media="screen">
+<link rel="stylesheet" href="css/button.css" type="text/css" media="screen">
+<link rel="stylesheet" href="css/table.css" type="text/css" media="screen">
+<link rel="stylesheet" href="css/datatip.css" type="text/css" media="screen">
+<!-- <link rel="stylesheet" href="css/mobile.css" type="text/css" media="screen"> -->
+
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/balloon-css/0.5.0/balloon.min.css">
   
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -50,15 +67,18 @@ echo "</pre>";
 
   function pickimg() {
     
-  var x   = document.getElementById("w12");
+  var w12   = document.getElementById("w12");
+  var bonfire   = document.getElementById("bonfire");
 
-  if (x.style.display === "none") {
-    x.style.display = "block";
+  if (w12.style.display === "none") {
+    w12.style.display = "block";
+    bonfire.style.display = "none";
+    play_audio("dice");
   } else {
-    x.style.display = "none";
+    w12.style.display = "none";
+    bonfire.style.display = "block";
   }
     
-    // document.getElementById("randimgw12").src = diceImages[getRandomInt(0, diceImages.length - 1)];
     document.getElementById("randimgw12").src = "dice/" + images[getRandomInt(0, images.length - 1)];
     
   } 
@@ -68,31 +88,100 @@ echo "</pre>";
   // roll dice 1-100, display yes if dice is either 77 or 7
   function rerun() {
 
-    var rnd = Math.floor((Math.random() * 100) + 1)
-    var x   = document.getElementById("rerunroll");
+    var rnd         = Math.floor((Math.random() * 100) + 1)
+    var rerunroll   = document.getElementById("rerunroll");
+    var bonfire     = document.getElementById("bonfire");
+    var epicsaxguy  = document.getElementById("EpicSaxGuy");
+    var vader       = document.getElementById("vader");
+    
+    
+    /*
+    var rerunroll   = document.getElementById("rerunroll");
+    var bonfire     = document.getElementById("bonfire");
+    var epicsaxguy  = document.getElementById("EpicSaxGuy");
+    */
+    
 
-      if (x.style.display === "none") {
-          x.style.display = "block";
-      } else {
-        x.style.display = "none";
+      if (rerunroll.style.display === "none") { // wenn würfel ausgabe nicht ausgegeben wird und button gedrückt wird
+          rerunroll.style.display = "block"; // button wird gedrückt, zeig würfel output als div: rerun
+          // y.style.display = "none";
+          // z.style.display = "block";
+      } else { // würfel output wenn angezeigt wird und button wieder gedrückt wird
+        rerunroll.style.display   = "none"; // verstecke rerun div wieder
+        bonfire.style.display     = "block"; // zeige bonfire wieder an
+        epicsaxguy.style.display  = "none"; // verstecke Epic Sax Guy Gif
+        vader.style.display       = "none"; // verstecke Vader
       }
     
-    // if (rnd > 1) { // DEBUG
+    // rnd = 1; // DEBUG
     if (rnd == 7 || rnd == 77) {
-      document.getElementById("rerunroll").innerHTML = "👍" + "<br>" + rnd;
-    } else {
-      document.getElementById("rerunroll").innerHTML = "¯\\_(ツ)_/¯" + "<br>" + rnd;
+      document.getElementById("rerunroll").innerHTML = "<img src='img/jumpforjoy.png'>" + "<br>" + rnd;
+      if (rerunroll.style.display === "block") { // sicherstellen, dass Ton und Gif nur abgespielt werden wenn der Würfel stimmt
+        play_audio("yes");
+        bonfire.style.display = "none"; // verstecke bonfire
+        epicsaxguy.style.display = "block"; // zeige Epic Sax Guy Gif
+      }
+    } else if (rnd == 1 || rnd == 100) {
+      document.getElementById("rerunroll").innerHTML = "<img src='img/stretchout.png'><br>" + rnd;
       
-      if (x.style.display === "block") play_haha();
+      if (rerunroll.style.display === "block") { // sicherstellen, dass Ton und Gif nur abgespielt werden wenn der Würfel stimmt
+        play_audio("no");
+        bonfire.style.display = "none"; // verstecke bonfire
+        vader.style.display = "block"; // zeige Epic Sax Guy Gif
+      }
+      
+      
+    } else { // alles außer 1, 100, 7, 77
+      document.getElementById("rerunroll").innerHTML = "¯\\_(ツ)_/¯ <br><img src='img/collapse.png'><br>" + rnd;
+      
+      if (rerunroll.style.display === "block") { // sicherstellen, dass Ton nur abgespielt wird wenn der Würfel stimmt
+        play_audio("haha");
+        bonfire.style.display = "none"; // verstecke bonfire
+      }
     } 
-  }
+    
+  } // EOF RERUN()
 
 
 </script> 
+  
+<script>
+  
+function reload_page () {
+  // window.location.reload();
+  location.reload();
+}
+  
+function reroll () {
+  play_audio('aids');
+  
+  setTimeout(function() { reload_page(); }, 1650);
+  
+}
+</script>  
 
 <script>
+  function play_audio (source) {
+    var myAudio = document.getElementById("audio_"+source);
+
+    if (myAudio.paused) {
+      myAudio.play();
+    } else {
+      myAudio.pause();
+    }
+    
+    
+    // audio.play();
+  }
+  
+  /*
   function play_haha() {
     var audio = document.getElementById("audio_haha");
+    audio.play();
+  }
+  
+  function play_yes() {
+    var audio = document.getElementById("audio_yes");
     audio.play();
   }
 
@@ -110,6 +199,12 @@ echo "</pre>";
     var audio = document.getElementById("audio_Pat");
     audio.play();
   }
+  
+  function play_dice() {
+    var audio = document.getElementById("audio_dice");
+    audio.play();
+  }
+  */
 </script>
   
 
@@ -119,11 +214,11 @@ echo "</pre>";
 
 <div class="container">
 
-  <div class="header">
-    <!-- <img src="img/ds2_logo.png" alt="Dark Souls II Aids" width="630" height="80" class="headerImage"> -->
-    <img src="img/ds3_logo.png" alt="Dark Souls III Aids" width="661" height="80" class="headerImage">
+  <header>
+    <!-- <img src="img/ds2_logo.png" alt="Dark Souls II Logo" width="630" height="80" class="headerImage"> -->
+    <img src="img/ds3_logo.png" alt="Dark Souls III Logo" width="661" height="80">
     <h4>mit verschärftem AIDS</h4>
-  </div>
+  </header>
 
 <div class="content">
 <div class="aidscontent">
@@ -141,16 +236,37 @@ echo "</pre>";
   ?>
 
     <div>
-      <img src="dice/<?= $mobsRNG ?>.png" width="100" height="100" alt="<?= $mobsRNG ?>">
+      <img src="dice/<?=$mobsRNG?>.png" class="dice" width="100" height="100" alt="<?=$mobsRNG?>">
     </div>
 
   </div>
 
 
   <!-- middle dummy; bonfire -->
-  <div class="flex-item-aids">
-    <img src="img/WeirdTepidChital-max-1mb.gif" width="172" height="236" alt=""/>
-  </div> 
+  <div id="bonfire" class="flex-item-aids-bonfire" data-balloon="Firelink Shrine abspielen" data-balloon-pos="up">
+    <span class="bonfire">
+      <img src="img/WeirdTepidChital-max-1mb.gif" width="172" height="236" alt="" onClick="play_audio('shrine')">
+    </span>
+  </div>
+  
+  <!-- w12 output -->
+  <div id="w12" style="display: none;">
+    <h2>W12</h2>
+    <img src="dice/0.png" class="dice" id="randimgw12" width="100" height="100" alt="Dice 0">
+  </div>
+  
+  <!-- EPIC SAX GUY -->
+  <div id="EpicSaxGuy" style="display: none;">
+    <img src="img/EpicSaxGuy.gif" width="186" height="234" alt=""/>
+  </div>
+  
+  <!-- Vader -->
+  <div id="vader" style="display: none;">
+    <img src="img/vader.jpg" width="323" height="203" alt=""/> <!-- width="383" height="263" -->
+  </div>
+  
+  <!-- rerunroll -->
+  <div class="rerunFont" id="rerunroll" style="display: none;"></div>
 
 
   <div class="flex-item-aids-right">
@@ -165,15 +281,20 @@ echo "</pre>";
   ?>
 
     <div>
-      <img src="dice/<?= $bossRNG ?>.png" width="100" height="100" alt="<?= $bossRNG ?>">
+      <img src="dice/<?=$bossRNG?>.png" class="dice" width="100" height="100" alt="<?=$bossRNG?>">
     </div>
 
 
   </div>
+  
+  
+  
 </div><!-- EOF flex-container-aids -->
 
   
-<div id="flex-container-aids">
+
+<!-- OUTPUT AIDS TEXT -->
+<div id="flex-container-aids-text">
   <div>
     <span class="aidsText">
       <?php
@@ -201,14 +322,12 @@ echo "</pre>";
   
   
   
-<!-- 
----- BUTTONS 
--->
+<!-- BUTTONS -->
 <div id="flex-container-roll">
   
   <!-- Reroll / Reload page -->
   <div class="flex-item">
-    <button class="button" onClick="window.location.reload()">
+    <button class="button" onClick="reroll()">
       <span>Reroll</span>
     </button>   
   </div>
@@ -218,8 +337,8 @@ echo "</pre>";
     <button class="button" onClick="pickimg()">
       <span>W12</span>
     </button> 
-    <!-- <a href="#" onClick="pickimg()"><img src="dice/0.png" id="randimgw12" width="100" height="100" alt="Dice 0"></a> -->
   </div>
+  
   
   <!-- Rerun? -->
   <div class="flex-item">
@@ -233,34 +352,62 @@ echo "</pre>";
   
   
 <!-- Rerun output -->
-<audio id="audio_haha" src="audio/SadTrombone.mp3" ></audio>
+  
+<!-- 
 <div class="rerunFont" id="rerunroll" style="display: none;"></div>
+-->
   
 <!-- w12 output -->
+<!--
 <div class="w12Font" id="w12" style="display: none;">
     <img src="dice/0.png" id="randimgw12" width="100" height="100" alt="Dice 0">
 </div>
+-->
 
 
 </div><!-- EOF aidscontent -->
 
 
 <hr>
+  
 
-    
-<div id="flex-container-aidsListing" class="aidsListing">
-  <div class="flex-item"><h3>Mobs</h3><?= displaySQLContent("mobs") ?></div>
-  <div class="flex-item"><h3>Boss</h3><?= displaySQLContent("boss") ?></div>
-  <div class="flex-item"><h3>Waffen</h3><?= displaySQLContent("weapons"); ?></div>
+
+<div class="aidsListing">
+<div id="flex-container-aidsListing">
+<?php
+$tables = array("mobs", "boss", "weapons");
+
+foreach($tables as $table) :
+  $table_output = ucfirst($table);
+  $stmt = $pdo->prepare("SELECT * FROM $table ORDER BY dice");
+  $stmt->execute();
+?>
+  <div class="flex-item-aidsListing">
+    <h3><?=$table_output?></h3>
+    <ul class="aidsList">
+
+      <?php while ($row = $stmt->fetch(PDO::FETCH_NUM)) : ?>
+      <li>
+        <a href="edit.php?mode=<?=$table?>&ID=<?=$row[0]?>" target="_blank" rel="noopener noreferrer">
+          <?=$row[2]?>
+        </a>
+      </li>
+      <?php ENDWHILE ?>
+      <li class="noListStyle"><a href="edit.php?action=add">+</a></li>
+    </ul>
+  </div>
+<?php
+  ENDFOREACH
+?>
 </div>
+</div>
+  
+  
 
   
 <hr>
 
-<!-- AUDIO -->
-<audio id="audio_Biber" src="audio/biber.mp3"></audio>
-<audio id="audio_Katz" src="audio/meow.mp3"></audio>
-<audio id="audio_Pat" src="audio/Pat.mp3"></audio>
+
 
 <!-- Kills Table -->
 <div class="killedBosses">
@@ -282,11 +429,12 @@ echo "</pre>";
 $stmt = $pdo->prepare("SELECT * FROM kills");
 $stmt->execute();
       
-while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) :
 ?>
   <tr> 
+    
    <td class="emoji">
-     <a href="edit.php?mode=kills&ID=<?=$row["ID"]?>" target="_blank" rel="noopener noreferrer" onClick="play_<?=$row["name"]?>()" data-balloon="<?=$row["name"]?>" data-balloon-pos="up">
+     <a href="edit.php?mode=kills&ID=<?=$row["ID"]?>" target="_blank" rel="noopener noreferrer" onClick="play_audio('<?=$row["name"]?>')" data-balloon="<?=$row["name"]?>" data-balloon-pos="up">
        <?=replaceNameWithEmoji($row["name"])?>
      </a>
    </td>
@@ -304,11 +452,14 @@ while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
    </td>
 
    <td>
-     <?=replaceCheeseWithEmoji( nl2br($row["bossNames"]) )?>
+     <a href="edit.php?mode=kills&ID=<?=$row["ID"]?>" target="_blank" rel="noopener noreferrer" data-balloon="<?=$row["bossNames"]?>" data-balloon-pos="up">
+       <?=replaceCheeseWithEmoji( nl2br($row["bossNames"]) )?>
+     </a>
    </td>
+    
   </tr>
 <?php
-}
+ENDWHILE
 ?>
  
     </tbody>
@@ -316,61 +467,68 @@ while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
 </div><!-- EOF killedBosses -->
   
   
-<!-- BONFIRE -->
-
+<!--
 <div id="flex-container-footer">
   <div class="flex-item">&nbsp;</div>
   
   <div class="flex-item">
-    
     <a href="#"><img src="img/arrow_icon.png" width="30" height="19" alt="To Top"></a>
     <a href="edit.php">Edit</a>
-    <a href="#"><img src="img/arrow_icon.png" width="30" height="19" alt="To Top"></a>
-    
+    <a href="#"><img src="img/arrow_icon.png" width="30" height="19" alt="To Top"></a> 
   </div>
   
   <div class="flex-item">&nbsp;</div>
 </div>
+-->
+
+  
+<footer>
+  <p>
+    <a href="#"><img src="img/arrow_icon.png" width="30" height="19" alt="To Top"></a>
+    <a href="edit.php">Edit</a>
+    <a href="#"><img src="img/arrow_icon.png" width="30" height="19" alt="To Top"></a> 
+  </p>
+</footer>
 
   
 </div><!-- EOF Content -->
 </div><!-- EOF Container -->
+  
+  
+  
+<!-- AUDIO -->
+<audio id="audio_Biber" src="audio/biber.mp3"></audio>
+<audio id="audio_Katz" src="audio/meow.mp3"></audio>
+<audio id="audio_Pat" src="audio/Pat.mp3"></audio>
+<audio id="audio_haha" src="audio/SadTrombone.mp3"></audio>
+<audio id="audio_yes" src="audio/EpicSaxGuy.mp3"></audio>
+<audio id="audio_no" src="audio/nooo.ogg"></audio>
+<audio id="audio_dice" src="audio/dice.wav"></audio>
+<!--<audio id="audio_shrine" src="audio/ds3_firelinkshrine.mp3"></audio>-->
+<audio id="audio_shrine" src="audio/DarkSoulsBonfireSoundEffect(cropped).ogg"></audio>
+<audio id="audio_aids" src="audio/aids.mp3"></audio>
+  
+  
+<!-- 
+<audio autoplay="false" controls="true" loop="true" preload="auto"> 
+  <source src="audio/ds3_firelinkshrine.mp3" type="audio/mpeg"></source> 
+  Your browser does not support the audio element. 
+</audio> 
+-->
   
 </body>
 </html>
 
 
 <?php
-/* save all aids to file and DB */
-
-$file = "latestAids.txt";
 $date = date("Y-m-d H:i:s");
-$IP = getRealIpAddr();
-
-$current = file_get_contents($file);
-
-$current .= $IP
-          . " - "
-          . $date
-          . " - "
-          . $mobsRNG
-          . " - "
-          . $bossRNG
-          . "\n"
-          ;
-
-
-file_put_contents($file, $current);
-
-
-//////////////////////////////MYSQL//////////////////
-$sql = "INSERT INTO rolls (date, IP, mobs, boss) VALUES (:date, :IP, :mobs, :boss)";
+$IP   = getRealIpAddr();
+$sql  = "INSERT INTO rolls (date, IP, mobs, boss) VALUES (:date, :IP, :mobs, :boss)";
 $stmt = $pdo->prepare($sql);                                  
 $stmt->bindParam(":date", $date, PDO::PARAM_STR);
 $stmt->bindParam(":IP", $IP, PDO::PARAM_STR);
 $stmt->bindParam(":mobs", $mobsRNG, PDO::PARAM_INT);
 $stmt->bindParam(":boss", $bossRNG, PDO::PARAM_INT);
-// $stmt->bindParam(':ID', $_GET['ID'], PDO::PARAM_INT);
 $stmt->execute();
 
 // Table/Output in edit.php

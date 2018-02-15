@@ -9,10 +9,7 @@
         <th scope="col"><s>Joker</s></th>
         <th scope="col">Kills</th>
       </tr>
-      <tr>
   <?php
-
-
   $sql = 'SELECT * FROM kills';
   $stmt = $pdo->prepare($sql);
   $stmt->execute();
@@ -62,7 +59,6 @@
 
   ?>
 
-      </tr>
     </tbody>
   </table>
 <!-- </div> -->
