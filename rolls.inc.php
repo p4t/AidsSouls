@@ -1,61 +1,37 @@
-<!-- <div class="flex-item-edit"> -->
-
-  <table>
+ <table>
     <tbody>
       <tr>
-        <th scope="col">ID</th>
-        <th scope="col">Mobs</th>
-        <th scope="col">Boss</th>
-        <th scope="col">Zeit</th>
-        <th scope="col">IP</th>
+        <th scope="col"><strong>ID</strong></th>
+        <th scope="col"><strong>Mobs</strong></th>
+        <th scope="col"><strong>Boss</strong></th>
+        <th scope="col"><strong>Zeit</strong></th>
+        <th scope="col"><strong>IP</strong></th>
       </tr>
+      
   <?php
-
-
-  $sql = 'SELECT * FROM rolls ORDER BY ID DESC LIMIT 10'; // Only show latest 10 entries
+  $sql = "SELECT * FROM rolls ORDER BY ID DESC LIMIT 10"; // Only show latest 10 entries
   $stmt = $pdo->prepare($sql);
   $stmt->execute();
-  $countRows = $stmt->rowCount();
         
-  while ($row = $stmt->fetch()) { 
-    // echo  $row[0] . " | " . $row[1] .  "<br/>";
-    echo "\n<tr>\n";
-
-    echo "<td>";
-    echo $row["ID"];
-    echo "</td>";
-    
-    echo "\n";
-
-    echo "<td>";
-    echo $row["mobs"];
-    echo "</td>";
-    
-    echo "\n";
-
-    echo "<td>";
-    echo $row["boss"];
-    echo "</td>";
-
-    echo "\n";
-    
-    echo "<td>";
-    echo formatDate($row["date"]);
-    echo "</td>";
-    
-    echo "\n";
-
-    echo "<td>";
-    echo $row["IP"];
-    echo "</td>";
-    
-    echo "\n";
-
-    echo "</tr>\n";
-  }
-
+  while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) { 
   ?>
-
-    </tbody>
-  </table>
-<!-- </div> -->
+      
+  <tr>
+    <td><?=$row["ID"]?></td>
+    <td><?=$row["mobs"]?></td>
+    <td><?=$row["boss"]?></td>
+    <td><?=formatDate($row["date"])?></td>
+    <td><?=$row["IP"]?></td>
+  </tr>
+      
+  <?php
+  }
+  ?>
+      
+  <tr>
+    <td colspan="5">
+      <a href="edit.php?action=truncate" onClick="return confirm('SICHER???????? MACH KE SCHEISS!');" data-tip="Tabelle leeren">Leeren</a>
+    </td>
+  </tr>
+  </tbody>
+</table>

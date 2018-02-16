@@ -20,14 +20,17 @@
   width: 120px;
   height: 68px;
   
-  /*
-  width: 120px;
-  height: 75px;
-  */
-  
   transition: all 0.5s;
   cursor: pointer;
   margin: 5px;
+}
+
+
+.button:active,
+.button:focus
+{
+  outline-color: #3f292b;
+  outline-style: 1px dotted;
 }
 
 .button span {

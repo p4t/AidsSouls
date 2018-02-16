@@ -1,0 +1,726 @@
+@charset "utf-8";
+
+html {
+
+  font-family: 'Lato', sans-serif;
+  font-size: 100%;
+  /* line-height: 1.15; */
+  /* font-weight: 400; */
+  
+  -webkit-font-smoothing: antialiased; /* Fix for webkit rendering */
+	-webkit-text-size-adjust: 100%; 
+  -ms-text-size-adjust: 100%;
+
+	
+  background: rgb(238, 238, 238);
+  
+  /*
+  background: url('img/bg.png') repeat;
+  */
+  
+  /* background: url(img/ds2coverbg2onlydots.png) no-repeat center center fixed; */
+  background: url(img/ds1remastercover.png) no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+
+	margin: 0;
+	padding: 0;
+	
+  color: #3f292b;
+
+  text-shadow: 0 1px 0 #fff;
+  
+  /* overflow: hidden; */
+}
+
+
+
+body {
+  
+}
+
+
+
+article,
+aside,
+footer,
+header,
+nav,
+section {
+  display: block;
+}
+
+
+
+/* Dark Souls Font Style */
+
+@font-face {
+	font-family: 'OptimusPrinceps';
+	src: url('OptimusPrinceps.eot');
+	src: local('OptimusPrinceps'), url('OptimusPrinceps.woff') format('woff'), url('OptimusPrinceps.ttf') format('truetype');
+}
+/* use this class to attach this font to any element i.e. <p class="fontsforweb_fontid_1045">Text with this font applied</p> */
+.fontsforweb_fontid_1045 {
+	font-family: 'OptimusPrinceps' !important;
+}
+
+
+
+
+strong {
+	font-weight: bold; 
+}
+
+em {
+	font-style: italic; 
+}
+
+s {
+  /* color: red; */
+}
+
+a, a:link, a:visited {
+  color: inherit;
+	text-decoration: none;
+}
+
+
+
+a:hover, a:focus, a:active {
+	color: #78110f;
+  /* text-decoration: none; */
+  
+  /* border-bottom: 1px red dashed; */
+  
+  /* WAVY RED DECORATION CORRECTION LINES
+  text-decoration: underline;
+  -webkit-text-decoration-color: salmon;
+  text-decoration-color: salmon;
+  -webkit-text-decoration-style: wavy;
+  text-decoration-style: wavy; 
+  */
+}
+
+
+
+	
+ul, ol, dl {
+	padding: 0;
+	margin: 0;
+	border: 0;
+  /* list-style: none outside; */
+  list-style: none outside;
+}
+
+
+
+h1, h2, h3, h4, h5, h6 {
+  color: #efefef;
+	font-weight: bold; 
+  text-shadow: 1px 1px 5px #bb754d, 1px 1px 10px #7a4930, -1px -1px 5px #bb754d, -1px -1px 10px #7a4930;
+  
+  margin: 0;
+  padding: 0;
+}
+
+h1 { font-size: 3.0em; line-height: 1em; }
+h2 { font-size: 2.5em; line-height: 2em; }
+h3 { font-size: 1.7em; line-height: 1.5em; }
+h4 { font-size: 1.5em; line-height: 1em; }
+h5 { font-size: 2.5em; line-height: 1em; }
+h6 { font-size: 1.1em; line-height: 1em; }
+
+
+h1, h2, h4, h5 {
+  font-family: 'OptimusPrinceps';
+}
+
+
+h1, h5 {
+  text-align: center;
+}
+
+
+
+img.headerImage {
+  /* margin-top: 0px; */
+}
+
+img, a img { 
+	border: none;
+}
+
+
+/* Flaired edges, by Tomas Theunissen */
+
+hr {
+  overflow: visible; /* For IE */
+  height: 30px;
+  border-style: solid;
+  border-color: black;
+  border-width: 1px 0 0 0;
+  border-radius: 20px;
+
+  margin-top: 25px;
+}
+hr:before { /* Not really supposed to work, but does */
+  display: block;
+  content: "";
+  height: 30px;
+  margin-top: -31px;
+  border-style: solid;
+  border-color: black;
+  border-width: 0 0 1px 0;
+  border-radius: 20px;
+}
+
+
+
+
+.container {
+	width: 95%;
+	max-width: 1260px;
+	min-width: 780px;
+
+	margin: 0 auto;
+}
+
+header {
+  text-align: center;
+}
+
+.header_Edit {
+  margin-top: 10px;
+}
+
+footer {
+  align-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.content {
+	width: 90%; /* 90% of .container */
+	margin: 0 auto;
+  margin-top: 20px; 
+  /* margin-bottom: 25px; */
+  
+}
+
+
+div.aidscontent, div.aidsListing {
+  width: 70%; /* % of .container !IMPORTANT */ 
+	/* max-width: 60%; */
+	margin: 0 auto;
+}
+
+
+/* Reroll Fade-In */
+.aidscontent, .w12, .rerunroll {
+  -webkit-animation: fade-in 2s ease;
+  -moz-animation: fade-in ease-in-out 2s both;
+  -ms-animation: fade-in ease-in-out 2s both;
+  -o-animation: fade-in ease-in-out 2s both;
+  animation: fade-in 2s ease;
+  visibility: visible;
+  -webkit-backface-visibility: hidden;
+}
+
+@-webkit-keyframes fade-in{0%{opacity:0;} 100%{opacity:1;}}
+@-moz-keyframes fade-in{0%{opacity:0} 100%{opacity:1}}
+@-o-keyframes fade-in{0%{opacity:0} 100%{opacity:1}}
+@keyframes fade-in{0%{opacity:0} 100%{opacity:1}}
+
+
+
+
+
+
+#flex-container, #flex-container-footer {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+
+  margin: 0 auto; 
+}
+
+#flex-container-aids {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  align-items: center;
+
+  /* margin: 0 auto; */
+  margin: auto; 
+}
+
+#flex-container-aidsListing {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  align-items: stretch;
+
+  /* margin: 0 auto; */
+  margin: auto; 
+}
+
+
+
+#flex-container-roll {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+
+  margin: 0 auto;
+  padding-top: 15px;
+
+}
+
+.flex-item, .flex-item-aids {
+  /* width: 100px; */
+  /* height: 200px; */
+  /* border: 1px black solid; */
+  /* background: #369; */
+}
+
+.flex-item-aids-left {
+  text-align: left;
+}
+.flex-item-aids-right {
+  text-align: right;
+}
+
+
+
+
+
+
+
+
+#flex-container-edit {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+
+  margin: 0 auto;
+
+   
+}
+
+.flex-item-edit {
+  margin-top: 5px;
+  font-weight: 400;
+}
+
+
+
+
+ul.aidsList {
+  list-style: decimal;
+  display: table;
+  font-size: 1.1em;
+}
+ul.aidsList > li {
+  /*
+  padding-left: 5px;
+  padding-right: 5px;
+  */
+}
+
+li.noListStyle {
+  list-style: none;
+}
+
+
+
+.aidsText {
+  font-size: 1.6em;
+  line-height: 2em;
+  
+  /*
+  padding-top: 50px;
+  padding-bottom: 25px;
+  */
+  
+  font-weight: bold;
+  text-shadow: 0px 2px 2px rgba(255, 255, 255, 0.4);
+}
+
+.weaponText {
+  font-size: 1.3em;
+  font-weight: bold;
+  text-shadow: 0px 2px 2px rgba(255, 255, 255, 0.4);
+}
+
+
+.edit_ID {
+  color: #6F6B6B;
+  opacity: 0.2;
+}
+
+
+
+
+
+
+
+
+
+.button {
+  border-radius: 4px;
+  background-color: #3F292B;
+  /* background-color: #434343; */
+  background: url('img/noise-diagonal-trans.png');
+  border: none;
+  
+  color: #fefefe;
+  text-shadow: 1px 1px 5px #bb754d, 1px 1px 10px #7a4930, -1px -1px 5px #bb754d, -1px -1px 10px #7a4930;
+  
+  text-align: center;
+  font-size: 1.7em; /* Button Text Font Size */
+  padding: 5px;
+
+  width: 120px;
+  height: 75px;
+  
+  transition: all 0.5s;
+  cursor: pointer;
+  margin: 5px;
+}
+
+.button span {
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+  transition: 0.5s;
+}
+
+.button span:after {
+  /* content: '\00bb'; */
+  content: '🎲';
+  position: absolute;
+  opacity: 0;
+  top: 0;
+  right: -20px;
+  margin-right: -10px;
+  transition: 0.5s;
+}
+
+.button:hover span {
+  padding-right: 25px;
+  text-shadow: 1px 1px 5px #bb754d;
+}
+
+.button:hover span:after {
+  opacity: 1;
+  right: 0;
+}
+
+.section {
+  /* white-space: nowrap; */
+}
+
+
+.buttonFont {
+  font-size: 1.5em;
+}
+
+
+.rerunFont, .w12Font {
+  font-family: 'OptimusPrinceps';
+  font-size: 3em;
+  font-weight: 600;
+  text-align: center;
+}
+
+/* ~~~ Table ~~~ */
+
+table {
+	background: #f5f5f5;
+	border-collapse: separate;
+	box-shadow: inset 0 1px 0 #fff;
+	font-size: 1em;
+	line-height: 24px;
+	margin: 30px auto;
+	text-align: left;
+
+}	
+
+th {
+	/* background: url(noise-diagonal.png), linear-gradient(#69302c, #bb754d); */
+  background: url(img/noise-diagonal.png), linear-gradient(#A37B73, #3F292B);
+	border-left: 1px solid #555;
+	border-right: 1px solid #777;
+	border-top: 1px solid #555;
+	border-bottom: 1px solid #333;
+	box-shadow: inset 0 1px 0 #999;
+	color: #fff;
+  font-weight: bold;
+	padding: 10px 15px;
+	position: relative;
+	text-shadow: 0 1px 0 #000;
+  
+  font-size: 1.2em;
+  
+  
+}
+
+
+
+th:after {
+	background: linear-gradient(rgba(255,255,255,0), rgba(255,255,255,.08));
+	content: '';
+	display: block;
+	height: 25%;
+	left: 0;
+	margin: 1px 0 0 0;
+	position: absolute;
+	top: 25%;
+	width: 100%;
+}
+
+th:first-child {
+	border-left: 1px solid #777;	
+	box-shadow: inset 1px 1px 0 #999;
+}
+
+th:last-child {
+	box-shadow: inset -1px 1px 0 #999;
+}
+
+td {
+	border-right: 1px solid #fff;
+	border-left: 1px solid #e8e8e8;
+	border-top: 1px solid #fff;
+	border-bottom: 1px solid #e8e8e8;
+	padding: 10px 15px;
+	position: relative;
+	transition: all 300ms;
+    
+  font-size: 1.1em;
+}
+
+td.emoji {
+  font-size: 4.5em;
+  width: 100px;
+  height: 75px; /* min height for style if no or few bosses were killed*/
+  text-align: center;
+  
+  /* text-replace: "Biber" "🐻" "Katz" "🐱" "Pat" "💩" "Bonfire" "🔥"; */
+}
+
+
+@keyframes bounce {
+	0%, 20%, 60%, 100% {
+		-webkit-transform: translateY(0);
+		transform: translateY(0);
+	}
+
+	40% {
+		-webkit-transform: translateY(-20px);
+		transform: translateY(-20px);
+	}
+
+	80% {
+		-webkit-transform: translateY(-10px);
+		transform: translateY(-10px);
+	}
+}
+
+
+
+td.emoji:hover {
+  /*
+  font-size: 1em;
+  content: '+';
+  */
+  animation: bounce 1s
+}
+
+
+
+
+
+
+td:first-child {
+	box-shadow: inset 1px 0 0 #fff;
+}	
+
+td:last-child {
+	border-right: 1px solid #e8e8e8;
+	box-shadow: inset -1px 0 0 #fff;
+}	
+
+tr {
+	background: url(img/noise-diagonal.png);	
+}
+
+tr:nth-child(odd) td {
+	background: #f1f1f1 url(img/noise-diagonal.png);	
+}
+
+tr:last-of-type td {
+	box-shadow: inset 0 -1px 0 #fff; 
+}
+
+tr:last-of-type td:first-child {
+	box-shadow: inset 1px -1px 0 #fff;
+}	
+
+tr:last-of-type td:last-child {
+	box-shadow: inset -1px -1px 0 #fff;
+}	
+
+
+
+tbody:hover td,
+tbody:hover td a {
+	color: transparent;
+	text-shadow: 0 0 3px #aaa;
+
+}
+
+tbody:hover tr:hover td,
+tbody:hover tr:hover td a {
+	color: #444;
+	text-shadow: 0 1px 0 #fff;
+}
+
+
+
+/*
+.editLink:hover:after {
+  content: "   \2026 ";
+}
+*/
+
+
+
+
+
+
+
+
+
+
+
+/* DATA TIP */
+
+
+[data-tip] {
+	position: relative;
+
+}
+[data-tip]:before {
+	content: '';
+	/* hides the tooltip when not hovered */
+	display: none;
+	content: '';
+	border-left: 5px solid transparent;
+	border-right: 5px solid transparent;
+	border-bottom: 5px solid #1a1a1a;	
+	position: absolute;
+	top: 30px;
+	left: 35px;
+	z-index: 8;
+	font-size: 0;
+	line-height: 0;
+	width: 0;
+	height: 0;
+}
+[data-tip]:after {
+	display: none;
+	content: attr(data-tip);
+	position: absolute;
+	top: 35px;
+	left: 0px;
+	padding: 5px 8px;
+	background: #1a1a1a;
+	color: #fff;
+	z-index: 9;
+	font-size: 0.75em;
+	height: 18px;
+	line-height: 18px;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+	white-space: nowrap;
+	word-wrap: normal;
+}
+[data-tip]:hover:before,
+[data-tip]:hover:after {
+	display: block;
+}
+
+
+
+
+
+
+
+
+
+
+
+/* MOBILE*/
+@media all and (max-width: 600px) {
+  /*
+  html {
+    background: green;
+  }
+  */
+  
+  .aidsText {
+    font-size: 2em;
+  }
+  
+  h1 { font-size: 3.5em; line-height: 1em; }
+  h2 { font-size: 3em; line-height: 1em; }
+  h3 { font-size: 2.1em; line-height: 1.5em; }
+  h4 { font-size: 2em; line-height: 1em; }
+  h5 { font-size: 1.7em; line-height: 1em; }
+  h6 { font-size: 1.6em; line-height: 1em; }
+  
+  ul.aidsList {
+    /* font-size: 1.3em; */
+    /* margin-right: 50px; */
+  }
+  
+  ul.aidsList > li {
+    font-size: 1.5em;
+  }
+  
+  
+  
+  th {
+    font-size: 2em;
+  }
+  td {
+    font-size: 1.5em;
+    line-height: 1.2em;
+  }
+  div.aidscontent, div.aidsListing {
+    width: 99%;
+  }
+  
+  /*BACKGROUND*/
+
+} /* EOF @media */
+
+
+  /* DEBUG */
+  
+
+  * {
+    border-style: groove;
+    border-color: coral;
+    border-width: 1px;
+  }
+

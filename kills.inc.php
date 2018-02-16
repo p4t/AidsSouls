@@ -1,64 +1,46 @@
-<!-- <div class="flex-item-edit"> -->
-
-  <table>
-    <tbody>
-      <tr>
-        <th scope="col">ID</th>
-        <th scope="col">Name</th>
-        <th scope="col">Joker</th>
-        <th scope="col"><s>Joker</s></th>
-        <th scope="col">Kills</th>
-      </tr>
+<table>
+  <tbody>
+    <tr>
+      <th scope="col"><strong>ID</strong></th>
+      <th scope="col"><strong>Name</strong></th>
+      <th scope="col"><strong>Joker</strong></th>
+      <th scope="col"><strong><s>Joker</s></strong></th>
+      <th scope="col"><strong>Kills</strong></th>
+    </tr>
+    
   <?php
-  $sql = 'SELECT * FROM kills';
+  $sql = "SELECT * FROM kills";
   $stmt = $pdo->prepare($sql);
   $stmt->execute();
-  $countRows = $stmt->rowCount();
 
-  while ($row = $stmt->fetch()) { 
-    echo "\n<tr>\n";
-
-    echo "<td>";
-    echo $row["ID"];
-    echo "</td>";
-    
-    echo "\n";
-
-    echo "<td>";
-    echo $row["name"];
-    echo "</td>";
-    
-    echo "\n";
-
-    echo "<td>";
-    echo "<a href=\"edit.php?mode=kills&ID=".$row["ID"]."\">";
-    echo $row["joker"];
-    echo "</a>";
-    echo "</td>";
-    
-    echo "\n";
-
-    echo "<td>";
-    echo "<a href=\"edit.php?mode=kills&ID=".$row["ID"]."\">";
-    echo $row["spent"];
-    echo "</a>";
-    echo "</td>";
-    
-    echo "\n";
-
-    echo "<td>";
-    echo "<a href=\"edit.php?mode=kills&ID=".$row["ID"]."\">";
-    echo nl2br($row["bossNames"]);
-    echo "</a>";
-    echo "</td>";
-    
-    echo "\n";
-
-    echo "</tr>\n";
-  }
-
+  while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) { 
   ?>
 
-    </tbody>
-  </table>
-<!-- </div> -->
+  <tr>
+    <td><?=$row["ID"]?></td>
+    <td><?=$row["name"]?></td>
+    <td>
+      <a href="edit.php?mode=kills&ID=<?=$row["ID"]?>">
+        <?=$row["joker"]?>
+      </a>
+    </td>
+
+    <td>
+      <a href="edit.php?mode=kills&ID=<?=$row["ID"]?>">
+        <?=$row["spent"]?>
+      </a>
+    </td>
+
+    <td>
+      <a href="edit.php?mode=kills&ID=<?=$row["ID"]?>">
+        <?=nl2br($row["bossNames"])?>
+      </a>
+    </td>
+  </tr>
+    
+  <?php
+  }
+  ?>
+    
+  </tbody>
+</table>

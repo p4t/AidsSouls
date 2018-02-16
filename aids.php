@@ -18,19 +18,19 @@ echo "</pre>";
   
 <meta charset="utf-8">
 
-<!-- <meta http-equiv="Cache-Control" content="no-store" /> -->
-  
-  
 <link rel="apple-touch-icon" sizes="180x180" href="/img/favico/apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="32x32" href="/img/favico/favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="/img/favico/favicon-16x16.png">
-<link rel="manifest" href="/site.webmanifest">
-<link rel="mask-icon" href="/img/favico/safari-pinned-tab.svg" color="#5bbad5">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/img/favico/safari-pinned-tab.svg" color="#3f292b">
 
-<meta name="msapplication-TileColor" content="#3f292b">
-<meta name="theme-color" content="#3f292b">  
+<meta name="theme-color" content="#3f292b">
+<meta name="msapplication-TileColor" content="#3f292b"> 
+<meta name="apple-mobile-web-app-status-bar-style" content="#3f292b">
 
-<!-- <meta name="viewport" content="width=device-width,initial-scale=1.0"> -->
+<meta name="mobile-web-app-capable" content="yes">
+
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
   
 <title>\[T]/</title>
 
@@ -39,7 +39,7 @@ echo "</pre>";
 <link rel="stylesheet" href="css/button.css" type="text/css" media="screen">
 <link rel="stylesheet" href="css/table.css" type="text/css" media="screen">
 <link rel="stylesheet" href="css/datatip.css" type="text/css" media="screen">
-<!-- <link rel="stylesheet" href="css/mobile.css" type="text/css" media="screen"> -->
+<link rel="stylesheet" href="css/mobile.css" type="text/css" media="screen">
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/balloon-css/0.5.0/balloon.min.css">
   
@@ -93,19 +93,9 @@ echo "</pre>";
     var bonfire     = document.getElementById("bonfire");
     var epicsaxguy  = document.getElementById("EpicSaxGuy");
     var vader       = document.getElementById("vader");
-    
-    
-    /*
-    var rerunroll   = document.getElementById("rerunroll");
-    var bonfire     = document.getElementById("bonfire");
-    var epicsaxguy  = document.getElementById("EpicSaxGuy");
-    */
-    
 
       if (rerunroll.style.display === "none") { // wenn würfel ausgabe nicht ausgegeben wird und button gedrückt wird
           rerunroll.style.display = "block"; // button wird gedrückt, zeig würfel output als div: rerun
-          // y.style.display = "none";
-          // z.style.display = "block";
       } else { // würfel output wenn angezeigt wird und button wieder gedrückt wird
         rerunroll.style.display   = "none"; // verstecke rerun div wieder
         bonfire.style.display     = "block"; // zeige bonfire wieder an
@@ -169,42 +159,7 @@ function reroll () {
     } else {
       myAudio.pause();
     }
-    
-    
-    // audio.play();
   }
-  
-  /*
-  function play_haha() {
-    var audio = document.getElementById("audio_haha");
-    audio.play();
-  }
-  
-  function play_yes() {
-    var audio = document.getElementById("audio_yes");
-    audio.play();
-  }
-
-  function play_Biber() {
-    var audio = document.getElementById("audio_Biber");
-    audio.play();
-  }
-  
-  function play_Katz() {
-    var audio = document.getElementById("audio_Katz");
-    audio.play();
-  }
-
-  function play_Pat() {
-    var audio = document.getElementById("audio_Pat");
-    audio.play();
-  }
-  
-  function play_dice() {
-    var audio = document.getElementById("audio_dice");
-    audio.play();
-  }
-  */
 </script>
   
 
@@ -215,6 +170,9 @@ function reroll () {
 <div class="container">
 
   <header>
+    <?php
+    if ( !empty($_GET["mode"]) && $_GET["mode"] == "rndwpn" ) echo randomWeapon();
+    ?>
     <!-- <img src="img/ds2_logo.png" alt="Dark Souls II Logo" width="630" height="80" class="headerImage"> -->
     <img src="img/ds3_logo.png" alt="Dark Souls III Logo" width="661" height="80">
     <h4>mit verschärftem AIDS</h4>
@@ -225,24 +183,21 @@ function reroll () {
 <div id="flex-container-aids">
 
   <div class="flex-item-aids-left">
-  <h2>Mobs</h2>
-  <?php
-  /*******************
-  * MOBS             *
-  *******************/
-  $mobsCount  = pdoCount("mobs");
-  $mobsRNG    = mt_rand (1, $mobsCount);
-  $mobsRow    = pdoAidsQuery("mobs", $mobsRNG);
-  ?>
+    <h2>Mobs</h2>
+    <?php
+    /*******************
+    * MOBS             *
+    *******************/
+    $mobsCount  = pdoCount("mobs");
+    $mobsRNG    = mt_rand (1, $mobsCount);
+    $mobsRow    = pdoAidsQuery("mobs", $mobsRNG);
+    ?>
 
-    <div>
-      <img src="dice/<?=$mobsRNG?>.png" class="dice" width="100" height="100" alt="<?=$mobsRNG?>">
-    </div>
-
+    <img src="dice/<?=$mobsRNG?>.png" class="dice" width="100" height="100" alt="<?=$mobsRNG?>">
   </div>
-
-
-  <!-- middle dummy; bonfire -->
+  
+  <!-- MIDDLE -->
+  <!-- bonfire -->
   <div id="bonfire" class="flex-item-aids-bonfire" data-balloon="Firelink Shrine abspielen" data-balloon-pos="up">
     <span class="bonfire">
       <img src="img/WeirdTepidChital-max-1mb.gif" width="172" height="236" alt="" onClick="play_audio('shrine')">
@@ -257,12 +212,12 @@ function reroll () {
   
   <!-- EPIC SAX GUY -->
   <div id="EpicSaxGuy" style="display: none;">
-    <img src="img/EpicSaxGuy.gif" width="186" height="234" alt=""/>
+    <img src="img/EpicSaxGuy.gif" width="186" height="234" alt="">
   </div>
   
   <!-- Vader -->
   <div id="vader" style="display: none;">
-    <img src="img/vader.jpg" width="323" height="203" alt=""/> <!-- width="383" height="263" -->
+    <img src="img/vader.jpg" width="323" height="203" alt=""> <!-- width="383" height="263" -->
   </div>
   
   <!-- rerunroll -->
@@ -270,29 +225,21 @@ function reroll () {
 
 
   <div class="flex-item-aids-right">
-  <h2>Boss</h2>
-  <?php
-  /*******************
-  * BOSS             *
-  *******************/
-  $bossCount  = pdoCount("boss");
-  $bossRNG    = mt_rand (1, $bossCount);
-  $bossRow    = pdoAidsQuery("mobs", $bossRNG);
-  ?>
-
-    <div>
-      <img src="dice/<?=$bossRNG?>.png" class="dice" width="100" height="100" alt="<?=$bossRNG?>">
-    </div>
-
-
+    <h2>Boss</h2>
+    <?php
+    /*******************
+    * BOSS             *
+    *******************/
+    $bossCount  = pdoCount("boss");
+    $bossRNG    = mt_rand (1, $bossCount);
+    $bossRow    = pdoAidsQuery("mobs", $bossRNG);
+    ?>
+    <img src="dice/<?=$bossRNG?>.png" class="dice" width="100" height="100" alt="<?=$bossRNG?>">
   </div>
-  
-  
   
 </div><!-- EOF flex-container-aids -->
 
   
-
 <!-- OUTPUT AIDS TEXT -->
 <div id="flex-container-aids-text">
   <div>
@@ -348,63 +295,52 @@ function reroll () {
   </div>
  
 </div>
-  
-  
-  
-<!-- Rerun output -->
-  
-<!-- 
-<div class="rerunFont" id="rerunroll" style="display: none;"></div>
--->
-  
-<!-- w12 output -->
-<!--
-<div class="w12Font" id="w12" style="display: none;">
-    <img src="dice/0.png" id="randimgw12" width="100" height="100" alt="Dice 0">
-</div>
--->
-
 
 </div><!-- EOF aidscontent -->
 
-
+  
+  
 <hr>
   
 
 
 <div class="aidsListing">
-<div id="flex-container-aidsListing">
-<?php
-$tables = array("mobs", "boss", "weapons");
+  <div id="flex-container-aidsListing">
+  <?php
+  $tables = array("mobs", "boss", "weapons");
 
-foreach($tables as $table) :
-  $table_output = ucfirst($table);
-  $stmt = $pdo->prepare("SELECT * FROM $table ORDER BY dice");
-  $stmt->execute();
-?>
-  <div class="flex-item-aidsListing">
-    <h3><?=$table_output?></h3>
-    <ul class="aidsList">
+  foreach($tables as $table) :
+    $table_output = ucfirst($table);
+    $stmt = $pdo->prepare("SELECT * FROM $table ORDER BY dice");
+    $stmt->execute();
+  ?>
+    <div class="flex-item-aidsListing">
+      <h3><?=$table_output?></h3>
+      <ul class="aidsList">
+        <?php while ($row = $stmt->fetch(PDO::FETCH_NUM)) : ?>
+        <li>
+          <a href="edit.php?mode=<?=$table?>&ID=<?=$row[0]?>" target="_blank">
+            <?=$row[2]?>
+          </a>
+        </li>
+        <?php ENDWHILE ?>
+        <li class="noListStyle" data-tip="Max 32 Chars, hit Enter">
+          <form action="edit.php?mode=<?=$table?>&action=add" method="post">
+            <span>+</span>
+            <input type="text" name="addEntry" value="" size="10" autocomplete="off" maxlength="32" placeholder="..." required="required">
+            <!-- <input type="submit" value="Submit"> -->
+          </form>
+        </li>
+      </ul>
+    </div>
+  <?php
+    ENDFOREACH
+  ?>
+  </div><!-- EOF aidsListing -->
+</div><!-- EOF flex-container-aidsListing -->
+  
 
-      <?php while ($row = $stmt->fetch(PDO::FETCH_NUM)) : ?>
-      <li>
-        <a href="edit.php?mode=<?=$table?>&ID=<?=$row[0]?>" target="_blank" rel="noopener noreferrer">
-          <?=$row[2]?>
-        </a>
-      </li>
-      <?php ENDWHILE ?>
-      <li class="noListStyle"><a href="edit.php?action=add">+</a></li>
-    </ul>
-  </div>
-<?php
-  ENDFOREACH
-?>
-</div>
-</div>
-  
-  
 
-  
 <hr>
 
 
@@ -416,9 +352,9 @@ foreach($tables as $table) :
     <thead>
       <tr>
         <th>Kaschber</th>
-        <th>Joker</th>
-        <th><s>Joker</s></th>
         <th>Kills</th>
+        <th>Joker</th>
+        <th>Boss</th>
       </tr>
     </thead>
     <tbody>
@@ -430,29 +366,31 @@ $stmt = $pdo->prepare("SELECT * FROM kills");
 $stmt->execute();
       
 while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) :
+  $joker = $row["joker"] - $row["spent"];
+  // echo "NAME: " . $row["name"] . " Joker - spent = " . $joker . "<br>";
 ?>
   <tr> 
     
    <td class="emoji">
-     <a href="edit.php?mode=kills&ID=<?=$row["ID"]?>" target="_blank" rel="noopener noreferrer" onClick="play_audio('<?=$row["name"]?>')" data-balloon="<?=$row["name"]?>" data-balloon-pos="up">
+     <a href="edit.php?mode=kills&ID=<?=$row["ID"]?>" target="_blank" onClick="play_audio('<?=$row["name"]?>')" data-balloon="<?=$row["name"]?>" data-balloon-pos="up">
        <?=replaceNameWithEmoji($row["name"])?>
      </a>
    </td>
 
    <td>
-     <a href="edit.php?mode=kills&ID=<?=$row["ID"]?>" target="_blank" rel="noopener noreferrer" data-balloon="<?=$row["joker"]?>" data-balloon-pos="up">
+     <a href="edit.php?mode=kills&ID=<?=$row["ID"]?>" target="_blank" data-balloon="<?=$row["joker"]?>" data-balloon-pos="up">
        <?=numberToTally($row["joker"])?>
      </a>
    </td>
 
    <td>
-     <a href="edit.php?mode=kills&ID=<?=$row["ID"]?>" target="_blank" rel="noopener noreferrer" data-balloon="<?=$row["spent"]?>" data-balloon-pos="up">
-       <?=numberToTally($row["spent"])?>
+     <a href="edit.php?mode=kills&ID=<?=$row["ID"]?>" target="_blank" data-balloon="<?=$joker?>" data-balloon-pos="up">
+       <?=replaceIntWithFlasks($joker)?>
      </a>
    </td>
 
    <td>
-     <a href="edit.php?mode=kills&ID=<?=$row["ID"]?>" target="_blank" rel="noopener noreferrer" data-balloon="<?=$row["bossNames"]?>" data-balloon-pos="up">
+     <a href="edit.php?mode=kills&ID=<?=$row["ID"]?>" target="_blank" data-balloon="<?=replaceBrWithComma($row["bossNames"])?>" data-balloon-pos="up">
        <?=replaceCheeseWithEmoji( nl2br($row["bossNames"]) )?>
      </a>
    </td>
@@ -465,23 +403,7 @@ ENDWHILE
     </tbody>
   </table>
 </div><!-- EOF killedBosses -->
-  
-  
-<!--
-<div id="flex-container-footer">
-  <div class="flex-item">&nbsp;</div>
-  
-  <div class="flex-item">
-    <a href="#"><img src="img/arrow_icon.png" width="30" height="19" alt="To Top"></a>
-    <a href="edit.php">Edit</a>
-    <a href="#"><img src="img/arrow_icon.png" width="30" height="19" alt="To Top"></a> 
-  </div>
-  
-  <div class="flex-item">&nbsp;</div>
-</div>
--->
-
-  
+    
 <footer>
   <p>
     <a href="#"><img src="img/arrow_icon.png" width="30" height="19" alt="To Top"></a>
@@ -490,7 +412,7 @@ ENDWHILE
   </p>
 </footer>
 
-  
+
 </div><!-- EOF Content -->
 </div><!-- EOF Container -->
   
@@ -534,15 +456,3 @@ $stmt->execute();
 // Table/Output in edit.php
 
 ?>
-
-
-<!-- 
-<div>
-  <? // if ($_SESSION['loggedIn'] === 1): ?>
-     <div id="main">Main Menu stuff goes here</div>
-  <? // else: ?>
-     <div id="main">Please log in...</div>
-  <? // endif ?>
-</div>
--->
-

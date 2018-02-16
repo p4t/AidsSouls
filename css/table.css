@@ -8,12 +8,14 @@ table {
   /* background: #3F292B; */ /*BG*/
   /* background: url("/img/ds3-asset-bg.png") center repeat-y; */
 
-  border: 50px solid transparent;
+  
+  border: 25px solid transparent;
   border-image: url("/img/border.png") 30 round;
+  
   background: url("/img/ds3-asset-bg.png") no-repeat center center scroll;
   
-	border-collapse: separate;
-	/* box-shadow: inset 0 1px 0 #3F292B; */
+	border-collapse: separate; /* TODO */
+	box-shadow: inset 0 1px 0 #3F292B;
 	font-size: 1em;
 	line-height: 24px;
 	margin: 30px auto;
@@ -22,14 +24,17 @@ table {
 }	
 
 th {
-	/* background: url(noise-diagonal.png), linear-gradient(#69302c, #bb754d); */
-  background: url("/img/noise-diagonal.png"), linear-gradient(#A37B73, #3F292B);
+	/* background: url(noise-diagonal.png), linear-gradient(#000, #000); */
+  /* background: url("/img/noise-diagonal.png"), linear-gradient(#A37B73, #3F292B); */
+  background: url("/img/noise-diagonal.png"), linear-gradient(#362417, #3F292B);
+  
 	/*
   border-left: 1px solid #555;
 	border-right: 1px solid #777;
 	border-top: 1px solid #555;
 	border-bottom: 1px solid #333;
   */
+  
 	box-shadow: inset 0 1px 0 #3F292B;
 	color: #fff;
   font-weight: bold;
@@ -165,21 +170,32 @@ tr:last-of-type td:last-child {
 }	
 
 
+
+
+/* transprent if hover on other columns */
 tbody:hover td,
-tbody:hover td a {
+tbody:hover td a
+{
 	color: transparent;
   text-shadow: 0 0 3px #aaa;
-  /* text-shadow: 1px 1px 1px #bb754d, 1px 1px 1px #7a4930, -1px -1px 1px #bb754d, -1px -1px 1px #7a4930; */  /*BROWN UGLY HOVER*/
 }
+tbody:hover img { opacity: 0.3 } /* extra for img */
 
+/* active hover over column */
 tbody:hover tr:hover td,
-tbody:hover tr:hover td a {
+tbody:hover tr:hover td a
+{
 	color: #fff;
-	/* text-shadow: 0 1px 0 #fff; */
-    text-shadow: 1px 1px 5px #bb754d, 1px 1px 10px #7a4930, -1px -1px 5px #bb754d, -1px -1px 10px #7a4930;
+  text-shadow: 1px 1px 5px #bb754d, 1px 1px 10px #7a4930, -1px -1px 5px #bb754d, -1px -1px 10px #7a4930;
 }
+tbody:hover tr:hover td img { opacity: 1.0 } /* extra for img */
 
 
+
+
+
+
+/********************/
 /* differrent transparent color hover for emojis */
 tbody:hover td.emoji,
 tbody:hover td.emoji a {
@@ -191,5 +207,6 @@ tbody:hover td.emoji a {
 
 tbody:hover td.emoji,
 tbody:hover td.emoji a:hover {
+  text-shadow: 1px 1px 5px #bb754d, 1px 1px 10px #7a4930, -1px -1px 5px #bb754d, -1px -1px 10px #7a4930;
   opacity: 1.0;
 } 

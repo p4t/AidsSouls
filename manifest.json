@@ -1,5 +1,5 @@
 {
-    "name": "\\[T]/",
+    "name": "Aids Souls",
     "short_name": "\\[T]/",
     "icons": [
         {
@@ -13,7 +13,8 @@
             "type": "image/png"
         }
     ],
+	"start_url": "/aids.php",
     "theme_color": "#3f292b",
-    "background_color": "#ffffff",
-    "display": "standalone"
+    "background_color": "#000000",
+    "display": "fullscreen"
 }

@@ -32,7 +32,7 @@ function randomWeapon () {
   $count      = pdoCount($section);
   $weaponRNG  = mt_rand (1, $count);
   // echo "(" . $weaponRNG . ")";
-  // $weaponRNG  = 21;
+  // $weaponRNG  = 6;
   
   $stmt = $pdo->prepare("SELECT * FROM weapons WHERE dice = $weaponRNG");
   $stmt->execute();
@@ -66,8 +66,10 @@ function replaceNameWithEmoji ($emoji) {
  * Replace (Cheese) from field text in DB Table Kills
  */
 function replaceCheeseWithEmoji ($text) {
-  // $text = str_replace ("Cheese", $text, "🧀");
+
   $text = str_replace("Cheese", "🧀", $text);
+  $text = str_replace("0", "<img src=\"/img/curlup.png\" width=\"62\" height=\"51\" alt=\"Curl Up\">", $text);
+  
   return $text;
 }
 
@@ -116,111 +118,21 @@ function pdoQuery ($query, $mode) {
 /*
  * Replace Int with Tally Marks
  */
-function numberToTally ($i) {
-  // $text = str_replace("Cheese", "🧀", $text);
-  
-  switch ($i) {
-      case 1:
-          echo "I";
-          break;
-      case 2:
-          echo "II";
-          break;
-      case 3:
-          echo "III";
-          break;
-      case 4:
-          echo "IIII";
-          break;
-      
-      case 5:
-          echo "<s>IIII</s>";
-          break;
-      case 6:
-          echo "<s>IIII</s> I";
-          break;
-      case 7:
-          echo "<s>IIII</s> II";
-          break;
-      case 8:
-          echo "<s>IIII</s> III";
-          break;
-      case 9:
-          echo "<s>IIII</s> IIII";
-          break;
-      case 10:
-          echo "<s>IIII</s> <s>IIII</s>";
-          break;
-      
-      case 11:
-          echo "<s>IIII</s> <s>IIII</s> I";
-          break;
-      case 12:
-          echo "<s>IIII</s> <s>IIII</s> II";
-          break;
-      case 13:
-          echo "<s>IIII</s> <s>IIII</s> III";
-          break;
-      case 14:
-          echo "<s>IIII</s> <s>IIII</s> IIII";
-          break;
-      case 15:
-          echo "<s>IIII</s> <s>IIII</s> <s>IIII</s>";
-          break;
-      
-      case 16:
-          echo "<s>IIII</s> <s>IIII</s> <s>IIII</s> I";
-          break;
-      case 17:
-          echo "<s>IIII</s> <s>IIII</s> <s>IIII</s> II";
-          break;
-      case 18:
-          echo "<s>IIII</s> <s>IIII</s> <s>IIII</s> III";
-          break;
-      case 19:
-          echo "<s>IIII</s> <s>IIII</s> <s>IIII</s> IIII";
-          break;
-      case 20:
-          echo "<s>IIII</s> <s>IIII</s> <s>IIII</s> <s>IIII</s>";
-          break;
-      
-      case 21:
-          echo "<s>IIII</s> <s>IIII</s> <s>IIII</s> <s>IIII</s> I";
-          break;
-      case 22:
-          echo "<s>IIII</s> <s>IIII</s> <s>IIII</s> <s>IIII</s> II";
-          break;
-      case 23:
-          echo "<s>IIII</s> <s>IIII</s> <s>IIII</s> <s>IIII</s> III";
-          break;
-      case 24:
-          echo "<s>IIII</s> <s>IIII</s> <s>IIII</s> <s>IIII</s> IIII";
-          break;
-      case 25:
-          echo "<s>IIII</s> <s>IIII</s> <s>IIII</s> <s>IIII</s> <s>IIII</s>";
-          break;
-      
-      case 25:
-          echo "<s>IIII</s> <s>IIII</s> <s>IIII</s> <s>IIII</s> <s>IIII</s> I";
-          break;
-      case 25:
-          echo "<s>IIII</s> <s>IIII</s> <s>IIII</s> <s>IIII</s> <s>IIII</s> II";
-          break;
-      case 25:
-          echo "<s>IIII</s> <s>IIII</s> <s>IIII</s> <s>IIII</s> <s>IIII</s> III";
-          break;
-      case 25:
-          echo "<s>IIII</s> <s>IIII</s> <s>IIII</s> <s>IIII</s> <s>IIII</s> IIII";
-          break;
-      case 25:
-          echo "<s>IIII</s> <s>IIII</s> <s>IIII</s> <s>IIII</s> <s>IIII</s> <s>IIII</s>";
-          break;
-      
-      default:
-          echo $i;
+
+function numberToTally ($number) {
+  $x = 1; 
+
+    if ( $number == 0 ) {
+      echo "<img src=\"/img/curlup.png\" width=\"62\" height=\"51\" alt=\"Curl Up\">";      
+    } else {
+    while ($x <= $number) {
+      if ($x % 5 == 1) echo "<br>";
+      echo "I";
+      $x++;
+    } // ENDWHILE
   }
-  
 }
+
 
 
 /*
@@ -234,6 +146,29 @@ function formatDate ($date) {
 
 
 
+
+function replaceBrWithComma ($text) {
+  $text = str_replace("\r\n", ", ", $text);
+  return $text;
+}
+
+/*
+ * Replace Int (number of kills) with flasks
+ * SUBSTRACT SPENT JOKER AND NO LONGER DISPLAY THAT ROW
+ */
+function replaceIntWithFlasks ($number) {
+  if ( $number != 0 ) {    
+    $x = 1; 
+    while ($x <= $number) {
+      // if ($x % 3 == 1) echo "<br>";
+      echo "<img src=\"img/flask_full.png\" width=\"33\" height=\"46\" alt=\"Flask Full\">"; // full: 123x136 empty: 84x130
+      $x++;
+    } // ENDWHILE
+  } else {
+      echo "<img src=\"/img/flask_empty.png\" width=\"33\" height=\"46\" alt=\"Flask Empty\">";
+  } // ENDIF
+  
+}
 
 
 

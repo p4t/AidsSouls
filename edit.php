@@ -103,7 +103,7 @@ require_once("functions.inc.php");
         <input type="number" name="newDice" value="<?= $row["dice"]; ?>" min="1" max="99" autocomplete="off" placeholder="Würfel" required="required">
         
         <label>Entry:</label>
-        <input type="text" name="newName" value="<?= $row["name"]; ?>" required="required">
+        <input type="text" name="newName" value="<?= $row["name"]; ?>" maxlength="32" required="required">
         <input type="submit" value="Submit">
       </form>
     </div>
@@ -180,16 +180,14 @@ if ( isset($_GET["mode"]) && ($_GET["mode"] == "kills") ) {
   
   
   
-  <?php 
+<?php 
   /*
  * ADD MOBS, BOSS, WEAPONS
  *
  *
  */
+  
   if ( !empty($_GET["mode"]) && (!empty($_GET['action'])) && ($_GET["mode"] == "weapons" || $_GET["mode"] == "mobs" || $_GET["mode"] == "boss") ) {
-    
-   // echo "Schniedel <br>";
-    
     (STRING)$mode   = $_GET["mode"];
     (STRING)$table  = $mode;
     // (INT)$ID        = $_GET["ID"];
@@ -211,10 +209,7 @@ if ( isset($_GET["mode"]) && ($_GET["mode"] == "kills") ) {
         
         if ($row["dice"] != NULL ) die("Dice Wert schon vergeben!");
       }
-      
-      
       // CHECK IF DICE VALUE ALREADY EXISTS
-        
       $sql = "INSERT INTO $table (dice, name) VALUES (:dice, :name)";
       // $sql = "INSERT INTO $table (dice, name) VALUES (:dice, :name) ON DUPLICATE KEY INSERT (dice, name) VALUES (:dice, :name)";
       $stmt = $pdo->prepare($sql);          
@@ -222,11 +217,34 @@ if ( isset($_GET["mode"]) && ($_GET["mode"] == "kills") ) {
       $stmt->bindParam(':name', $_POST['addEntry'], PDO::PARAM_STR);
       $stmt->execute();
 
-      redirect("edit.php", $statusCode = 303);
+      redirect("aids.php", $statusCode = 303);
 
-    }
+    } else { // display form if coming from link within aids.php and no $_POST
+      ?>
       
-  }
+      <form action="edit.php?mode=<?=$table?>&action=add" method="post">
+        
+        <table>
+          <tbody>
+            <tr>
+              <td data-tip="Keine Zahl überspringen, Feld freilassen für auto Dice +1. Keine doppelten Werte!">
+                <input type="number" name="addDice" value="" min="1" max="99" autocomplete="off" placeholder="Würfel">
+              </td>
+              <td data-tip="Name">
+                <input type="text" name="addEntry" value="" autocomplete="off" maxlength="32" placeholder="<?=$table?> Name" required="required">
+              </td>
+              <td data-tip="Abschicken"><input type="submit" value="Submit">
+                &nbsp;
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        
+      </form>  
+  <?php
+    } // ENDIF $_POST["addEntry"]
+      
+  } // ENDIF
 
   ?>
   
@@ -234,27 +252,43 @@ if ( isset($_GET["mode"]) && ($_GET["mode"] == "kills") ) {
   
   
   
-  <?php
+<?php
 /*
  * DELETE 
  *
  *
  */
 
-  if ( !empty($_GET["action"]) && $_GET["action"] == "delete" ) {
-    (STRING)$mode   = $_GET["mode"];
-    (STRING)$table  = $mode;
-    (INT)$ID        = $_GET["ID"];
-    
-    $sql = "DELETE FROM $table WHERE ID = :ID";
-    $stmt = $pdo->prepare($sql);
-    $stmt->bindParam(':ID', $ID, PDO::PARAM_INT);
-    $stmt->execute();
-    echo "Schniedel";
-    redirect("edit.php", $statusCode = 303);
-  }
+if ( !empty($_GET["action"]) && $_GET["action"] == "delete" ) {
+  (STRING)$mode   = $_GET["mode"];
+  (STRING)$table  = $mode;
+  (INT)$ID        = $_GET["ID"];
 
-  ?>
+  $sql = "DELETE FROM $table WHERE ID = :ID";
+  $stmt = $pdo->prepare($sql);
+  $stmt->bindParam(':ID', $ID, PDO::PARAM_INT);
+  $stmt->execute();
+
+  redirect("edit.php", $statusCode = 303);
+}
+
+
+
+
+/*
+ * TRUNCATE
+ *
+ *
+ */
+
+if ( !empty($_GET["action"]) && $_GET["action"] == "truncate" ) {
+  $sql = "TRUNCATE rolls";
+  $stmt = $pdo->prepare($sql);
+  $stmt->execute();
+  
+  redirect("edit.php", $statusCode = 303);
+}
+?>
   
   
   
@@ -277,9 +311,9 @@ if ( empty($_GET["mode"]) ) :
 <table>
   <tbody>
     <tr>
-      <th scope="col">Dice</th>
-      <th scope="col"><?=ucfirst($table)?></th>
-      <th scope="col">Action</th>
+      <th scope="col"><strong>Dice</strong></th>
+      <th scope="col"><strong><?=ucfirst($table)?></strong></th>
+      <th scope="col"><strong>Action</strong></th>
     </tr>
     <?php while ($row = $stmt->fetch(PDO::FETCH_NUM)) : ?>
     <tr>
@@ -287,26 +321,24 @@ if ( empty($_GET["mode"]) ) :
       <td><a href="edit.php?mode=<?=$table?>&ID=<?=$row[0]?>"><?=$row[2]?></a></td>
       <td>
         <a href="edit.php?mode=<?=$table?>&ID=<?=$row[0]?>" data-tip="Edit">
-          <img src="img/edit-icon.png" width="024" height="024" alt="Edit">
+          <img src="img/edit-icon.png" class="edit_icon" width="024" height="024" alt="Edit">
         </a>
-        <a href="edit.php?mode=<?=$table?>&action=delete&ID=<?=$row[0]?>" onClick="return confirm('SICHER????????');" data-tip="Delete">
+        <a href="edit.php?mode=<?=$table?>&action=delete&ID=<?=$row[0]?>" onClick="return confirm('SICHER???????? MACH KE SCHEISS!');" data-tip="Delete">
           <img src="img/delete-icon.png" width="024" height="024" alt="Delete">
         </a>
       </td>
     </tr>
     <?php ENDWHILE ?>
     <tr>
-      <!-- <form action="edit.php?mode=<?=$table?>&action=add" method="post"> -->  <!-- MOVED -->
-        <td data-tip="Keine Zahl überspringen, Feld freilassen für auto Dice +1. Keine doppelten Werte!">
-          <input type="number" name="addDice" value="" min="1" max="99" autocomplete="off" placeholder="Würfel">
-        </td>
-        <td data-tip="Name">
-          <input type="text" name="addEntry" value="" autocomplete="off" placeholder="<?=$table?> Name" required="required">
-        </td>
-        <td data-tip="Abschicken"><input type="submit" value="Submit">
-          &nbsp;
-        </td>
-      <!-- </form> --> <!-- MOVED -->
+      <td data-tip="Keine Zahl überspringen, Feld freilassen für auto Dice +1. Keine doppelten Werte!">
+        <input type="number" name="addDice" value="" min="1" max="99" autocomplete="off" placeholder="Würfel">
+      </td>
+      <td data-tip="Name">
+        <input type="text" name="addEntry" value="" autocomplete="off" maxlength="32" placeholder="<?=$table?> Name" required="required">
+      </td>
+      <td data-tip="Abschicken"><input type="submit" value="Submit">
+        &nbsp;
+      </td>
     </tr>
   </tbody>
 </table>
@@ -334,18 +366,14 @@ ENDIF // EOF if ( empty($_GET["mode"]) )
   
   
 <!-- FOOTER -->  
+  <footer>
+  <p>
+    <a href="#"><img src="img/arrow_icon.png" width="30" height="19" alt="To Top"></a>
+    <a href="edit.php">Back</a>
+    <a href="#"><img src="img/arrow_icon.png" width="30" height="19" alt="To Top"></a> 
+  </p>
+</footer>
   
-<div id="flex-container">
-  <div class="flex-item">&nbsp;</div>
-  <div class="flex-item">
-    <a href="edit.php">Back</a>
-    |
-    <a href="#"><img src="img/arrow_icon.png" alt="Back to top" width="30" height="19"></a>
-    |
-    <a href="edit.php">Back</a>
-  </div>
-  <div class="flex-item">&nbsp;</div>
-</div>
 
   
 </body>
