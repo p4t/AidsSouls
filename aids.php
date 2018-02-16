@@ -171,7 +171,7 @@ function reroll () {
 
   <header>
     <?php
-    if ( !empty($_GET["mode"]) && $_GET["mode"] == "rndwpn" ) echo randomWeapon();
+    if ( !empty($_GET["mode"]) && $_GET["mode"] == "rndwpn" ) echo "<div>" . randomWeapon() . "</div>";
     ?>
     <!-- <img src="img/ds2_logo.png" alt="Dark Souls II Logo" width="630" height="80" class="headerImage"> -->
     <img src="img/ds3_logo.png" alt="Dark Souls III Logo" width="661" height="80">

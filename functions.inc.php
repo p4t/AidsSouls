@@ -38,9 +38,9 @@ function randomWeapon () {
   $stmt->execute();
   $row = $stmt->fetch(PDO::FETCH_ASSOC);
   
-  echo $row["name"];
-  echo "&nbsp;";
   echo "<img src=\"img/weapon_icon.png\" width=\"41\" height=\"40\" alt=\"Weapon\">\n"; // 71, 70
+  echo "&nbsp;";
+  echo $row["name"];
   
   // return $weaponRNG;
 }
