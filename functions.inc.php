@@ -38,15 +38,16 @@ function randomWeapon () {
   $stmt->execute();
   $row = $stmt->fetch(PDO::FETCH_ASSOC);
   
+  $weapon = $row["name"];
+  
+  /*
   echo "<img src=\"img/weapon_icon.png\" width=\"41\" height=\"40\" alt=\"Weapon\">\n"; // 71, 70
   echo "&nbsp;";
   echo $row["name"];
-  
-  // return $weaponRNG;
+  */
+  return $weapon;
 }
 	
-
-
 
   
 /*
@@ -118,7 +119,6 @@ function pdoQuery ($query, $mode) {
 /*
  * Replace Int with Tally Marks
  */
-
 function numberToTally ($number) {
   $x = 1; 
 
@@ -151,6 +151,7 @@ function replaceBrWithComma ($text) {
   $text = str_replace("\r\n", ", ", $text);
   return $text;
 }
+
 
 /*
  * Replace Int (number of kills) with flasks

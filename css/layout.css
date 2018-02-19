@@ -6,6 +6,17 @@
 	src: local("Trajan"), url("/fonts/TrajanProRegular.ttf") format("truetype");
 }
 
+/* Dark Souls Font Style */
+@font-face {
+	font-family: "OptimusPrinceps";
+	src: url("/fonts/OptimusPrinceps.ttf");
+	src: local("OptimusPrinceps"), url("/fonts/OptimusPrinceps.woff") format("woff"), url("/fonts/OptimusPrinceps.ttf") format("truetype");
+}
+/* use this class to attach this font to any element i.e. <p class="fontsforweb_fontid_1045">Text with this font applied</p> */
+.fontsforweb_fontid_1045 {
+	font-family: "OptimusPrinceps" !important;
+}
+
 html {
   font-family: "Trajan", sans-serif;
   font-size: 100%;
@@ -44,16 +55,6 @@ section {
   display: block;
 }
 
-/* Dark Souls Font Style */
-@font-face {
-	font-family: "OptimusPrinceps";
-	src: url("/fonts/OptimusPrinceps.ttf");
-	src: local("OptimusPrinceps"), url("/fonts/OptimusPrinceps.woff") format("woff"), url("/fonts/OptimusPrinceps.ttf") format("truetype");
-}
-/* use this class to attach this font to any element i.e. <p class="fontsforweb_fontid_1045">Text with this font applied</p> */
-.fontsforweb_fontid_1045 {
-	font-family: "OptimusPrinceps" !important;
-}
 
 strong {
 	font-weight: bold; 
@@ -125,7 +126,7 @@ img, a img {
 
 
 hr {
-  background: url("/img/hr2.png") round;
+  background: url("/img/hr.png") round;
   height: 20px;
   border: 0;
 }
@@ -175,15 +176,7 @@ div.aidscontent, div.aidsListing {
   background: url("/img/ds3-asset-bg.png") no-repeat center center scroll;
   -moz-background-size: 120% 120%;
   -webkit-background-size: 120% 120%;
-  background-size:120% 120%;
-
-
-  /*
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  background-size: cover;
-  */
+  background-size: 120% 120%;
   
   padding: 15px;
 }
@@ -243,22 +236,28 @@ li.noListStyle {
   list-style: none;
 }
 
+.wrap {
+  width: 765px;
+  margin: 0 auto;
+}
 
-
-.aidsText {
+.aidsText, .weaponText {
+  
   font-size: 1.6em;
   line-height: 2em;
   
   font-weight: bold;
-  text-shadow: 0px 2px 2px rgba(255, 255, 255, 0.4);
+  text-shadow: 1px 1px 25px rgba(239, 35, 60, 0.5), 1px 1px 25px rgba(122, 73, 48, 0.5), -1px -1px 25px rgba(230, 57, 70, 0.5), -1px -1px 88px rgba(217, 4, 41, 0.5);  
 }
 
+
+/*
 .weaponText {
   font-size: 1.3em;
   font-weight: bold;
   text-shadow: 0px 2px 2px rgba(255, 255, 255, 0.4);
 }
-
+*/
 
 .edit_ID {
   color: #6F6B6B;
@@ -277,23 +276,21 @@ li.noListStyle {
 img.dice {
   /* filter:blur(5px); */
   /* filter:invert(100%); */
-  filter: contrast(0) sepia(100%) hue-rotate(200deg) brightness(1.4) saturate(0.28);
+  filter: contrast(0) sepia(100%) hue-rotate(20deg) brightness(1.4) saturate(0.28);
 
   width: 100px;
   height: 100px;
 }
 
 img.edit_icon {
-  /* filter:blur(5px); */
-  /* filter:invert(100%); */
   filter: contrast(0) sepia(100%) hue-rotate(200deg) brightness(1.4) saturate(0.28);
-
 }
 
 
 
 /* FORM */
-input[type=text] {
+/* input[type=text] { */
+input, textarea {
   
   padding: 4px 6px;
   margin: 8px 0;
@@ -309,8 +306,14 @@ input[type=text] {
   background-size: cover;
 }
 
+/*
 input[type=text]:active,
 input[type=text]:focus
+*/
+input:active,
+input:focus,
+textarea:active,
+textarea:focus
 {
   outline-color: #3f292b;
   outline-style: 1px dotted;

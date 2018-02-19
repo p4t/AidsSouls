@@ -97,14 +97,13 @@ require_once("functions.inc.php");
     
   <div class="flex-item">
       <form action="edit.php?mode=<?= $mode ?>&ID=<?= $_GET["ID"] ?>" method="post">
-
-        <label>Dice:</label>
-        <!-- <input type="text" name="newDice" value="<?php //$row["dice"]; ?>" required="required"> -->
-        <input type="number" name="newDice" value="<?= $row["dice"]; ?>" min="1" max="99" autocomplete="off" placeholder="Würfel" required="required">
-        
-        <label>Entry:</label>
-        <input type="text" name="newName" value="<?= $row["name"]; ?>" maxlength="32" required="required">
-        <input type="submit" value="Submit">
+        <ul>
+          <li><label>Dice:</label></li>
+          <li><input type="number" name="newDice" value="<?= $row["dice"]; ?>" min="1" max="99" autocomplete="off" placeholder="Würfel" required="required"></li>
+          <li><label>Entry:</label></li>
+          <li><input type="text" name="newName" value="<?= $row["name"]; ?>" maxlength="32" required="required"></li>
+          <li><input type="submit" value="Submit"></li>
+        </ul>
       </form>
     </div>
   
@@ -154,16 +153,19 @@ if ( isset($_GET["mode"]) && ($_GET["mode"] == "kills") ) {
     
   <div class="flex-item">
       <form action="edit.php?mode=kills&ID=<?= $_GET["ID"] ?>" method="post">
-        <label>Joker:</label>
-        <input type="text" name="newJoker" value="<?= $row["joker"]; ?>">
+        <ul>
+          <li><label>Joker:</label></li>
+          <li><input type="number" name="newJoker" value="<?= $row["joker"]; ?>" min="0" max="99" autocomplete="off" placeholder="Joker insgesamt" required="required"></li>
 
-        <label>Ausgegeben:</label>
-        <input type="text" name="newSpent" value="<?= $row["spent"]; ?>">
+          <li><label>Ausgegeben:</label></li>
+          <li><input type="number" name="newSpent" value="<?= $row["spent"]; ?>" min="0" max="99" autocomplete="off" placeholder="Joker ausgegeben" required="required"></li>
 
-        <label>bossNames:</label>
-        <textarea rows="15" name="newBossNames" cols="50"><?= $row["bossNames"]; ?></textarea>
+          <li><label>bossNames:</label></li>
+          <li><textarea rows="15" name="newBossNames" cols="50" required="required"><?=$row["bossNames"]?></textarea></li>
 
-        <input type="submit" value="Submit">
+          <li><input type="submit" value="Submit"></li>
+          
+        </ul>
       </form>
     </div>
   
@@ -230,8 +232,8 @@ if ( isset($_GET["mode"]) && ($_GET["mode"] == "kills") ) {
               <td data-tip="Keine Zahl überspringen, Feld freilassen für auto Dice +1. Keine doppelten Werte!">
                 <input type="number" name="addDice" value="" min="1" max="99" autocomplete="off" placeholder="Würfel">
               </td>
-              <td data-tip="Name">
-                <input type="text" name="addEntry" value="" autocomplete="off" maxlength="32" placeholder="<?=$table?> Name" required="required">
+              <td data-tip="Maximal 32 Zeichen">
+                <input type="text" name="addEntry" value="" autocomplete="off" maxlength="32" placeholder="Name" required="required">
               </td>
               <td data-tip="Abschicken"><input type="submit" value="Submit">
                 &nbsp;
@@ -333,8 +335,8 @@ if ( empty($_GET["mode"]) ) :
       <td data-tip="Keine Zahl überspringen, Feld freilassen für auto Dice +1. Keine doppelten Werte!">
         <input type="number" name="addDice" value="" min="1" max="99" autocomplete="off" placeholder="Würfel">
       </td>
-      <td data-tip="Name">
-        <input type="text" name="addEntry" value="" autocomplete="off" maxlength="32" placeholder="<?=$table?> Name" required="required">
+      <td data-tip="Max 32 Zeichen">
+        <input type="text" name="addEntry" value="" autocomplete="off" maxlength="32" placeholder="Name" required="required">
       </td>
       <td data-tip="Abschicken"><input type="submit" value="Submit">
         &nbsp;

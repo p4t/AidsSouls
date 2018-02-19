@@ -9,7 +9,35 @@ print_r($_GET);
 echo "</pre>";
 */
 
-// $s = preg_replace('![^a-z]!', '', $s); 
+// $modes = preg_replace('![^a-z]!', '', $mode); 
+
+
+/*******************
+* AIDS             *
+*******************/
+// MOBS
+$mobsCount  = pdoCount("mobs");
+$mobsRNG    = mt_rand (1, $mobsCount);
+// $mobsRNG    = 20; // DEBUG
+
+// Boss
+$bossCount  = pdoCount("boss");
+$bossRNG    = mt_rand (1, $bossCount);
+// $bossRNG    = 5; // DEBUG
+
+$stmt = $pdo->prepare("SELECT mobs.name, boss.name FROM mobs, boss WHERE mobs.dice = $mobsRNG AND boss.dice = $bossRNG");
+$stmt->execute();
+$row = $stmt->fetch(PDO::FETCH_GROUP);
+
+$mobsAids = $row[0];
+$bossAids = $row[1];
+
+/*
+echo "<pre>";
+print_r($row);
+echo "</pre>";
+*/
+
 ?>
 
 <!doctype html>
@@ -67,25 +95,36 @@ echo "</pre>";
 
   function pickimg() {
     
-  var w12   = document.getElementById("w12");
-  var bonfire   = document.getElementById("bonfire");
-
+  var w12         = document.getElementById("w12");
+  var bonfire     = document.getElementById("bonfire");
+  // OTHER DIVS FROM OTHER FUNCTIONS
+  var rerunroll   = document.getElementById("rerunroll");
+  var epicsaxguy  = document.getElementById("EpicSaxGuy");
+  var vader       = document.getElementById("vader");
+        
   if (w12.style.display === "none") {
-    w12.style.display = "block";
+    w12.style.display     = "block";
     bonfire.style.display = "none";
+    
+    // close other div from other function
+    rerunroll.style.display   = "none";
+    vader.style.display       = "none";
+    epicsaxguy.style.display  = "none";
+    
+    // play audio
     play_audio("dice");
   } else {
-    w12.style.display = "none";
+    w12.style.display     = "none";
     bonfire.style.display = "block";
   }
-    
+  
     document.getElementById("randimgw12").src = "dice/" + images[getRandomInt(0, images.length - 1)];
     
   } 
 </script>
   
 <script>
-  // roll dice 1-100, display yes if dice is either 77 or 7
+  // roll dice 1-100, success if dice is either 77 or 7
   function rerun() {
 
     var rnd         = Math.floor((Math.random() * 100) + 1)
@@ -93,9 +132,13 @@ echo "</pre>";
     var bonfire     = document.getElementById("bonfire");
     var epicsaxguy  = document.getElementById("EpicSaxGuy");
     var vader       = document.getElementById("vader");
+    // OTHER DIVS FROM OTHER FUNCTIONS
+    var w12         = document.getElementById("w12");
 
-      if (rerunroll.style.display === "none") { // wenn würfel ausgabe nicht ausgegeben wird und button gedrückt wird
+
+      if (rerunroll.style.display === "none") { // wenn würfel div nicht angezeigt wird und button gedrückt wird
           rerunroll.style.display = "block"; // button wird gedrückt, zeig würfel output als div: rerun
+          w12.style.display       = "none"; // close other div from other function
       } else { // würfel output wenn angezeigt wird und button wieder gedrückt wird
         rerunroll.style.display   = "none"; // verstecke rerun div wieder
         bonfire.style.display     = "block"; // zeige bonfire wieder an
@@ -105,24 +148,25 @@ echo "</pre>";
     
     // rnd = 1; // DEBUG
     if (rnd == 7 || rnd == 77) {
-      document.getElementById("rerunroll").innerHTML = "<img src='img/jumpforjoy.png'>" + "<br>" + rnd;
+      document.getElementById("rerunroll").innerHTML = "<img src='img/jumpforjoy.png' alt='Jump for Joy'>" + "<br>" + rnd;
       if (rerunroll.style.display === "block") { // sicherstellen, dass Ton und Gif nur abgespielt werden wenn der Würfel stimmt
         play_audio("yes");
-        bonfire.style.display = "none"; // verstecke bonfire
-        epicsaxguy.style.display = "block"; // zeige Epic Sax Guy Gif
+        bonfire.style.display     = "none"; // verstecke bonfire
+        epicsaxguy.style.display  = "block"; // zeige Epic Sax Guy Gif
+        w12.style.display         = "none"; // close other div from other function
       }
     } else if (rnd == 1 || rnd == 100) {
-      document.getElementById("rerunroll").innerHTML = "<img src='img/stretchout.png'><br>" + rnd;
+      document.getElementById("rerunroll").innerHTML = "<img src='img/stretchout.png' alt='Stretch out'><br>" + rnd;
       
       if (rerunroll.style.display === "block") { // sicherstellen, dass Ton und Gif nur abgespielt werden wenn der Würfel stimmt
         play_audio("no");
         bonfire.style.display = "none"; // verstecke bonfire
-        vader.style.display = "block"; // zeige Epic Sax Guy Gif
+        vader.style.display   = "block"; // zeige Epic Sax Guy Gif
       }
       
       
     } else { // alles außer 1, 100, 7, 77
-      document.getElementById("rerunroll").innerHTML = "¯\\_(ツ)_/¯ <br><img src='img/collapse.png'><br>" + rnd;
+      document.getElementById("rerunroll").innerHTML = "¯\\_(ツ)_/¯ <br><img src='img/collapse.png' alt='Collapse'><br>" + rnd;
       
       if (rerunroll.style.display === "block") { // sicherstellen, dass Ton nur abgespielt wird wenn der Würfel stimmt
         play_audio("haha");
@@ -131,8 +175,6 @@ echo "</pre>";
     } 
     
   } // EOF RERUN()
-
-
 </script> 
   
 <script>
@@ -145,7 +187,7 @@ function reload_page () {
 function reroll () {
   play_audio('aids');
   
-  setTimeout(function() { reload_page(); }, 1650);
+  setTimeout(function() { reload_page(); }, 1800);
   
 }
 </script>  
@@ -184,15 +226,6 @@ function reroll () {
 
   <div class="flex-item-aids-left">
     <h2>Mobs</h2>
-    <?php
-    /*******************
-    * MOBS             *
-    *******************/
-    $mobsCount  = pdoCount("mobs");
-    $mobsRNG    = mt_rand (1, $mobsCount);
-    $mobsRow    = pdoAidsQuery("mobs", $mobsRNG);
-    ?>
-
     <img src="dice/<?=$mobsRNG?>.png" class="dice" width="100" height="100" alt="<?=$mobsRNG?>">
   </div>
   
@@ -226,14 +259,6 @@ function reroll () {
 
   <div class="flex-item-aids-right">
     <h2>Boss</h2>
-    <?php
-    /*******************
-    * BOSS             *
-    *******************/
-    $bossCount  = pdoCount("boss");
-    $bossRNG    = mt_rand (1, $bossCount);
-    $bossRow    = pdoAidsQuery("mobs", $bossRNG);
-    ?>
     <img src="dice/<?=$bossRNG?>.png" class="dice" width="100" height="100" alt="<?=$bossRNG?>">
   </div>
   
@@ -245,10 +270,15 @@ function reroll () {
   <div>
     <span class="aidsText">
       <?php
-      if ( $mobsRow["name"] == "Zufällige Waffe" ) {
-        randomWeapon(); 
+      if ( $mobsAids == "Zufällige Waffe" ) {
+        $mobsRandomWeapon = randomWeapon();
+        
+        echo "<img src=\"img/weapon_icon.png\" width=\"41\" height=\"40\" alt=\"Weapon\">\n"; // 71, 70
+        echo "&nbsp;";
+        echo $mobsRandomWeapon;
+        
       } else {
-        echo $mobsRow["name"];
+        echo $mobsAids;
       }
       ?>
     </span>
@@ -257,10 +287,15 @@ function reroll () {
   <div>
     <span class="aidsText">
       <?php
-      if ( $bossRow["name"] == "Zufällige Waffe" ) {
-        randomWeapon();
+      if ( $bossAids == "Zufällige Waffe" ) {
+        $bossRandomWeapon = randomWeapon();
+        
+        echo "<img src=\"img/weapon_icon.png\" width=\"41\" height=\"40\" alt=\"Weapon\">\n"; // 71, 70
+        echo "&nbsp;";
+        echo $bossRandomWeapon;
+        
       } else {
-        echo $bossRow["name"];
+        echo $bossAids;
       }
       ?>
     </span>
@@ -367,33 +402,25 @@ $stmt->execute();
       
 while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) :
   $joker = $row["joker"] - $row["spent"];
-  // echo "NAME: " . $row["name"] . " Joker - spent = " . $joker . "<br>";
 ?>
   <tr> 
-    
-   <td class="emoji">
+    <td class="emoji">
      <a href="edit.php?mode=kills&ID=<?=$row["ID"]?>" target="_blank" onClick="play_audio('<?=$row["name"]?>')" data-balloon="<?=$row["name"]?>" data-balloon-pos="up">
        <?=replaceNameWithEmoji($row["name"])?>
      </a>
-   </td>
+    </td>
 
-   <td>
-     <a href="edit.php?mode=kills&ID=<?=$row["ID"]?>" target="_blank" data-balloon="<?=$row["joker"]?>" data-balloon-pos="up">
-       <?=numberToTally($row["joker"])?>
-     </a>
-   </td>
+    <td data-balloon="<?=$row["joker"]?> gekillte Bosse" data-balloon-pos="up">
+     <?=numberToTally($row["joker"])?>
+    </td>
 
-   <td>
-     <a href="edit.php?mode=kills&ID=<?=$row["ID"]?>" target="_blank" data-balloon="<?=$joker?>" data-balloon-pos="up">
+    <td data-balloon="<?=$joker?> Joker übrig" data-balloon-pos="up">
        <?=replaceIntWithFlasks($joker)?>
-     </a>
-   </td>
+    </td>
 
-   <td>
-     <a href="edit.php?mode=kills&ID=<?=$row["ID"]?>" target="_blank" data-balloon="<?=replaceBrWithComma($row["bossNames"])?>" data-balloon-pos="up">
+    <td data-balloon="<?=replaceBrWithComma($row["bossNames"])?>" data-balloon-pos="up">
        <?=replaceCheeseWithEmoji( nl2br($row["bossNames"]) )?>
-     </a>
-   </td>
+    </td>
     
   </tr>
 <?php
@@ -403,6 +430,12 @@ ENDWHILE
     </tbody>
   </table>
 </div><!-- EOF killedBosses -->
+  
+<!--
+<section>
+  <h2>Regeln</h2>
+</section>
+-->
     
 <footer>
   <p>
@@ -426,31 +459,36 @@ ENDWHILE
 <audio id="audio_yes" src="audio/EpicSaxGuy.mp3"></audio>
 <audio id="audio_no" src="audio/nooo.ogg"></audio>
 <audio id="audio_dice" src="audio/dice.wav"></audio>
-<!--<audio id="audio_shrine" src="audio/ds3_firelinkshrine.mp3"></audio>-->
-<audio id="audio_shrine" src="audio/DarkSoulsBonfireSoundEffect(cropped).ogg"></audio>
+<audio id="audio_shrine" src="audio/ds3_firelinkshrine.mp3"></audio>
+<!--<audio id="audio_shrine" src="audio/DarkSoulsBonfireSoundEffect(cropped).ogg"></audio>-->
 <audio id="audio_aids" src="audio/aids.mp3"></audio>
   
-  
-<!-- 
-<audio autoplay="false" controls="true" loop="true" preload="auto"> 
-  <source src="audio/ds3_firelinkshrine.mp3" type="audio/mpeg"></source> 
-  Your browser does not support the audio element. 
-</audio> 
--->
-  
+
 </body>
 </html>
 
 
 <?php
+if ( !empty($mobsRandomWeapon) ) {
+  $rolledMobsAids = $mobsRandomWeapon;
+} else {
+  $rolledMobsAids = $mobsAids;
+}
+
+if ( !empty($bossRandomWeapon) ) {
+  $rolledBossAids = $bossRandomWeapon;
+} else {
+  $rolledBossAids = $bossAids;
+}
+
 $date = date("Y-m-d H:i:s");
 $IP   = getRealIpAddr();
 $sql  = "INSERT INTO rolls (date, IP, mobs, boss) VALUES (:date, :IP, :mobs, :boss)";
 $stmt = $pdo->prepare($sql);                                  
 $stmt->bindParam(":date", $date, PDO::PARAM_STR);
 $stmt->bindParam(":IP", $IP, PDO::PARAM_STR);
-$stmt->bindParam(":mobs", $mobsRNG, PDO::PARAM_INT);
-$stmt->bindParam(":boss", $bossRNG, PDO::PARAM_INT);
+$stmt->bindParam(":mobs", $rolledMobsAids, PDO::PARAM_STR);
+$stmt->bindParam(":boss", $rolledBossAids, PDO::PARAM_STR);
 $stmt->execute();
 
 // Table/Output in edit.php

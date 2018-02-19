@@ -13,6 +13,9 @@ table {
   border-image: url("/img/border.png") 30 round;
   
   background: url("/img/ds3-asset-bg.png") no-repeat center center scroll;
+  -moz-background-size: 120% 120%;
+  -webkit-background-size: 120% 120%;
+  background-size: 120% 120%;
   
 	border-collapse: separate; /* TODO */
 	box-shadow: inset 0 1px 0 #3F292B;
@@ -87,7 +90,7 @@ td {
 td.emoji {
   font-size: 4.5em;
   width: 100px;
-  height: 75px; /* min height for style if no or few bosses were killed*/
+  height: 100px; /* min height for style if no or few bosses were killed*/
   text-align: center;
   
   
