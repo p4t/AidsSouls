@@ -65,21 +65,19 @@
   /* background: #369; */
 }
 
-.flex-item-aids-bonfire {
-  /*
-  width: 172px;
-  height: 236px;
-  */
+.flex-item-aids-left,
+.flex-item-aids-middle,
+.flex-item-aids-right
+{
+  text-align: center;
 }
 
-.flex-item-aids-left {
-  text-align: left;
+.flex-item-aids-middle {
+  
+  font-size: 3em;
+  font-weight: 600;
+  
 }
-.flex-item-aids-right {
-  text-align: right;
-}
-
-
 
 
 

@@ -1,12 +1,14 @@
- <table>
-    <tbody>
-      <tr>
-        <th scope="col"><strong>ID</strong></th>
-        <th scope="col"><strong>Mobs</strong></th>
-        <th scope="col"><strong>Boss</strong></th>
-        <th scope="col"><strong>Zeit</strong></th>
-        <th scope="col"><strong>IP</strong></th>
-      </tr>
+<a id="Rolls"></a>
+
+<table class="edit">
+  <tbody>
+    <tr>
+      <th scope="col"><strong>ID</strong></th>
+      <th scope="col"><strong>Mobs</strong></th>
+      <th scope="col"><strong>Boss</strong></th>
+      <th scope="col"><strong>Zeit</strong></th>
+      <th scope="col"><strong>IP</strong></th>
+    </tr>
       
   <?php
   $sql = "SELECT * FROM rolls ORDER BY ID DESC LIMIT 10"; // Only show latest 10 entries

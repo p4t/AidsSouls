@@ -37,13 +37,12 @@ html {
 	padding: 0;
 	
   color: #fff;
-  text-shadow: 0 1px 0 #fff;
+  text-shadow: 1px 1px 1px #000;
   
   /* overflow: hidden; */
 }
 
 body {
-  
 }
 
 article,
@@ -55,6 +54,25 @@ section {
   display: block;
 }
 
+header {
+  text-align: center;
+}
+
+header img {
+  margin-bottom: -18px;
+}
+
+
+nav {
+  text-align: center;
+}
+
+footer {
+  align-content: center;
+  align-items: center;
+  text-align: center;
+}
+
 
 strong {
 	font-weight: bold; 
@@ -63,11 +81,6 @@ strong {
 
 em {
 	font-style: italic; 
-}
-
-
-s {
-  /* color: red; */
 }
 
 
@@ -88,7 +101,7 @@ ul, ol, dl {
 	padding: 0;
 	margin: 0;
 	border: 0;
-  list-style: none outside;
+  list-style: none;
 }
 
 
@@ -105,8 +118,8 @@ h1, h2, h3, h4, h5, h6 {
 h1 { font-size: 3.0em; line-height: 1em; }
 h2 { font-size: 2.5em; line-height: 2em; }
 h3 { font-size: 1.7em; line-height: 1.5em; }
-h4 { font-size: 1.5em; line-height: 1em; }
-h5 { font-size: 2.5em; line-height: 1em; }
+h4 { font-size: 1.5em; line-height: 1.5em; }
+h5 { font-size: 2.5em; line-height: 1.5em; }
 h6 { font-size: 1.1em; line-height: 1em; }
 
 
@@ -131,6 +144,8 @@ hr {
   border: 0;
 }
 
+
+
 .container {
 	width: 95%;
 	max-width: 1260px;
@@ -139,9 +154,6 @@ hr {
 	margin: 0 auto;
 }
 
-header {
-  text-align: center;
-}
 
 .content {
 	width: 90%; /* 90% of .container */
@@ -151,12 +163,6 @@ header {
 
 .header_Edit {
   margin-top: 10px;
-}
-
-footer {
-  align-content: center;
-  align-items: center;
-  text-align: center;
 }
 
 
@@ -182,15 +188,10 @@ div.aidscontent, div.aidsListing {
 }
 
 /*
-div.aidsListing li:hover:after {
-  content: " (" attr(href) ")";
-}
-`/
-
 .bonfire:hover:after {
   content: '\25BA';
 }
-
+*/
 
 /* Reroll Fade-In */
 .aidscontent, .rerunroll {
@@ -210,7 +211,6 @@ div.aidsListing li:hover:after {
 
 
 
-
 .rerunFont {
   /* font-family: "OptimusPrinceps"; */
   font-size: 3em;
@@ -218,11 +218,19 @@ div.aidsListing li:hover:after {
   text-align: center;
 }
 
+.superaids {
+  font-size: 0.6em;
+  line-height: 1em;
+  text-shadow: 1px 1px 25px rgba(239, 35, 60, 0.5), 1px 1px 25px rgba(122, 73, 48, 0.5), -1px -1px 25px rgba(230, 57, 70, 0.5), -1px -1px 88px rgba(217, 4, 41, 0.5);  
 
-ul.aidsList {
+}
+
+
+ul.aidsList { /* UP FOR Mobs, Boss, Weapons Aids */
   list-style: decimal inside;
   display: table;
   font-size: 1.1em;
+  margin: 2px;
 }
 
 ul.aidsList > li {
@@ -242,7 +250,6 @@ li.noListStyle {
 }
 
 .aidsText, .weaponText {
-  
   font-size: 1.6em;
   line-height: 2em;
   
@@ -251,21 +258,13 @@ li.noListStyle {
 }
 
 
-/*
-.weaponText {
-  font-size: 1.3em;
-  font-weight: bold;
-  text-shadow: 0px 2px 2px rgba(255, 255, 255, 0.4);
-}
-*/
-
 .edit_ID {
   color: #6F6B6B;
   opacity: 0.2;
 }
 
 #w12 {
-  /* height: 236px; */
+  font-size: 1em; /* Normalize font size for middle div, see flex-item-aids-middle */
 }
 
 .dice {
@@ -274,53 +273,15 @@ li.noListStyle {
 
 
 img.dice {
-  /* filter:blur(5px); */
-  /* filter:invert(100%); */
-  filter: contrast(0) sepia(100%) hue-rotate(20deg) brightness(1.4) saturate(0.28);
-
+  /* filter: contrast(0) sepia(50%) hue-rotate(20deg) brightness(1.9) saturate(0.28); */ /* Turn black dice white */
+  
   width: 100px;
   height: 100px;
 }
 
 img.edit_icon {
-  filter: contrast(0) sepia(100%) hue-rotate(200deg) brightness(1.4) saturate(0.28);
+  filter: contrast(0) sepia(50%) hue-rotate(20deg) brightness(1.9) saturate(0.28);
 }
-
-
-
-/* FORM */
-/* input[type=text] { */
-input, textarea {
-  
-  padding: 4px 6px;
-  margin: 8px 0;
-  box-sizing: border-box;
-  border: 0px;
-  
-  color: #fff;
-  
-  background: url("/img/button_bg.png") no-repeat center center fixed;  
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  background-size: cover;
-}
-
-/*
-input[type=text]:active,
-input[type=text]:focus
-*/
-input:active,
-input:focus,
-textarea:active,
-textarea:focus
-{
-  outline-color: #3f292b;
-  outline-style: 1px dotted;
-}
-
-
-
 
 /* DEBUG */
 /*
@@ -330,4 +291,3 @@ textarea:focus
   border-width: 1px;
 }
 */
-    

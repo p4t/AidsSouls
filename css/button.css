@@ -1,64 +1,42 @@
-@charset "utf-8";
-
-
-.button {
-  border-radius: 4px;
-  background-color: #3F292B;
-  /* background-color: #434343; */
-  /* background: url("/img/noise-diagonal-trans.png"); */
-  background: url("/img/button_bg.png");
-  border: none;
-  
-  font-family: "OptimusPrinceps";
-  color: #fefefe;
-  text-shadow: 1px 1px 5px #bb754d, 1px 1px 10px #7a4930, -1px -1px 5px #bb754d, -1px -1px 10px #7a4930;
-  
-  text-align: center;
-  font-size: 1.7em; /* Button Text Font Size */
-  padding: 5px;
-  
-  width: 120px;
-  height: 68px;
-  
-  transition: all 0.5s;
-  cursor: pointer;
-  margin: 5px;
-}
-
-
-.button:active,
-.button:focus
-{
-  outline-color: #3f292b;
-  outline-style: 1px dotted;
-}
-
-.button span {
-  cursor: pointer;
-  display: inline-block;
+/* Scss Document */
+a {
   position: relative;
-  transition: 0.5s;
-}
+  display: inline-block;
+  padding: 1.2em 2em;
+  text-decoration: none;
+  text-align: center;
+  cursor: pointer;
+  user-select: none;
+  color: white; }
+  a::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background: linear-gradient(135deg, #6e8efb, #a777e3);
+    border-radius: 4px;
+    transition: box-shadow .5s ease, transform .2s ease;
+    will-change: transform;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    transform: translateY(var(--ty, 0)) rotateX(var(--rx, 0)) rotateY(var(--ry, 0)) translateZ(var(--tz, -12px)); }
+  a:hover::before {
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3); }
+  a::after {
+    position: relative;
+    display: inline-block;
+    content: attr(data-title);
+    transition: transform .2s ease;
+    font-weight: bold;
+    letter-spacing: .01em;
+    will-change: transform;
+    transform: translateY(var(--ty, 0)) rotateX(var(--rx, 0)) rotateY(var(--ry, 0)); }
 
-.button span:after {
-  /* content: '\00bb'; */
-  content: '🎲';
-  position: absolute;
-  opacity: 0;
-  top: 0;
-  right: -20px;
-  margin-right: -10px;
-  transition: 0.5s;
-}
-
-.button:hover span {
-  padding-right: 25px;
-  text-shadow: 1px 1px 5px #bb754d;
-}
-
-.button:hover span:after {
-  opacity: 1;
-  right: 0;
-}
-
-
+body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  transform-style: preserve-3d;
+  transform: perspective(800px); }

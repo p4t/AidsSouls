@@ -1,26 +1,7 @@
+﻿<!-- <meta charset="utf-8"> -->
+
 <?php
-/***************************
-*
-* AIDS.PHP
-*
-*****************************/
-
-
-/*
-Get IP
-*/
-function getRealIpAddr() {
-  if (!empty($_SERVER["HTTP_CLIENT_IP"])) {
-    $ip = $_SERVER["HTTP_CLIENT_IP"];
-  }
-  elseif (!empty($_SERVER["HTTP_X_FORWARDED_FOR"])) {
-    $ip = $_SERVER["HTTP_X_FORWARDED_FOR"];
-  }
-  else {
-    $ip = $_SERVER["REMOTE_ADDR"];
-  }
-  return $ip;
-}
+// AIDS.PHP
 
 
 /*
@@ -28,11 +9,10 @@ function getRealIpAddr() {
  */
 function randomWeapon () {
   global $pdo;
+  
   $section    = "weapons";
   $count      = pdoCount($section);
   $weaponRNG  = mt_rand (1, $count);
-  // echo "(" . $weaponRNG . ")";
-  // $weaponRNG  = 6;
   
   $stmt = $pdo->prepare("SELECT * FROM weapons WHERE dice = $weaponRNG");
   $stmt->execute();
@@ -40,11 +20,6 @@ function randomWeapon () {
   
   $weapon = $row["name"];
   
-  /*
-  echo "<img src=\"img/weapon_icon.png\" width=\"41\" height=\"40\" alt=\"Weapon\">\n"; // 71, 70
-  echo "&nbsp;";
-  echo $row["name"];
-  */
   return $weapon;
 }
 	
@@ -57,7 +32,8 @@ function replaceNameWithEmoji ($emoji) {
   if ($emoji == "Biber") $emoji = "🐻";
   elseif ($emoji == "Katz") $emoji = "🐱";
   elseif ($emoji == "Pat") $emoji = "💩";
-  elseif ($emoji == "\[T]/") $emoji = "🔥";
+  elseif ($emoji == "Coop") $emoji = "🎮";
+  
   return $emoji;
 }
 
@@ -67,7 +43,6 @@ function replaceNameWithEmoji ($emoji) {
  * Replace (Cheese) from field text in DB Table Kills
  */
 function replaceCheeseWithEmoji ($text) {
-
   $text = str_replace("Cheese", "🧀", $text);
   $text = str_replace("0", "<img src=\"/img/curlup.png\" width=\"62\" height=\"51\" alt=\"Curl Up\">", $text);
   
@@ -80,7 +55,7 @@ function replaceCheeseWithEmoji ($text) {
  */
 function pdoCount ($table) {
   global $pdo;
-  // return $pdo->query("SELECT count(ID) FROM $table")->fetchColumn();
+
   return $pdo->query("SELECT count(dice) FROM $table")->fetchColumn();
 }
 
@@ -146,7 +121,9 @@ function formatDate ($date) {
 
 
 
-
+/*
+ * Replace <br> with comma for data-tip
+ */
 function replaceBrWithComma ($text) {
   $text = str_replace("\r\n", ", ", $text);
   return $text;
@@ -174,13 +151,36 @@ function replaceIntWithFlasks ($number) {
 
 
 
-/***************************
-*
-* EDIT.PHP
-*
-*****************************/
+
+/*
+* Get IP
+*/
+function getIpAddr() {
+  if (!empty($_SERVER["HTTP_CLIENT_IP"])) {
+    $ip = $_SERVER["HTTP_CLIENT_IP"];
+  }
+  elseif (!empty($_SERVER["HTTP_X_FORWARDED_FOR"])) {
+    $ip = $_SERVER["HTTP_X_FORWARDED_FOR"];
+  }
+  else {
+    $ip = $_SERVER["REMOTE_ADDR"];
+  }
+  return $ip;
+}
 
 
+
+
+
+
+
+/**********************************************************************************/
+
+
+
+
+
+// EDIT.PHP
 /*
 * Sanitize Query
 */
@@ -207,13 +207,15 @@ function buildQuery ($get_var) {
 function clean_string ($string) {
     $bad = array("content-type", "bcc:", "to:", "cc:", "href");
     return str_replace($bad, "", $string);
+  // $mode = preg_replace('![^a-z]!', '', $mode); 
+
 }
 
 
 /*
 * redirect back to given URL, statuscode = 303
 */
-function redirect($url, $statusCode) {
+function redirect ($url, $statusCode) {
   header("Location: " . $url, true, $statusCode);
   die();
 }

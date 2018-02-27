@@ -1,4 +1,6 @@
-<table>
+<a id="Kills"></a>
+
+<table class="edit">
   <tbody>
     <tr>
       <th scope="col"><strong>ID</strong></th>

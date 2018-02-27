@@ -18,43 +18,71 @@ require_once("functions.inc.php");
 
 
 <!doctype html>
-<html>
+<html lang="de">
 <head>
   
 <meta charset="utf-8">
-<meta name="theme-color" content="#3f292b"> 
-
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   
-<title>\[T]/</title>
+<title>\[T]/ the Edit</title>
+<base href="http://gyros-mit-zaziki.de/edit">
 
 <link rel="stylesheet" href="css/layout.css" type="text/css" media="screen">
 <link rel="stylesheet" href="css/flex.css" type="text/css" media="screen">
 <link rel="stylesheet" href="css/button.css" type="text/css" media="screen">
 <link rel="stylesheet" href="css/table.css" type="text/css" media="screen">
+<link rel="stylesheet" href="css/form.css" type="text/css" media="screen">
 <link rel="stylesheet" href="css/datatip.css" type="text/css" media="screen">
 <link rel="stylesheet" href="css/mobile.css" type="text/css" media="screen">
-
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/balloon-css/0.5.0/balloon.min.css">
   
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/balloon-css/0.5.0/balloon.min.css">
+
+<link rel="apple-touch-icon" sizes="180x180" href="/img/favico/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/img/favico/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/img/favico/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/img/favico/safari-pinned-tab.svg" color="#3f292b">
+
+<meta name="theme-color" content="#3f292b">
+<meta name="msapplication-TileColor" content="#3f292b"> 
+<meta name="apple-mobile-web-app-status-bar-style" content="#3f292b">
+
+<meta name="mobile-web-app-capable" content="yes">
+  
+<meta name="google" content="notranslate">
+<meta name="application-name" content="Aids Souls Edit">
+<meta name="description" content="Roll dice to edit AIDS">
+<meta name="robots" content="noindex, nofollow">
+<meta name="googlebot" content="noindex, nofollow">
+<meta name="google" content="nositelinkssearchbox">
+  
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
  
 </head>
 
 <body>
-  
-  <div class="header_Edit">
-    <h1>&raquo; <a href="aids.php">AIDS</a> &laquo;</h1>
-  </div>
+  <header>
+  <!-- <div class="header_Edit"> -->
+    <h1>&raquo; <a href="/aids">AIDS</a> &laquo;</h1>
+  <!-- </div> -->
+  </header>
 
+  <nav>
+    <a href="#">Home</a> |
+    <a href="#Mobs">Mobs</a> |
+    <a href="#Boss">Boss</a> |
+    <a href="#Weapons">Weapons</a> |
+    <a href="#Kills">Kills</a> |
+    <a href="#Rolls">Rolls</a> |
+    <a href="/aids">Aids</a>
+  </nav>
 
 <?php
 /*
- * EDIT MOBS, BOSS, WEAPONS
+ * EDIT: MOBS, BOSS, WEAPONS
  */
 
-  if ( !empty($_GET["mode"]) && (empty($_GET["action"])) && ($_GET["mode"] == "weapons" || $_GET["mode"] == "mobs" || $_GET["mode"] == "boss") ) {
+  if ( !empty($_GET["mode"]) && empty($_GET["action"]) && ($_GET["mode"] == "weapons" || $_GET["mode"] == "mobs" || $_GET["mode"] == "boss") ) {
     (STRING)$mode   = $_GET["mode"];
     (STRING)$table  = $mode;
     (INT)$ID        = $_GET["ID"];  
@@ -62,8 +90,6 @@ require_once("functions.inc.php");
     if ( isset($_POST["newName"]) ) {
       (STRING)$newName  = $_POST["newName"];
       (INT)$newDice     = $_POST["newDice"];
-
-      // pdoUpdateTable($pdo, $table, $post, $ID);
       
       $sql = "UPDATE $table SET name = :name, dice = :dice WHERE ID = :ID";
       $stmt = $pdo->prepare($sql);                                  
@@ -72,31 +98,20 @@ require_once("functions.inc.php");
       $stmt->bindParam(":ID", $_GET["ID"], PDO::PARAM_INT);
       $stmt->execute();
       
-      // UPDATE ID IF ID INPUT FIELD SHOWS DIFFERENT VALUE
-      /*
-      if ( $ID != $newID ) {
-        $sql = "UPDATE $table SET ID = :newID WHERE ID = :ID";
-        $stmt = $pdo->prepare($sql);
-        $stmt->bindParam(":newID", $_POST["newID"], PDO::PARAM_INT);
-        $stmt->bindParam(":ID", $_GET["ID"], PDO::PARAM_INT);
-        $stmt->execute();
-      }
-      */
-
-      redirect("edit.php", $statusCode = 303);
+      redirect("/edit", $statusCode = 303);
 
     } else {
       
       $stmt = $pdo->prepare("SELECT * FROM $table WHERE ID = ".$_GET["ID"]." ");
       $stmt->execute();
       $row = $stmt->fetch(PDO::FETCH_ASSOC);
-  }
+    }
 ?>
 <div id="flex-container">
   <div class="flex-item">&nbsp;</div>
     
   <div class="flex-item">
-      <form action="edit.php?mode=<?= $mode ?>&ID=<?= $_GET["ID"] ?>" method="post">
+      <form action="/edit?mode=<?= $mode ?>&ID=<?= $_GET["ID"] ?>" method="post" id="edit">
         <ul>
           <li><label>Dice:</label></li>
           <li><input type="number" name="newDice" value="<?= $row["dice"]; ?>" min="1" max="99" autocomplete="off" placeholder="Würfel" required="required"></li>
@@ -120,7 +135,7 @@ require_once("functions.inc.php");
  * EDIT KILLS
  */
 
-if ( isset($_GET["mode"]) && ($_GET["mode"] == "kills") ) {
+if ( !empty($_GET["mode"]) && $_GET["mode"] == "kills" ) {
   (STRING)$mode       = $_GET["mode"];
   (STRING)$table      = $mode;
   (INT)$ID            = $_GET["ID"];
@@ -139,10 +154,10 @@ if ( isset($_GET["mode"]) && ($_GET["mode"] == "kills") ) {
     $stmt->bindParam(':ID', $_GET['ID'], PDO::PARAM_INT);
     $stmt->execute();
     
-    redirect("edit.php", $statusCode = 303);
+    redirect("/edit", $statusCode = 303);
      
   } else {
-    $stmt = $pdo->prepare('SELECT * FROM kills WHERE ID = '.$_GET["ID"].' ');
+    $stmt = $pdo->prepare("SELECT * FROM kills WHERE ID = ".$_GET["ID"]." ");
     $stmt->execute();
     $row = $stmt->fetch(PDO::FETCH_ASSOC);
   }
@@ -152,13 +167,13 @@ if ( isset($_GET["mode"]) && ($_GET["mode"] == "kills") ) {
   <div class="flex-item">&nbsp;</div>
     
   <div class="flex-item">
-      <form action="edit.php?mode=kills&ID=<?= $_GET["ID"] ?>" method="post">
+      <form action="/edit?mode=kills&ID=<?=$_GET["ID"]?>" method="post" id="edit">
         <ul>
           <li><label>Joker:</label></li>
-          <li><input type="number" name="newJoker" value="<?= $row["joker"]; ?>" min="0" max="99" autocomplete="off" placeholder="Joker insgesamt" required="required"></li>
+          <li><input type="number" name="newJoker" value="<?=$row["joker"]?>" min="0" max="99" autocomplete="off" placeholder="Joker insgesamt" required="required"></li>
 
           <li><label>Ausgegeben:</label></li>
-          <li><input type="number" name="newSpent" value="<?= $row["spent"]; ?>" min="0" max="99" autocomplete="off" placeholder="Joker ausgegeben" required="required"></li>
+          <li><input type="number" name="newSpent" value="<?=$row["spent"]?>" min="0" max="99" autocomplete="off" placeholder="Joker ausgegeben" required="required"></li>
 
           <li><label>bossNames:</label></li>
           <li><textarea rows="15" name="newBossNames" cols="50" required="required"><?=$row["bossNames"]?></textarea></li>
@@ -184,12 +199,12 @@ if ( isset($_GET["mode"]) && ($_GET["mode"] == "kills") ) {
   
 <?php 
   /*
- * ADD MOBS, BOSS, WEAPONS
+ * ADD: MOBS, BOSS, WEAPONS
  *
  *
  */
   
-  if ( !empty($_GET["mode"]) && (!empty($_GET['action'])) && ($_GET["mode"] == "weapons" || $_GET["mode"] == "mobs" || $_GET["mode"] == "boss") ) {
+  if ( !empty($_GET["mode"]) && !empty($_GET["action"]) && ($_GET["mode"] == "weapons" || $_GET["mode"] == "mobs" || $_GET["mode"] == "boss") ) {
     (STRING)$mode   = $_GET["mode"];
     (STRING)$table  = $mode;
     // (INT)$ID        = $_GET["ID"];
@@ -203,7 +218,7 @@ if ( isset($_GET["mode"]) && ($_GET["mode"] == "kills") ) {
         $stmt->execute();
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
         (INT)$addDice = $row["dice"] + 1; // +1 of max dice value
-      } else {
+      } else { 
         // cherck if dice alrerady exists
         $stmt = $pdo->prepare("SELECT dice FROM $table WHERE dice = $addDice"); // get max value from field dice
         $stmt->execute();
@@ -211,21 +226,19 @@ if ( isset($_GET["mode"]) && ($_GET["mode"] == "kills") ) {
         
         if ($row["dice"] != NULL ) die("Dice Wert schon vergeben!");
       }
-      // CHECK IF DICE VALUE ALREADY EXISTS
+      // Insert Dice Value into DB
       $sql = "INSERT INTO $table (dice, name) VALUES (:dice, :name)";
-      // $sql = "INSERT INTO $table (dice, name) VALUES (:dice, :name) ON DUPLICATE KEY INSERT (dice, name) VALUES (:dice, :name)";
       $stmt = $pdo->prepare($sql);          
       $stmt->bindParam(':dice', $addDice, PDO::PARAM_INT);
       $stmt->bindParam(':name', $_POST['addEntry'], PDO::PARAM_STR);
       $stmt->execute();
 
-      redirect("aids.php", $statusCode = 303);
+      redirect("/aids", $statusCode = 303);
 
     } else { // display form if coming from link within aids.php and no $_POST
       ?>
       
-      <form action="edit.php?mode=<?=$table?>&action=add" method="post">
-        
+      <form action="/edit?mode=<?=$table?>&action=add" method="post">
         <table>
           <tbody>
             <tr>
@@ -241,13 +254,11 @@ if ( isset($_GET["mode"]) && ($_GET["mode"] == "kills") ) {
             </tr>
           </tbody>
         </table>
-        
       </form>  
   <?php
-    } // ENDIF $_POST["addEntry"]
+    } // ENDIF (ELSE) $_POST["addEntry"]
       
   } // ENDIF
-
   ?>
   
   
@@ -257,8 +268,6 @@ if ( isset($_GET["mode"]) && ($_GET["mode"] == "kills") ) {
 <?php
 /*
  * DELETE 
- *
- *
  */
 
 if ( !empty($_GET["action"]) && $_GET["action"] == "delete" ) {
@@ -271,7 +280,7 @@ if ( !empty($_GET["action"]) && $_GET["action"] == "delete" ) {
   $stmt->bindParam(':ID', $ID, PDO::PARAM_INT);
   $stmt->execute();
 
-  redirect("edit.php", $statusCode = 303);
+  redirect("/edit", $statusCode = 303);
 }
 
 
@@ -279,8 +288,6 @@ if ( !empty($_GET["action"]) && $_GET["action"] == "delete" ) {
 
 /*
  * TRUNCATE
- *
- *
  */
 
 if ( !empty($_GET["action"]) && $_GET["action"] == "truncate" ) {
@@ -288,7 +295,7 @@ if ( !empty($_GET["action"]) && $_GET["action"] == "truncate" ) {
   $stmt = $pdo->prepare($sql);
   $stmt->execute();
   
-  redirect("edit.php", $statusCode = 303);
+  redirect("/edit", $statusCode = 303);
 }
 ?>
   
@@ -309,24 +316,25 @@ if ( empty($_GET["mode"]) ) :
     $stmt = $pdo->prepare("SELECT * FROM $table ORDER BY dice");
     $stmt->execute();
 ?>
-<form action="edit.php?mode=<?=$table?>&action=add" method="post">
-<table>
+<a id="<?=ucfirst($table)?>"></a>
+<form action="/edit?mode=<?=$table?>&action=add" method="post">
+<table class="edit">
   <tbody>
     <tr>
       <th scope="col"><strong>Dice</strong></th>
       <th scope="col"><strong><?=ucfirst($table)?></strong></th>
-      <th scope="col"><strong>Action</strong></th>
+      <th scope="col" class="edit_action"><strong>...</strong></th>
     </tr>
     <?php while ($row = $stmt->fetch(PDO::FETCH_NUM)) : ?>
     <tr>
-      <td><a href="edit.php?mode=<?=$table?>&ID=<?=$row[0]?>"><?=$row[1]?></a></td>
-      <td><a href="edit.php?mode=<?=$table?>&ID=<?=$row[0]?>"><?=$row[2]?></a></td>
-      <td>
-        <a href="edit.php?mode=<?=$table?>&ID=<?=$row[0]?>" data-tip="Edit">
-          <img src="img/edit-icon.png" class="edit_icon" width="024" height="024" alt="Edit">
+      <td><a href="/edit?mode=<?=$table?>&ID=<?=$row[0]?>"><?=$row[1]?></a></td>
+      <td><a href="/edit?mode=<?=$table?>&ID=<?=$row[0]?>"><?=$row[2]?></a></td>
+      <td class="edit_action">
+        <a href="/edit?mode=<?=$table?>&ID=<?=$row[0]?>" data-tip="Edit">
+          <img src="/img/edit-icon.png" class="edit_icon" width="024" height="024" alt="Edit">
         </a>
-        <a href="edit.php?mode=<?=$table?>&action=delete&ID=<?=$row[0]?>" onClick="return confirm('SICHER???????? MACH KE SCHEISS!');" data-tip="Delete">
-          <img src="img/delete-icon.png" width="024" height="024" alt="Delete">
+        <a href="/edit?mode=<?=$table?>&action=delete&ID=<?=$row[0]?>" onClick="return confirm('SICHER???????? MACH KE SCHEISS!');" data-tip="Delete">
+          <img src="/img/delete-icon.png" width="024" height="024" alt="Delete">
         </a>
       </td>
     </tr>
@@ -369,11 +377,22 @@ ENDIF // EOF if ( empty($_GET["mode"]) )
   
 <!-- FOOTER -->  
   <footer>
-  <p>
-    <a href="#"><img src="img/arrow_icon.png" width="30" height="19" alt="To Top"></a>
-    <a href="edit.php">Back</a>
-    <a href="#"><img src="img/arrow_icon.png" width="30" height="19" alt="To Top"></a> 
-  </p>
+    <!--
+    <p>
+      <a href="#"><img src="img/arrow_icon.png" width="30" height="19" alt="To Top"></a>
+      <a href="edit.php">Back</a>
+      <a href="#"><img src="img/arrow_icon.png" width="30" height="19" alt="To Top"></a> 
+    </p>
+    -->
+    <nav>
+      <a href="#">Home</a> |
+      <a href="#Mobs">Mobs</a> |
+      <a href="#Boss">Boss</a> |
+      <a href="#Weapons">Weapons</a> |
+      <a href="#Kills">Kills</a> |
+      <a href="#Rolls">Rolls</a> |
+      <a href="/aids">Aids</a>
+    </nav>
 </footer>
   
 

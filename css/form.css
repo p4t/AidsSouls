@@ -1,0 +1,55 @@
+@charset "utf-8";
+
+/* FORM */
+/* input[type=text] { */
+input, textarea {
+  
+  padding: 4px 6px;
+  margin: 8px 0;
+  box-sizing: border-box;
+  border: 1px groove #846731;
+  
+  color: #fff;
+  
+  background: url("/img/button_bg.png") no-repeat center center fixed;  
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+/*
+input[type=text]:active,
+input[type=text]:focus
+*/
+
+input:active,
+input:focus,
+textarea:active,
+textarea:focus
+{
+  outline-color: #3f292b;
+  outline-style: 2px dotted;
+}
+
+/*
+input:hover,
+textarea:hover {
+  outline-color: red;
+  outline-style: 5px dashed;
+}
+
+input.invalid {
+  border-color: red;
+}
+*/
+
+
+form#edit {
+  /* margin: 50px; */
+  /* top, tight, bottom, left */
+  margin: 50px 10px 50px 10px;
+  padding: 20px;
+  border: 1px dashed #000;
+  background-color: rgba(0, 0, 0, 0.7)
+}
