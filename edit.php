@@ -25,15 +25,15 @@ require_once("functions.inc.php");
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   
 <title>\[T]/ the Edit</title>
-<base href="http://gyros-mit-zaziki.de/edit">
+<base href="http://aids.gyros-mit-zaziki.de">
 
-<link rel="stylesheet" href="css/layout.css" type="text/css" media="screen">
-<link rel="stylesheet" href="css/flex.css" type="text/css" media="screen">
-<link rel="stylesheet" href="css/button.css" type="text/css" media="screen">
-<link rel="stylesheet" href="css/table.css" type="text/css" media="screen">
-<link rel="stylesheet" href="css/form.css" type="text/css" media="screen">
-<link rel="stylesheet" href="css/datatip.css" type="text/css" media="screen">
-<link rel="stylesheet" href="css/mobile.css" type="text/css" media="screen">
+<link rel="stylesheet" href="/css/layout.css" type="text/css" media="screen">
+<link rel="stylesheet" href="/css/flex.css" type="text/css" media="screen">
+<link rel="stylesheet" href="/css/button.css" type="text/css" media="screen">
+<link rel="stylesheet" href="/css/table.css" type="text/css" media="screen">
+<link rel="stylesheet" href="/css/form.css" type="text/css" media="screen">
+<link rel="stylesheet" href="/css/datatip.css" type="text/css" media="screen">
+<link rel="stylesheet" href="/css/mobile.css" type="text/css" media="screen">
   
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/balloon-css/0.5.0/balloon.min.css">
 
@@ -63,18 +63,16 @@ require_once("functions.inc.php");
 <body>
   <header>
   <!-- <div class="header_Edit"> -->
-    <h1>&raquo; <a href="/aids">AIDS</a> &laquo;</h1>
+    <h1>&raquo; <a href="/">AIDS</a> &laquo;</h1>
   <!-- </div> -->
   </header>
 
   <nav>
-    <a href="#">Home</a> |
-    <a href="#Mobs">Mobs</a> |
-    <a href="#Boss">Boss</a> |
-    <a href="#Weapons">Weapons</a> |
-    <a href="#Kills">Kills</a> |
-    <a href="#Rolls">Rolls</a> |
-    <a href="/aids">Aids</a>
+    <a href="/edit#Mobs">Mobs</a> |
+    <a href="/edit#Boss">Boss</a> |
+    <a href="/edit#Weapons">Weapons</a> |
+    <a href="/edit#Kills">Kills</a> |
+    <a href="/edit#Rolls">Rolls</a>
   </nav>
 
 <?php
@@ -233,7 +231,8 @@ if ( !empty($_GET["mode"]) && $_GET["mode"] == "kills" ) {
       $stmt->bindParam(':name', $_POST['addEntry'], PDO::PARAM_STR);
       $stmt->execute();
 
-      redirect("/aids", $statusCode = 303);
+      // redirect("/aids", $statusCode = 303);
+      redirect("/edit", $statusCode = 303);
 
     } else { // display form if coming from link within aids.php and no $_POST
       ?>
@@ -370,31 +369,22 @@ ENDIF // EOF if ( empty($_GET["mode"]) )
   
   
   
-  
-  
-  
-  
+
   
 <!-- FOOTER -->  
+<hr>
   <footer>
-    <!--
-    <p>
-      <a href="#"><img src="img/arrow_icon.png" width="30" height="19" alt="To Top"></a>
-      <a href="edit.php">Back</a>
-      <a href="#"><img src="img/arrow_icon.png" width="30" height="19" alt="To Top"></a> 
-    </p>
-    -->
     <nav>
-      <a href="#">Home</a> |
-      <a href="#Mobs">Mobs</a> |
-      <a href="#Boss">Boss</a> |
-      <a href="#Weapons">Weapons</a> |
-      <a href="#Kills">Kills</a> |
-      <a href="#Rolls">Rolls</a> |
-      <a href="/aids">Aids</a>
+      <a href="/edit#">^</a> |
+      <a href="/edit#Mobs">Mobs</a> |
+      <a href="/edit#Boss">Boss</a> |
+      <a href="/edit#Weapons">Weapons</a> |
+      <a href="/edit#Kills">Kills</a> |
+      <a href="/edit#Rolls">Rolls</a> |
+      <a href="/edit#">^</a>
     </nav>
-</footer>
-  
+  </footer>
+<hr>
 
   
 </body>

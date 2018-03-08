@@ -26,7 +26,6 @@ html {
   -ms-text-size-adjust: 100%;
   
   background: url("/img/ds3bg/shrine2.jpg") no-repeat center center fixed;
-  /* background: url("/img/ds1remaster.jpg") no-repeat center center fixed; */
   
   -webkit-background-size: cover;
   -moz-background-size: cover;
@@ -68,8 +67,6 @@ nav {
 }
 
 footer {
-  align-content: center;
-  align-items: center;
   text-align: center;
 }
 
@@ -130,6 +127,10 @@ h1, h2, h4, h5 {
 
 h1, h5 {
   text-align: center;
+}
+
+h5#Kills {
+  margin-bottom: -25px;
 }
 
 
@@ -210,13 +211,18 @@ div.aidscontent, div.aidsListing {
 @keyframes fade-in{0%{opacity:0} 100%{opacity:1}}
 
 
-
+/*
 .rerunFont {
-  /* font-family: "OptimusPrinceps"; */
   font-size: 3em;
   font-weight: 600;
   text-align: center;
+  
+  text-shadow: 2px 2px 3px #000;
+  
+  text-shadow: 1px 1px 25px rgba(239, 35, 60, 0.5), 1px 1px 25px rgba(122, 73, 48, 0.5), -1px -1px 25px rgba(230, 57, 70, 0.5), -1px -1px 88px rgba(217, 4, 41, 0.5);   
 }
+*/
+
 
 .superaids {
   font-size: 0.6em;
@@ -283,11 +289,19 @@ img.edit_icon {
   filter: contrast(0) sepia(50%) hue-rotate(20deg) brightness(1.9) saturate(0.28);
 }
 
+
+#ajax_form {
+  text-align: center;
+  margin: 5px;
+}
+
+
+
 /* DEBUG */
-/*
+
+
 * {
   border-style: groove;
   border-color: chartreuse;
   border-width: 1px;
 }
-*/

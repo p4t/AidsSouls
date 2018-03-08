@@ -149,9 +149,6 @@ function replaceIntWithFlasks ($number) {
 }
 
 
-
-
-
 /*
 * Get IP
 */
@@ -167,6 +164,41 @@ function getIpAddr() {
   }
   return $ip;
 }
+
+
+
+
+
+
+// AJAX
+/*
+* Get max dice value and add 1 to insert into DB via ajaxPDOInsert
+*/
+function getDiceValuePlusOne ($table) {
+  global $pdo;
+
+  $stmt = $pdo->prepare("SELECT * FROM $table ORDER BY dice DESC LIMIT 1"); // get max value from field dice
+  $stmt->execute();
+  $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+  return $row["dice"] + 1;
+}
+
+
+/*
+* Simple PDO insert for Ajax *.inc, add Dice, Name into Table
+*/
+function ajaxPDOInsert ($table, $addDice, $addEntry) {
+  global $pdo;
+
+  $sql = "INSERT INTO $table (dice, name) VALUES (:dice, :name)";
+  $stmt = $pdo->prepare($sql);          
+  $stmt->bindParam(':dice', $addDice, PDO::PARAM_INT);
+  $stmt->bindParam(':name', $addEntry, PDO::PARAM_STR);
+  $stmt->execute();
+}
+
+
 
 
 

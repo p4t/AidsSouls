@@ -25,6 +25,8 @@ $bossSuperAids = $rowSuperAids[1];
   <?=$mobsSuperAids?>
 </span>
 
+<span> - </span>
+
 <span class="superaids">
   <?=$bossSuperAids?>
 </span>

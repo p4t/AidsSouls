@@ -8,12 +8,12 @@
             "type": "image/png"
         },
         {
-            "src": "img/favico/android-chrome-512x512.png",
+            "src": "/img/favico/android-chrome-512x512.png",
             "sizes": "512x512",
             "type": "image/png"
         }
     ],
-	"start_url": "/aids.php",
+	"start_url": "/",
     "theme_color": "#3f292b",
     "background_color": "#000000",
     "display": "fullscreen"

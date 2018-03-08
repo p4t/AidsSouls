@@ -2,7 +2,11 @@
 // Lib
 require_once("config.db.php");
 require_once("functions.inc.php");
-// include_once("superaids.inc.php"); // DW Hack
+
+// DB Hack
+// include_once("aids.ajax.php");
+// include_once("jquery_post.php");
+// include_once("superaids.inc.php");
 
 // MOBS
 $mobsCount  = pdoCount("mobs");
@@ -25,7 +29,7 @@ $row = $stmt->fetch(PDO::FETCH_GROUP);
 $mobsAids = $row[0];
 $bossAids = $row[1];
 
-$weaponIMG  = "&nbsp;<img src=\"img/weapon_icon.png\" width=\"41\" height=\"40\" alt=\"Weapon\">";
+$weaponIMG  = "&nbsp;<img src=\"/img/weapon_icon.png\" width=\"41\" height=\"40\" alt=\"Weapon\">";
 
 // Append weapon img HACK
 if ( $mobsAids == "Zufällige Waffe" ) {
@@ -37,7 +41,7 @@ if ( $mobsAids == "Zufällige Waffe" ) {
 
 if ( $bossAids == "Zufällige Waffe" ) {
   $bossAids = randomWeapon();
-  $bossAidsOutput = $bossAids . $weaponIMG;
+  $bossAidsOutput = $weaponIMG . $bossAids;
 } else {
   $bossAidsOutput = $bossAids;
 }
@@ -64,15 +68,15 @@ $stmt->execute();
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   
 <title>\[T]/</title>
-<base href="http://gyros-mit-zaziki.de/aids">
+<base href="http://aids.gyros-mit-zaziki.de">
 
-<link rel="stylesheet" href="css/layout.css" type="text/css" media="screen">
-<link rel="stylesheet" href="css/flex.css" type="text/css" media="screen">
-<link rel="stylesheet" href="css/button.css" type="text/css" media="screen">
-<link rel="stylesheet" href="css/table.css" type="text/css" media="screen">
-<link rel="stylesheet" href="css/form.css" type="text/css" media="screen">
-<link rel="stylesheet" href="css/datatip.css" type="text/css" media="screen">
-<link rel="stylesheet" href="css/mobile.css" type="text/css" media="screen">
+<link rel="stylesheet" href="/css/layout.css" type="text/css" media="screen">
+<link rel="stylesheet" href="/css/flex.css" type="text/css" media="screen">
+<link rel="stylesheet" href="/css/button.css" type="text/css" media="screen">
+<link rel="stylesheet" href="/css/table.css" type="text/css" media="screen">
+<link rel="stylesheet" href="/css/form.css" type="text/css" media="screen">
+<link rel="stylesheet" href="/css/datatip.css" type="text/css" media="screen">
+<link rel="stylesheet" href="/css/mobile.css" type="text/css" media="screen">
   
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/balloon-css/0.5.0/balloon.min.css">
 
@@ -96,6 +100,97 @@ $stmt->execute();
 <meta name="google" content="nositelinkssearchbox">
   
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+ 
+<!-- Android Bamboozle -->
+<script>
+$('body').on('keydown', 'input, select, textarea', function(e) {
+var self = $(this)
+  , form = self.parents('form:eq(0)')
+  , focusable
+  , next
+  , prev
+  ;
+
+if (e.shiftKey) {
+ if (e.keyCode == 13) {
+     focusable =   form.find('input,a,select,button,textarea').filter(':visible');
+     prev = focusable.eq(focusable.index(this)-1); 
+
+     if (prev.length) {
+        prev.focus();
+     } else {
+        form.submit();
+    }
+  }
+}
+  else
+if (e.keyCode == 13) {
+    focusable = form.find('input,a,select,button,textarea').filter(':visible');
+    next = focusable.eq(focusable.index(this)+1);
+    if (next.length) {
+        next.focus();
+    } else {
+        form.submit();
+    }
+    return false;
+}
+});
+</script>
+  
+<!-- jQuery Ajax Form -->
+<script>
+$(document).ready(function () {
+  
+  // clear all inputs on focus loss
+  /*
+  $("input").blur(function(){
+      // alert("This input field has lost its focus.");
+    $(this).val('');
+  });
+  */
+  
+  // on button click or enter
+  $("#btn").click(function () {
+    var vmobs     = $("input#ajax_mobs").val(); // mobs input field
+    var vboss     = $("input#ajax_boss").val(); // boss field
+    var vweapons  = $("input#ajax_weapons").val(); // weapons field
+  
+    if ($.trim(vmobs) == '' && $.trim(vboss) == '' && $.trim(vweapons) == '') {
+      alert("Mindestens 1 Feld ausfüllen");
+      // $("#success").text("Bitte ausfüllen!" + "<br>");
+      discombobulate();
+    } else {
+      $.post("jquery_post.php", // Required URL of the page on server
+        { // Data Sending With Request To Server
+          mobs: vmobs,
+          boss: vboss,
+          weapons: vweapons
+        },
+        function (response, status) { // Required Callback Function
+          // alert("*----Received Data----*\n\nResponse : " + response + "\n\nStatus : " + status); //"response" receives - whatever written in echo of above PHP script.
+          // alert(response);
+          // $("#success").append( "<p>Erfolg!</p>" );
+          // $("#success").append( response + "<br>"); // show success msg for every added entry
+          // $("#success").replaceWith( response ); // show success msg fonce
+          $("#form")[0].reset();
+          $("#flex-container-ajax").load("aids.ajax.php"); // load weapons list again for ajax bamboozle
+        });
+    } // ENDIF
+    
+  });
+});
+
+  
+/*
+$('#my_form').keydown(function () {
+  var key = e.which;
+  if (key == 13) {
+    // As ASCII code for ENTER key is "13"
+    $('#my_form').submit(); // Submit form code
+  }
+});
+*/
+</script>
   
 <!-- W12 JS -->
 <script>
@@ -170,17 +265,18 @@ $stmt->execute();
       bonfire.style.display     = "block";
     }
     
-    // rnd = 99; // DEBUG
+    /* DEBUG */
+    // rnd = 99;
     
     if (rnd == 7 || rnd == 77) { // EPIC SAX GUY
-      document.getElementById("rerunroll").innerHTML = "<img src='img/EpicSaxGuy.gif' width='186' height='234' alt='Epic Sax Guy'> <br>" + rnd;
+      document.getElementById("rerunroll").innerHTML = "<img src='/img/EpicSaxGuy.gif' width='186' height='234' alt='Epic Sax Guy'> <br>" + rnd;
       if (rerunroll.style.display === "block") {
         play_audio("yes");
         bonfire.style.display     = "none";
         w12.style.display         = "none";
       }
     } else if (rnd == 1 || rnd == 100) { // VADER
-      document.getElementById("rerunroll").innerHTML = "<img src='img/vader.jpg' width='323' height='203' alt='Vader'> <br>" + rnd;
+      document.getElementById("rerunroll").innerHTML = "<img src='/img/vader.jpg' width='323' height='203' alt='Vader'> <br>" + rnd;
       
       if (rerunroll.style.display === "block") {
         play_audio("no");
@@ -198,7 +294,8 @@ $stmt->execute();
         });
       }
     } else { // alles außer 1, 100, 7, 77, 99
-      document.getElementById("rerunroll").innerHTML = "¯\\_(ツ)_/¯ <br><img src='img/collapse.png' alt='Collapse'><br>" + rnd;
+      document.getElementById("rerunroll").innerHTML = "¯\\_(ツ)_/¯ <br>" + rnd;
+      // <img src='img/collapse.png' alt='Collapse'>
       
       if (rerunroll.style.display === "block") {
         play_audio("haha");
@@ -236,19 +333,9 @@ function reroll () {
   }
 </script>
   
-
 </head>
 
 <body>
-  
-
-<!--
-<div class="navbar">
-  <a href="#home">Home</a>
-  <a href="#mobs">Test</a>
-  <a href="#boss">Test</a>
-</div>
--->
   
 
 <div class="container">
@@ -260,9 +347,9 @@ function reroll () {
   ////////////////////////////TODO
   ?>
   
-  <!-- <img src="img/ds1_logo.png" alt="Dark Souls II Logo" width="630" height="80"> -->
-  <!-- <img src="img/ds2_logo.png" alt="Dark Souls II Logo" width="630" height="80"> -->
-  <img src="img/ds3_logo.png" alt="Dark Souls III Logo" width="661" height="80">
+  <!-- <img src="/img/ds1_logo.png" alt="Dark Souls II Logo" width="630" height="80"> -->
+  <!-- <img src="/img/ds2_logo.png" alt="Dark Souls II Logo" width="630" height="80"> -->
+  <img src="/img/ds3_logo.png" alt="Dark Souls III Logo" width="661" height="80">
   <!-- <img src="img/ds1remaster_logo.png" alt="Dark Souls II Logo" width="630" height="80"> -->
   <h4>mit verschärftem AIDS</h4>  
 </header>
@@ -285,14 +372,14 @@ function reroll () {
   <!-- bonfire -->
   <div id="bonfire" class="flex-item-aids-middle" data-balloon="Firelink Shrine abspielen" data-balloon-pos="up">
     <span class="bonfire">
-      <img src="img/WeirdTepidChital-max-1mb.gif" width="172" height="236" alt="" onClick="play_audio('shrine')">
+      <img src="/img/WeirdTepidChital-max-1mb.gif" width="172" height="236" alt="" onClick="play_audio('shrine')">
     </span>
   </div>
   
   <!-- w12 output -->
   <div id="w12" class="flex-item-aids-middle" style="display: none;">
     <h2>W12</h2>
-    <img src="dice/0.png" class="dice" id="randimgw12" width="100" height="100" alt="Dice 0">
+    <img src="/dice/0.png" class="dice" id="randimgw12" width="100" height="100" alt="Dice 0">
   </div>
   
   <!-- rerunroll -->
@@ -301,7 +388,7 @@ function reroll () {
   <!-- BOSS right -->
   <div class="flex-item-aids-right">
     <h2>Boss</h2>
-    <img src="dice/<?=$bossRNG?>.png" class="dice" width="100" height="100" alt="<?=$bossRNG?>">
+    <img src="/dice/<?=$bossRNG?>.png" class="dice" width="100" height="100" alt="<?=$bossRNG?>">
   </div>
   
 </div><!-- EOF flex-container-aids -->
@@ -355,55 +442,50 @@ function reroll () {
   
 <hr>
 
-<nav>
-  <a href="#">Home</a> |
-  <a href="#Roll">Roll</a> |
-  <a href="#Aids">Aids</a> |
-  <a href="#Kills">Kills</a> |
-  <a href="/edit">Edit</a>
-</nav>
-
-<hr>
-  
   
 <h5 id="Aids">Aids</h5>
 <!-- LIST OF ALL THE AIDS: MOBS BOSS, WEAPONS -->
+  
 <div class="aidsListing">
-  <div id="flex-container-aidsListing">
-  <?php
-  $tables = array("mobs", "boss", "weapons");
+  <div id="flex-container-ajax">
+    <?php
+    include_once("aids.ajax.php")
+    ?>
+  </div><!-- .flex-container-ajax -->
 
-  foreach ($tables as $table) :
-    $table_output = ucfirst($table);
-    $stmt = $pdo->prepare("SELECT * FROM $table ORDER BY dice");
-    $stmt->execute();
-  ?>
-    <div class="flex-item-aidsListing">
-      <h3><?=$table_output?></h3>
-      <ul class="aidsList">
-        <?php while ($row = $stmt->fetch(PDO::FETCH_NUM)) : ?>
-        <li>
-          <a href="edit.php?mode=<?=$table?>&ID=<?=$row[0]?>" target="_blank">
-            <?=$row[2]?>
-          </a>
-        </li>
-        <?php ENDWHILE ?>
-        <li class="noListStyle" data-tip="Max 32 Chars, hit Enter">
-          <form action="edit.php?mode=<?=$table?>&action=add" method="post">
-            
-            <label for="<?=$table?>addEntry">
-              +
-              <input type="text" name="addEntry" id="<?=$table?>addEntry" value="" size="10" autocomplete="off" maxlength="32" placeholder="..." required="required">
-            </label>
-            
-          </form>
-        </li>
-      </ul>
-    </div>
-  <?php
-    ENDFOREACH
-  ?>
-  </div><!-- EOF aidsListing -->
+  <!-- Ajax Success Msg -->
+  <div id="success">&nbsp;</div>
+  
+  <!-- jQuery Form: Add Mobs, Boss, Weapons -->
+  <div id="ajax_form">
+    
+    <form id="form" method="post" onsubmit="return false">
+      <!-- Mobs -->
+      <label for="ajax_mobs">
+        <em><strong>Mobs:</strong></em>
+        <input type="text" id="ajax_mobs" value="" size="10" autocomplete="off" maxlength="32" placeholder="...">
+      </label>
+      <!-- Boss -->
+      <label for="ajax_boss">
+        <em><strong>Boss:</strong></em>
+        <input type="text" id="ajax_boss" value="" size="10" autocomplete="off" maxlength="32" placeholder="...">
+      </label>
+      <!-- Weapons -->
+      <label for="ajax_weapons">
+        <em><strong>Waffe:</strong></em>
+        <input type="text" id="ajax_weapons" value="" size="10" autocomplete="off" maxlength="32" placeholder="...">
+      </label>
+      
+      <br>
+      
+      <label for="btn">
+        <button id="btn" class="button_small">+</button>
+      </label>
+    </form>
+  
+  </div>
+  
+  
 </div><!-- EOF flex-container-aidsListing -->
   
   
@@ -464,11 +546,11 @@ ENDWHILE
 <hr>
 <footer>
   <nav>
-    <a href="#">Home</a> |
+    <a href="#">^</a> |
     <a href="#Roll">Roll</a> |
     <a href="#Aids">Aids</a> |
     <a href="#Kills">Kills</a> |
-    <a href="/edit">Edit</a>
+    <a href="/edit" target="_blank">Edit</a>
   </nav>
 </footer>
 <hr>
@@ -480,20 +562,17 @@ ENDWHILE
   
 <!-- AUDIO -->
 <div id="audio">
-  <audio id="audio_Biber"     src="audio/biber.mp3"></audio>
-  <audio id="audio_Katz"      src="audio/meow.mp3"></audio>
-  <audio id="audio_Pat"       src="audio/Pat.mp3"></audio>
-  <audio id="audio_haha"      src="audio/SadTrombone.mp3"></audio>
-  <audio id="audio_yes"       src="audio/EpicSaxGuy.mp3"></audio>
-  <audio id="audio_no"        src="audio/nooo.ogg"></audio>
-  <audio id="audio_dice"      src="audio/dice.wav"></audio>
-  <audio id="audio_shrine"    src="audio/ds3_firelinkshrine.mp3"></audio>
-  <audio id="audio_aids"      src="audio/aids.mp3"></audio>
-  <audio id="audio_superaids" src="audio/superaids.mp3"></audio>
+  <audio id="audio_Biber"     src="/audio/biber.mp3"></audio>
+  <audio id="audio_Katz"      src="/audio/meow.mp3"></audio>
+  <audio id="audio_Pat"       src="/audio/Pat.mp3"></audio>
+  <audio id="audio_haha"      src="/audio/SadTrombone.mp3"></audio>
+  <audio id="audio_yes"       src="/audio/EpicSaxGuy.mp3"></audio>
+  <audio id="audio_no"        src="/audio/nooo.ogg"></audio>
+  <audio id="audio_dice"      src="/audio/dice.wav"></audio>
+  <audio id="audio_shrine"    src="/audio/ds3_firelinkshrine.mp3"></audio>
+  <audio id="audio_aids"      src="/audio/aids.mp3"></audio>
+  <audio id="audio_superaids" src="/audio/superaids.mp3"></audio>
 </div>
-  
-<!--<audio id="audio_shrine"  src="audio/DarkSoulsBonfireSoundEffect(cropped).ogg"></audio>-->
-
 
 </body>
 </html>

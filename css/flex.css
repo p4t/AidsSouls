@@ -34,7 +34,7 @@
   margin: auto; 
 }
 
-#flex-container-aidsListing {
+#flex-container-aidsListing, #flex-container-ajax {
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
@@ -72,11 +72,13 @@
   text-align: center;
 }
 
+/* w12, rerun, rerunroll */
 .flex-item-aids-middle {
-  
   font-size: 3em;
   font-weight: 600;
   
+  /* text-shadow: 2px 2px 3px #000; */
+  text-shadow: 15px 15px 25px rgba(0, 0, 0, 0.5), 15px 15px 25px rgba(0, 0, 0, 0.5), -1px -1px 25px rgba(230, 57, 70, 0.5), -1px -1px 88px rgba(219, 127, 103, 0.8);  
 }
 
 
