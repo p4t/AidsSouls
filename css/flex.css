@@ -34,7 +34,7 @@
   margin: auto; 
 }
 
-#flex-container-aidsListing, #flex-container-ajax {
+#flex-container-aidsListing, #flex-container-ajax, #flex-container-ajax-form {
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
@@ -81,7 +81,9 @@
   text-shadow: 15px 15px 25px rgba(0, 0, 0, 0.5), 15px 15px 25px rgba(0, 0, 0, 0.5), -1px -1px 25px rgba(230, 57, 70, 0.5), -1px -1px 88px rgba(219, 127, 103, 0.8);  
 }
 
-
+.flex-item-ajax-form {
+  
+}
 
 
 

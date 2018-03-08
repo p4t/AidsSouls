@@ -1,9 +1,9 @@
 <?php
-require_once("config.db.php");
-require_once("functions.inc.php");
-
-
 if ( (!empty($_POST["mobs"])) || (!empty($_POST["boss"])) || (!empty($_POST["weapons"])) ) {
+  
+  // Database
+  require_once("config.db.php");
+  require_once("functions.inc.php");
 
   // (STRING)$addEntry = $_POST["weapons"];
   // (STRING)$table    = "weapons";

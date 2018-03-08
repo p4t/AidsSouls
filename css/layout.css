@@ -233,10 +233,10 @@ div.aidscontent, div.aidsListing {
 
 
 ul.aidsList { /* UP FOR Mobs, Boss, Weapons Aids */
-  list-style: decimal inside;
+  list-style: decimal outside;
   display: table;
   font-size: 1.1em;
-  margin: 2px;
+  margin: 2px 15px 2px 15px;
 }
 
 ul.aidsList > li {
@@ -244,7 +244,36 @@ ul.aidsList > li {
   padding-left: 5px;
   padding-right: 5px;
   */
+  border: 1px solid transparent; /* fix hover */
 }
+
+/* prevent new line break in editable content */
+ul.aidsList > li br {
+  display: inline;
+  display: none;
+}
+
+ul.aidsList > li:hover {
+  border: 1px groove #846731;
+}
+ul.aidsList > li:active,
+ul.aidsList > li:focus
+{
+  color: #fff;
+  
+  outline-color: #3f292b;
+  outline-style: 2px dotted;
+  
+  background: url("/img/button_bg.png") no-repeat center center fixed;  
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+
+
+
 
 li.noListStyle {
   list-style: none;
@@ -290,18 +319,21 @@ img.edit_icon {
 }
 
 
-#ajax_form {
+#ajax-form-button {
   text-align: center;
-  margin: 5px;
 }
 
+#reroll_hover {
+  
+}
 
 
 /* DEBUG */
 
-
+/*
 * {
   border-style: groove;
   border-color: chartreuse;
   border-width: 1px;
 }
+*/

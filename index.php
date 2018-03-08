@@ -6,6 +6,8 @@ require_once("functions.inc.php");
 // DB Hack
 // include_once("aids.ajax.php");
 // include_once("jquery_post.php");
+// include_once("edit.ajax.php");
+
 // include_once("superaids.inc.php");
 
 // MOBS
@@ -100,9 +102,45 @@ $stmt->execute();
 <meta name="google" content="nositelinkssearchbox">
   
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
- 
+
+<!-- Prevent new line break on enter key-->
+<script>
+$('#flex-container-ajax').on('keydown', function(e) {
+  if (e.which == 13 && e.shiftKey == false) {
+    // Prevent insertion of a return
+    // You could do other things here, for example
+    // focus on the next field
+    alert("NLB");
+    return false;
+  }
+});  
+</script>
+
+<!-- jQuery Ajax inline edit -->
+<script>  
+$(function(){
+	// acknowledgement message
+    var message_status = $("#status");
+  
+    $("li[contenteditable=true]").blur(function(){
+        var field = $(this).attr("id") ;
+        var value = $(this).text() ;
+        $.post('edit.ajax.php' , field + "=" + value, function(data){
+            if(data != '')
+			{
+				message_status.show();
+				message_status.text(data);
+				// hide the message
+				setTimeout(function(){message_status.hide()},3000); // 3000
+			}
+        });
+    });
+});
+</script>
+
 <!-- Android Bamboozle -->
 <script>
+/*
 $('body').on('keydown', 'input, select, textarea', function(e) {
 var self = $(this)
   , form = self.parents('form:eq(0)')
@@ -135,6 +173,7 @@ if (e.keyCode == 13) {
     return false;
 }
 });
+*/
 </script>
   
 <!-- jQuery Ajax Form -->
@@ -192,7 +231,7 @@ $('#my_form').keydown(function () {
 */
 </script>
   
-<!-- W12 JS -->
+<!-- W12 -->
 <script>
   // Random image out of 12  
   var images = ["1.png",
@@ -245,7 +284,7 @@ $('#my_form').keydown(function () {
   } 
 </script>
 
-<!-- Rerun JS -->
+<!-- Rerun -->
 <script>
   // roll dice 1-100, success if dice is either 77 or 7
   function rerun() {
@@ -263,6 +302,14 @@ $('#my_form').keydown(function () {
     } else {
       rerunroll.style.display   = "none";
       bonfire.style.display     = "block";
+      // stop audio
+      stop_audio();
+      /*
+      stop_audio("haha");
+      stop_audio("yes");
+      stop_audio("no");
+      stop_audio("superaids");
+      */
     }
     
     /* DEBUG */
@@ -306,7 +353,7 @@ $('#my_form').keydown(function () {
   } // EOF RERUN()
 </script> 
  
-<!-- Reload Page JS -->
+<!-- Reload Page -->
 <script>  
 function reload_page () {
   location.reload();
@@ -320,24 +367,52 @@ function reroll () {
 }
 </script>  
 
-<!-- Play Audio JS -->
+<!-- Play Audio -->
 <script>
   function play_audio (source) {
     var myAudio = document.getElementById("audio_"+source);
 
-    if (myAudio.paused) {
-      myAudio.play();
+    if (source = "shrine") {
+      
+      if (myAudio.paused) {
+        myAudio.play();
+      } else {
+        myAudio.pause();
+      }
+      
     } else {
-      myAudio.pause();
+      myAudio.play();
     }
+  
+  } // ENDFUNCTION
+</script>
+
+<!-- Stop Audio --> 
+<script>
+function stop_audio () {
+  var audio_haha      = document.getElementById("audio_haha");
+  var audio_yes       = document.getElementById("audio_yes");
+  var audio_no        = document.getElementById("audio_no");
+  var audio_superaids = document.getElementById("audio_superaids");
+  
+  if (audio_haha.currentTime > 0) {
+    audio_haha.pause();
+    audio_haha.currentTime = 0;
   }
+  /*
+  stop_audio("haha");
+  stop_audio("yes");
+  stop_audio("no");
+  stop_audio("superaids");
+  */
+}
 </script>
   
 </head>
 
-<body>
+<body spellcheck="false">
   
-
+<!-- Wrapper -->
 <div class="container">
 
 <header>
@@ -415,16 +490,16 @@ function reroll () {
   
   <!-- Reroll / Reload page -->
   <div class="flex-item">
-    <button class="button" onClick="reroll()">
+    <button id="reroll_hover" class="button" onClick="reroll()" data-balloon="getLatestRolls()" data-balloon-pos="down">
       <span>Reroll</span>
-    </button>   
+    </button>
   </div>
   
   <!-- W12 -->
   <div class="flex-item">
     <button class="button" onClick="pickimg()">
       <span>W12</span>
-    </button> 
+    </button>
   </div>
   
   
@@ -444,8 +519,7 @@ function reroll () {
 
   
 <h5 id="Aids">Aids</h5>
-<!-- LIST OF ALL THE AIDS: MOBS BOSS, WEAPONS -->
-  
+<!-- LIST OF ALL THE AIDS: MOBS BOSS, WEAPONS --> 
 <div class="aidsListing">
   <div id="flex-container-ajax">
     <?php
@@ -454,36 +528,42 @@ function reroll () {
   </div><!-- .flex-container-ajax -->
 
   <!-- Ajax Success Msg -->
-  <div id="success">&nbsp;</div>
+  <div id="status"></div>
   
   <!-- jQuery Form: Add Mobs, Boss, Weapons -->
-  <div id="ajax_form">
-    
-    <form id="form" method="post" onsubmit="return false">
+  <form id="form" method="post" onsubmit="return false">
+    <div id="flex-container-ajax-form">
       <!-- Mobs -->
-      <label for="ajax_mobs">
-        <em><strong>Mobs:</strong></em>
-        <input type="text" id="ajax_mobs" value="" size="10" autocomplete="off" maxlength="32" placeholder="...">
-      </label>
+      <div class="flex-item-ajax-form">
+        <label for="ajax_mobs" class="">
+          <em><strong>Mobs:</strong></em>
+          <input type="text" id="ajax_mobs" value="" size="10" autocomplete="off" maxlength="32" placeholder="...">
+        </label>
+      </div>
       <!-- Boss -->
-      <label for="ajax_boss">
-        <em><strong>Boss:</strong></em>
-        <input type="text" id="ajax_boss" value="" size="10" autocomplete="off" maxlength="32" placeholder="...">
-      </label>
+      <div class="flex-item-ajax-form">
+        <label for="ajax_boss">
+          <em><strong>Boss:</strong></em>
+          <input type="text" id="ajax_boss" value="" size="10" autocomplete="off" maxlength="32" placeholder="...">
+        </label>
+      </div>
       <!-- Weapons -->
-      <label for="ajax_weapons">
-        <em><strong>Waffe:</strong></em>
-        <input type="text" id="ajax_weapons" value="" size="10" autocomplete="off" maxlength="32" placeholder="...">
-      </label>
-      
-      <br>
-      
+      <div class="flex-item-ajax-form">
+        <label for="ajax_weapons">
+          <em><strong>Waffe:</strong></em>
+          <input type="text" id="ajax_weapons" value="" size="10" autocomplete="off" maxlength="32" placeholder="...">
+        </label>
+      </div>
+    </div>
+
+    <div id="ajax-form-button">
       <label for="btn">
         <button id="btn" class="button_small">+</button>
       </label>
-    </form>
+    </div>
+  </form>
   
-  </div>
+  
   
   
 </div><!-- EOF flex-container-aidsListing -->
