@@ -91,6 +91,17 @@ td {
   font-size: 1.1em;
 }
 
+/* Ajax edit border */
+td:active,
+td:focus
+{
+  border: 3px ridge #3f292b;
+  
+  
+  outline-color: #3f292b;
+  outline-style: 2px dotted;
+  
+}
 
 
 td.emoji {

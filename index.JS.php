@@ -1,7 +1,4 @@
 <?php
-// Info
-// phpinfo() = 5.3.10
-  
 // Lib
 require_once("config.db.php");
 require_once("functions.inc.php");
@@ -9,56 +6,15 @@ require_once("functions.inc.php");
 // DB Hack
 // include_once("aids.ajax.php");
 // include_once("jquery_post.php");
-// include_once("edit.ajax.php");
-
 // include_once("superaids.inc.php");
 
-// check for rndwpn
-if ( !empty($_GET["mode"]) && $_GET["mode"] == "rndwpn" ) die(randomWeapon());
+// MOBS
+$mobsCount  = pdoCount("mobs");
+$mobsRNG    = mt_rand (1, $mobsCount);
 
-/*
-$mobs_data = $pdo->query("SELECT * from mobs")->fetchAll(PDO::FETCH_GROUP);
-$boss_data = $pdo->query("SELECT * from boss")->fetchAll(PDO::FETCH_GROUP);
-var_export($mobs_data);
-*/
-  
-/*
-foreach ($mobs_data as $field => $val) {
-  echo htmlspecialchars("Field: $field VAL:  $val");
-  echo "<br>";
-}
-*/
-
-
-/* SQL
-SELECT
-(SELECT COUNT(dice) FROM mobs) as mobsCount,
-(SELECT COUNT(dice) FROM boss) as bossCount,
-(SELECT name FROM mobs WHERE dice = 1) as mobsAids,
-(SELECT name FROM boss WHERE dice = 5) as bossAids;
-
-SELECT (SELECT COUNT(dice) FROM mobs) as mobsCount, (SELECT COUNT(dice) FROM boss) as bossCount;
-
-SELECT mobs.name, boss.name FROM mobs, boss WHERE mobs.dice = $mobsRNG AND boss.dice = $bossRNG;
-
-
-SELECT
-(SELECT COUNT(dice) FROM mobs) as mobsCount,
-(SELECT name FROM mobs WHERE dice = FLOOR(RAND() * (20 - 1 + 1))) as mobsAids,
-(SELECT COUNT(dice) FROM boss) as bossCount,
-(SELECT name FROM boss WHERE dice = FLOOR(RAND() * (12 - 1 + 1))) as bossAids
-*/
-
-
-// Get max dice value for mt_rand()
-$stmt = $pdo->prepare( "SELECT (SELECT COUNT(dice) FROM mobs) as mobsCount, (SELECT COUNT(dice) FROM boss) as bossCount" );
-$stmt->execute();
-$row = $stmt->fetch(PDO::FETCH_ASSOC);
-
-
-// MOBS, BOSS RNG
-$mobsRNG  = mt_rand (1, $row["mobsCount"]);
-$bossRNG  = mt_rand (1, $row["bossCount"]);
+// Boss
+$bossCount  = pdoCount("boss");
+$bossRNG    = mt_rand (1, $bossCount);
 
 /* DEBUG */
 /*
@@ -66,13 +22,12 @@ $mobsRNG    = 20;
 $bossRNG    = 5;
 */
 
-// Get Aids name from mobs boss tables 
 $stmt = $pdo->prepare("SELECT mobs.name, boss.name FROM mobs, boss WHERE mobs.dice = $mobsRNG AND boss.dice = $bossRNG");
 $stmt->execute();
 $row = $stmt->fetch(PDO::FETCH_GROUP);
 
-$mobsAids   = $row[0];
-$bossAids   = $row[1];
+$mobsAids = $row[0];
+$bossAids = $row[1];
 
 $weaponIMG  = "&nbsp;<img src=\"/img/weapon_icon.png\" width=\"41\" height=\"40\" alt=\"Weapon\">";
 
@@ -102,6 +57,7 @@ $stmt->bindParam(":mobs", $mobsAids, PDO::PARAM_STR);
 $stmt->bindParam(":boss", $bossAids, PDO::PARAM_STR);
 $stmt->execute();
 // Table/Output in edit.php
+
 ?>
 
 <!doctype html>
@@ -144,48 +100,40 @@ $stmt->execute();
 <meta name="google" content="nositelinkssearchbox">
   
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-
-<!-- Prevent new line break on enter key-->
+ 
+<!-- Android Bamboozle -->
 <script>
-$("#flex-container-ajax").on("keydown", function(e) {
-  if (e.which == 13 && e.shiftKey == false) {
-    // Prevent insertion of a return
-    // You could do other things here, for example
-    // focus on the next field
-    // alert("NLB");
-    return false;
-  }
-});  
-</script>
+$('body').on('keydown', 'input, select, textarea', function(e) {
+var self = $(this)
+  , form = self.parents('form:eq(0)')
+  , focusable
+  , next
+  , prev
+  ;
 
-<!-- jQuery Ajax inline edit -->
-<script>  
-$(function(){
-	// acknowledgement message
-    var message_status = $("#status");
-  
-  // check text length
-  /*
-    if ($("#field").html().length > 20) {
-    short_text = $("#field").html().substr(0, 20);
-    $("#field").html(short_text + "...");
+if (e.shiftKey) {
+ if (e.keyCode == 13) {
+     focusable =   form.find('input,a,select,button,textarea').filter(':visible');
+     prev = focusable.eq(focusable.index(this)-1); 
+
+     if (prev.length) {
+        prev.focus();
+     } else {
+        form.submit();
     }
-  */
-  
-    $("li[contenteditable=true]").blur(function(){
-        var field = $(this).attr("id") ;
-        var value = $(this).text() ;
-        $.post("edit.ajax.php" , field + "=" + value, function(data){
-          /*
-          if (data != "") {
-            message_status.show();
-            message_status.text(data);
-            // hide the message
-            setTimeout(function(){message_status.hide()},3000); // 3000
-			   }
-          */
-        });
-    });
+  }
+}
+  else
+if (e.keyCode == 13) {
+    focusable = form.find('input,a,select,button,textarea').filter(':visible');
+    next = focusable.eq(focusable.index(this)+1);
+    if (next.length) {
+        next.focus();
+    } else {
+        form.submit();
+    }
+    return false;
+}
 });
 </script>
   
@@ -207,7 +155,7 @@ $(document).ready(function () {
     var vboss     = $("input#ajax_boss").val(); // boss field
     var vweapons  = $("input#ajax_weapons").val(); // weapons field
   
-    if ($.trim(vmobs) == "" && $.trim(vboss) == "" && $.trim(vweapons) == "") {
+    if ($.trim(vmobs) == '' && $.trim(vboss) == '' && $.trim(vweapons) == '') {
       alert("Mindestens 1 Feld ausfüllen");
       // $("#success").text("Bitte ausfüllen!" + "<br>");
       discombobulate();
@@ -231,39 +179,20 @@ $(document).ready(function () {
     
   });
 });
+
+  
+/*
+$('#my_form').keydown(function () {
+  var key = e.which;
+  if (key == 13) {
+    // As ASCII code for ENTER key is "13"
+    $('#my_form').submit(); // Submit form code
+  }
+});
+*/
 </script>
   
-<!-- Toggles -->
-<script>
-  function bonfire_toggle (mode) {
-    // mode: on/off
-    var bonfire     = document.getElementById("bonfire");
-    
-    if (mode === "show") bonfire.style.display = "block";
-    else if (mode === "hide") bonfire.style.display = "none";
-  }
-  
-  function toggle (source, mode) {
-    var source     = document.getElementById(source);
-    
-    if (mode === "show") source.style.display = "block";
-    else if (mode === "hide") source.style.display = "none";
-  }
-  
-  function show (source) {
-    var source     = document.getElementById(source);
-    source.style.display = "block";
-  }
-  
-  function hide (source) {
-    var source     = document.getElementById(source);
-    source.style.display = "none";
-  }
-  
-  
-</script>
-  
-<!-- W12 -->
+<!-- W12 JS -->
 <script>
   // Random image out of 12  
   var images = ["1.png",
@@ -285,126 +214,99 @@ $(document).ready(function () {
   }
 
   function pickimg() {
-
-    if ( $("#w12").css("display") == "none" ) {
-
-      $("#w12").show();
-      $("#bonfire").hide();
-
-      // close div of rerun() if shown
-      $("#rerunroll").hide();
-      // play audio
-      play_audio("dice");
-      
-    } else {
-      $("#w12").hide();
-      $("#bonfire").show();
-    }
-
-    var src = "/dice/" + images[getRandomInt(0, images.length - 1)];
-    $("img#randimgw12").prop("src", src)
     
-  } // ENDFUNCTION
+  var w12         = document.getElementById("w12");
+  var bonfire     = document.getElementById("bonfire");
+  // HANDLE OTHER DIVS TO BE CLOSED
+  var rerunroll   = document.getElementById("rerunroll");
+  
+  if (w12.style.display === "none") {
+    w12.style.display     = "block"; 
+    bonfire.style.display = "none";
+    
+    // close other divs outside this function
+    rerunroll.style.display   = "none";
+    play_audio("dice");
+  } else {
+    w12.style.display     = "none";
+    bonfire.style.display = "block";
+  }
+  
+  /*
+  jQuery
+  if (w12.style.display === "none") play_audio("dice");
+    
+  $( "#w12" ).toggle();
+  $( "#bonfire" ).toggle();
+  $( "#rerunroll" ).hide(); // other div function
+  */
+    
+  document.getElementById("randimgw12").src = "dice/" + images[getRandomInt(0, images.length - 1)]; 
+  } 
 </script>
 
-<!-- Rerun -->
-<script>  
-  /*
-  * roll dice 1-100, success if dice is either 77 or 7
-  * 1 = 
-  *
-  */
+<!-- Rerun JS -->
+<script>
+  // roll dice 1-100, success if dice is either 77 or 7
   function rerun() {
 
     var rnd         = Math.floor((Math.random() * 100) + 1)
-    //var rerunroll   = document.getElementById("rerunroll");
-    //var bonfire     = document.getElementById("bonfire");
-
-    //var w12         = document.getElementById("w12");
+    var rerunroll   = document.getElementById("rerunroll");
+    var bonfire     = document.getElementById("bonfire");
     
-    /*
-    var rerunroll   = $("#rerunroll").get(0);
-    var bonfire     = $("#bonfire")[0];
-    */
+    // OTHER DIVS FROM OTHER FUNCTIONS
+    var w12         = document.getElementById("w12");
     
-    if ( $("#rerunroll").css("display") === "none" ) {
-      $("#w12").hide();
-      $("#bonfire").hide(); // ????????????????????? WIESO? FFS?
-      $("#rerunroll").show();
+    if (rerunroll.style.display === "none") { 
+        rerunroll.style.display = "block";
+        w12.style.display       = "none";
     } else {
-      $("#rerunroll").hide();
-      $("#bonfire").show();
-      
-      // stop audio
-      stop_audio(); // "haha"/sad trombome only atm
+      rerunroll.style.display   = "none";
+      bonfire.style.display     = "block";
     }
-     
+    
     /* DEBUG */
-    // rnd = 7;
+    // rnd = 99;
     
-    // If checkbox for rerun only (no vader, superaids) is checked
-    // check for special output in rnd (1, 7, 77, 99, 100)
-    if ( 
-        ( $("input#rerun_only").is(":checked") && rnd != 7 && rnd != 77 ) // checkbox checked, rnd is not 7 or 77
-        ||
-        ( $("input#rerun_only").not(":checked") && rnd != 1 && rnd != 7 && rnd != 77 && rnd != 100 && rnd !=99 ) // checkbox unchecked and no special (vader etc)
-      )
-    {
+    if (rnd == 7 || rnd == 77) { // EPIC SAX GUY
+      document.getElementById("rerunroll").innerHTML = "<img src='/img/EpicSaxGuy.gif' width='186' height='234' alt='Epic Sax Guy'> <br>" + rnd;
+      if (rerunroll.style.display === "block") {
+        play_audio("yes");
+        bonfire.style.display     = "none";
+        w12.style.display         = "none";
+      }
+    } else if (rnd == 1 || rnd == 100) { // VADER
+      document.getElementById("rerunroll").innerHTML = "<img src='/img/vader.jpg' width='323' height='203' alt='Vader'> <br>" + rnd;
       
-      /* ¯\_(ツ)_/¯ SAD TROMBONE */
-      // every rnd value except: 1, 100, 7, 77, 99
-      $("#rerunroll").html("¯\\_(ツ)_/¯ <br>" + rnd);
-  
-      if ( $("#rerunroll").css("display") === "block" ) {
+      if (rerunroll.style.display === "block") {
+        play_audio("no");
+        bonfire.style.display = "none";
+      }  
+    } else if (rnd == 99) { // SUPERAIDS
+      document.getElementById("rerunroll").innerHTML = "<br>" + rnd;
+      
+      if (rerunroll.style.display === "block") {
+        play_audio("superaids");
+        bonfire.style.display = "none";
+        // load('superaids.inc.php'); // get super aids
+        $(function(){
+          $("#rerunroll").load("superaids.inc.php");
+        });
+      }
+    } else { // alles außer 1, 100, 7, 77, 99
+      document.getElementById("rerunroll").innerHTML = "¯\\_(ツ)_/¯ <br>" + rnd;
+      // <img src='img/collapse.png' alt='Collapse'>
+      
+      if (rerunroll.style.display === "block") {
         play_audio("haha");
-        $("#bonfire").hide();
+        bonfire.style.display = "none";
       }
-      
-    } else {
-      /* Checkbox rerun_only is not checked and no standard output ie 55, 20. NOT 1, 7, 77, 99, 100 */
-      
-      /* EPIC SAX GUY */
-      if (rnd == 7 || rnd == 77) {
-        $("#rerunroll").html("<img src='/img/EpicSaxGuy.gif' width='186' height='234' alt='Epic Sax Guy'> <br>" + rnd);        
-        
-        if ( $("#rerunroll").css("display") === "block" ) {
-          play_audio("yes");
-          $("#bonfire").hide();
-          $("#bonfire").hide();
-        }
-        
-        /* VADER */
-      } else if (rnd == 1 || rnd == 100) {
-        $("#rerunroll").html("<img src='/img/vader.jpg' width='323' height='203' alt='Vader'> <br>" + rnd);
-
-        if ( $("#rerunroll").css("display") === "block" ) {
-          play_audio("no");
-          $("#bonfire").hide();
-        }  
-        
-        /* SUPERAIDS */
-      } else if (rnd == 99) {
-        $("#rerunroll").html("SUPERAIDS<br>" + rnd);
-
-        if ( $("#rerunroll").css("display") === "block" ) { 
-          play_audio("superaids");
-          $("#bonfire").hide();
-          $("#rerunroll").load("superaids.inc.php"); // Ajax load superaids php
-        }
-
-      }
-      
-    } // ENDIF
-    
-    /* always uncheck checkbox "rerun_only" on every click if bonfire is hidden */
-    if ( $("input#rerun_only").is(":checked") && $("#bonfire").css("display") == "block" ) {
-      $("input#rerun_only").prop("checked", false);
-    }
+    } 
     
   } // EOF RERUN()
 </script> 
  
-<!-- Reload Page -->
+<!-- Reload Page JS -->
 <script>  
 function reload_page () {
   location.reload();
@@ -413,12 +315,12 @@ function reload_page () {
 function reroll () {
   play_audio("aids");
   
-  setTimeout(function() { reload_page(); }, 1800); // time to play rich evans aids
+  setTimeout(function() { reload_page(); }, 1800);
   
 }
 </script>  
 
-<!-- Play Audio -->
+<!-- Play Audio JS -->
 <script>
   function play_audio (source) {
     var myAudio = document.getElementById("audio_"+source);
@@ -437,49 +339,25 @@ function reroll () {
   
   } // ENDFUNCTION
 </script>
-
-<!-- Stop Audio --> 
-<script>
-function stop_audio () {
-  var audio_haha      = document.getElementById("audio_haha");
-  var audio_yes       = document.getElementById("audio_yes");
-  var audio_no        = document.getElementById("audio_no");
-  var audio_superaids = document.getElementById("audio_superaids");
-  
-  if (audio_haha.currentTime > 0) {
-    audio_haha.pause();
-    audio_haha.currentTime = 0;
-  }
-  /*
-  stop_audio("haha");
-  stop_audio("yes");
-  stop_audio("no");
-  stop_audio("superaids");
-  */
-}
-</script>
   
 </head>
 
-<body spellcheck="false">
+<body>
   
 
-<!-- <div id="fullscreen"> -->
-  <!--
-  <iframe id="ytplayer" type="text/html" width="640" height="390"
-  src="https://www.youtube.com/watch?v=gy1B3agGNxw?autoplay=1&origin=http://aids.gyros-mit-zaziki.de/"
-  frameborder="1"/>
-  -->
-<!-- </div> -->
-  
-<!-- Wrapper -->
 <div class="container">
 
 <header>
+  <?php
+  if ( !empty($_GET["mode"]) && $_GET["mode"] == "rndwpn" ) echo "<div>" . randomWeapon() . "</div>";
+  if ( !empty($_GET["mode"]) && $_GET["mode"] == "doubleaids" ) echo "<div>" . "DOPPELAIDS" . "</div>";
+  ////////////////////////////TODO
+  ?>
+  
   <!-- <img src="/img/ds1_logo.png" alt="Dark Souls II Logo" width="630" height="80"> -->
   <!-- <img src="/img/ds2_logo.png" alt="Dark Souls II Logo" width="630" height="80"> -->
   <img src="/img/ds3_logo.png" alt="Dark Souls III Logo" width="661" height="80">
-  <!-- <img src="/img/ds1remaster_logo.png" alt="Dark Souls II Logo" width="630" height="80"> -->
+  <!-- <img src="img/ds1remaster_logo.png" alt="Dark Souls II Logo" width="630" height="80"> -->
   <h4>mit verschärftem AIDS</h4>  
 </header>
 
@@ -544,27 +422,24 @@ function stop_audio () {
   
   <!-- Reroll / Reload page -->
   <div class="flex-item">
-    <button id="reroll_hover" class="button" onClick="reroll()" data-balloon="<?=getLatestRoll()?>" data-balloon-pos="down">
+    <button class="button" onClick="reroll()">
       <span>Reroll</span>
-    </button>
+    </button>   
   </div>
   
   <!-- W12 -->
   <div class="flex-item">
     <button class="button" onClick="pickimg()">
       <span>W12</span>
-    </button>
+    </button> 
   </div>
   
   
   <!-- Rerun? -->
   <div class="flex-item">
-    <label for="rerun_only" class="rerun_checkbox">
-      <input type="checkbox" id="rerun_only" data-balloon="Nur Rerun (Kein Vader, Superaids)" data-balloon-pos="down">
-    </label>
-    <button class="button" onClick="rerun()">
-      <span>Rerun</span>
-    </button>
+      <button class="button" onClick="rerun()">
+        <span>Rerun</span>
+      </button>
   </div>
  
 </div>
@@ -576,7 +451,8 @@ function stop_audio () {
 
   
 <h5 id="Aids">Aids</h5>
-<!-- LIST OF ALL THE AIDS: MOBS BOSS, WEAPONS --> 
+<!-- LIST OF ALL THE AIDS: MOBS BOSS, WEAPONS -->
+  
 <div class="aidsListing">
   <div id="flex-container-ajax">
     <?php
@@ -585,40 +461,37 @@ function stop_audio () {
   </div><!-- .flex-container-ajax -->
 
   <!-- Ajax Success Msg -->
-  <div id="status"></div>
+  <div id="success">&nbsp;</div>
   
   <!-- jQuery Form: Add Mobs, Boss, Weapons -->
-  <form id="form" method="post" onsubmit="return false">
-    <div id="flex-container-ajax-form">
+  <div id="ajax_form">
+    
+    <form id="form" method="post" onsubmit="return false">
       <!-- Mobs -->
-      <div class="flex-item-ajax-form">
-        <label for="ajax_mobs" class="">
-          <em><strong>Mobs:</strong></em>
-          <input type="text" id="ajax_mobs" value="" size="10" autocomplete="off" maxlength="32" placeholder="...">
-        </label>
-      </div>
+      <label for="ajax_mobs">
+        <em><strong>Mobs:</strong></em>
+        <input type="text" id="ajax_mobs" value="" size="10" autocomplete="off" maxlength="32" placeholder="...">
+      </label>
       <!-- Boss -->
-      <div class="flex-item-ajax-form">
-        <label for="ajax_boss">
-          <em><strong>Boss:</strong></em>
-          <input type="text" id="ajax_boss" value="" size="10" autocomplete="off" maxlength="32" placeholder="...">
-        </label>
-      </div>
+      <label for="ajax_boss">
+        <em><strong>Boss:</strong></em>
+        <input type="text" id="ajax_boss" value="" size="10" autocomplete="off" maxlength="32" placeholder="...">
+      </label>
       <!-- Weapons -->
-      <div class="flex-item-ajax-form">
-        <label for="ajax_weapons">
-          <em><strong>Waffe:</strong></em>
-          <input type="text" id="ajax_weapons" value="" size="10" autocomplete="off" maxlength="32" placeholder="...">
-        </label>
-      </div>
-    </div>
-
-    <div id="ajax-form-button">
+      <label for="ajax_weapons">
+        <em><strong>Waffe:</strong></em>
+        <input type="text" id="ajax_weapons" value="" size="10" autocomplete="off" maxlength="32" placeholder="...">
+      </label>
+      
+      <br>
+      
       <label for="btn">
         <button id="btn" class="button_small">+</button>
       </label>
-    </div>
-  </form>
+    </form>
+  
+  </div>
+  
   
 </div><!-- EOF flex-container-aidsListing -->
   
@@ -651,20 +524,21 @@ while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) :
 ?>
   <tr> 
     <td class="emoji">
-      <a href="edit.php?mode=kills&ID=<?=$row["ID"]?>" target="_blank" onClick="play_audio('<?=$row["name"]?>')" data-balloon="<?=$row["name"]?>" data-balloon-pos="up"><?=replaceNameWithEmoji( $row["name"] )?></a>
+      <a href="edit.php?mode=kills&ID=<?=$row["ID"]?>" target="_blank" onClick="play_audio('<?=$row["name"]?>')" data-balloon="<?=$row["name"]?>" data-balloon-pos="up"><?=replaceNameWithEmoji($row["name"])?></a>
     </td>
 
-    <td>
-      <a href="edit.php?mode=kills&ID=<?=$row["ID"]?>" target="_blank" onClick="play_audio('<?=$row["name"]?>')" data-balloon="<?=$row["joker"]?> gekillte Bosse" data-balloon-pos="up"><?=numberToTally( $row["joker"] )?></a>
+    <td data-balloon="<?=$row["joker"]?> gekillte Bosse" data-balloon-pos="up">
+      <?=numberToTally( $row["joker"] )?>
     </td>
 
-    <td>
-      <a href="edit.php?mode=kills&ID=<?=$row["ID"]?>" target="_blank" onClick="play_audio('<?=$row["name"]?>')" data-balloon="<?=$joker?> Joker übrig" data-balloon-pos="up"><?=replaceIntWithFlasks( $joker )?></a>
+    <td data-balloon="<?=$joker?> Joker übrig" data-balloon-pos="up">
+       <?=replaceIntWithFlasks($joker)?>
     </td>
 
-    <td id="id:<?=$row["ID"]?>" contenteditable="true" onClick="play_audio('<?=$row["name"]?>')">
-      <a href="edit.php?mode=kills&ID=<?=$row["ID"]?>" target="_blank" onClick="play_audio('<?=$row["name"]?>')" data-balloon="<?=replaceBrWithComma( $row["bossNames"] )?>" data-balloon-pos="up"><?=replaceCheeseWithEmoji( nl2br($row["bossNames"]) )?></a>
+    <td data-balloon="<?=replaceBrWithComma( $row["bossNames"] )?>" data-balloon-pos="up">
+       <?=replaceCheeseWithEmoji( nl2br($row["bossNames"]) )?>
     </td>
+    
   </tr>
 <?php
 ENDWHILE

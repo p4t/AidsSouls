@@ -30,6 +30,17 @@
   margin: 5px;
 }
 
+.button:active,
+.button:focus
+{
+  border: none;
+  outline: none;
+  /*
+  outline-color: #3f292b;
+  outline-style: 2px dotted;
+  */
+}
+
 .button span {
   cursor: pointer;
   display: inline-block;

@@ -1,7 +1,4 @@
 <?php
-// Info
-// phpinfo() = 5.3.10
-  
 // Lib
 require_once("config.db.php");
 require_once("functions.inc.php");
@@ -13,52 +10,13 @@ require_once("functions.inc.php");
 
 // include_once("superaids.inc.php");
 
-// check for rndwpn
-if ( !empty($_GET["mode"]) && $_GET["mode"] == "rndwpn" ) die(randomWeapon());
+// MOBS
+$mobsCount  = pdoCount("mobs");
+$mobsRNG    = mt_rand (1, $mobsCount);
 
-/*
-$mobs_data = $pdo->query("SELECT * from mobs")->fetchAll(PDO::FETCH_GROUP);
-$boss_data = $pdo->query("SELECT * from boss")->fetchAll(PDO::FETCH_GROUP);
-var_export($mobs_data);
-*/
-  
-/*
-foreach ($mobs_data as $field => $val) {
-  echo htmlspecialchars("Field: $field VAL:  $val");
-  echo "<br>";
-}
-*/
-
-
-/* SQL
-SELECT
-(SELECT COUNT(dice) FROM mobs) as mobsCount,
-(SELECT COUNT(dice) FROM boss) as bossCount,
-(SELECT name FROM mobs WHERE dice = 1) as mobsAids,
-(SELECT name FROM boss WHERE dice = 5) as bossAids;
-
-SELECT (SELECT COUNT(dice) FROM mobs) as mobsCount, (SELECT COUNT(dice) FROM boss) as bossCount;
-
-SELECT mobs.name, boss.name FROM mobs, boss WHERE mobs.dice = $mobsRNG AND boss.dice = $bossRNG;
-
-
-SELECT
-(SELECT COUNT(dice) FROM mobs) as mobsCount,
-(SELECT name FROM mobs WHERE dice = FLOOR(RAND() * (20 - 1 + 1))) as mobsAids,
-(SELECT COUNT(dice) FROM boss) as bossCount,
-(SELECT name FROM boss WHERE dice = FLOOR(RAND() * (12 - 1 + 1))) as bossAids
-*/
-
-
-// Get max dice value for mt_rand()
-$stmt = $pdo->prepare( "SELECT (SELECT COUNT(dice) FROM mobs) as mobsCount, (SELECT COUNT(dice) FROM boss) as bossCount" );
-$stmt->execute();
-$row = $stmt->fetch(PDO::FETCH_ASSOC);
-
-
-// MOBS, BOSS RNG
-$mobsRNG  = mt_rand (1, $row["mobsCount"]);
-$bossRNG  = mt_rand (1, $row["bossCount"]);
+// Boss
+$bossCount  = pdoCount("boss");
+$bossRNG    = mt_rand (1, $bossCount);
 
 /* DEBUG */
 /*
@@ -66,13 +24,12 @@ $mobsRNG    = 20;
 $bossRNG    = 5;
 */
 
-// Get Aids name from mobs boss tables 
 $stmt = $pdo->prepare("SELECT mobs.name, boss.name FROM mobs, boss WHERE mobs.dice = $mobsRNG AND boss.dice = $bossRNG");
 $stmt->execute();
 $row = $stmt->fetch(PDO::FETCH_GROUP);
 
-$mobsAids   = $row[0];
-$bossAids   = $row[1];
+$mobsAids = $row[0];
+$bossAids = $row[1];
 
 $weaponIMG  = "&nbsp;<img src=\"/img/weapon_icon.png\" width=\"41\" height=\"40\" alt=\"Weapon\">";
 
@@ -102,6 +59,7 @@ $stmt->bindParam(":mobs", $mobsAids, PDO::PARAM_STR);
 $stmt->bindParam(":boss", $bossAids, PDO::PARAM_STR);
 $stmt->execute();
 // Table/Output in edit.php
+
 ?>
 
 <!doctype html>
@@ -233,36 +191,6 @@ $(document).ready(function () {
 });
 </script>
   
-<!-- Toggles -->
-<script>
-  function bonfire_toggle (mode) {
-    // mode: on/off
-    var bonfire     = document.getElementById("bonfire");
-    
-    if (mode === "show") bonfire.style.display = "block";
-    else if (mode === "hide") bonfire.style.display = "none";
-  }
-  
-  function toggle (source, mode) {
-    var source     = document.getElementById(source);
-    
-    if (mode === "show") source.style.display = "block";
-    else if (mode === "hide") source.style.display = "none";
-  }
-  
-  function show (source) {
-    var source     = document.getElementById(source);
-    source.style.display = "block";
-  }
-  
-  function hide (source) {
-    var source     = document.getElementById(source);
-    source.style.display = "none";
-  }
-  
-  
-</script>
-  
 <!-- W12 -->
 <script>
   // Random image out of 12  
@@ -285,118 +213,132 @@ $(document).ready(function () {
   }
 
   function pickimg() {
-
-    if ( $("#w12").css("display") == "none" ) {
-
-      $("#w12").show();
-      $("#bonfire").hide();
-
-      // close div of rerun() if shown
-      $("#rerunroll").hide();
-      // play audio
-      play_audio("dice");
-      
-    } else {
-      $("#w12").hide();
-      $("#bonfire").show();
-    }
-
-    var src = "/dice/" + images[getRandomInt(0, images.length - 1)];
-    $("img#randimgw12").prop("src", src)
     
-  } // ENDFUNCTION
+  var w12         = document.getElementById("w12");
+  var bonfire     = document.getElementById("bonfire");
+  // HANDLE OTHER DIVS TO BE CLOSED
+  var rerunroll   = document.getElementById("rerunroll");
+  
+  if (w12.style.display === "none") {
+    w12.style.display     = "block"; 
+    bonfire.style.display = "none";
+    
+    // close other divs outside this function
+    rerunroll.style.display   = "none";
+    play_audio("dice");
+  } else {
+    w12.style.display     = "none";
+    bonfire.style.display = "block";
+  }
+  
+  /*
+  jQuery
+  if (w12.style.display === "none") play_audio("dice");
+    
+  $( "#w12" ).toggle();
+  $( "#bonfire" ).toggle();
+  $( "#rerunroll" ).hide(); // other div function
+  */
+    
+  document.getElementById("randimgw12").src = "dice/" + images[getRandomInt(0, images.length - 1)]; 
+  } 
 </script>
 
 <!-- Rerun -->
-<script>  
-  /*
-  * roll dice 1-100, success if dice is either 77 or 7
-  * 1 = 
-  *
-  */
+<script>
+  function bonfire (mode) {
+    // mode: on/off
+  }
+  
+  
+  
+  // roll dice 1-100, success if dice is either 77 or 7
   function rerun() {
 
     var rnd         = Math.floor((Math.random() * 100) + 1)
-    //var rerunroll   = document.getElementById("rerunroll");
-    //var bonfire     = document.getElementById("bonfire");
-
-    //var w12         = document.getElementById("w12");
-    
+    var rerunroll   = document.getElementById("rerunroll");
+    var bonfire     = document.getElementById("bonfire");
     /*
     var rerunroll   = $("#rerunroll").get(0);
     var bonfire     = $("#bonfire")[0];
     */
     
-    if ( $("#rerunroll").css("display") === "none" ) {
-      $("#w12").hide();
-      $("#bonfire").hide(); // ????????????????????? WIESO? FFS?
-      $("#rerunroll").show();
+    // OTHER DIVS FROM OTHER FUNCTIONS
+    var w12         = document.getElementById("w12");
+    
+    if (rerunroll.style.display === "none") { 
+        rerunroll.style.display = "block";
+        w12.style.display       = "none";
     } else {
-      $("#rerunroll").hide();
-      $("#bonfire").show();
-      
+      rerunroll.style.display   = "none";
+      bonfire.style.display     = "block";
       // stop audio
-      stop_audio(); // "haha"/sad trombome only atm
+      stop_audio();
+      /*
+      stop_audio("haha");
+      stop_audio("yes");
+      stop_audio("no");
+      stop_audio("superaids");
+      */
     }
-     
+    
+    
     /* DEBUG */
-    // rnd = 7;
+    // rnd = 99;
     
-    // If checkbox for rerun only (no vader, superaids) is checked
-    // check for special output in rnd (1, 7, 77, 99, 100)
-    if ( 
-        ( $("input#rerun_only").is(":checked") && rnd != 7 && rnd != 77 ) // checkbox checked, rnd is not 7 or 77
-        ||
-        ( $("input#rerun_only").not(":checked") && rnd != 1 && rnd != 7 && rnd != 77 && rnd != 100 && rnd !=99 ) // checkbox unchecked and no special (vader etc)
-      )
-    {
+    // if checkbox for rerun only (no vader, epic sax guy, superaids) is checked
+    if ( $("input#rerun_only").is(":checked") && rnd != 7 && rnd != 77) {
+      // alert("CHECK");
+      // $("#status").append( "CHECKED!" );
+      // uncheck checkbox
+      // $("input#rerun_only").attr("checked", false);
+      // uncheck checkbox 
+      // $("input#rerun_only").prop("checked", false);
       
-      /* ¯\_(ツ)_/¯ SAD TROMBONE */
-      // every rnd value except: 1, 100, 7, 77, 99
-      $("#rerunroll").html("¯\\_(ツ)_/¯ <br>" + rnd);
-  
-      if ( $("#rerunroll").css("display") === "block" ) {
+      document.getElementById("rerunroll").innerHTML = "¯\\_(ツ)_/¯ <br>" + rnd;
+      if (rerunroll.style.display === "block") {
         play_audio("haha");
-        $("#bonfire").hide();
+        bonfire.style.display = "none";
       }
-      
     } else {
-      /* Checkbox rerun_only is not checked and no standard output ie 55, 20. NOT 1, 7, 77, 99, 100 */
       
-      /* EPIC SAX GUY */
-      if (rnd == 7 || rnd == 77) {
-        $("#rerunroll").html("<img src='/img/EpicSaxGuy.gif' width='186' height='234' alt='Epic Sax Guy'> <br>" + rnd);        
-        
-        if ( $("#rerunroll").css("display") === "block" ) {
+      if (rnd == 7 || rnd == 77) { // EPIC SAX GUY
+        document.getElementById("rerunroll").innerHTML = "<img src='/img/EpicSaxGuy.gif' width='186' height='234' alt='Epic Sax Guy'> <br>" + rnd;
+        if (rerunroll.style.display === "block") {
           play_audio("yes");
-          $("#bonfire").hide();
-          $("#bonfire").hide();
+          bonfire.style.display     = "none";
+          w12.style.display         = "none";
         }
-        
-        /* VADER */
-      } else if (rnd == 1 || rnd == 100) {
-        $("#rerunroll").html("<img src='/img/vader.jpg' width='323' height='203' alt='Vader'> <br>" + rnd);
+      } else if (rnd == 1 || rnd == 100) { // VADER
+        document.getElementById("rerunroll").innerHTML = "<img src='/img/vader.jpg' width='323' height='203' alt='Vader'> <br>" + rnd;
 
-        if ( $("#rerunroll").css("display") === "block" ) {
+        if (rerunroll.style.display === "block") {
           play_audio("no");
-          $("#bonfire").hide();
+          bonfire.style.display = "none";
         }  
-        
-        /* SUPERAIDS */
-      } else if (rnd == 99) {
-        $("#rerunroll").html("SUPERAIDS<br>" + rnd);
+      } else if (rnd == 99) { // SUPERAIDS
+        document.getElementById("rerunroll").innerHTML = "<br>" + rnd;
 
-        if ( $("#rerunroll").css("display") === "block" ) { 
+        if (rerunroll.style.display === "block") {
           play_audio("superaids");
-          $("#bonfire").hide();
-          $("#rerunroll").load("superaids.inc.php"); // Ajax load superaids php
+          bonfire.style.display = "none";
+          // load('superaids.inc.php'); // get super aids
+          $(function(){
+            $("#rerunroll").load("superaids.inc.php");
+          });
         }
-
+      } else { // alles außer 1, 100, 7, 77, 99
+        
+        document.getElementById("rerunroll").innerHTML = "¯\\_(ツ)_/¯ <br>" + rnd;
+        if (rerunroll.style.display === "block") {
+          play_audio("haha");
+          bonfire.style.display = "none";
+        }
+        
       }
-      
-    } // ENDIF
+    } // ENDIF $("input#rerun_only").is(":checked")
     
-    /* always uncheck checkbox "rerun_only" on every click if bonfire is hidden */
+    // always uncheck checkbox on every click to be safe but only if bonfire is hidden
     if ( $("input#rerun_only").is(":checked") && $("#bonfire").css("display") == "block" ) {
       $("input#rerun_only").prop("checked", false);
     }
@@ -463,19 +405,16 @@ function stop_audio () {
 
 <body spellcheck="false">
   
-
-<!-- <div id="fullscreen"> -->
-  <!--
-  <iframe id="ytplayer" type="text/html" width="640" height="390"
-  src="https://www.youtube.com/watch?v=gy1B3agGNxw?autoplay=1&origin=http://aids.gyros-mit-zaziki.de/"
-  frameborder="1"/>
-  -->
-<!-- </div> -->
-  
 <!-- Wrapper -->
 <div class="container">
 
 <header>
+  <?php
+  if ( !empty($_GET["mode"]) && $_GET["mode"] == "rndwpn" ) echo "<div class=\"weaponText\">" . randomWeapon() . "</div>";
+  if ( !empty($_GET["mode"]) && $_GET["mode"] == "doubleaids" ) echo "<div>" . "DOPPELAIDS" . "</div>";
+  ////////////////////////////TODO
+  ?>
+  
   <!-- <img src="/img/ds1_logo.png" alt="Dark Souls II Logo" width="630" height="80"> -->
   <!-- <img src="/img/ds2_logo.png" alt="Dark Souls II Logo" width="630" height="80"> -->
   <img src="/img/ds3_logo.png" alt="Dark Souls III Logo" width="661" height="80">
@@ -560,7 +499,7 @@ function stop_audio () {
   <!-- Rerun? -->
   <div class="flex-item">
     <label for="rerun_only" class="rerun_checkbox">
-      <input type="checkbox" id="rerun_only" data-balloon="Nur Rerun (Kein Vader, Superaids)" data-balloon-pos="down">
+      <input type="checkbox" id="rerun_only" data-balloon="Nur Rerun (Kein Vader, Epic Sax Guy, Superaids)" data-balloon-pos="down">
     </label>
     <button class="button" onClick="rerun()">
       <span>Rerun</span>

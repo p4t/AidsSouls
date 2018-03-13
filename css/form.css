@@ -2,20 +2,34 @@
 
 /* FORM */
 /* input[type=text] { */
-input, textarea {
-  
+textarea,
+input[type="text"],
+input[type="submit"],
+input[type="button"],
+input[type="number"]
+{
+  /*
+  font-family: "Trajan", sans-serif;
+  */
+
   padding: 4px 6px;
   margin: 8px 0;
   box-sizing: border-box;
   border: 1px groove #846731;
-  
+
   color: #fff;
-  
+
   background: url("/img/button_bg.png") no-repeat center center fixed;  
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
+  
+  /*
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  border-radius: 2px;
+  */
 }
 
 /*
@@ -43,6 +57,35 @@ input.invalid {
   border-color: red;
 }
 */
+
+/*
+input[type=checkbox] {
+  border: 1px dashed #000;
+  background-color: rgba(0, 0, 0, 0.7)
+}
+*/
+
+/* CHECKBOX */
+input[type="checkbox"] {
+  appearance: none;
+  transform: scale(1.2);
+  /* width: 40px; */
+  /* height: 16px; */
+  border: 1px solid #aaa;
+  
+  /* border-radius: 10px; */
+  
+  background: black;
+
+  box-sizing: border-box;
+}
+
+input[type="checkbox"]:checked {
+  background: #a6c7ff;
+  border-color: #8daee5;
+}
+
+
 
 
 form#edit {

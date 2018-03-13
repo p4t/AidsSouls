@@ -188,11 +188,11 @@ div.aidscontent, div.aidsListing {
   padding: 15px;
 }
 
-/*
+
 .bonfire:hover:after {
-  content: '\25BA';
+  content: "\25BA";
 }
-*/
+
 
 /* Reroll Fade-In */
 .aidscontent, .rerunroll {
@@ -247,7 +247,7 @@ ul.aidsList > li {
   border: 1px solid transparent; /* fix hover */
 }
 
-/* prevent new line break in editable content */
+/* prevent new line break in ajax editable content */
 ul.aidsList > li br {
   display: inline;
   display: none;
@@ -270,10 +270,6 @@ ul.aidsList > li:focus
   -o-background-size: cover;
   background-size: cover;
 }
-
-
-
-
 
 li.noListStyle {
   list-style: none;
@@ -327,6 +323,19 @@ img.edit_icon {
   
 }
 
+#status {
+  color: #006100;
+  background-color: #c6efce;
+}
+
+
+#fullscreen {
+  display: none;
+  position: absolute;
+  z-index: 100;
+  left: 0;
+  top:0;
+}
 
 /* DEBUG */
 

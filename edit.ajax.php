@@ -1,10 +1,10 @@
 <?php
 if (!empty($_POST)) {
-	//database settings
+	// Database
   require_once("config.db.php");
   require_once("functions.inc.php");
   
-	foreach($_POST as $field => $val){
+	foreach ($_POST as $field => $val) {
     // echo htmlspecialchars("Fieldname: $field_name VAL:  $val <br>");
     
 		// clean post values
@@ -26,7 +26,7 @@ if (!empty($_POST)) {
     echo "3: " . $split_data[3];
     */
     
-    if (!empty($id) && !empty($table) && !empty($name)) {
+    if ( !empty($id) && !empty($table) && !empty($name) && strlen($name) <= 32 ) {
 			// update the values      
       $sql = "UPDATE $table SET name = :name WHERE ID = :ID";
       $stmt = $pdo->prepare($sql);                                  

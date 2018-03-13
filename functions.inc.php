@@ -1,6 +1,4 @@
-﻿<!-- <meta charset="utf-8"> -->
-
-<?php
+﻿<?php
 // AIDS.PHP
 
 
@@ -163,6 +161,22 @@ function getIpAddr() {
     $ip = $_SERVER["REMOTE_ADDR"];
   }
   return $ip;
+}
+
+
+/*
+* Get (second highest) latest Roll from DB
+*/
+function getLatestRoll () {
+  global $pdo;
+  
+  $stmt = $pdo->prepare("SELECT mobs, boss FROM rolls ORDER BY ID DESC LIMIT 1,1");
+  $stmt->execute();
+  $row = $stmt->fetch(PDO::FETCH_ASSOC);
+  
+  // echo $row["mobs"] . "-" . $row["boss"];
+  
+  return $row["mobs"] . " - " . $row["boss"];;
 }
 
 
