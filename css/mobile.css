@@ -38,13 +38,30 @@
   }
   */
   
+.container, .content {
+  /*95%, 90%*/
+	width: 99%;
+}
 
+  
+  
+  
   
   div.aidscontent, div.aidsListing {
     width: 99%;
   }
   
-  
-  
-
 } /* EOF @media */
+
+
+@media all and (max-width: 1200px) {
+  .container, .content {
+    /*95%, 90%*/
+    width: 95%;
+  }
+  
+  div.aidscontent, div.aidsListing {
+    width: 95%;
+  }
+  
+}

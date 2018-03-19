@@ -22,6 +22,42 @@ function randomWeapon () {
 }
 	
 
+/*
+ * Get RNG for Mobs and Boss
+ */
+function getRNG () {
+  global $pdo;
+  
+  // Get max dice value for mt_rand()
+  $stmt = $pdo->prepare( "SELECT (SELECT COUNT(dice) FROM mobs) as mobsCount, (SELECT COUNT(dice) FROM boss) as bossCount" );
+  $stmt->execute();
+  $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+  // MOBS, BOSS RNG
+  $mobsRNG  = mt_rand (1, $row["mobsCount"]);
+  $bossRNG  = mt_rand (1, $row["bossCount"]);
+  
+  return array($mobsRNG, $bossRNG);
+}
+
+
+/*
+ * Get Aids from DB Where dice = rng (getRNG())
+ */
+function getAidsByRNG ($mobsRNG, $bossRNG) {
+  global $pdo;
+  
+  $stmt = $pdo->prepare("SELECT mobs.name, boss.name FROM mobs, boss WHERE mobs.dice = $mobsRNG AND boss.dice = $bossRNG");
+  $stmt->execute();
+  $row = $stmt->fetch(PDO::FETCH_GROUP);
+
+  $mobsAids = $row[0];
+  $bossAids= $row[1];
+  
+  return array($mobsAids, $bossAids);
+}
+
+
   
 /*
  * Replace Name with Emoji because MySQL sucks
@@ -126,6 +162,16 @@ function replaceBrWithComma ($text) {
   $text = str_replace("\r\n", ", ", $text);
   return $text;
 }
+
+
+/*
+ * Replace dash - with <br>
+ */
+function replacedashWithBr ($text) {
+  $text = str_replace("-", "<br>", $text);
+  return $text;
+}
+
 
 
 /*
@@ -294,5 +340,17 @@ function pdoDelete ($table, $post, $ID) {
   $stmt->bindParam(':name', $post, PDO::PARAM_STR);
   $stmt->bindParam(':ID', $ID, PDO::PARAM_INT);
   $stmt->execute();
+}
+
+
+/*
+ * Find gaps (dice) in array
+ */
+function missing_number($num_list) {
+  // construct a new array
+  // $new_arr = range($num_list[0], max($num_list));                                                    
+  $new_arr = range($num_list, max($num_list));
+  // use array_diff to find the missing elements 
+  return array_diff($new_arr, $num_list);
 }
 ?>

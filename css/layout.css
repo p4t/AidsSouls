@@ -1,21 +1,37 @@
 @charset "utf-8";
 
+/* Dark Souls 3 Menu Font Style */
 @font-face {
 	font-family: "Trajan";
 	src: url("/fonts/TrajanProRegular.ttf");
 	src: local("Trajan"), url("/fonts/TrajanProRegular.ttf") format("truetype");
 }
 
-/* Dark Souls Font Style */
+/* Dark Souls Logo Font Style */
 @font-face {
 	font-family: "OptimusPrinceps";
 	src: url("/fonts/OptimusPrinceps.ttf");
 	src: local("OptimusPrinceps"), url("/fonts/OptimusPrinceps.woff") format("woff"), url("/fonts/OptimusPrinceps.ttf") format("truetype");
 }
+
+/* Dark Souls 1 Menu Font Style */
+@font-face {
+	font-family: "ds1";
+	src: url("/fonts/Soul_Font.ttf");
+	src: local("ds1"), url("/fonts/Soul_Font.ttf") format("truetype");
+}
+
+
 /* use this class to attach this font to any element i.e. <p class="fontsforweb_fontid_1045">Text with this font applied</p> */
-.fontsforweb_fontid_1045 {
+.dsfontwww {
 	font-family: "OptimusPrinceps" !important;
 }
+
+
+html { box-sizing: border-box; } *, *:before, *:after { box-sizing: inherit; }
+
+
+
 
 html {
   font-family: "Trajan", sans-serif;
@@ -170,13 +186,13 @@ hr {
 
 
 div.aidscontent, div.aidsListing {
-  width: 70%; /* % of .container !IMPORTANT */ 
+  width: 80%; /* % of .container !IMPORTANT 70 default */ 
 	/* max-width: 60%; */
 	margin: 0 auto;
   
 }
 
-div.aidscontent, div.aidsListing {
+div.aidscontent, div.aidsListing, div#todo {
   border: 25px solid transparent;
   border-image: url("/img/border.png") 30 round;
   
@@ -186,6 +202,13 @@ div.aidscontent, div.aidsListing {
   background-size: 120% 120%;
   
   padding: 15px;
+}
+
+#todo {
+  width: 50%;
+  margin: 0 auto;
+  /* text-align: center; */
+  white-space: pre-wrap;
 }
 
 
@@ -323,9 +346,23 @@ img.edit_icon {
   
 }
 
+
 #status {
+  /*
   color: #006100;
-  background-color: #c6efce;
+  */
+  color: white;
+  background-color: #5cb85c;
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  /*
+  background-color: red;
+  color: white;
+  */
+  text-align: center;
+  display: none;
 }
 
 
@@ -334,15 +371,40 @@ img.edit_icon {
   position: absolute;
   z-index: 100;
   left: 0;
-  top:0;
+  top: 0;
 }
 
-/* DEBUG */
 
+.checkbox_center {
+  text-align: center;
+  align-content: center;
+  align-items: center;
+}
+
+
+
+/* For quick column layout */
+.row {
+    display: flex;
+}
+
+.col {
+    flex: 1;
+}
+
+
+
+/* DEBUG */
 /*
 * {
   border-style: groove;
   border-color: chartreuse;
   border-width: 1px;
+}
+*/
+
+/*
+* {
+  outline: 1px solid chartreuse;
 }
 */

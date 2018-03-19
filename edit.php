@@ -22,7 +22,7 @@ require_once("functions.inc.php");
 <head>
   
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=yes">
   
 <title>\[T]/ the Edit</title>
 <base href="http://aids.gyros-mit-zaziki.de">
@@ -35,8 +35,8 @@ require_once("functions.inc.php");
 <link rel="stylesheet" href="/css/datatip.css" type="text/css" media="screen">
 <link rel="stylesheet" href="/css/mobile.css" type="text/css" media="screen">
   
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/balloon-css/0.5.0/balloon.min.css">
-
+<link rel="stylesheet" href="/css/balloon.css">
+  
 <link rel="apple-touch-icon" sizes="180x180" href="/img/favico/apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="32x32" href="/img/favico/favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="/img/favico/favicon-16x16.png">
@@ -56,8 +56,8 @@ require_once("functions.inc.php");
 <meta name="googlebot" content="noindex, nofollow">
 <meta name="google" content="nositelinkssearchbox">
   
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
- 
+<script src="/js/jquery-3.3.1.min.js"></script>
+
 </head>
 
 <body>
@@ -74,6 +74,69 @@ require_once("functions.inc.php");
     <a href="/edit#Kills">Kills</a> |
     <a href="/edit#Rolls">Rolls</a>
   </nav>
+  
+  
+  
+  
+  <pre>
+  <?php
+/*
+  $data = $pdo->query("SELECT dice FROM weapons")->fetchAll(PDO::FETCH_COLUMN);
+  print_r($data);
+*/
+  ?>
+  </pre>
+
+  <?php
+  // $arr = range(min($data), max($data));
+  // $missing = min(array_diff($arr, $data));
+  // print_r($missing);
+  // var_dump(min(array_diff($arr,$data
+  // $missing_number = missing_number($data);
+ ?>
+  
+  
+  
+  
+<?php
+$tables = array("mobs", "boss", "weapons");
+foreach($tables as $table) :
+  $data = $pdo->query("SELECT dice FROM $table")->fetchAll(PDO::FETCH_COLUMN);
+  
+  $missing_number = missing_number($data);
+  if ( !empty($missing_number) ) :
+  ?>
+
+<div id="flex-container-missingnumbers">
+  <div class="flex-item-missingnumbers">
+    Folgende Würfel fehlen in der Tabelle <strong><?=$table?></strong>:
+    <p>
+    <?php
+    // print_r($missing_number);
+    // echo $missing_number[0];
+    
+    foreach($missing_number as $value) {
+      echo $value . "<br>";
+    }
+    
+    ?>
+    </p>
+  </div>
+</div>
+  <?php
+  ENDIF
+    ?>
+  
+<?php
+  ENDFOREACH
+?>
+
+  
+  
+  
+  
+  
+  
 
 <?php
 /*
@@ -276,9 +339,32 @@ if ( !empty($_GET["action"]) && $_GET["action"] == "delete" ) {
 
   $sql = "DELETE FROM $table WHERE ID = :ID";
   $stmt = $pdo->prepare($sql);
-  $stmt->bindParam(':ID', $ID, PDO::PARAM_INT);
+  $stmt->bindParam(":ID", $ID, PDO::PARAM_INT);
   $stmt->execute();
-
+  
+  // Check if number in dice is missing
+  /*
+  $data = $pdo->query("SELECT dice FROM $table")->fetchAll(PDO::FETCH_COLUMN);
+  $missing_number = missing_number($data);
+  missing_number($data);
+  */ 
+  
+  $count = pdoCount($table);
+  if ( $ID != $count ) {
+    $data = $pdo->query("SELECT dice FROM $table")->fetchAll(PDO::FETCH_COLUMN);
+    $missing_number = missing_number($data);
+    print_r( $missing_number);
+  }
+  
+  
+  // $stmt = $pdo->prepare("SELECT dice FROM $table ORDER BY dice DESC LIMIT 1"); // get max value from field dice
+  //$stmt = $pdo->prepare("SELECT dice FROM $table WHERE ID = $ID"); // get max value from field dice
+  //$stmt->execute();
+  //$row = $stmt->fetch(PDO::FETCH_ASSOC);
+  //$row["dice"] + 1; // +1 of max dice value
+  
+  
+  
   redirect("/edit", $statusCode = 303);
 }
 
@@ -369,6 +455,7 @@ ENDIF // EOF if ( empty($_GET["mode"]) )
   
   
   
+
 
   
 <!-- FOOTER -->  

@@ -9,8 +9,10 @@ input[type="button"],
 input[type="number"]
 {
   /*
-  font-family: "Trajan", sans-serif;
+  font-family: "ds1", sans-serif;
   */
+  font-family: inherit;
+  font-size: 1.02em;
 
   padding: 4px 6px;
   margin: 8px 0;
