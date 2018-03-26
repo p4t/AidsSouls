@@ -1,0 +1,30 @@
+@charset "utf-8";
+
+.message {
+  background: black;
+  color: white;
+  font-family: "ds1";
+  
+  
+  display: block;
+  width: 937px;
+  height: 205px;
+  background-image: url("/img/plaque.jpg");
+  background-repeat: no-repeat;
+  margin: 0 auto;
+  
+  padding-left: 213px;
+  padding-top: 33px;
+  /*
+  position: relative;
+  left: -20px;
+  */
+  box-sizing: border-box;
+}
+.message_line {
+  margin: 0;
+  padding: 0;
+  color: #d2d2d2;
+  font-size: 1.7em;
+  line-height: 1em;
+}

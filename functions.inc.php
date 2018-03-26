@@ -46,13 +46,31 @@ function getRNG () {
  */
 function getAidsByRNG ($mobsRNG, $bossRNG) {
   global $pdo;
+  $flasks = 13;
+  
+  $weaponIMG = "&nbsp;<img src=\"/img/weapon_icon.png\" width=\"41\" height=\"40\" alt=\"Weapon\">";
   
   $stmt = $pdo->prepare("SELECT mobs.name, boss.name FROM mobs, boss WHERE mobs.dice = $mobsRNG AND boss.dice = $bossRNG");
   $stmt->execute();
   $row = $stmt->fetch(PDO::FETCH_GROUP);
 
   $mobsAids = $row[0];
-  $bossAids= $row[1];
+  $bossAids = $row[1];
+  
+  // Random Weapon
+  if ( $mobsAids == "Zufällige Waffe" ) $mobsAids = randomWeapon() . $weaponIMG;
+  if ( $bossAids == "Zufällige Waffe" ) $bossAids = $weaponIMG . randomWeapon();
+  
+  // Flask number
+  if ( $mobsAids == "Flask Würfeln" ) {
+    $flaskRNG = mt_rand(1, $flasks); // $flasks Number of flasks
+    $mobsAids = $mobsAids . " ($flaskRNG) ";
+  }
+
+  if ( $bossAids == "Flask Würfeln" ) {
+    $flaskRNG = mt_rand(1, $flasks); // $flasks Number of flasks
+    $bossAids = $bossAids . " ($flaskRNG) ";
+  }  
   
   return array($mobsAids, $bossAids);
 }
@@ -147,9 +165,11 @@ function numberToTally ($number) {
 /*
  * Format date, strtotime
  */
-function formatDate ($date) {
+function formatDate ($date, $time = 0) {
   $date = strtotime ($date);
-  $date = date("d.m.Y H:i:s", $date);
+  if ( $time = 0 ) $date = date("d.m.Y H:i:s", $date);
+  else $date = date("H:i:s", $date);
+  
   return $date;
 }
 
@@ -167,7 +187,7 @@ function replaceBrWithComma ($text) {
 /*
  * Replace dash - with <br>
  */
-function replacedashWithBr ($text) {
+function replaceDashWithBr ($text) {
   $text = str_replace("-", "<br>", $text);
   return $text;
 }
@@ -225,6 +245,20 @@ function getLatestRoll () {
   return $row["mobs"] . " - " . $row["boss"];;
 }
 
+/*
+* Get x amount of latest Rolls (10)
+*/
+function getLatestRolls () {
+  global $pdo;
+  
+  $stmt = $pdo->prepare("SELECT date, IP, mobs, boss FROM rolls ORDER BY ID DESC LIMIT 1, 10");
+  $stmt->execute();
+  $row = $stmt->fetch(PDO::FETCH_ASSOC);
+  
+  // echo $row["mobs"] . "-" . $row["boss"];
+  
+  return $row["mobs"] . " - " . $row["boss"] . "Time:" . $row["date"] . "IP: " . $row["IP"];
+}
 
 
 
@@ -307,7 +341,7 @@ function clean_string ($string) {
 /*
 * redirect back to given URL, statuscode = 303
 */
-function redirect ($url, $statusCode) {
+function redirect ($url, $statusCode = 303) {
   header("Location: " . $url, true, $statusCode);
   die();
 }
@@ -341,6 +375,42 @@ function pdoDelete ($table, $post, $ID) {
   $stmt->bindParam(':ID', $ID, PDO::PARAM_INT);
   $stmt->execute();
 }
+
+
+/*
+* CHeck if a number between 1 and max dice vlaue in db is missing
+*/
+function checkMissingDice () {
+  global $pdo;
+  
+  $tables = array("mobs", "boss", "weapons");
+  foreach($tables as $table) {
+    $data = $pdo->query("SELECT dice FROM $table")->fetchAll(PDO::FETCH_COLUMN);
+
+    $missing_number = missing_number($data);
+
+    if ( !empty($missing_number) ) {
+      echo "
+      <div id=\"flex-container-missingnumbers\">\n
+      <div class=\"flex-item-missingnumbers\">\n
+      Folgende Würfel fehlen in der Tabelle <strong>{$table}</strong>:\n
+      <p>\n
+      ";
+      // print_r($missing_number);
+      // echo $missing_number[0];
+      foreach($missing_number as $value) {
+        echo $value . "<br>\n";
+      }
+
+      echo "
+      </p>\n
+      </div>\n
+      </div>\n
+      ";
+    } // ENDIF
+  } // ENDFOREACH
+} // ENDFUNCTION
+ 
 
 
 /*

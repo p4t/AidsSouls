@@ -32,7 +32,7 @@
       
   <tr>
     <td colspan="5">
-      <a href="edit.php?action=truncate" onClick="return confirm('SICHER???????? MACH KE SCHEISS!');" data-tip="Tabelle leeren">Leeren</a>
+      <a href="edit.php?action=truncate" onClick="return confirm('SICHER???????? MACH KE SCHEISS!');" data-balloon="Tabelle leeren" data-balloon-pos="up">Leeren</a>
     </td>
   </tr>
   </tbody>

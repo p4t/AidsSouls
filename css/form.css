@@ -8,9 +8,6 @@ input[type="submit"],
 input[type="button"],
 input[type="number"]
 {
-  /*
-  font-family: "ds1", sans-serif;
-  */
   font-family: inherit;
   font-size: 1.02em;
 
@@ -26,13 +23,12 @@ input[type="number"]
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
-  
-  /*
-  -webkit-border-radius: 2px;
-  -moz-border-radius: 2px;
-  border-radius: 2px;
-  */
 }
+
+input[type=number]{
+    width: 55px;
+} 
+
 
 /*
 input[type=text]:active,
@@ -69,22 +65,43 @@ input[type=checkbox] {
 
 /* CHECKBOX */
 input[type="checkbox"] {
+  /*
   appearance: none;
-  transform: scale(1.2);
-  /* width: 40px; */
-  /* height: 16px; */
-  border: 1px solid #aaa;
+  transform: scale(1.5);
+  */
+  /*
+  width: 80px;
+  height: 16px; 
+  */
   
+  
+  width: 30px; /*Desired width*/
+  height: 20px; /*Desired height*/
+  cursor: pointer;
+  -webkit-appearance: none;
+  appearance: none;  
+  
+  /* box-sizing: border-box; */
+  
+  /*
+  background: white;
+  border: 1px solid #000;
+  */
   /* border-radius: 10px; */
   
-  background: black;
-
-  box-sizing: border-box;
+  
+  border-radius: 4px;
+  background-color: #3F292B;
+  /* background-color: #434343; */
+  /* background: url("/img/noise-diagonal-trans.png"); */
+  background: url("/img/button_bg.png");
+  
+  filter: contrast(0) sepia(50%) hue-rotate(20deg) brightness(1.9) saturate(0.28); 
 }
 
 input[type="checkbox"]:checked {
-  background: #a6c7ff;
-  border-color: #8daee5;
+  background: #3f292b;
+  border: 2px dashed;
 }
 
 

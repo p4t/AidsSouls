@@ -30,6 +30,29 @@ table {
 }	
 
 
+table.noStyle {
+  border: none;
+	border-collapse: inherit;
+	box-shadow: none;
+	font-size: inherit;
+	line-height: inherit;
+	margin: 0 auto;
+	text-align: left;
+  
+  padding: 10px;
+}
+
+table.noStyle,
+thead.noStyle,
+tbody.noStyle,
+th.noStyle,
+tr.noStyle,
+td.noStyle {
+  font-size: 1em;
+}
+
+
+
 th {
 	/* background: url(noise-diagonal.png), linear-gradient(#000, #000); */
   /* background: url("/img/noise-diagonal.png"), linear-gradient(#A37B73, #3F292B); */

@@ -27,8 +27,13 @@
 	font-family: "OptimusPrinceps" !important;
 }
 
-
-html { box-sizing: border-box; } *, *:before, *:after { box-sizing: inherit; }
+/* Border fix */
+html {
+  box-sizing: border-box;
+}
+*, *:before, *:after {
+  box-sizing: inherit;
+}
 
 
 
@@ -84,6 +89,7 @@ nav {
 
 footer {
   text-align: center;
+  background-color: rgba(0,0,0,0.1);
 }
 
 
@@ -162,12 +168,12 @@ hr {
 }
 
 
-
 .container {
 	width: 95%;
+
 	max-width: 1260px;
 	min-width: 780px;
-
+  
 	margin: 0 auto;
 }
 
@@ -205,16 +211,29 @@ div.aidscontent, div.aidsListing, div#todo {
 }
 
 #todo {
-  width: 50%;
+  width: 60%;
   margin: 0 auto;
   /* text-align: center; */
   white-space: pre-wrap;
 }
 
+/* Inline Edit Fix */
+#todo:active,
+#todo:focus
+{
+  color: #fff;
+  
+  /* outline-color: #3f292b; */
+  outline-color: #fff;
+  outline-style: 9px dotted;
+}
 
+
+/*
 .bonfire:hover:after {
   content: "\25BA";
 }
+*/
 
 
 /* Reroll Fade-In */
@@ -307,6 +326,8 @@ li.noListStyle {
   font-size: 1.6em;
   line-height: 2em;
   
+  white-space: nowrap;
+  
   font-weight: bold;
   text-shadow: 1px 1px 25px rgba(239, 35, 60, 0.5), 1px 1px 25px rgba(122, 73, 48, 0.5), -1px -1px 25px rgba(230, 57, 70, 0.5), -1px -1px 88px rgba(217, 4, 41, 0.5);  
 }
@@ -332,6 +353,84 @@ img.dice {
   width: 100px;
   height: 100px;
 }
+
+
+
+img.dice {
+    overflow: hidden;
+    transition-duration: 0.8s;
+    transition-property: transform;
+}
+img.dice:hover {
+    transform: rotate(360deg);
+    -webkit-transform: rotate(360deg);
+}
+
+
+/*
+.animate_rotate {
+    -webkit-animation: animaterotate 0.6s;
+    animation: animaterotate 0.6s
+}
+
+@-webkit-keyframes animaterotate {
+    from {-webkit-transform: scale(0)} 
+    to {-webkit-transform: scale(1)}
+}
+    
+@keyframes animaterotate {
+    from {transform: scale(0)} 
+    to {transform: scale(1)}
+}
+*/
+
+/* DICE ROLL ANIMATION */
+/*
+.animate_rotate {
+    -webkit-animation: spin 1s;
+    animation: spin 1s
+}
+
+@-moz-keyframes spin {
+    from { -moz-transform: rotate(0deg); }
+    to { -moz-transform: rotate(360deg); }
+}
+@-webkit-keyframes spin {
+    from { -webkit-transform: rotate(0deg); }
+    to { -webkit-transform: rotate(360deg); }
+}
+@keyframes spin {
+    from {transform:rotate(0deg);}
+    to {transform:rotate(360deg);}
+}
+*/
+
+
+
+
+
+/***TEST***/
+
+.animate_rotate {
+
+
+    /* The animation part: */
+    animation-name: spin;
+    animation-duration: 1000ms;
+    animation-iteration-count: 1;
+    animation-timing-function: ease-in-out;
+}
+@keyframes spin {
+    from {transform:rotate(0deg);}
+    to {transform:rotate(360deg);}
+}
+
+.rotatingimg{transition: transform 2s;}
+.rotatingimg:hover{transform:rotate(360deg);}
+
+
+
+
 
 img.edit_icon {
   filter: contrast(0) sepia(50%) hue-rotate(20deg) brightness(1.9) saturate(0.28);
@@ -382,15 +481,206 @@ img.edit_icon {
 }
 
 
+/* Bonfire Play Button */
+.itemsContainer {
+  /* background:red; */
+  float: left;
+  position: relative;
+}
+.itemsContainer:hover .play {
+  display: block;
+}
+.play {
+  position: absolute;
+  display: none;
+  top: 68%; 
+  width: 40px;
+  margin: 0 auto;
+  left: 0px;
+  right: 0px;
+  z-index: 100;
+  cursor: pointer;
+  white-space: nowrap;
+} 
+
 
 /* For quick column layout */
+.table, .row, .col {
+  /*
+  outline: 1px solid #22FF00;
+  */
+}
+.table {
+  width: 50%;
+}
 .row {
-    display: flex;
+  display: flex;
+  white-space: nowrap;
 }
 
 .col {
-    flex: 1;
+  flex: 1;
 }
+
+
+
+
+/* MODAL */
+/* The Modal (background) */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content/Box */
+.modal-content {
+  /* background-color: green; */
+  /* background-color: rgba(0,0,0,0.4); */
+  margin: 15% auto; /* 15% from the top and centered */
+  padding: 20px;
+  /* border: 1px solid #888; */
+  /* width: 80%; */ /* Could be more or less, depending on screen size */
+  /* width: 937px;*/
+}
+
+/* The Close Button */
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 2em;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: red;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+
+/* Add Zoom Animation */
+.animate {
+    -webkit-animation: animatezoom 0.6s;
+    animation: animatezoom 0.6s
+}
+
+@-webkit-keyframes animatezoom {
+    from {-webkit-transform: scale(0)} 
+    to {-webkit-transform: scale(1)}
+}
+    
+@keyframes animatezoom {
+    from {transform: scale(0)} 
+    to {transform: scale(1)}
+}
+
+
+
+
+
+
+
+
+
+
+/* COLLAPSIBLE */
+.collapsible {
+  background-color: rgba(0, 0, 0, 0.7);
+  
+  cursor: pointer;
+  padding: 18px;
+  width: 100%;
+  border: none;
+  outline: none;
+  /* font-size: 15px; */
+  
+  justify-content: center;
+  align-content: center;
+  align-items: center;
+  text-align: center;
+
+}
+
+.collapsible-head {
+  font-family: "Trajan";
+  font-size: 1.5em;
+  color: white;
+}
+
+.active, .collapsible:hover {
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+.collapsible:after {
+  content: '\002B';
+  color: white;
+  font-weight: bold;
+  float: right;
+  margin-left: 5px;
+}
+
+.active:after {
+  content: "\2212";
+}
+
+.collapsible-content {
+  padding: 0 18px;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.2s ease-out;
+  /*  
+  background-color: #f1f1f1;
+  */
+  /* border: 25px solid transparent; */
+  background-color: rgba(0, 0, 0, 0.4);
+
+  justify-content: center;
+  align-content: center;
+  align-items: center;
+  text-align: center;
+
+}
+
+
+
+
+
+
+
+
+/* PARTICLE */
+/* ---- reset ---- */
+canvas{ display: block; vertical-align: bottom; } 
+/* ---- particles.js container ---- */ 
+#particles-js{ position:absolute; width: 100%; height: 100%; background-color: #232741; background-image: url(""); background-repeat: no-repeat; background-size: 20%; background-position: 50% 50%; } 
+/* ---- stats.js ---- */ 
+.count-particles{ background: #000022; position: absolute; top: 48px; left: 0; width: 80px; color: #13E8E9; font-size: .8em; text-align: left; text-indent: 4px; line-height: 14px; padding-bottom: 2px; font-family: Helvetica, Arial, sans-serif; font-weight: bold; } 
+.js-count-particles{ font-size: 1.1em; } 
+#stats, .count-particles{ -webkit-user-select: none; margin-top: 5px; margin-left: 5px; } 
+#stats{ border-radius: 3px 3px 0 0; overflow: hidden; } .count-particles{ border-radius: 0 0 3px 3px; }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

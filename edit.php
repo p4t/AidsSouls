@@ -32,8 +32,8 @@ require_once("functions.inc.php");
 <link rel="stylesheet" href="/css/button.css" type="text/css" media="screen">
 <link rel="stylesheet" href="/css/table.css" type="text/css" media="screen">
 <link rel="stylesheet" href="/css/form.css" type="text/css" media="screen">
-<link rel="stylesheet" href="/css/datatip.css" type="text/css" media="screen">
 <link rel="stylesheet" href="/css/mobile.css" type="text/css" media="screen">
+<link rel="stylesheet" href="/css/login.css" type="text/css" media="screen">
   
 <link rel="stylesheet" href="/css/balloon.css">
   
@@ -63,7 +63,7 @@ require_once("functions.inc.php");
 <body>
   <header>
   <!-- <div class="header_Edit"> -->
-    <h1>&raquo; <a href="/">AIDS</a> &laquo;</h1>
+    <h1>&raquo;<a href="/">AIDS</a>&laquo;</h1>
   <!-- </div> -->
   </header>
 
@@ -99,36 +99,8 @@ require_once("functions.inc.php");
   
   
 <?php
-$tables = array("mobs", "boss", "weapons");
-foreach($tables as $table) :
-  $data = $pdo->query("SELECT dice FROM $table")->fetchAll(PDO::FETCH_COLUMN);
-  
-  $missing_number = missing_number($data);
-  if ( !empty($missing_number) ) :
-  ?>
-
-<div id="flex-container-missingnumbers">
-  <div class="flex-item-missingnumbers">
-    Folgende Würfel fehlen in der Tabelle <strong><?=$table?></strong>:
-    <p>
-    <?php
-    // print_r($missing_number);
-    // echo $missing_number[0];
-    
-    foreach($missing_number as $value) {
-      echo $value . "<br>";
-    }
-    
-    ?>
-    </p>
-  </div>
-</div>
-  <?php
-  ENDIF
-    ?>
-  
-<?php
-  ENDFOREACH
+/* Check for missing dice in sequence */
+checkMissingDice();
 ?>
 
   
@@ -304,13 +276,13 @@ if ( !empty($_GET["mode"]) && $_GET["mode"] == "kills" ) {
         <table>
           <tbody>
             <tr>
-              <td data-tip="Keine Zahl überspringen, Feld freilassen für auto Dice +1. Keine doppelten Werte!">
+              <td data-balloon="Leer lassen für Würfel +1, keine doppelten Werte." data-balloon-pos="right">
                 <input type="number" name="addDice" value="" min="1" max="99" autocomplete="off" placeholder="Würfel">
               </td>
-              <td data-tip="Maximal 32 Zeichen">
+              <td data-balloon="Max 32 Zeichen" data-balloon-pos="up">
                 <input type="text" name="addEntry" value="" autocomplete="off" maxlength="32" placeholder="Name" required="required">
               </td>
-              <td data-tip="Abschicken"><input type="submit" value="Submit">
+              <td data-balloon="Abschicken" data-balloon-pos="up"><input type="submit" value="Submit">
                 &nbsp;
               </td>
             </tr>
@@ -387,13 +359,66 @@ if ( !empty($_GET["action"]) && $_GET["action"] == "truncate" ) {
   
   
   
-<div id="flex-container-edit">
   
+  
+<!-- LOGIN -->
+<button onclick="document.getElementById('id01').style.display='block'" style="width:auto;">Login</button>
 
+<div id="id01" class="modal">
+  
+  <form class="modal-content animate" action="/login.php">
+    <div class="imgcontainer">
+      <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">&times;</span>
+      <img src="img_avatar2.png" alt="Avatar" class="avatar">
+    </div>
+
+    <div class="container">
+      <label for="uname"><b>Username</b></label>
+      <input type="text" placeholder="Enter Username" name="uname" required>
+
+      <label for="psw"><b>Password</b></label>
+      <input type="password" placeholder="Enter Password" name="psw" required>
+        
+      <button type="submit">Login</button>
+      <label>
+        <input type="checkbox" checked="checked" name="remember"> Remember me
+      </label>
+    </div>
+
+    <div class="container" style="background-color:#f1f1f1">
+      <button type="button" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn">Cancel</button>
+      <span class="psw">Forgot <a href="#">password?</a></span>
+    </div>
+  </form>
+  
+</div>
+
+<script>
+// Get the modal
+var modal = document.getElementById('id01');
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+    if (event.target == modal) {
+        modal.style.display = "none";
+    }
+}
+</script> 
+
+  
+  
+  
+  
+  
+  
+  
+  
+<div id="flex-container-edit">  
 <?php
 /* STANDARD ANSICHT WENN NUR EDIT.PHP
 * DISPLAY ALL TABLES WHERE TO EDIT FROM
 */
+  
 if ( empty($_GET["mode"]) ) :
   $tables = array("mobs", "boss", "weapons");
 
@@ -415,23 +440,26 @@ if ( empty($_GET["mode"]) ) :
       <td><a href="/edit?mode=<?=$table?>&ID=<?=$row[0]?>"><?=$row[1]?></a></td>
       <td><a href="/edit?mode=<?=$table?>&ID=<?=$row[0]?>"><?=$row[2]?></a></td>
       <td class="edit_action">
-        <a href="/edit?mode=<?=$table?>&ID=<?=$row[0]?>" data-tip="Edit">
+        <a href="/edit?mode=<?=$table?>&ID=<?=$row[0]?>" data-balloon="Edit" data-balloon-pos="up">
           <img src="/img/edit-icon.png" class="edit_icon" width="024" height="024" alt="Edit">
         </a>
-        <a href="/edit?mode=<?=$table?>&action=delete&ID=<?=$row[0]?>" onClick="return confirm('SICHER???????? MACH KE SCHEISS!');" data-tip="Delete">
+        <!-- DISABLE DELETION TEMPORARILY -->
+        <!--
+        <a href="/edit?mode=<?=$table?>&action=delete&ID=<?=$row[0]?>" onClick="return confirm('SICHER???????? MACH KE SCHEISS!');" data-balloon="Löschen" data-balloon-pos="up">
           <img src="/img/delete-icon.png" width="024" height="024" alt="Delete">
         </a>
+        -->
       </td>
     </tr>
     <?php ENDWHILE ?>
     <tr>
-      <td data-tip="Keine Zahl überspringen, Feld freilassen für auto Dice +1. Keine doppelten Werte!">
+      <td data-balloon="Leer lassen für Würfel +1, keine doppelten Werte." data-balloon-pos="right">
         <input type="number" name="addDice" value="" min="1" max="99" autocomplete="off" placeholder="Würfel">
       </td>
-      <td data-tip="Max 32 Zeichen">
+      <td data-balloon="Max 32 Zeichen" data-balloon-pos="up">
         <input type="text" name="addEntry" value="" autocomplete="off" maxlength="32" placeholder="Name" required="required">
       </td>
-      <td data-tip="Abschicken"><input type="submit" value="Submit">
+      <td data-balloon="Abschicken" data-balloon-pos="up"><input type="submit" value="Submit">
         &nbsp;
       </td>
     </tr>
@@ -446,6 +474,9 @@ if ( empty($_GET["mode"]) ) :
     include("kills.inc.php");
     include("rolls.inc.php");
   ?>
+
+
+  
 
 <?php
 ENDIF // EOF if ( empty($_GET["mode"]) )

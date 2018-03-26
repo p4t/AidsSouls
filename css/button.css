@@ -17,8 +17,11 @@
   font-size: 1.7em; /* Button Text Font Size */
   padding: 5px;
   
+  /* width: 120px; */
   width: 120px;
   height: 68px;
+  
+  white-space: nowrap;
   
   /*
   width: 120px;
@@ -50,7 +53,7 @@
 
 .button span:after {
   /* content: '\00bb'; */
-  content: '🎲';
+  content: "🎲";
   position: absolute;
   opacity: 0;
   top: 0;

@@ -19,20 +19,26 @@
   ?>
 
   <tr>
-    <td><?=$row["ID"]?></td>
-    <td><?=$row["name"]?></td>
+    <td>
+      <a href="edit.php?mode=kills&ID=<?=$row["ID"]?>">
+        <?=$row["ID"]?>
+      </a>
+    </td>
+    <td>
+      <a href="edit.php?mode=kills&ID=<?=$row["ID"]?>">
+        <?=$row["name"]?>
+      </a>
+    </td>
     <td>
       <a href="edit.php?mode=kills&ID=<?=$row["ID"]?>">
         <?=$row["joker"]?>
       </a>
     </td>
-
     <td>
       <a href="edit.php?mode=kills&ID=<?=$row["ID"]?>">
         <?=$row["spent"]?>
       </a>
     </td>
-
     <td>
       <a href="edit.php?mode=kills&ID=<?=$row["ID"]?>">
         <?=nl2br($row["bossNames"])?>

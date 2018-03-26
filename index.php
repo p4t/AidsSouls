@@ -15,99 +15,33 @@ require_once("functions.inc.php");
 // include_once("superaids.inc.php");
 
 
-
-//////////////////////////////////TAB FÜR LATEST ROLLS SWITCH ZW ROLL BUTTON ETC
-
-
 // check for rndwpn
 if ( !empty($_GET["mode"]) && $_GET["mode"] == "rndwpn" ) die(randomWeapon());
 
-/*
 // Get max dice value for mt_rand()
-$stmt = $pdo->prepare( "SELECT (SELECT COUNT(dice) FROM mobs) as mobsCount, (SELECT COUNT(dice) FROM boss) as bossCount" );
-$stmt->execute();
-$row = $stmt->fetch(PDO::FETCH_ASSOC);
-
-// MOBS, BOSS RNG
-$mobsRNG  = mt_rand (1, $row["mobsCount"]);
-$bossRNG  = mt_rand (1, $row["bossCount"]);
-*/
-
-$RNG = getRNG();
-$mobsRNG = $RNG[0];
-$bossRNG = $RNG[1];
+$RNG      = getRNG();
+$mobsRNG  = $RNG[0];
+$bossRNG  = $RNG[1];
 
 // DEBUG
-// $mobsRNG    = 15;
-// $bossRNG    = 5;
+/*
+$mobsRNG = 20;
+$bossRNG = 5;
+*/
 
+/*
+//////////////// COMBINE getRNG() and getAidsByRNG and return as array with 4 values
+*/
 
 // Get Aids name from mobs boss tables 
-/*
-$stmt = $pdo->prepare("SELECT mobs.name, boss.name FROM mobs, boss WHERE mobs.dice = $mobsRNG AND boss.dice = $bossRNG");
-$stmt->execute();
-$row = $stmt->fetch(PDO::FETCH_GROUP);
-
-$mobsAids     = $row[0];
-$bossAids     = $row[1];
-*/
 $Aids     = getAidsByRNG($mobsRNG, $bossRNG);
 $mobsAids = $Aids[0];
 $bossAids = $Aids[1];
 
+// Random Weapon
 $randomWeapon = randomWeapon();
-$weaponIMG  = "&nbsp;<img src=\"/img/weapon_icon.png\" width=\"41\" height=\"40\" alt=\"Weapon\">";
-
-// Append weapon img HACK
-if ( $mobsAids == "Zufällige Waffe" ) {
-  $mobsAids = randomWeapon();
-  $mobsAidsOutput = $mobsAids . $weaponIMG;
-} else {
-  $mobsAidsOutput = $mobsAids;
-}
-
-if ( $bossAids == "Zufällige Waffe" ) {
-  $bossAids = randomWeapon();
-  $bossAidsOutput = $weaponIMG . $bossAids;
-} else {
-  $bossAidsOutput = $bossAids;
-}
-
-$randomWeaponOutput = $weaponIMG . $randomWeapon . $weaponIMG;
-
-// Flask würfeln (STRTOLOWER?)
-if ( $mobsAids == "Flask Würfeln" ) {
-  $flaskRNG       = mt_rand(1, 12);
-  $mobsAidsOutput = $mobsAids . " ($flaskRNG) ";
-}
-
-
-// DEBUG PRE
-echo "<pre>";
-echo "///DEBUG///";
-echo "<br>";
-echo "MOBSRNG: $RNG[0]";
-echo "<br>";
-echo "BOSSRNG: $RNG[1]";
-echo "<br>";
-echo "MOBSAIDS: $Aids[0]";
-echo "<br>";
-echo "BOSSAIDS: $Aids[1]";
-echo "<br>";
-
-echo "<br>";
-
-echo "<br>";
-
-echo "<br>";
-
-echo "<br>";
-
-
-
-echo "</pre>";
-
-
+$weaponIMG    = "&nbsp;<img src=\"/img/weapon_icon.png\" width=\"41\" height=\"40\" alt=\"Weapon\">";
+$flaskIMG     = "<img src=\"/img/flask_full.png\" width=\"13\" height=\"16\" alt=\"Weapon\">"; // 123x136
 
 // Get Todo List from DB
 $stmt = $pdo->prepare( "SELECT * FROM todo" );
@@ -118,16 +52,17 @@ $todoID   = $row["ID"];
 $todoText = $row["todoText"];
 
 // Write aids rolls into DB
-if ( empty($mobsAids) ) $mobsAids = "ERROR";
-if ( empty($bossAids) ) $bossAids = "ERROR";
+$saveMobsAids = str_replace($weaponIMG, "", $mobsAids);
+$saveBossAids = str_replace($weaponIMG, "", $bossAids);
+
 $date = date("Y-m-d H:i:s");
 $IP   = getIpAddr();
 $sql  = "INSERT INTO rolls (date, IP, mobs, boss) VALUES (:date, :IP, :mobs, :boss)";
 $stmt = $pdo->prepare($sql);                                  
 $stmt->bindParam(":date", $date, PDO::PARAM_STR);
 $stmt->bindParam(":IP", $IP, PDO::PARAM_STR);
-$stmt->bindParam(":mobs", $mobsAids, PDO::PARAM_STR);
-$stmt->bindParam(":boss", $bossAids, PDO::PARAM_STR);
+$stmt->bindParam(":mobs", $saveMobsAids, PDO::PARAM_STR);
+$stmt->bindParam(":boss", $saveBossAids, PDO::PARAM_STR);
 $stmt->execute();
 // TableOutput in edit.php
 ?>
@@ -147,7 +82,8 @@ $stmt->execute();
 <link rel="stylesheet" href="/css/button.css" type="text/css" media="screen">
 <link rel="stylesheet" href="/css/table.css" type="text/css" media="screen">
 <link rel="stylesheet" href="/css/form.css" type="text/css" media="screen">
-<link rel="stylesheet" href="/css/datatip.css" type="text/css" media="screen">
+<link rel="stylesheet" href="/css/messages.css" type="text/css" media="screen">
+<link rel="stylesheet" href="/css/dice_animations.css" type="text/css" media="screen">
 <link rel="stylesheet" href="/css/mobile.css" type="text/css" media="screen">
 <!-- Balloon Tooltip -->
 <link rel="stylesheet" href="/css/balloon.css">
@@ -171,56 +107,47 @@ $stmt->execute();
 <meta name="googlebot" content="noindex, nofollow">
 <meta name="google" content="nositelinkssearchbox">
 
-  <!-- jQuery -->
-<script src="/js/jquery-3.3.1.min.js"></script>
 
+<!-- jQuery -->
+<script src="/js/jquery-3.3.1.min.js"></script>
+  
+<!-- Code highlighting (Prism) -->
+<!--
+Markup, CSS , C-like , JavaScript, PHP, HTTP, SQL, JAVA, JSON
+----
+Line Numbers, Show Language, Highlight Keywords, Toolbar, Copy to Clipboard Button
+-->
+<!--
+<link href="/css/prism.css" rel="stylesheet" />
+<script src="/js/prism.js"></script>
+-->
+  
 <!-- JS/jQuery Scripts -->
 <!-- <script src="/js/scripts.js"></script> -->
 <!-- <script src="/js/dragon.js"></script> -->
 
-<!-- DEBUG STUFF -->
+  
 <script>
-/*
-var browserWidth = $(window).width();
-alert("jQueryBrowserWidth: " + browserWidth);
-*/
+  /*
+  var bwidth = $(window).width();
+  alert(bwidth);
+  */
+</script>
+  
+  
+<!-- Show Modal on hover -->
+<script>
+function showModal() {
+  var modal = document.getElementById('myModal');
+  if ( modal.style.display = "none" ) {
+    modal.style.display = "block";  
+  } else {
+    modal.style.display = "none";
+  }
+  
+}
 </script>
  
-<!-- Bonfire Refresh sound on site load/reload -->
-<script>
-/*
-$(document).ready(function() {
-  play_audio("bonfirerefresh");
-});
-*/
-
-/*
-$(document).ready(function() {
-$("#audio_bonfirerefresh").get(0).play();
-});
-    */
-  
-  
-</script>
-  
-<!-- Prevent new line break on enter key-->
-<script>
-$("#flex-container-ajax").on("keydown", function(e) {
-  if (e.which == 13 && e.shiftKey == false) {
-    // Prevent insertion of a return
-    // You could do other things here, for example
-    // focus on the next field
-    // alert("NLB");
-    return false;
-  }
-});  
-</script>
-
-<!-- JS for RandomWeapon() -->
-<script>
-// alert("<?//=$randomWeapon;?>")
-</script>
-  
 <!-- jQuery Ajax inline edit AIDS -->
 <script>  
 $(document).ready(function () {
@@ -259,10 +186,11 @@ $(document).ready(function () {
       var message_status = $("#status");
 
       $("div[contenteditable=true]").blur(function(){
+      // $("#todo").blur(function(){
           var field = $(this).attr("id");
 
         // NLB Hack
-        var updatedHTML = $(this).html();   
+        var updatedHTML = $(this).html();
         var replacement = updatedHTML.trim()
                 .replace(/<br(\s*)\/*>/ig, '\n')
                 .replace(/<[p|div]\s/ig, '\n$0')
@@ -421,7 +349,7 @@ $( document ).ready(function() {
     if ( $("#reroll_switch").is(":checked") ) {
       // "checked"
       // alert("DEBUG");
-      $("#reroll_switch_button").text("Koscht Nix");
+      $("#reroll_switch_button").text("-(((AIDS)))");
 
       return;
     }
@@ -527,7 +455,7 @@ if ( $("input#dice_switch").is(":checked") ) {
   message_status.show();
   message_status.text(images);
   // hide the message
-  setTimeout(function(){message_status.hide()},30000); // 3000
+  setTimeout(function(){message_status.hide()},3000); // 3000
   
   /* always uncheck checkbox "rerun_only" on every click if bonfire is hidden */
   /*
@@ -574,7 +502,7 @@ if ( $("input#dice_switch").is(":checked") ) {
     }
      
     /* DEBUG */
-    // rnd = 99;
+    // rnd = 7;
     
     // If checkbox for rerun only (no vader, superaids) is checked
     // check for special output in rnd (1, 7, 77, 99, 100)
@@ -605,6 +533,9 @@ if ( $("input#dice_switch").is(":checked") ) {
           play_audio("yes");
           $("#bonfire").hide();
           $("#bonfire").hide();
+          // modal popup
+          var modal = document.getElementById('myModal');
+          // modal.style.display = "block";
         }
         
         /* VADER */
@@ -640,26 +571,35 @@ if ( $("input#dice_switch").is(":checked") ) {
 </script> 
  
 <!-- Reload Page -->
-<script>  
-  
-//////////////////IF CHECKBOX  
-  
+<script>
 function reload_page () {
   location.reload();
 }
   
 function reroll () {
-  play_audio("aids");
-  
-  var myAudio = document.getElementById("audio_aids");
-  
-  myAudio.onended = function() {
-      // alert("AIDS");
+  $(document).ready(function () {
+    /*
+    play_audio("aids");
+    var myAudio = document.getElementById("audio_aids");
+
+    myAudio.onended = function() {
       location.reload();
     }
-  
-  // setTimeout(function() { reload_page(); }, 1800); // time to play rich evans aids (default: 1800)
-  
+    */
+
+    // setTimeout(function() { reload_page(); }, 1800); // time to play rich evans aids (default: 1800)
+
+    if ( $("input#reroll_switch").is(":checked") ) {
+      location.reload();
+    } else {
+      play_audio("aids");
+
+      var myAudio = document.getElementById("audio_aids");
+      myAudio.onended = function() {
+        location.reload();
+      }
+    }
+  });
 }
 </script>  
 
@@ -672,8 +612,10 @@ function reroll () {
       
       if (myAudio.paused) {
         myAudio.play();
+        $(".play").html("&#10074;&#10074;");
       } else {
         myAudio.pause();
+        $(".play").html("&#9658;");
       }
       
     } else {
@@ -704,10 +646,44 @@ function stop_audio () {
 }
 </script>  
 
+<!-- particles.js lib - https://github.com/VincentGarreau/particles.js -->
+<script src="http://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+<script>
+particlesJS("particles-js", {"particles":{"number":{"value":160,"density":{"enable":true,"value_area":800}},"color":{"value":"#ffffff"},"shape":{"type":"circle","stroke":{"width":0,"color":"#000000"},"polygon":{"nb_sides":5},"image":{"src":"img/github.svg","width":100,"height":100}},"opacity":{"value":1,"random":true,"anim":{"enable":true,"speed":1,"opacity_min":0,"sync":false}},"size":{"value":3,"random":true,"anim":{"enable":false,"speed":4,"size_min":0.3,"sync":false}},"line_linked":{"enable":false,"distance":150,"color":"#ffffff","opacity":0.4,"width":1},"move":{"enable":true,"speed":1,"direction":"none","random":true,"straight":false,"out_mode":"out","bounce":false,"attract":{"enable":false,"rotateX":600,"rotateY":600}}},"interactivity":{"detect_on":"canvas","events":{"onhover":{"enable":true,"mode":"bubble"},"onclick":{"enable":true,"mode":"repulse"},"resize":true},"modes":{"grab":{"distance":400,"line_linked":{"opacity":1}},"bubble":{"distance":250,"size":0,"duration":2,"opacity":0,"speed":3},"repulse":{"distance":400,"duration":0.4},"push":{"particles_nb":4},"remove":{"particles_nb":2}}},"retina_detect":true});var count_particles, stats, update; stats = new Stats; stats.setMode(0); stats.domElement.style.position = 'absolute'; stats.domElement.style.left = '0px'; stats.domElement.style.top = '0px'; document.body.appendChild(stats.domElement); count_particles = document.querySelector('.js-count-particles'); update = function() { stats.begin(); stats.end(); if (window.pJSDom[0].pJS.particles && window.pJSDom[0].pJS.particles.array) { count_particles.innerText = window.pJSDom[0].pJS.particles.array.length; } requestAnimationFrame(update); }; requestAnimationFrame(update);;
+</script>  
+  
+
 </head>
 
 <body spellcheck="false">
   
+<!-- DEBUG -->
+<?php
+// DEBUG PRE
+/*
+echo "<pre class=\"line-numbers\"><code class=\"lang-http\">";
+
+echo "///DEBUG///";
+echo "\n";
+echo "MOBSRNG: $RNG[0]";
+echo "\n";
+echo "BOSSRNG: $RNG[1]";
+echo "\n";
+echo "MOBSAIDS: " . str_replace($weaponIMG, "", $Aids[0]);
+echo "\n";
+echo "BOSSAIDS: " . str_replace($weaponIMG, "", $Aids[1]);
+echo "\n";
+echo "RANDOMWEAPON: $randomWeapon";
+
+echo "</code></pre>";
+*/
+?>
+  
+ <!--
+<div id="particles-js">
+
+</div><!-- EOF PARTICLE -->
+    
 <!-- Wrapper -->
 <div class="container">
 
@@ -720,6 +696,10 @@ function stop_audio () {
   <h4>mit verschärftem AIDS</h4>  
 </header>
 
+
+<?=checkMissingDice()?>
+
+  
 <a id="Roll"></a>
 
 <div class="content">
@@ -729,31 +709,34 @@ function stop_audio () {
 <div id="flex-container-aids">
 
   <!-- MOBS left -->
-  <div class="flex-item-aids-left">
+  <div class="flex-item-aids-left bounceInDownRotate">
     <h2>Mobs</h2>
     <img src="/dice/<?=$mobsRNG?>.png" class="dice" width="100" height="100" alt="<?=$mobsRNG?>">
   </div>
   
   <!-- MIDDLE -->
   <!-- bonfire -->
-  <div id="bonfire" class="flex-item-aids-middle" data-balloon="Firelink Shrine abspielen" data-balloon-pos="up">
-    <span class="bonfire">
-      <img src="/img/WeirdTepidChital-max-1mb.gif" width="172" height="236" alt="" onClick="play_audio('shrine')">
-    </span>
+  <div id="bonfire" class="flex-item-aids-middle" onClick="play_audio('shrine')">
+    <div class="itemsContainer">
+      <div class="image"> <a href="#">  <img src="/img/WeirdTepidChital-max-1mb.gif" width="172" height="236" alt="" /> </a></div>
+      <div class="play">&#9658; </div><!-- &#9646; -->
+    </div>
+    <!-- <img src="/img/WeirdTepidChital-max-1mb.gif" width="172" height="236" alt="" onClick="play_audio('shrine')" data-balloon="Firelink Shrine abspielen" data-balloon-pos="up"> -->
   </div>
   
   <!-- w12 output -->
   <div id="w12" class="flex-item-aids-middle" style="display: none;">
     <h2 id="dice_h2">W12</h2>
-    <img src="/dice/0.png" class="dice" id="randimgw12" width="100" height="100" alt="Dice 0">
+    <img src="/dice/0.png" class="dice roll" id="randimgw12" width="100" height="100" alt="Dice 0">
   </div>
   
   <!-- rerunroll -->
   <div class="flex-item-aids-middle" id="rerunroll" style="display: none;"></div>
 
   <!-- BOSS right -->
-  <div class="flex-item-aids-right">
+  <div class="flex-item-aids-right bounceInDownRotate">
     <h2>Boss</h2>
+    <!-- <img src="/dice/<?=$bossRNG?>.png" class="dice animate_rotate" width="100" height="100" alt="<?=$bossRNG?>"> -->
     <img src="/dice/<?=$bossRNG?>.png" class="dice" width="100" height="100" alt="<?=$bossRNG?>">
   </div>
   
@@ -764,19 +747,22 @@ function stop_audio () {
 <div id="flex-container-aids-text">
   <div>
     <span class="aidsText">
-      <?=$mobsAidsOutput?>
+      <!-- onMouseOver="showModal()" onMouseOut="showModal()" -->
+      <?=$mobsAids?>
     </span>
   </div>
 
   <div>
     <span>
       <?=$randomWeapon?>
+      <!-- play button: &#9658; -->
     </span>
+
   </div>
 
   <div>
     <span class="aidsText">
-      <?=$bossAidsOutput?>
+      <?=$bossAids?>
     </span>
   </div>
 </div><!-- EOF flex-container-aids -->
@@ -788,7 +774,7 @@ function stop_audio () {
   <!-- Reroll / Reload page -->
   <div class="flex-item">
     <label for="reroll_switch" class="rerun_checkbox">
-      <input type="checkbox" id="reroll_switch" data-balloon="Ohne Verzögerung" data-balloon-pos="down">
+      <input type="checkbox" id="reroll_switch" data-balloon="Ohne (((Aids)))" data-balloon-pos="down">
     </label>
     <button id="reroll_hover" class="button" onClick="reroll()" data-balloon="<?=getLatestRoll()?>" data-balloon-pos="down">
       <span id="reroll_switch_button">Reroll</span>
@@ -797,18 +783,12 @@ function stop_audio () {
   
   <!-- W12 -->
   <div class="flex-item">
-
-    <div>
-      <button class="button" onClick="pickimg()" data-balloon="Würfel: 12 und 20" data-balloon-pos="down">
-        <span id="dice_switch_button">W12</span>
-      </button>
-    </div>
-    <div class="checkbox_center">
-      <label for="dice_switch" class="rerun_checkbox">
-        <input type="checkbox" id="dice_switch" data-balloon="Wechsel zwischen w12 und w20" data-balloon-pos="down">
-      </label>
-    </div>
-    
+    <label for="dice_switch" class="rerun_checkbox">
+      <input type="checkbox" id="dice_switch" data-balloon="Wechsel zwischen w12 und w20" data-balloon-pos="down">
+    </label>
+    <button class="button" onClick="pickimg()" data-balloon="Würfel: 12 und 20" data-balloon-pos="down">
+      <span id="dice_switch_button">W12</span>
+    </button>    
   </div>
   
   
@@ -817,12 +797,12 @@ function stop_audio () {
     <label for="rerun_only" class="rerun_checkbox">
       <input type="checkbox" id="rerun_only" data-balloon="Nur Rerun (Kein Vader, Superaids)" data-balloon-pos="down">
     </label>
+  
     <button class="button" onClick="rerun()" data-balloon="1, 100: Vader. 7, 77: Epic Sax Guy. 99: Superaids. Rest: ¯\_(ツ)_/¯" data-balloon-pos="down" data-balloon-length="fit">
       <span id="rerun_switch_button">Rerun</span>
     </button>
   </div>
- 
-</div>
+</div> 
 
 </div><!-- EOF aidscontent -->
 
@@ -931,7 +911,48 @@ ENDWHILE
 
   
   
-<hr>
+<hr>  
+  
+<!--
+<h5 id="Rolls">LatestRolls()</h5>
+<button class="collapsible"><span class="collapsible-head">latestRolls("10")</span></button>
+<div class="collapsible-content">
+  <table class="noStyle">
+  <?php
+    $data = $pdo->query("SELECT date, IP, mobs, boss FROM rolls ORDER BY ID DESC LIMIT 1, 10")->fetchAll(PDO::FETCH_ASSOC);
+    foreach ($data as $value) :
+  ?>
+    <tr>
+      <td><?=$value["mobs"]?></td>
+      <td><?=$value["boss"]?></td>
+      <td><?=formatDate($value["date"])?></td>    
+    </tr>
+  <?php  
+    ENDFOREACH
+  ?>
+  </table>
+</div>
+<script>
+/*
+var coll = document.getElementsByClassName("collapsible");
+var i;
+
+for (i = 0; i < coll.length; i++) {
+  coll[i].addEventListener("click", function() {
+    this.classList.toggle("active");
+    var content = this.nextElementSibling;
+    if (content.style.maxHeight){
+      content.style.maxHeight = null;
+    } else {
+      content.style.maxHeight = content.scrollHeight + "px";
+    } 
+  });
+}
+*/
+</script>
+-->
+  
+
   
   
 <h5 id="Todo">Todo</h5>
@@ -940,6 +961,19 @@ ENDWHILE
   <?=$todoText?>
 </div>
 
+  
+<!--  
+<hr>
+  
+
+<div class="message">
+  <div class="message_line">Dying ahead</div>
+</div>
+  
+<hr>
+-->
+  
+  
 <!-- Ajax Success Msg fixed -->
 <div id="status">&nbsp;</div>
 
@@ -947,11 +981,7 @@ ENDWHILE
 <hr>
 <footer>
   <nav>
-    <a href="#">^</a> |
-    <a href="#Roll">Roll</a> |
-    <a href="#Aids">Aids</a> |
-    <a href="#Kills">Kills</a> |
-    <a href="#Todo">Todo</a> |
+    <a href="#" id="myBtn">Zuletzt gewürfelt</a> |
     <a href="/edit" target="_blank">Edit</a>
   </nav>
 </footer>
@@ -977,9 +1007,73 @@ ENDWHILE
   <!--
   <audio id="audio_shrine"          src="/audio/ds3_firelinkshrine.mp3"></audio>
   <audio id="audio_shrine"          src="/audio/DarkSoulsBonfireSoundEffect(cropped).ogg"></audio>
-  -->
-  <audio id="audio_shrine"          src="/audio/NomNomNom.mp3"></audio>
+-->
+  <audio id="audio_shrine"          src="/audio/DarkSoulsBonfireSoundEffect(cropped)LowerVolume.ogg"></audio>
+  
+  
 </div>
 
+  
+
+<!-- LATEST ROLLS MODAL POPUP -->
+<!-- Trigger/Open The Modal -->
+<!-- <button id="myBtn" class="button">latestRolls()</button> -->
+<!-- The Modal -->
+<div id="myModal" class="modal animate">
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    <div class="message">
+      <div class="message_line">
+        <?php
+        $data = $pdo->query("SELECT date, IP, mobs, boss FROM rolls ORDER BY ID DESC LIMIT 1, 4")->fetchAll(PDO::FETCH_ASSOC);
+        foreach ($data as $value) :
+        ?>
+        <div class="row">
+          <div class="col"><?=$value["mobs"]?></div>
+          <div class="col"><?=$value["boss"]?></div>
+          <div class="col"><?=formatDate($value["date"], 1)?></div>
+        </div>
+        <?php
+        ENDFOREACH
+        ?> 
+      </div>
+    </div>
+  </div>
+</div><!--  EOF MODAL -->
+<script>
+// Get the modal
+var modal = document.getElementById('myModal');
+  
+var modal_content = document.getElementsByClassName("modal-content")[0];
+
+// Get the button that opens the modal
+var btn = document.getElementById("myBtn");
+
+// Get the <span> element that closes the modal
+var span = document.getElementsByClassName("close")[0];
+
+// When the user clicks on the button, open the modal 
+btn.onclick = function() {
+  modal.style.display = "block";
+}
+
+// When the user clicks on <span> (x), close the modal
+span.onclick = function() {
+  modal.style.display = "none";
+}
+
+// When User clicks content in Modal
+modal_content.onclick = function() {
+  modal.style.display = "none";
+}
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+  if (event.target == modal) { 
+      modal.style.display = "none";
+  }
+}
+</script>    
+  
 </body>
 </html>
