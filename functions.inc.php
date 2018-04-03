@@ -46,9 +46,8 @@ function getRNG () {
  */
 function getAidsByRNG ($mobsRNG, $bossRNG) {
   global $pdo;
-  $flasks = 13;
-  
-  $weaponIMG = "&nbsp;<img src=\"/img/weapon_icon.png\" width=\"41\" height=\"40\" alt=\"Weapon\">";
+  global $flasks;
+  global $weaponIMG;
   
   $stmt = $pdo->prepare("SELECT mobs.name, boss.name FROM mobs, boss WHERE mobs.dice = $mobsRNG AND boss.dice = $bossRNG");
   $stmt->execute();
@@ -58,8 +57,11 @@ function getAidsByRNG ($mobsRNG, $bossRNG) {
   $bossAids = $row[1];
   
   // Random Weapon
-  if ( $mobsAids == "Zufällige Waffe" ) $mobsAids = randomWeapon() . $weaponIMG;
-  if ( $bossAids == "Zufällige Waffe" ) $bossAids = $weaponIMG . randomWeapon();
+  // if ( $mobsAids == "Zufällige Waffe" ) $mobsAids = randomWeapon() . $weaponIMG;
+  // if ( $bossAids == "Zufällige Waffe" ) $bossAids = $weaponIMG . randomWeapon();
+  
+  if ( $mobsAids == "Zufällige Waffe" ) $mobsAids = randomWeapon();
+  if ( $bossAids == "Zufällige Waffe" ) $bossAids = randomWeapon();
   
   // Flask number
   if ( $mobsAids == "Flask Würfeln" ) {
@@ -74,6 +76,15 @@ function getAidsByRNG ($mobsRNG, $bossRNG) {
   
   return array($mobsAids, $bossAids);
 }
+
+
+/*
+ * Replace Name with Emoji because MySQL sucks
+ */
+function getFlasks () {
+  // 
+}
+
 
 
   
@@ -165,9 +176,9 @@ function numberToTally ($number) {
 /*
  * Format date, strtotime
  */
-function formatDate ($date, $time = 0) {
+function formatDate ($date, $format = false) {
   $date = strtotime ($date);
-  if ( $time = 0 ) $date = date("d.m.Y H:i:s", $date);
+  if ( !empty($format) ) $date = date("d.m.Y H:i:s", $date);
   else $date = date("H:i:s", $date);
   
   return $date;
@@ -235,14 +246,19 @@ function getIpAddr() {
 */
 function getLatestRoll () {
   global $pdo;
+  global $weaponIMG;
   
   $stmt = $pdo->prepare("SELECT mobs, boss FROM rolls ORDER BY ID DESC LIMIT 1,1");
   $stmt->execute();
   $row = $stmt->fetch(PDO::FETCH_ASSOC);
   
-  // echo $row["mobs"] . "-" . $row["boss"];
+  // Remove Weapon IMG
+  $latestMobsAids = str_replace($weaponIMG, "", $row["mobs"]);
+  $latestBossAids = str_replace($weaponIMG, "", $row["boss"]);
   
-  return $row["mobs"] . " - " . $row["boss"];;
+  // echo ":::".$latestBossAids.":::";
+  
+  return $latestMobsAids . " - " . $latestBossAids;
 }
 
 /*
@@ -294,8 +310,23 @@ function ajaxPDOInsert ($table, $addDice, $addEntry) {
 
 
 
-
-
+/*
+* Save rolled Aids into DB
+*/
+function saveRolls ($mobsAids = false, $bossAids = false) {
+  global $pdo;
+  
+  $date = date("Y-m-d H:i:s");
+  $IP   = getIpAddr();
+  $sql  = "INSERT INTO rolls (date, IP, mobs, boss) VALUES (:date, :IP, :mobs, :boss)";
+  $stmt = $pdo->prepare($sql);                                  
+  $stmt->bindParam(":date", $date, PDO::PARAM_STR);
+  $stmt->bindParam(":IP", $IP, PDO::PARAM_STR);
+  $stmt->bindParam(":mobs", $mobsAids, PDO::PARAM_STR);
+  $stmt->bindParam(":boss", $bossAids, PDO::PARAM_STR);
+  $stmt->execute();
+  
+}
 
 
 
@@ -422,5 +453,20 @@ function missing_number($num_list) {
   $new_arr = range($num_list, max($num_list));
   // use array_diff to find the missing elements 
   return array_diff($new_arr, $num_list);
+}
+
+
+
+/*
+ * Check if user made a change from Ajax inline Edit
+ */
+function checkIfValueExists ($ID, $table) {
+  global $pdo;
+
+  $stmt = $pdo->prepare("SELECT name FROM $table WHERE ID = $ID");
+  $stmt->execute();
+  $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+  return $row["name"];
 }
 ?>

@@ -283,12 +283,15 @@ table.edit {
   background-size: 100% 100%;
   
 	font-size: 1em;
-	line-height: 24px;
+	line-height: 2em;
   text-align: left;
   text-shadow: 2px 2px 1px #000;
   
 	margin: 0 auto;
   margin-top: 20px;
+  
+  margin-right: 5px;
+  
   
 
 }	
@@ -300,4 +303,11 @@ table.edit td {
 
 td.edit_action, th.edit_action {
   text-align: center;
+}
+
+
+table.edit, td.edit_col {
+  width: fixed;
+  table-layout: fixed;
+  overflow: hidden;
 }

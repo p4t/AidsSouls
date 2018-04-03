@@ -57,7 +57,7 @@
 #flex-container-roll {
   display: flex;
   flex-direction: row;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   justify-content: space-between;
 
   margin: 0 auto;
@@ -102,6 +102,15 @@
 .flex-item-todo
 {
   text-align: center;
+}
+
+.flex-item-button {
+  text-align: center;
+  justify-content: center;
+  align-content: center;
+  align-items: center;
+  align-self: flex-start;
+ /* flex: 0 0 100%; */
 }
 
 /* w12, rerun, rerunroll */

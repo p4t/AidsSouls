@@ -46,7 +46,14 @@ html {
 	-webkit-text-size-adjust: 100%; 
   -ms-text-size-adjust: 100%;
   
-  background: url("/img/ds3bg/shrine2.jpg") no-repeat center center fixed;
+  background-color: #000;
+  
+  /* DS3 Wallpaper */
+  background: url("/img/bg/shrine.jpg") no-repeat center center fixed;
+  
+  /* DS1 Remaster */
+  /* background: url("/img/bg/ds1remaster.jpg") no-repeat center center fixed; */
+  
   
   -webkit-background-size: cover;
   -moz-background-size: cover;
@@ -63,6 +70,12 @@ html {
 }
 
 body {
+}
+
+body#edit {
+  font-family: "Montserrat", sans-serif;
+  font-size: 1em;
+  line-height: 1.2em;
 }
 
 article,
@@ -115,6 +128,22 @@ a:hover, a:focus, a:active {
   text-shadow: 1px 1px 5px #bb754d, 1px 1px 10px #7a4930, -1px -1px 5px #bb754d, -1px -1px 10px #7a4930;
 }
 
+
+a[href^="mailto:"]:before { content: "\2709"; }
+.phone:before             { content: "\2706"; }
+.tel:before             { content: "\2706"; }
+.important:before         { content: "\27BD"; }
+blockquote:before         { content: "\275D"; }
+blockquote:after          { content: "\275E"; }
+.alert:before             { content: "\26A0"; }
+
+
+::selection {
+  background-color: black;
+  /*
+  color: #000;
+  */
+}
 
 ul, ol, dl {
 	padding: 0;
@@ -189,16 +218,19 @@ hr {
 }
 
 
-
-
-div.aidscontent, div.aidsListing {
+div.aidscontent,
+div.aidsListing
+{
   width: 80%; /* % of .container !IMPORTANT 70 default */ 
 	/* max-width: 60%; */
 	margin: 0 auto;
   
 }
 
-div.aidscontent, div.aidsListing, div#todo {
+div.aidscontent,
+div.aidsListing,
+div#todo
+{
   border: 25px solid transparent;
   border-image: url("/img/border.png") 30 round;
   
@@ -293,6 +325,7 @@ ul.aidsList > li {
 ul.aidsList > li br {
   display: inline;
   display: none;
+  list-style: none; /* No list style of Br happens for some reason */
 }
 
 ul.aidsList > li:hover {
@@ -312,6 +345,8 @@ ul.aidsList > li:focus
   -o-background-size: cover;
   background-size: cover;
 }
+
+
 
 li.noListStyle {
   list-style: none;
@@ -356,14 +391,93 @@ img.dice {
 
 
 
-img.dice {
+img.dice,
+.die,
+.dice_wrapper
+{
     overflow: hidden;
     transition-duration: 0.8s;
     transition-property: transform;
 }
-img.dice:hover {
-    transform: rotate(360deg);
-    -webkit-transform: rotate(360deg);
+img.dice:hover,
+.die:hover,
+.dice_wrapper:hover
+{
+  -webkit-transform: rotate(360deg);
+  transform: rotate(360deg);
+  
+}
+
+
+.die {
+  /*
+  ALSO CHECKBOX IMAGE SIGN HAKE FÜR CHECKED
+  */
+  width: 100px;
+  height: 100px;
+  
+  font-size: 5em;
+  line-height: 100px;
+  color: black;
+  text-shadow: 1px 1px 10px black;
+  background: white;   
+  border-radius: 15px;
+  border: 1px solid chocolate;
+  /*
+  box-shadow: 1px 1px 5px #fff, 1px 1px 2px #000, -1px -1px 1px #bb754d, -1px -1px 2px #fff;
+  */
+}
+
+:root {
+  --dice-size: 125px;
+}
+
+.dice_wrapper {
+  /*
+  font-family: "Trajan";
+  font-family: "OptimusPrinceps";
+  font-family: "ds1";
+  */
+  font-family: inherit;
+
+  width: var(--dice-size);
+  height: var(--dice-size);
+  line-height: var(--dice-size); /* the same div height */
+  font-size: 5em;
+  font-weight: normal;
+
+  color: black;
+  text-shadow: 1px 1px 10px black;
+  /*
+  text-align: center;
+  vertical-align: middle;
+  */
+  opacity: 1;
+
+  display: flex;
+
+  background: url("/dice/dice.png") no-repeat center;
+  -webkit-background-size: contain;
+  -moz-background-size: contain;
+  -o-background-size: contain;
+  background-size: contain;
+
+
+  /*
+  border-radius: 15px;
+  border: 1px solid chocolate;  
+  */
+}
+
+/* Center font on mobile fix */
+.dice_wrapper-font {
+  margin: auto;
+  
+  
+  -webkit-user-select: none;  
+  -moz-user-select: none;    
+  -ms-user-select: none;      
+  user-select: none;
 }
 
 
@@ -572,11 +686,12 @@ img.edit_icon {
     -webkit-animation: animatezoom 0.6s;
     animation: animatezoom 0.6s
 }
-
+/*
 @-webkit-keyframes animatezoom {
     from {-webkit-transform: scale(0)} 
     to {-webkit-transform: scale(1)}
 }
+*/
     
 @keyframes animatezoom {
     from {transform: scale(0)} 
@@ -673,9 +788,24 @@ canvas{ display: block; vertical-align: bottom; }
 
 
 
+.amp {
+font-family: Baskerville, 'Goudy Old Style', Palatino, 'Book Antiqua', serif;
+font-style: italic;
+font-weight: normal;
+}
 
 
 
+
+
+.delete {
+  color: red;
+  display: none;
+  float: right;
+}
+.title:hover .delete {
+  display:block;
+}
 
 
 

@@ -22,7 +22,7 @@
     <td><?=$row["ID"]?></td>
     <td><?=$row["mobs"]?></td>
     <td><?=$row["boss"]?></td>
-    <td><?=formatDate($row["date"])?></td>
+    <td><?=formatDate($row["date"], "datetime")?></td>
     <td><?=$row["IP"]?></td>
   </tr>
       

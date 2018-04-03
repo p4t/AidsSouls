@@ -1,9 +1,9 @@
 <?php
 // Set up DB and connect
-$host     = "127.0.0.1";
-$db       = "aids";
-$user     = "aids";
-$pass     = "Ahqx69#5";
+$host     = "";
+$db       = "";
+$user     = "";
+$pass     = "";
 $charset  = "utf8";
 
 $dsn = "mysql:host=$host;dbname=$db;charset=$charset";
@@ -24,4 +24,6 @@ $pdo->setAttribute( PDO::ATTR_EMULATE_PREPARES, false ); // emulate prep
 /* BASE TABLE*/
 define("TABLE", "ds3");
 $dbTable = TABLE;
+
+define("__DR", $_SERVER["DOCUMENT_ROOT"]);
 ?>

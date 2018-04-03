@@ -1,19 +1,10 @@
 <?php
-//////////////// WARNING IF DICE ORDER IS NOT IN ORDER :-)
-
-// DEBUG
-  /*
-if ( isset($_GET["mode"])) {
-  echo "Mode: " . $_GET["mode"] . "<br>";
-}
-*/
-
+// Databse
 require_once("config.db.php");
 require_once("functions.inc.php");
 
-  //////////////////////////// FELD FÜR IDEEN AUF SEITE
-
-// $name			= $s = trim(strip_tags($_POST['name']));
+// Save visits to edit.php into db
+saveRolls();
 ?>
 
 
@@ -33,7 +24,10 @@ require_once("functions.inc.php");
 <link rel="stylesheet" href="/css/table.css" type="text/css" media="screen">
 <link rel="stylesheet" href="/css/form.css" type="text/css" media="screen">
 <link rel="stylesheet" href="/css/mobile.css" type="text/css" media="screen">
+
+<!--
 <link rel="stylesheet" href="/css/login.css" type="text/css" media="screen">
+-->
   
 <link rel="stylesheet" href="/css/balloon.css">
   
@@ -42,6 +36,9 @@ require_once("functions.inc.php");
 <link rel="icon" type="image/png" sizes="16x16" href="/img/favico/favicon-16x16.png">
 <link rel="manifest" href="/manifest.json">
 <link rel="mask-icon" href="/img/favico/safari-pinned-tab.svg" color="#3f292b">
+  
+<!-- Font for Edit.php and Input Fields -->
+<link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
 
 <meta name="theme-color" content="#3f292b">
 <meta name="msapplication-TileColor" content="#3f292b"> 
@@ -60,7 +57,7 @@ require_once("functions.inc.php");
 
 </head>
 
-<body>
+<body spellcheck="false" id="edit">
   <header>
   <!-- <div class="header_Edit"> -->
     <h1>&raquo;<a href="/">AIDS</a>&laquo;</h1>
@@ -227,6 +224,78 @@ if ( !empty($_GET["mode"]) && $_GET["mode"] == "kills" ) {
   
   
   
+<?php
+/*
+ * EDIT TODO
+ */
+
+if ( !empty($_GET["mode"]) && $_GET["mode"] == "todo" ) {
+    (STRING)$mode   = $_GET["mode"];
+    (STRING)$table  = $mode;
+    (INT)$ID        = $_GET["ID"];  
+  
+    if ( isset($_POST["newTodo"]) ) {
+      (STRING)$newTodo  = $_POST["newTodo"];
+      
+      $sql = "UPDATE $table SET todoText = :todoText WHERE ID = :ID";
+      $stmt = $pdo->prepare($sql);                                  
+      $stmt->bindParam(":todoText", $_POST["newTodo"], PDO::PARAM_STR);
+      $stmt->bindParam(":ID", $_GET["ID"], PDO::PARAM_INT);
+      $stmt->execute();
+      
+      redirect("/edit", $statusCode = 303);
+
+    } else {
+      
+      $stmt = $pdo->prepare("SELECT * FROM $table WHERE ID = ".$_GET["ID"]." ");
+      $stmt->execute();
+      $row = $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+?>
+<div id="flex-container">
+  <div class="flex-item">&nbsp;</div>
+    
+  <div class="flex-item">
+      <form action="/edit?mode=<?=$mode?>&ID=<?=$_GET["ID"]?>" method="post" id="edit">
+        <ul>
+          <li><label>Entry:</label></li>
+          <li><textarea rows="15" name="newTodo" cols="50" required="required"><?=$row["todoText"]?></textarea></li>
+          <li><input type="submit" value="Submit"></li>
+        </ul>
+      </form>
+    </div>
+  
+  <div class="flex-item">&nbsp;</div>
+</div>
+  
+<?php
+} // ENDIF
+?>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
   
   
   
@@ -357,60 +426,7 @@ if ( !empty($_GET["action"]) && $_GET["action"] == "truncate" ) {
 ?>
   
   
-  
-  
-  
-  
-<!-- LOGIN -->
-<button onclick="document.getElementById('id01').style.display='block'" style="width:auto;">Login</button>
 
-<div id="id01" class="modal">
-  
-  <form class="modal-content animate" action="/login.php">
-    <div class="imgcontainer">
-      <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">&times;</span>
-      <img src="img_avatar2.png" alt="Avatar" class="avatar">
-    </div>
-
-    <div class="container">
-      <label for="uname"><b>Username</b></label>
-      <input type="text" placeholder="Enter Username" name="uname" required>
-
-      <label for="psw"><b>Password</b></label>
-      <input type="password" placeholder="Enter Password" name="psw" required>
-        
-      <button type="submit">Login</button>
-      <label>
-        <input type="checkbox" checked="checked" name="remember"> Remember me
-      </label>
-    </div>
-
-    <div class="container" style="background-color:#f1f1f1">
-      <button type="button" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn">Cancel</button>
-      <span class="psw">Forgot <a href="#">password?</a></span>
-    </div>
-  </form>
-  
-</div>
-
-<script>
-// Get the modal
-var modal = document.getElementById('id01');
-
-// When the user clicks anywhere outside of the modal, close it
-window.onclick = function(event) {
-    if (event.target == modal) {
-        modal.style.display = "none";
-    }
-}
-</script> 
-
-  
-  
-  
-  
-  
-  
   
   
 <div id="flex-container-edit">  
@@ -433,35 +449,49 @@ if ( empty($_GET["mode"]) ) :
     <tr>
       <th scope="col"><strong>Dice</strong></th>
       <th scope="col"><strong><?=ucfirst($table)?></strong></th>
-      <th scope="col" class="edit_action"><strong>...</strong></th>
+      <!-- <th scope="col" class="edit_action"><strong>...</strong></th> -->
     </tr>
     <?php while ($row = $stmt->fetch(PDO::FETCH_NUM)) : ?>
     <tr>
       <td><a href="/edit?mode=<?=$table?>&ID=<?=$row[0]?>"><?=$row[1]?></a></td>
-      <td><a href="/edit?mode=<?=$table?>&ID=<?=$row[0]?>"><?=$row[2]?></a></td>
+      <td class="edit_col">
+        <div class="title">
+          <a href="/edit?mode=<?=$table?>&ID=<?=$row[0]?>"><?=$row[2]?></a>
+          <!-- DELETE -->
+          <a class="delete" href="/edit?mode=<?=$table?>&action=delete&ID=<?=$row[0]?>" onClick="return confirm('SICHER???????? MACH KE SCHEISS!');" data-balloon="Löschen" data-balloon-pos="left">
+            <img src="/img/delete-icon.png" width="20" height="20" alt="Delete">
+          </a>
+          <!-- EDIT -->
+          <a class="delete" href="/edit?mode=<?=$table?>&ID=<?=$row[0]?>" data-balloon="Edit" data-balloon-pos="left">
+            <img src="/img/edit-icon.png" class="edit_icon" width="20" height="20" alt="Edit">
+          </a>
+        </div>
+      </td>
+      <!--
       <td class="edit_action">
-        <a href="/edit?mode=<?=$table?>&ID=<?=$row[0]?>" data-balloon="Edit" data-balloon-pos="up">
+        <a href="/edit?mode=<?//$table?>&ID=<?//$row[0]?>" data-balloon="Edit" data-balloon-pos="up">
           <img src="/img/edit-icon.png" class="edit_icon" width="024" height="024" alt="Edit">
         </a>
-        <!-- DISABLE DELETION TEMPORARILY -->
-        <!--
-        <a href="/edit?mode=<?=$table?>&action=delete&ID=<?=$row[0]?>" onClick="return confirm('SICHER???????? MACH KE SCHEISS!');" data-balloon="Löschen" data-balloon-pos="up">
+
+        <a href="/edit?mode=<?//$table?>&action=delete&ID=<?//$row[0]?>" onClick="return confirm('SICHER???????? MACH KE SCHEISS!');" data-balloon="Löschen" data-balloon-pos="up">
           <img src="/img/delete-icon.png" width="024" height="024" alt="Delete">
         </a>
-        -->
       </td>
+      -->
     </tr>
     <?php ENDWHILE ?>
     <tr>
-      <td data-balloon="Leer lassen für Würfel +1, keine doppelten Werte." data-balloon-pos="right">
+      <td colspan="2">
         <input type="number" name="addDice" value="" min="1" max="99" autocomplete="off" placeholder="Würfel">
+        <input type="text" class="edit_input" name="addEntry" value="" autocomplete="off" maxlength="32" placeholder="Name" required="required">
+        &nbsp;
+        <input type="submit" value="Submit">
       </td>
-      <td data-balloon="Max 32 Zeichen" data-balloon-pos="up">
-        <input type="text" name="addEntry" value="" autocomplete="off" maxlength="32" placeholder="Name" required="required">
-      </td>
+      <!--
       <td data-balloon="Abschicken" data-balloon-pos="up"><input type="submit" value="Submit">
         &nbsp;
       </td>
+      -->
     </tr>
   </tbody>
 </table>
@@ -472,6 +502,7 @@ if ( empty($_GET["mode"]) ) :
 
   <?php
     include("kills.inc.php");
+    include("todo.inc.php");
     include("rolls.inc.php");
   ?>
 
@@ -493,7 +524,7 @@ ENDIF // EOF if ( empty($_GET["mode"]) )
 <hr>
   <footer>
     <nav>
-      <a href="/edit#">^</a> |
+      <a href="/edit">&lt;</a> |
       <a href="/edit#Mobs">Mobs</a> |
       <a href="/edit#Boss">Boss</a> |
       <a href="/edit#Weapons">Weapons</a> |

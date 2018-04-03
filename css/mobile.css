@@ -38,17 +38,22 @@
   }
   */
   
-.container, .content {
-  /*95%, 90%*/
-	width: 99%;
-}
+  .container, .content {
+    /*95%, 90%*/
+    width: 99%;
+  }
 
-  
-  
-  
   
   div.aidscontent, div.aidsListing {
     width: 99%;
+  }
+  
+  
+  .dice_wrapper {
+    /**/
+  }
+  .dice_wrapper-font {
+    /**/
   }
   
 } /* EOF @media */

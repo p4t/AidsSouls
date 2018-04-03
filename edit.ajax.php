@@ -27,14 +27,20 @@ if (!empty($_POST)) {
     */
     
     if ( !empty($id) && !empty($table) && !empty($name) && strlen($name) <= 32 ) {
-			// update the values      
-      $sql = "UPDATE $table SET name = :name WHERE ID = :ID";
-      $stmt = $pdo->prepare($sql);                                  
-      $stmt->bindParam(":name", $name, PDO::PARAM_STR);
-      $stmt->bindParam(":ID", $id, PDO::PARAM_INT);
-      $stmt->execute();
       
-			echo "Updated";
+      // check if change was made by the user on input Ajax Inline Edit      
+      if ( checkIfValueExists($id, $table) == $name ) {
+        echo "VALUE IS THE SAME";
+      } else {
+        // update the values      
+        $sql = "UPDATE $table SET name = :name WHERE ID = :ID";
+        $stmt = $pdo->prepare($sql);                                  
+        $stmt->bindParam(":name", $name, PDO::PARAM_STR);
+        $stmt->bindParam(":ID", $id, PDO::PARAM_INT);
+        $stmt->execute();
+
+        echo "Updated";
+      }
 		} else {
 			echo "Invalid Requests";
 		}
