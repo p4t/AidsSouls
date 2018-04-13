@@ -2,9 +2,7 @@
 
 .message {
   background: black;
-  color: white;
-  font-family: "ds1";
-  
+  color: white;  
   
   display: block;
   width: 937px;
@@ -25,6 +23,8 @@
   margin: 0;
   padding: 0;
   color: #d2d2d2;
-  font-size: 1.7em;
-  line-height: 1em;
+  
+  font-family: inherit;
+  font-size: 1.1em;
+  line-height: 1.3em;
 }

@@ -2,10 +2,11 @@
 require_once("config.db.php");
 
   // $tables = array("mobs", "boss", "weapons");
-  $tables = array("mobs", "boss", "weapons");
+  $tables = array("mobs", "weapons", "boss");
 
   foreach ($tables as $table) :
     $table_output = ucfirst($table);
+    if ( $table_output == "Weapons" ) $table_output = "Waffen";
     $stmt = $pdo->prepare("SELECT * FROM $table ORDER BY dice");
     $stmt->execute();
   ?>
@@ -19,6 +20,12 @@ require_once("config.db.php");
           </li>    
           <?php ENDWHILE ?>
         </ul>
+        
+        <label for="ajax_<?=$table?>">
+          +&nbsp;<input type="text" id="ajax_<?=$table?>" value="" size="15" autocomplete="off" maxlength="32" placeholder="<?=ucfirst($table)?>">
+        </label>
+        
+        
       </div><!-- EOF .flex-item-aidsListing -->
     
   <?php

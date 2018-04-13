@@ -3,57 +3,23 @@
 
 /* MOBILE*/
 @media all and (max-width: 600px) {
-  /*
-  html {
-    background: green;
-  }
-  */
-  /*
-  .aidsText {
-    font-size: 2em;
-  }
-  
-  h1 { font-size: 3.5em; line-height: 1em; }
-  h2 { font-size: 3em; line-height: 1em; }
-  h3 { font-size: 2.1em; line-height: 1.5em; }
-  h4 { font-size: 2em; line-height: 1em; }
-  h5 { font-size: 1.7em; line-height: 1em; }
-  h6 { font-size: 1.6em; line-height: 1em; }
-  
-  ul.aidsList {
-  }
-  
-  ul.aidsList > li {
-    font-size: 1.5em;
-  }
-  
-  
-  
-  th {
-    font-size: 2em;
-  }
-  td {
-    font-size: 1.5em;
-    line-height: 1.2em;
-  }
-  */
-  
+ 
   .container, .content {
     /*95%, 90%*/
     width: 99%;
   }
 
-  
   div.aidscontent, div.aidsListing {
     width: 99%;
   }
-  
-  
-  .dice_wrapper {
-    /**/
-  }
+
+  /* Fix Number positioning on mobile browsers */
   .dice_wrapper-font {
-    /**/
+    /* margin-top: 10px; */
+    -moz-margin-before: 10px;
+    -webkit-margin-before: 10px;
+    -o-margin-before: 10px;
+    margin-top: 10px;
   }
   
 } /* EOF @media */
@@ -70,3 +36,11 @@
   }
   
 }
+
+/* Chrome 29+ */
+/*
+@media screen and (-webkit-min-device-pixel-ratio:0)
+  and (min-resolution:.001dpcm) {
+    div{top:0;} 
+}
+*/

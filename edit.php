@@ -13,7 +13,8 @@ saveRolls();
 <head>
   
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=yes">
+<!-- <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=yes, user-scalable=yes"> -->
+<meta name="viewport" content="width=device-width, initial-scale=1">
   
 <title>\[T]/ the Edit</title>
 <base href="http://aids.gyros-mit-zaziki.de">
@@ -75,25 +76,6 @@ saveRolls();
   
   
   
-  <pre>
-  <?php
-/*
-  $data = $pdo->query("SELECT dice FROM weapons")->fetchAll(PDO::FETCH_COLUMN);
-  print_r($data);
-*/
-  ?>
-  </pre>
-
-  <?php
-  // $arr = range(min($data), max($data));
-  // $missing = min(array_diff($arr, $data));
-  // print_r($missing);
-  // var_dump(min(array_diff($arr,$data
-  // $missing_number = missing_number($data);
- ?>
-  
-  
-  
   
 <?php
 /* Check for missing dice in sequence */
@@ -103,8 +85,7 @@ checkMissingDice();
   
   
   
-  
-  
+
   
 
 <?php
@@ -113,13 +94,16 @@ checkMissingDice();
  */
 
   if ( !empty($_GET["mode"]) && empty($_GET["action"]) && ($_GET["mode"] == "weapons" || $_GET["mode"] == "mobs" || $_GET["mode"] == "boss") ) {
-    (STRING)$mode   = $_GET["mode"];
-    (STRING)$table  = $mode;
-    (INT)$ID        = $_GET["ID"];  
+    (STRING)$mode         = $_GET["mode"];
+    (STRING)$table        = $mode;
+    (STRING)$parentField  = $table."Name";
+    (INT)$ID              = $_GET["ID"];  
   
     if ( isset($_POST["newName"]) ) {
       (STRING)$newName  = $_POST["newName"];
+      (STRING)$oldName  = $_POST["oldName"];
       (INT)$newDice     = $_POST["newDice"];
+      (INT)$oldDice     = $_POST["oldDice"];
       
       $sql = "UPDATE $table SET name = :name, dice = :dice WHERE ID = :ID";
       $stmt = $pdo->prepare($sql);                                  
@@ -127,6 +111,10 @@ checkMissingDice();
       $stmt->bindParam(":dice", $_POST["newDice"], PDO::PARAM_INT);
       $stmt->bindParam(":ID", $_GET["ID"], PDO::PARAM_INT);
       $stmt->execute();
+      
+      // log
+      if ( $newDice  != $oldDice ) logAction ($table, "Edit", $ID, $parentField , $oldDice, $newDice);
+      if ( $newName  != $oldName ) logAction ($table, "Edit", $ID, $parentField, $oldName, $newName);
       
       redirect("/edit", $statusCode = 303);
 
@@ -144,11 +132,13 @@ checkMissingDice();
       <form action="/edit?mode=<?= $mode ?>&ID=<?= $_GET["ID"] ?>" method="post" id="edit">
         <ul>
           <li><label>Dice:</label></li>
-          <li><input type="number" name="newDice" value="<?= $row["dice"]; ?>" min="1" max="99" autocomplete="off" placeholder="Würfel" required="required"></li>
+          <li><input type="number" name="newDice" value="<?=$row["dice"]?>" min="1" max="99" autocomplete="off" placeholder="#" required="required"></li>
           <li><label>Entry:</label></li>
-          <li><input type="text" name="newName" value="<?= $row["name"]; ?>" maxlength="32" required="required"></li>
+          <li><input type="text" name="newName" value="<?=$row["name"]?>" maxlength="32" required="required"></li>
           <li><input type="submit" value="Submit"></li>
         </ul>
+        <input type="hidden" name="oldDice" value="<?=$row["dice"]?>">
+        <input type="hidden" name="oldName" value="<?=$row["name"]?>">
       </form>
     </div>
   
@@ -172,9 +162,12 @@ if ( !empty($_GET["mode"]) && $_GET["mode"] == "kills" ) {
   
   if ( isset($_POST["newJoker"])) {
     (INT)$postJoker   = $_POST["newJoker"];
+    (INT)$oldJoker    = $_POST["oldJoker"];
     (INT)$postSpent   = $_POST["newSpent"];
-    (STRING)$postName = $_POST["newName"];
+    (INT)$oldSpent    = $_POST["oldSpent"];
+    // (STRING)$postName = $_POST["newName"];
     (STRING)$postBoss = $_POST["newBossNames"];
+    (STRING)$oldBoss  = $_POST["oldBossNames"];
     
     $sql = "UPDATE kills SET joker = :joker, spent = :spent, bossNames = :bossNames WHERE ID = :ID";
     $stmt = $pdo->prepare($sql);                                  
@@ -183,6 +176,11 @@ if ( !empty($_GET["mode"]) && $_GET["mode"] == "kills" ) {
     $stmt->bindParam(':bossNames', $_POST['newBossNames'], PDO::PARAM_STR);
     $stmt->bindParam(':ID', $_GET['ID'], PDO::PARAM_INT);
     $stmt->execute();
+    
+    // log
+    if ( $newJoker  != $postJoker ) logAction ($table, "Edit", $ID, "joker", $oldJoker, $postJoker);
+    if ( $newSpent  != $postSpent ) logAction ($table, "Edit", $ID, "spent", $oldSpent, $postSpent);
+    if ( $newBoss   != $postBoss ) logAction ($table, "Edit", $ID, "bossNames", $oldBoss, $postBoss);
     
     redirect("/edit", $statusCode = 303);
      
@@ -211,6 +209,9 @@ if ( !empty($_GET["mode"]) && $_GET["mode"] == "kills" ) {
           <li><input type="submit" value="Submit"></li>
           
         </ul>
+        <input type="hidden" name="oldJoker" value="<?=$row["joker"]?>">
+        <input type="hidden" name="oldSpent" value="<?=$row["spent"]?>">
+        <input type="hidden" name="oldBossNames" value="<?=$row["bossNames"]?>">
       </form>
     </div>
   
@@ -346,7 +347,7 @@ if ( !empty($_GET["mode"]) && $_GET["mode"] == "todo" ) {
           <tbody>
             <tr>
               <td data-balloon="Leer lassen für Würfel +1, keine doppelten Werte." data-balloon-pos="right">
-                <input type="number" name="addDice" value="" min="1" max="99" autocomplete="off" placeholder="Würfel">
+                <input type="number" name="addDice" value="" min="1" max="99" autocomplete="off" placeholder="#">
               </td>
               <td data-balloon="Max 32 Zeichen" data-balloon-pos="up">
                 <input type="text" name="addEntry" value="" autocomplete="off" maxlength="32" placeholder="Name" required="required">
@@ -374,14 +375,18 @@ if ( !empty($_GET["mode"]) && $_GET["mode"] == "todo" ) {
  */
 
 if ( !empty($_GET["action"]) && $_GET["action"] == "delete" ) {
-  (STRING)$mode   = $_GET["mode"];
-  (STRING)$table  = $mode;
-  (INT)$ID        = $_GET["ID"];
+  (STRING)$mode         = $_GET["mode"];
+  (STRING)$table        = $mode;
+  (STRING)$parentField  = $table . "Name";
+  (INT)$ID              = $_GET["ID"];
 
   $sql = "DELETE FROM $table WHERE ID = :ID";
   $stmt = $pdo->prepare($sql);
   $stmt->bindParam(":ID", $ID, PDO::PARAM_INT);
   $stmt->execute();
+  
+  // log
+  logAction ($table, "Del", $ID, $parentField, "", "");
   
   // Check if number in dice is missing
   /*
@@ -445,12 +450,20 @@ if ( empty($_GET["mode"]) ) :
 <a id="<?=ucfirst($table)?>"></a>
 <form action="/edit?mode=<?=$table?>&action=add" method="post">
 <table class="edit">
-  <tbody>
+  <thead>
+    <tr>
+      <th class="th-h" colspan="9">
+        &raquo; <?=ucfirst($table)?>
+      </th>
+    </tr>
+    
     <tr>
       <th scope="col"><strong>Dice</strong></th>
       <th scope="col"><strong><?=ucfirst($table)?></strong></th>
       <!-- <th scope="col" class="edit_action"><strong>...</strong></th> -->
     </tr>
+  </thead>
+  <tbody>
     <?php while ($row = $stmt->fetch(PDO::FETCH_NUM)) : ?>
     <tr>
       <td><a href="/edit?mode=<?=$table?>&ID=<?=$row[0]?>"><?=$row[1]?></a></td>
@@ -482,9 +495,8 @@ if ( empty($_GET["mode"]) ) :
     <?php ENDWHILE ?>
     <tr>
       <td colspan="2">
-        <input type="number" name="addDice" value="" min="1" max="99" autocomplete="off" placeholder="Würfel">
+        <input type="number" name="addDice" value="" min="1" max="99" autocomplete="off" placeholder="#">
         <input type="text" class="edit_input" name="addEntry" value="" autocomplete="off" maxlength="32" placeholder="Name" required="required">
-        &nbsp;
         <input type="submit" value="Submit">
       </td>
       <!--
@@ -502,8 +514,10 @@ if ( empty($_GET["mode"]) ) :
 
   <?php
     include("kills.inc.php");
-    include("todo.inc.php");
     include("rolls.inc.php");
+    include("todo.inc.php");
+    include("backups.inc.php");
+    include("logs.inc.php");
   ?>
 
 

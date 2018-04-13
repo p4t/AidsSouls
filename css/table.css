@@ -8,7 +8,7 @@ table {
   /* background: #3F292B; */ /*BG*/
   /* background: url("/img/ds3-asset-bg.png") center repeat-y; */
   
-  
+  width: 80%;
   
   border: 25px solid transparent;
   border-image: url("/img/border.png") 30 round;
@@ -262,19 +262,31 @@ tbody:hover td.emoji a:hover {
 
 
 
-
-
-
+/*
+table.edit,
+table.edit th,
+table.edit tr,
+table.edit td,
+table.edit td.edit_action,
+table.edit th.edit_action,
+table.edit td.edit_col
+{
+  all: unset;
+  all: initial;
+}
+*/
 
 
 /* Table adjustements for edit.php */
 table.edit {
+  
+  width: auto;
+  
   border: 0px;
   border-image: none;
   border-collapse: separate;
 	box-shadow: inset 0 1px 0 #3F292B;
   
-  /* background: none; */
   
   background-color: rgba(0, 0, 0, 0.7);
   
@@ -283,21 +295,23 @@ table.edit {
   background-size: 100% 100%;
   
 	font-size: 1em;
-	line-height: 2em;
+	line-height: 1em;
   text-align: left;
   text-shadow: 2px 2px 1px #000;
   
 	margin: 0 auto;
   margin-top: 20px;
-  
   margin-right: 5px;
   
-  
+  padding: 0;
 
 }	
 
 table.edit td {
   border: 1px inset #3F292B;
+  padding: 5px;
+  
+  line-height: 1.5em;
 }
 
 
@@ -310,4 +324,12 @@ table.edit, td.edit_col {
   width: fixed;
   table-layout: fixed;
   overflow: hidden;
+}
+
+
+
+table.edit th.th-h {
+  font-family: "OptimusPrinceps";
+  font-size: 1.8em;
+  text-align: center;
 }

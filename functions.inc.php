@@ -41,6 +41,7 @@ function getRNG () {
 }
 
 
+
 /*
  * Get Aids from DB Where dice = rng (getRNG())
  */
@@ -63,6 +64,12 @@ function getAidsByRNG ($mobsRNG, $bossRNG) {
   if ( $mobsAids == "Zufällige Waffe" ) $mobsAids = randomWeapon();
   if ( $bossAids == "Zufällige Waffe" ) $bossAids = randomWeapon();
   
+  // Shots
+  /*
+  if ( $mobsAids == "Jäscher" || $mobsAids == "Feige" ) $mobsAids = "";
+  if ( $bossAids == "Jäscher" || $bossAids == "Feige") $bossAids = "";
+  */
+  
   // Flask number
   if ( $mobsAids == "Flask Würfeln" ) {
     $flaskRNG = mt_rand(1, $flasks); // $flasks Number of flasks
@@ -76,6 +83,44 @@ function getAidsByRNG ($mobsRNG, $bossRNG) {
   
   return array($mobsAids, $bossAids);
 }
+
+
+/*
+ * Get one time Aids if SHOTS were rolled previously
+ */
+function getShotsAidsByRNG ($section) {
+  global $pdo;
+  global $flasks;
+  
+  // Get max dice value for mt_rand()
+  $stmt = $pdo->prepare( "SELECT count(dice) as TMP_CNT from $section" );
+  $stmt->execute();
+  $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+  // TMP RNG
+  $TMP_RNG  = mt_rand (1, $row["TMP_CNT"]);
+  
+  $stmt = $pdo->prepare("SELECT name FROM $section WHERE dice = $TMP_RNG");
+  // WHERE DICE != JÄSCHER FEIGE
+  $stmt->execute();
+  $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+  $TMP_AIDS = $row["name"];
+  
+  // Random Weapon
+  if ( $TMP_AIDS == "Zufällige Waffe" ) $TMP_AIDS = randomWeapon();
+
+  // Flask number
+  if ( $TMP_AIDS == "Flask Würfeln" ) {
+    $flaskRNG = mt_rand(1, $flasks); // $flasks Number of flasks
+    $TMP_AIDS = $TMP_AIDS . " ($flaskRNG) ";
+  }
+  
+  // echo "DEBUG: " . $TMP_RNG;
+  
+  return $TMP_AIDS;
+}
+
 
 
 /*
@@ -248,7 +293,7 @@ function getLatestRoll () {
   global $pdo;
   global $weaponIMG;
   
-  $stmt = $pdo->prepare("SELECT mobs, boss FROM rolls ORDER BY ID DESC LIMIT 1,1");
+  $stmt = $pdo->prepare("SELECT mobs, boss FROM rolls WHERE mobs != '' AND boss != '' ORDER BY ID DESC LIMIT 1,1");
   $stmt->execute();
   $row = $stmt->fetch(PDO::FETCH_ASSOC);
   
@@ -326,6 +371,49 @@ function saveRolls ($mobsAids = false, $bossAids = false) {
   $stmt->bindParam(":boss", $bossAids, PDO::PARAM_STR);
   $stmt->execute();
   
+}
+
+
+
+
+
+/*
+* Log actions
+*
+* TABLE `log` (
+*  `ID` int(10) NOT NULL,
+*  `section` varchar(255) NOT NULL,
+*  `action` varchar(255) NOT NULL,
+*  `parentID` int(10) NOT NULL,
+*  `parentField` varchar(255) NOT NULL,
+*  `old` varchar(255) NOT NULL,
+*  `new` varchar(255) NOT NULL,
+*  `IP` varchar(255) NOT NULL,
+*  `date` datetime NOT NULL
+*/
+
+function logAction ($section, $action, $parentID, $parentField, $old, $new) {
+  global $pdo;
+  
+  // diff()?
+  
+  $date = date("Y-m-d H:i:s");
+  $IP   = getIpAddr();
+  
+  $sql  = "INSERT INTO log (section, action, parentID, parentField, old, new, IP, date) VALUES (:section, :action, :parentID, :parentField, :old, :new, :IP, :date)";
+  $stmt = $pdo->prepare($sql);   
+  
+  $stmt->bindParam(":section", $section, PDO::PARAM_STR);
+  $stmt->bindParam(":action", $action, PDO::PARAM_STR);
+  $stmt->bindParam(":parentID", $parentID, PDO::PARAM_INT);
+  $stmt->bindParam(":parentField", $parentField, PDO::PARAM_STR);
+  $stmt->bindParam(":old", $old, PDO::PARAM_STR);
+  $stmt->bindParam(":new", $new, PDO::PARAM_STR);
+  
+  $stmt->bindParam(":IP", $IP, PDO::PARAM_STR);
+  $stmt->bindParam(":date", $date, PDO::PARAM_STR);
+  
+  $stmt->execute();
 }
 
 
@@ -468,5 +556,25 @@ function checkIfValueExists ($ID, $table) {
   $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
   return $row["name"];
+}
+
+
+
+/*
+ * CScan dir and list files ordered by create date
+ */
+function scan_dir($dir) {
+    $ignored = array('.', '..', '.svn', '.htaccess');
+
+    $files = array();    
+    foreach (scandir($dir) as $file) {
+        if (in_array($file, $ignored)) continue;
+        $files[$file] = filemtime($dir . '/' . $file);
+    }
+
+    arsort($files);
+    $files = array_keys($files);
+
+    return ($files) ? $files : false;
 }
 ?>

@@ -59,6 +59,11 @@ html {
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
+  
+  /* Firefox Cover Fix */
+  /*
+  min-height: 100%;
+  */
 
 	margin: 0;
 	padding: 0;
@@ -131,19 +136,18 @@ a:hover, a:focus, a:active {
 
 a[href^="mailto:"]:before { content: "\2709"; }
 .phone:before             { content: "\2706"; }
-.tel:before             { content: "\2706"; }
+.tel:before               { content: "\2706"; }
 .important:before         { content: "\27BD"; }
 blockquote:before         { content: "\275D"; }
 blockquote:after          { content: "\275E"; }
 .alert:before             { content: "\26A0"; }
 
-
+/*
 ::selection {
-  background-color: black;
-  /*
-  color: #000;
-  */
+  background-color: #3E363F;
+  color: #ffffff;
 }
+*/
 
 ul, ol, dl {
 	padding: 0;
@@ -469,14 +473,21 @@ img.dice:hover,
   */
 }
 
+/* Append to disable user select */
+.user-select {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
 /* Center font on mobile fix */
 .dice_wrapper-font {
-  margin: auto;
+  margin: 0 auto;
   
-  
-  -webkit-user-select: none;  
-  -moz-user-select: none;    
-  -ms-user-select: none;      
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
   user-select: none;
 }
 
@@ -553,6 +564,7 @@ img.edit_icon {
 
 #ajax-form-button {
   text-align: center;
+  display: none;
 }
 
 #reroll_hover {
@@ -560,7 +572,7 @@ img.edit_icon {
 }
 
 
-#status {
+#status, #jsstatus {
   /*
   color: #006100;
   */
@@ -577,6 +589,30 @@ img.edit_icon {
   text-align: center;
   display: none;
 }
+
+
+
+#jsstatus {
+  top: 0;
+  left: 0;
+  bottom: auto;
+  width: 100%;
+}
+
+#status_song {
+  color: white;
+  background: rgba(33, 32, 33, 0.75);
+  width: 100%;
+  /*
+  background-color: red;
+  color: white;
+  */
+  text-align: center;
+  display: none;
+}
+
+
+
 
 
 #fullscreen {
@@ -767,24 +803,11 @@ img.edit_icon {
 
 
 
-
-
-
-
-
-/* PARTICLE */
-/* ---- reset ---- */
-canvas{ display: block; vertical-align: bottom; } 
-/* ---- particles.js container ---- */ 
-#particles-js{ position:absolute; width: 100%; height: 100%; background-color: #232741; background-image: url(""); background-repeat: no-repeat; background-size: 20%; background-position: 50% 50%; } 
-/* ---- stats.js ---- */ 
-.count-particles{ background: #000022; position: absolute; top: 48px; left: 0; width: 80px; color: #13E8E9; font-size: .8em; text-align: left; text-indent: 4px; line-height: 14px; padding-bottom: 2px; font-family: Helvetica, Arial, sans-serif; font-weight: bold; } 
-.js-count-particles{ font-size: 1.1em; } 
-#stats, .count-particles{ -webkit-user-select: none; margin-top: 5px; margin-left: 5px; } 
-#stats{ border-radius: 3px 3px 0 0; overflow: hidden; } .count-particles{ border-radius: 0 0 3px 3px; }
-
-
-
+  /* Style to reverse the caret icon from pointing downwards to upwards */
+  .caret.caret-up {
+    border-top-width: 0;
+    border-bottom: 4px solid #fff;
+  }
 
 
 
@@ -814,6 +837,7 @@ font-weight: normal;
 
 
 
+
 /* DEBUG */
 /*
 * {
@@ -825,6 +849,6 @@ font-weight: normal;
 
 /*
 * {
-  outline: 1px solid chartreuse;
+  outline: 1px solid red;
 }
 */

@@ -1,10 +1,18 @@
 <a id="Todo"></a>
 
 <table class="edit">
-  <tbody>
+  <thead>
+    <tr>
+      <th class="th-h">
+        &raquo; Todo
+      </th>
+    </tr>
+    
     <tr>
       <th scope="col"><strong>Todo</strong></th>
     </tr>
+  </thead>
+  <tbody>
     
   <?php
   $sql = "SELECT * FROM todo";

@@ -1,6 +1,9 @@
 <?php
+// Info
+// phpinfo() = 5.3.10
+
 // Set up DB and connect
-$host     = "";
+$host     = "127.0.0.1";
 $db       = "";
 $user     = "";
 $pass     = "";
@@ -26,4 +29,5 @@ define("TABLE", "ds3");
 $dbTable = TABLE;
 
 define("__DR", $_SERVER["DOCUMENT_ROOT"]);
+define("FLASKS", 13);
 ?>

@@ -25,6 +25,9 @@ if ( (!empty($_POST["mobs"])) || (!empty($_POST["boss"])) || (!empty($_POST["wea
       $addDice  = getDiceValuePlusOne($table);
       
       ajaxPDOInsert($table, $addDice, $addEntry);
+      
+      // log
+      // log ($table, "add", "", $addEntry);
     }
 
 } // END FOREACH
