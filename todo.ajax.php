@@ -39,6 +39,9 @@ if (!empty($_POST)) {
       $stmt->bindParam(":ID", $ID, PDO::PARAM_INT);
       $stmt->execute();
       
+      // Log
+      logAction ("todo", "todo.ajax", 1, "todoText", "", $todoText);      
+      
 			echo "Updated";
 		} else {
 			echo "Invalid Requests1";

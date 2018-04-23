@@ -26,6 +26,9 @@ if ( (!empty($_POST["mobs"])) || (!empty($_POST["boss"])) || (!empty($_POST["wea
       
       ajaxPDOInsert($table, $addDice, $addEntry);
       
+      // Log
+      logAction ($table, "post.ajax", "DICE:" . $addDice, $table."Name" , "", $addEntry);
+      
       // log
       // log ($table, "add", "", $addEntry);
     }

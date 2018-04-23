@@ -14,7 +14,7 @@ if (!empty($_POST)) {
 		// from the fieldname:id get id, table
 		$split_data = explode(":", $field);
 		$table      = $split_data[1];
-    $id         = $split_data[3];
+    $ID         = $split_data[3];
     $name       = $val;
     
     // echo "explode: " . $split_data[4];
@@ -26,18 +26,21 @@ if (!empty($_POST)) {
     echo "3: " . $split_data[3];
     */
     
-    if ( !empty($id) && !empty($table) && !empty($name) && strlen($name) <= 32 ) {
+    if ( !empty($ID) && !empty($table) && !empty($name) && strlen($name) <= 32 ) {
       
       // check if change was made by the user on input Ajax Inline Edit      
-      if ( checkIfValueExists($id, $table) == $name ) {
+      if ( checkIfValueExists($ID, $table) == $name ) {
         echo "VALUE IS THE SAME";
       } else {
         // update the values      
         $sql = "UPDATE $table SET name = :name WHERE ID = :ID";
         $stmt = $pdo->prepare($sql);                                  
         $stmt->bindParam(":name", $name, PDO::PARAM_STR);
-        $stmt->bindParam(":ID", $id, PDO::PARAM_INT);
+        $stmt->bindParam(":ID", $ID, PDO::PARAM_INT);
         $stmt->execute();
+        
+        // Log
+        logAction ($table, "edit.ajax", $ID, $table."Name" , "", $name);
 
         echo "Updated";
       }

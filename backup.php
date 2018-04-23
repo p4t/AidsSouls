@@ -8,9 +8,9 @@
 /**
  * Define database parameters here
  */
-define("DB_USER", 'aids');
+define("DB_USER", 'snauerz');
 define("DB_PASSWORD", 'Ahqx69#5');
-define("DB_NAME", 'aids');
+define("DB_NAME", 'ds3');
 define("DB_HOST", 'localhost');
 define("BACKUP_DIR", 'myphp-backup-files'); // Comment this line to use same script's directory ('.')
 define("TABLES", '*'); // Full backup

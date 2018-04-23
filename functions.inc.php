@@ -11,12 +11,16 @@ function randomWeapon () {
   $section    = "weapons";
   $count      = pdoCount($section);
   $weaponRNG  = mt_rand (1, $count);
+  // $weaponRNG  = 17;
   
   $stmt = $pdo->prepare("SELECT * FROM weapons WHERE dice = $weaponRNG");
   $stmt->execute();
   $row = $stmt->fetch(PDO::FETCH_ASSOC);
   
   $weapon = $row["name"];
+  
+  // Debug
+  // $weapon = "Pickaxe";
   
   return $weapon;
 }
@@ -65,10 +69,25 @@ function getAidsByRNG ($mobsRNG, $bossRNG) {
   if ( $bossAids == "Zufällige Waffe" ) $bossAids = randomWeapon();
   
   // Shots
-  /*
-  if ( $mobsAids == "Jäscher" || $mobsAids == "Feige" ) $mobsAids = "";
-  if ( $bossAids == "Jäscher" || $bossAids == "Feige") $bossAids = "";
-  */
+  if ( $mobsAids == "Jäscher" || $mobsAids == "Feige" ) { // if (strcasecmp($var1, $var2) == 0) {
+    // RNG # for balloon-tip
+    $mobsRNGNR   = $mobsRNG;
+
+    $newMobsAids = getShotsAidsByRNG("mobs");
+
+    $mobsAids = $mobsAids . ":&nbsp;" . $newMobsAids;
+
+  }
+
+  if ( $bossAids == "Jäscher" || $bossAids == "Feige") {
+    // RNG # for balloon-tip
+    $bossRNGNR   = $bossRNG;
+
+    $newBossAids = getShotsAidsByRNG("boss");
+
+    $bossAids = $bossAids . ":&nbsp;" . $newBossAids;
+
+  }
   
   // Flask number
   if ( $mobsAids == "Flask Würfeln" ) {
@@ -85,23 +104,71 @@ function getAidsByRNG ($mobsRNG, $bossRNG) {
 }
 
 
+
+/*
+ * Get max dice value from $section for mt_rand()
+ */
+function getMaxDiceValue ($section) {
+  global $pdo;
+  
+  $stmt = $pdo->prepare( "SELECT count(dice) as TMP_CNT from $section" );
+  $stmt->execute();
+  $row = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+  return $row["TMP_CNT"];
+}
+
+
+
+/*
+ * Get dice values where field name = jäscher and feige to exclude in mt_rand()
+ * Jäscher, Feige
+ */
+function getDiceValuesWhereNameIsShots($section) {
+  global $pdo;
+  
+  $stmt = $pdo->prepare("
+  SELECT (SELECT dice
+        FROM   $section
+        WHERE  name = 'Feige') AS feige,
+       (SELECT dice
+        FROM   $section
+        WHERE  name = 'Jäscher')   AS jager
+  ");
+  $stmt->execute();
+  $row = $stmt->fetch(PDO::FETCH_GROUP);
+  
+  return array($row["feige"], $row["jager"]);
+}
+
+
 /*
  * Get one time Aids if SHOTS were rolled previously
  */
 function getShotsAidsByRNG ($section) {
   global $pdo;
   global $flasks;
+    
+  // Get Max Dice Value fir mt_rand()
+  $TMP_CNT = getMaxDiceValue($section);
   
-  // Get max dice value for mt_rand()
-  $stmt = $pdo->prepare( "SELECT count(dice) as TMP_CNT from $section" );
-  $stmt->execute();
-  $row = $stmt->fetch(PDO::FETCH_ASSOC);
-
+  // Get dice values where field name = jäscher and feige to exclude in mt_rand()
+  $shots = getDiceValuesWhereNameIsShots($section);
+  
+  $feige = $shots[0];
+  $jager = $shots[1];
+  
   // TMP RNG
-  $TMP_RNG  = mt_rand (1, $row["TMP_CNT"]);
+  // exclude $feige and $jager
+  while( in_array( ($n = mt_rand(1, $TMP_CNT)), array($feige, $jager) ) );
   
+  $TMP_RNG = $n;  
+
+  // Debug
+  if ( $TMP_RNG == $feige || $TMP_RNG == $jager ) echo "ALARM";
+  
+  // Get aids where dice = rng
   $stmt = $pdo->prepare("SELECT name FROM $section WHERE dice = $TMP_RNG");
-  // WHERE DICE != JÄSCHER FEIGE
   $stmt->execute();
   $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
@@ -115,11 +182,77 @@ function getShotsAidsByRNG ($section) {
     $flaskRNG = mt_rand(1, $flasks); // $flasks Number of flasks
     $TMP_AIDS = $TMP_AIDS . " ($flaskRNG) ";
   }
-  
-  // echo "DEBUG: " . $TMP_RNG;
-  
+    
   return $TMP_AIDS;
 }
+
+
+
+
+
+
+/*
+ * Replace Dice Number with Symbol
+ */
+function replaceDiceWithSymbol ($aids, $rng) {
+  global $pdo;
+  // if ( $aids == "Ohne Flask" ) $RNG = "<img src=\"/dice/icons/flask_empty.png\" width=\"84\" height=\"130\" alt=\"Ohne Flask\">";
+
+  // Get all weapons in an Array
+  $data = $pdo->query("SELECT name FROM weapons")->fetchAll(PDO::FETCH_ASSOC);
+  /*  
+  echo "<pre>";
+  print_r($data);
+  echo "</pre>";
+  */
+  // Go through Array and check if rolled $aids is a weapon
+  foreach ($data as $value) {
+    if ( $aids  == $value["name"] ) {
+
+      $weapon = str_replace( " ", "_", strtolower($value["name"]) );
+      $weapon = str_replace( "'", "", $weapon );
+      
+      // $weapon = str_replace([" ", "'"], "_", $string);
+      
+      $RNG = "<img src=\"/dice/icons/weapons/{$weapon}-icon.png\" alt=\"Q\">"; // width=\"84\" height=\"130\"
+      $stop_switch = TRUE;
+    }
+    
+  }
+  
+  
+  switch ($aids) {
+    case "Ohne Flask":
+      $RNG = "<img src=\"/dice/icons/flask_empty.png\" width=\"84\" height=\"130\" alt=\"Ohne Flask\">";      
+      break;
+    case "Nur R2":
+      $RNG = "R2";
+      break;
+    case "Nur RT":
+      $RNG = "RT";
+      break;
+    case "Invade":
+      $RNG = "<img src=\"/dice/icons/invade.png\" width=\"99\" height=\"102\" alt=\"Invade\">";
+      break;
+    case "Symbol of Aids":
+      $RNG = "<img src=\"/dice/icons/symbolofaids.png\" width=\"126\" height=\"100\" alt=\"Symbol of Aids\">";
+      break;
+    case "Jäscher":
+      $RNG = "<img src=\"/dice/icons/jagermeister.png\" width=\"100\" height=\"100\" alt=\"Jägermeister\">";
+      break;
+      
+    default:
+      // return false;
+      if ( $stop_switch != TRUE ) $RNG = $rng;
+  }
+  
+  
+  return $RNG;
+}
+
+
+
+
 
 
 
@@ -361,11 +494,16 @@ function ajaxPDOInsert ($table, $addDice, $addEntry) {
 function saveRolls ($mobsAids = false, $bossAids = false) {
   global $pdo;
   
+  $userID = $_SESSION["userID"];
+  $username = $_SESSION["username"];
+  
   $date = date("Y-m-d H:i:s");
   $IP   = getIpAddr();
-  $sql  = "INSERT INTO rolls (date, IP, mobs, boss) VALUES (:date, :IP, :mobs, :boss)";
+  $sql  = "INSERT INTO rolls (date, userID, username, IP, mobs, boss) VALUES (:date, :userID, :username, :IP, :mobs, :boss)";
   $stmt = $pdo->prepare($sql);                                  
   $stmt->bindParam(":date", $date, PDO::PARAM_STR);
+  $stmt->bindParam(":userID", $userID, PDO::PARAM_INT);
+  $stmt->bindParam(":username", $username, PDO::PARAM_STR);
   $stmt->bindParam(":IP", $IP, PDO::PARAM_STR);
   $stmt->bindParam(":mobs", $mobsAids, PDO::PARAM_STR);
   $stmt->bindParam(":boss", $bossAids, PDO::PARAM_STR);
@@ -394,13 +532,20 @@ function saveRolls ($mobsAids = false, $bossAids = false) {
 
 function logAction ($section, $action, $parentID, $parentField, $old, $new) {
   global $pdo;
+  // global $_SESSION["username"];
   
   // diff()?
   
-  $date = date("Y-m-d H:i:s");
-  $IP   = getIpAddr();
+  if ( !empty($_SESSION["username"]) ) $username = $_SESSION["username"];
+  else $username = "0";
   
-  $sql  = "INSERT INTO log (section, action, parentID, parentField, old, new, IP, date) VALUES (:section, :action, :parentID, :parentField, :old, :new, :IP, :date)";
+  if ( !empty($_SESSION["userID"]) ) $userID = $_SESSION["userID"];
+  else $userID = "0";
+    
+  $date     = date("Y-m-d H:i:s");
+  $IP       = getIpAddr();
+  
+  $sql  = "INSERT INTO log (section, action, parentID, parentField, old, new, userID, username, IP, date) VALUES (:section, :action, :parentID, :parentField, :old, :new, :userID, :username, :IP, :date)";
   $stmt = $pdo->prepare($sql);   
   
   $stmt->bindParam(":section", $section, PDO::PARAM_STR);
@@ -409,6 +554,8 @@ function logAction ($section, $action, $parentID, $parentField, $old, $new) {
   $stmt->bindParam(":parentField", $parentField, PDO::PARAM_STR);
   $stmt->bindParam(":old", $old, PDO::PARAM_STR);
   $stmt->bindParam(":new", $new, PDO::PARAM_STR);
+  $stmt->bindParam(":userID", $userID, PDO::PARAM_INT);
+  $stmt->bindParam(":username", $username, PDO::PARAM_STR);
   
   $stmt->bindParam(":IP", $IP, PDO::PARAM_STR);
   $stmt->bindParam(":date", $date, PDO::PARAM_STR);
@@ -561,7 +708,7 @@ function checkIfValueExists ($ID, $table) {
 
 
 /*
- * CScan dir and list files ordered by create date
+ * Scan dir and list files ordered by create date
  */
 function scan_dir($dir) {
     $ignored = array('.', '..', '.svn', '.htaccess');
@@ -577,4 +724,63 @@ function scan_dir($dir) {
 
     return ($files) ? $files : false;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/******************** LOGIN ***********************/
+
+
+
+/*
+ * Login, check if username and password entered are valid (Database)
+ */
+function login (string $username, string $password) {
+  global $pdo;
+  
+  $query  = "SELECT * FROM user WHERE username=:username AND password=:password";
+  $stmt   = $pdo->prepare($query);
+  $stmt->bindParam("username", $username, PDO::PARAM_STR);
+  $stmt->bindValue("password", $password, PDO::PARAM_STR);
+  $stmt->execute();
+  $count  = $stmt->rowCount();
+  $row    = $stmt->fetch(PDO::FETCH_ASSOC);
+  
+  if ( ($count == 1) && (!empty($row)) ) {
+    if ( $username == "Biber" ) $userID = 1;
+    else if ( $username == "Katz" ) $userID = 2;
+    else if ( $username == "Pat" ) $userID = 3;
+    
+    $_SESSION["valid"]    = true;
+    $_SESSION["timeout"]  = time();
+    $_SESSION["username"] = $username;
+    $_SESSION["userID"]   = $userID;
+    
+    redirect("/", $statusCode = 303);
+  } else {
+    $error = "Wrong username or password";
+    return $error;
+  }
+}
+
+function logout() {
+  session_start();
+  unset($_SESSION["userID"]);
+  unset($_SESSION["username"]);
+  unset($_SESSION["valid"]);
+	session_destroy();
+  redirect("/", $statusCode = 303);
+}
+
 ?>

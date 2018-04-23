@@ -3,7 +3,7 @@
 <table class="edit">
   <thead>
     <tr>
-      <th class="th-h" colspan="5">
+      <th class="th-h" colspan="6">
         &raquo; Latest Rolls/Visits
       </th>
     </tr>
@@ -13,6 +13,7 @@
       <th scope="col"><strong>Mobs</strong></th>
       <th scope="col"><strong>Boss</strong></th>
       <th scope="col"><strong>Zeit</strong></th>
+      <th scope="col"><strong>User</strong></th>
       <th scope="col"><strong>IP</strong></th>
     </tr>
   </thead>
@@ -30,6 +31,7 @@
     <td><?=$row["mobs"]?></td>
     <td><?=$row["boss"]?></td>
     <td><?=formatDate($row["date"], "datetime")?></td>
+    <td><?=$row["username"]?></td>
     <td><?=$row["IP"]?></td>
   </tr>
       
@@ -38,7 +40,7 @@
   ?>
       
   <tr>
-    <td colspan="5">
+    <td colspan="6">
       <a href="edit.php?action=truncate" onClick="return confirm('SICHER???????? MACH KE SCHEISS!');" data-balloon="Tabelle leeren" data-balloon-pos="up">Leeren</a>
     </td>
   </tr>

@@ -3,12 +3,23 @@
 require_once("config.db.php");
 require_once("functions.inc.php");
 
+// Handle Logout
+if (
+    (!empty($_GET["action"])) &&
+    ($_GET["action"] == "logout") &&
+    ($_SESSION["valid"] == true)
+   ) {
+  logout();
+}
+
 // DB Hack
 // include_once("aids.ajax.php");
 // include_once("jquery_post.php");
 // include_once("edit.ajax.php");
 // include_once("todo.ajax.php");
 // include_once("superaids.inc.php");
+
+// include_once("/css/login.css");
 
 
 // Get max dice value for mt_rand()
@@ -20,16 +31,16 @@ $flasks     = FLASKS;
 $weaponIMG  = "<img src=\"/img/weapon_icon.png\" width=\"30\" height=\"30\" alt=\"Weapon\">"; // 41, 40
 
 // DEBUG
-/*
-$mobsRNG = 23;
-$bossRNG = 16;
-*/
+$mobsRNG = 22;
+$bossRNG = 17;
+
 
 // Get Aids from mobs boss tables 
 $Aids     = getAidsByRNG($mobsRNG, $bossRNG);
 $mobsAids = $Aids[0];
 $bossAids = $Aids[1];
 
+// Debug output
 /*
 echo "<pre>";
 
@@ -45,30 +56,48 @@ echo "BossAids: " . $bossAids;
 echo "</pre>";
 */
 
+// $aidsArray = array("Jäscher", "Feige");
 
-if ( $mobsAids == "Jäscher" || $mobsAids == "Feige" ) {
+$mobsRNG_Output = replaceDiceWithSymbol ($mobsAids, $mobsRNG);
+$bossRNG_Output = replaceDiceWithSymbol ($bossAids, $bossRNG);
+
+
+
+/*
+// Handle Shots
+if ( $mobsAids == "Jäscher" || $mobsAids == "Feige" ) { // if (strcasecmp($var1, $var2) == 0) {
+  // RNG # for balloon-tip
+  $mobsRNGNR   = $mobsRNG;
   
   $newMobsAids = getShotsAidsByRNG("mobs");
-  if ( $newMobsAids == "Jäscher" || $newMobsAids == "Feige" ) {
-      $newMobsAids = getShotsAidsByRNG("mobs");
-  }
-  $mobsAids = $mobsAids . ": " . $newMobsAids;
+
+  $mobsAids = $mobsAids . ":&nbsp;" . $newMobsAids;
   
-  $mobsRNG = "<img src=\"/dice/dice_jagermeister.png\" width=\"125\" height=\"125\" alt=\"Jägermeister\">";
-  $shots = "TRUE";
+  // JS Hack
+  $shots = TRUE;
   
 }
+
 if ( $bossAids == "Jäscher" || $bossAids == "Feige") {
+  // RNG # for balloon-tip
+  $bossRNGNR   = $bossRNG;
 
   $newBossAids = getShotsAidsByRNG("boss");
-  if ( $newBossAids == "Jäscher" || $newBossAids == "Feige" ) {
-      $newBossAids = getShotsAidsByRNG("boss");
-  }
-  $bossAids = $bossAids . ": " . $newBossAids;
+
+  $bossAids = $bossAids . ":&nbsp;" . $newBossAids;
   
-  $bossRNG = "<img src=\"/dice/dice_jagermeister.png\" width=\"125\" height=\"125\" alt=\"Jägermeister\">";
-  $shots = "TRUE";
+  // JS Hack
+  $shots = TRUE;
 }
+*/
+
+// Save $boss/mobsRNG number value in var to output as balloon-tip if the dice number is replaced by image
+/*
+$c_mobs = $mobsRNGNR ?? $mobsRNG;
+$c_boss = $bossRNGNR ?? $bossRNG;
+*/
+
+
 
 // Random Weapon
 $randomWeapon = randomWeapon();
@@ -83,6 +112,27 @@ $todoText = $row["todoText"];
 
 // Write aids rolls into DB
 saveRolls($mobsAids, $bossAids); // Table/Output in edit.php
+
+/* LOGIN */
+/*
+unset($error);
+
+if ( (!empty($_POST["username"])) && (!empty($_POST["password"])) ) {
+
+  $username = trim($_POST["username"]);
+  $password = trim($_POST["password"]);
+  
+  $error = login ($username, $password);
+    
+} // ENDIF
+if ( (!empty($_SESSION["username"])) && ($_SESSION["valid"] == TRUE) ) {
+*/
+
+/*
+echo "mobsrngout: " . $mobsRNG_Output;
+echo "<br><br>";
+echo "bossrngout: " . $bossRNG_Output;
+*/
 ?>
 
 <!doctype html>
@@ -93,13 +143,14 @@ saveRolls($mobsAids, $bossAids); // Table/Output in edit.php
 <meta name="viewport" content="width=device-width, initial-scale=1">
   
 <title>\[T]/</title>
-<base href="http://aids.gyros-mit-zaziki.de">
+<base href="http://ds.fahrzeugatelier.de">
   
 <link rel="stylesheet" href="/css/layout.css" type="text/css" media="screen">
 <link rel="stylesheet" href="/css/flex.css" type="text/css" media="screen">
 <link rel="stylesheet" href="/css/button.css" type="text/css" media="screen">
 <link rel="stylesheet" href="/css/table.css" type="text/css" media="screen">
 <link rel="stylesheet" href="/css/form.css" type="text/css" media="screen">
+<!-- <link rel="stylesheet" href="/css/login.css" type="text/css" media="screen"> -->
 <link rel="stylesheet" href="/css/messages.css" type="text/css" media="screen">
 <link rel="stylesheet" href="/css/dice_animations.css" type="text/css" media="screen">
 <link rel="stylesheet" href="/css/mobile.css" type="text/css" media="screen">
@@ -132,6 +183,10 @@ saveRolls($mobsAids, $bossAids); // Table/Output in edit.php
 
 <!-- jQuery -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<!-- jQuery Corner Plugin -->
+<!-- https://github.com/malsup/corner -->
+<script src="/js/jquery.corner.js"></script>
 
 
 <!-- Open Bonfire -->
@@ -371,75 +426,85 @@ $( document ).ready(function() {
 <!-- W6, W12, W20, W30 -->
 <script>
 // Random image out of 12
-var images_w6  = ["1.png", "2.png","3.png","4.png","5.png","6.png"];
+var images_w6  = [
+  "1.png",
+  "2.png",
+  "3.png",
+  "4.png",
+  "5.png",
+  "6.png"
+];
   
-var images_w12  = ["1.png",
-                  "2.png",
-                  "3.png",
-                  "4.png",
-                  "5.png",
-                  "6.png",
-                  "7.png",
-                  "8.png",
-                  "9.png",
-                  "10.png",
-                  "11.png",
-                  "12.png"
-                  ];
+var images_w12  = [
+  "1.png",
+  "2.png",
+  "3.png",
+  "4.png",
+  "5.png",
+  "6.png",
+  "7.png",
+  "8.png",
+  "9.png",
+  "10.png",
+  "11.png",
+  "12.png"
+];
 
-var images_w20  = ["1.png",
-                  "2.png",
-                  "3.png",
-                  "4.png",
-                  "5.png",
-                  "6.png",
-                  "7.png",
-                  "8.png",
-                  "9.png",
-                  "10.png",
-                  "11.png",
-                  "12.png",
-                  "13.png",
-                  "14.png",
-                  "15.png",
-                  "16.png",
-                  "17.png",
-                  "18.png",
-                  "19.png",
-                  "20.png"
-                  ];
+var images_w20  = [
+  "1.png",
+  "2.png",
+  "3.png",
+  "4.png",
+  "5.png",
+  "6.png",
+  "7.png",
+  "8.png",
+  "9.png",
+  "10.png",
+  "11.png",
+  "12.png",
+  "13.png",
+  "14.png",
+  "15.png",
+  "16.png",
+  "17.png",
+  "18.png",
+  "19.png",
+  "20.png"
+];
 
-var images_w30  = ["1.png",
-                  "2.png",
-                  "3.png",
-                  "4.png",
-                  "5.png",
-                  "6.png",
-                  "7.png",
-                  "8.png",
-                  "9.png",
-                  "10.png",
-                  "11.png",
-                  "12.png",
-                  "13.png",
-                  "14.png",
-                  "15.png",
-                  "16.png",
-                  "17.png",
-                  "18.png",
-                  "19.png",
-                  "20.png",
-                  "21.png",
-                  "22.png",
-                  "23.png",
-                  "24.png",
-                  "25.png",
-                  "26.png",
-                  "27.png",
-                  "28.png",
-                  "29.png",
-                  "30.png"
-                  ];
+var images_w30  = [
+  "1.png",
+  "2.png",
+  "3.png",
+  "4.png",
+  "5.png",
+  "6.png",
+  "7.png",
+  "8.png",
+  "9.png",
+  "10.png",
+  "11.png",
+  "12.png",
+  "13.png",
+  "14.png",
+  "15.png",
+  "16.png",
+  "17.png",
+  "18.png",
+  "19.png",
+  "20.png",
+  "21.png",
+  "22.png",
+  "23.png",
+  "24.png",
+  "25.png",
+  "26.png",
+  "27.png",
+  "28.png",
+  "29.png",
+  "30.png"
+];
 
 function getRandomInt(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -558,11 +623,11 @@ $( document ).ready(function() {
   if ( (!empty($_GET["debug"])) && ($_GET["debug"] == "vader") ) {
   ?>
   run_rnd = 1;
-  <?
+  <?php
   } else if ( (!empty($_GET["debug"])) && ($_GET["debug"] == "superaids") ) {
   ?>
   run_rnd = 99;
-  <?
+  <?php
   }
   ?>
   
@@ -736,40 +801,42 @@ function reroll () {
 <!-- Random Audio -->
 <script>
 // Random image out of 12
-var audio_files  = ["fail",
-                    "sadtrombone",
-                    "dolphin",
-                    "evillaugh",
-                    "hagay",
-                    "hahaha(nelson)",
-                    "sadmusic",
-                    "sadmusic2",
-                    "zackgalifianakislaugh",
-                    "Cheep_1",
-                    "Cheep_2",
-                    "IDidNotHitHer",
-                    "JustAChickenCheep",
-                    "TearingMeApartLisa",
-                    "TommyLaugh_1",
-                    "TommyLaugh_2",
-                    "TommyLaugh_3",
-                    "WhyWhyLisa",
-                    "YouMustBeKidding",
-                    "200Puls",
-                    "badesalz1",
-                    "badesalzWAS",
-                    "draufdruecken",
-                    "drecksack",
-                    "gehtdicheinscheissdreckan",
-                    "kotzinstreppenhaus",
-                    "mimimi",
-                    "mundstuhl",
-                    "blamage",
-                    "scheisse",
-                    "schwarzerbildschirm",
-                    "wernerflasche",
-                    "richevanslaugh"
-                    ];
+var audio_files  = [
+  "fail",
+  "sadtrombone",
+  "dolphin",
+  "evillaugh",
+  "hagay",
+  "hahaha(nelson)",
+  "sadmusic",
+  "sadmusic2",
+  "zackgalifianakislaugh",
+  "Cheep_1",
+  "Cheep_2",
+  "IDidNotHitHer",
+  "JustAChickenCheep",
+  "TearingMeApartLisa",
+  "TommyLaugh_1",
+  "TommyLaugh_2",
+  "TommyLaugh_3",
+  "WhyWhyLisa",
+  "YouMustBeKidding",
+  "200Puls",
+  "badesalz1",
+  "badesalzWAS",
+  "draufdruecken",
+  "drecksack",
+  "gehtdicheinscheissdreckan",
+  "kotzinstreppenhaus",
+  "mimimi",
+  "mundstuhl",
+  "blamage",
+  "scheisse",
+  "schwarzerbildschirm",
+  "wernerflasche",
+  "richevanslaugh",
+  "alwayssunnybell"
+];
 
   
   
@@ -789,6 +856,10 @@ function randomSoundEffect() {
   // alert(audio_files.length);
   
   var src = audio_files[getRandomInt(0, audio_files.length - 1)];
+  
+  // Debug
+  // var src = audio_files[33];
+  
   // $("img#randimgw12").prop("src", src);
   
   /*
@@ -805,7 +876,8 @@ function randomSoundEffect() {
 <script>
   function play_audio (source) {
     var myAudio = document.getElementById("audio_"+source);
-    if (source = "shrine") {
+    
+    if (source == "shrine") {
       
       if (myAudio.paused) {
         myAudio.play();
@@ -818,6 +890,16 @@ function randomSoundEffect() {
     } else {
       myAudio.play();
     }
+    
+    // Loop
+    $(myAudio).bind("ended", function()  {
+      if (source !== "dice" && source !== "bier" && source !== "superaids" && source !== "vader" ) {
+        // Debug
+        // alert(source);
+        myAudio.currentTime = 0;
+        myAudio.play();
+      }
+    });
   
   } // ENDFUNCTION
 </script>
@@ -830,6 +912,7 @@ function stop_audio () {
   var i;
   var src;
   
+  // go through all audio_files array and check if one of those is currently playing and if so, stop it
   for (i = 0; i < audio_files.length; i++) {
     // src = audio_files[i] + ".mp3";
     src = "audio_" + audio_files[i];
@@ -860,7 +943,7 @@ function stop_audio () {
 
 <!-- SHOTS -->
 <?php
-if ( !empty($shots) && $shots == "TRUE"  ) {
+if ( !empty($shots) && $shots == TRUE  ) {
 ?>  
 <script>
 // alert("BIER");
@@ -878,12 +961,12 @@ $( document ).ready(function() {
 </head>
 
 <body spellcheck="false">
-      
+
+
 <!-- Wrapper -->
 <div class="container">
+
   
-
-
 <!-- Header -->
 <header>
   <!-- 
@@ -901,22 +984,20 @@ $( document ).ready(function() {
   checkMissingDice();
 ?>
 
-  
-<a id="Roll"></a>
 
 <div class="content">
-<div class="aidscontent">
+<div class="aidscontent" id="jQueryCorner">
   
 <!-- AIDS: MOBS, MIDDLE, BOSS -->
 <div id="flex-container-aids">
 
   <!-- MOBS left -->
-  <div class="flex-item-aids-left">
+  <div class="flex-item-aids-left" data-balloon="<?=$mobsRNG?>" data-balloon-pos="up">
     <h2>Mobs</h2>
     <div class="bounceInDownRotate">
       <div class="dice_wrapper">
         <div class="dice_wrapper-font">
-          <span id="mobsRNG"><?=$mobsRNG?></span>
+          <span id="mobsRNG"><?=$mobsRNG_Output?></span>
         </div>
       </div>
     </div>
@@ -941,12 +1022,12 @@ $( document ).ready(function() {
   <div class="flex-item-aids-middle" id="rerunroll" style="display: none;"></div>
 
   <!-- BOSS right -->
-  <div class="flex-item-aids-right">
+  <div class="flex-item-aids-right" data-balloon="<?=$bossRNG?>" data-balloon-pos="up">
     <h2>Boss</h2>
     <div class="bounceInDownRotate">
       <div class="dice_wrapper">
         <div class="dice_wrapper-font">
-          <span id="bossRNG"><?=$bossRNG?></span>
+          <span id="bossRNG"><?=$bossRNG_Output?></span>
         </div>
       </div>
     </div>
@@ -964,7 +1045,7 @@ $( document ).ready(function() {
   </div>
 
   
-  <div id="randomWeapon"><?=$randomWeapon?></div>
+  <!-- <div id="randomWeapon">php$randomWeapon</div> -->
   
 
   <div>
@@ -1106,6 +1187,11 @@ $(".custom-option").on("click", function() {
 <div id="jsstatus">&nbsp;</div>
 
 </div><!-- EOF aidscontent -->
+  
+
+<script>
+  // $("#jQueryCorner").corner("sculpt");
+</script>
 
   
 <div id="status_song">&nbsp;</div>
@@ -1220,7 +1306,7 @@ ENDWHILE
   </table>
 </div><!-- EOF killedBosses -->
 
-  
+
   
 <hr>  
   
@@ -1239,6 +1325,10 @@ ENDWHILE
 <hr>
 <footer>
   <nav>
+    <span>
+      User: <?=$_SESSION["username"]?> |
+    </span>
+    <a href="/?action=logout">Logout</a> |
     <a href="#" id="myBtn">Zuletzt gewürfelt</a> |
     <a href="/edit" target="_blank">Edit</a>
   </nav>
@@ -1247,8 +1337,7 @@ ENDWHILE
   
 
 </div><!-- EOF Content -->
-</div><!-- EOF Container -->
-  
+</div><!-- EOF Container -->  
   
 <!-- AUDIO -->
 <div id="audio">
@@ -1268,9 +1357,6 @@ ENDWHILE
   <audio id="audio_richevanslaugh"  src="/audio/richevanslaugh.mp3"></audio>
   
   
-  
-    
-  
   <!-- Scheissendreck -->
   <audio id="audio_dolphin"               src="/audio/dolphin.mp3"></audio>
   <audio id="audio_evillaugh"             src="/audio/evillaugh.mp3"></audio>
@@ -1279,8 +1365,9 @@ ENDWHILE
   <audio id="audio_sadmusic"              src="/audio/sadmusic.mp3"></audio>
   <audio id="audio_sadmusic2"             src="/audio/sadmusic2.mp3"></audio>
   <audio id="audio_zackgalifianakislaugh" src="/audio/zackgalifianakislaugh.mp3"></audio>
-    
+  <audio id="audio_alwayssunnybell"       src="/audio/alwayssunnybell.mp3"></audio>
   
+
   <!-- The Room -->
   <audio id="audio_Cheep_1"             src="/audio/TheRoom/Cheep_1.mp3"></audio>
   <audio id="audio_Cheep_2"             src="/audio/TheRoom/Cheep_2.mp3"></audio>
@@ -1311,10 +1398,11 @@ ENDWHILE
   <audio id="audio_cundflicht"                src="/audio/WoWQuote/cundflicht.mp3"></audio>
   
   
-  
   <!-- Shrine Background -->
   <audio id="audio_shrine"          src="/audio/ds3_firelinkshrine.mp3"></audio>
+  
   <!--
+  <audio id="audio_shrine"          src="/audio/DancingWithTearsInMyEyes.mp3"></audio>
   <audio id="audio_shrine"          src="/audio/DarkSoulsBonfireSoundEffect(cropped).ogg"></audio>
   <audio id="audio_shrine"          src="/audio/DarkSoulsBonfireSoundEffect(cropped)LowerVolume.ogg"></audio>
   <audio id="audio_shrine"          src="/audio/DS1_Firelink_Shrine.mp3"></audio>
@@ -1384,3 +1472,12 @@ window.onclick = function(event) {
 
 </body>
 </html>
+
+<?php
+// Session/Login end
+/*
+} else { 
+  include("login.inc.php");
+}
+*/
+?>

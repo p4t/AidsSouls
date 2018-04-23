@@ -2,7 +2,7 @@
 require_once("config.db.php");
 
   // $tables = array("mobs", "boss", "weapons");
-  $tables = array("mobs", "weapons", "boss");
+  $tables = array("mobs", "boss", "weapons");
 
   foreach ($tables as $table) :
     $table_output = ucfirst($table);
@@ -22,7 +22,7 @@ require_once("config.db.php");
         </ul>
         
         <label for="ajax_<?=$table?>">
-          +&nbsp;<input type="text" id="ajax_<?=$table?>" value="" size="15" autocomplete="off" maxlength="32" placeholder="<?=ucfirst($table)?>">
+          <span data-balloon="<?=$table_output?> hinzufügen" data-balloon-pos="down">+</span>&nbsp;<input type="text" id="ajax_<?=$table?>" value="" size="15" autocomplete="off" maxlength="32" placeholder="<?=ucfirst($table)?>">
         </label>
         
         

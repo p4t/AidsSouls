@@ -3,7 +3,7 @@
 <table class="edit">
   <thead>
     <tr>
-      <th class="th-h" colspan="9">
+      <th class="th-h" colspan="10">
         &raquo; Logs
       </th>
     </tr>
@@ -16,6 +16,7 @@
       <th scope="col"><strong>ParentField</strong></th>
       <th scope="col"><strong>Old</strong></th>
       <th scope="col"><strong>New</strong></th>
+      <th scope="col"><strong>User</strong></th>
       <th scope="col"><strong>IP</strong></th>
       <th scope="col"><strong>Date</strong></th>
     </tr>
@@ -38,6 +39,7 @@
     <td><?=$row["parentField"]?></td>
     <td><?=$row["old"]?></td>
     <td><?=$row["new"]?></td>
+    <td><?=$row["username"]?></td>
     <td><?=$row["IP"]?></td>
     <td><?=formatDate($row["date"], "datetime")?></td>
   </tr>
@@ -47,7 +49,7 @@
   ?>
       
   <tr>
-    <td colspan="9">
+    <td colspan="10">
       <a href="edit.php?action=truncate2" onClick="return confirm('SICHER???????? MACH KE SCHEISS!');" data-balloon="Tabelle leeren" data-balloon-pos="up">Leeren</a>
     </td>
   </tr>

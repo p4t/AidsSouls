@@ -36,12 +36,12 @@ echo "</pre>";
 <table class="edit">
   <thead>
     <tr>
-      <th class="th-h" colspan="2">
+      <th class="th-h" colspan="1">
         &raquo; Backups
       </th>
     </tr>
     <tr>
-      <th scope="col"><strong>ID</strong></th>
+      <!-- <th scope="col"><strong>ID</strong></th> -->
       <th scope="col"><strong>File</strong></th>
     </tr>
   </thead>
@@ -53,7 +53,7 @@ echo "</pre>";
   ?>
       
   <tr>
-    <td><?=$key?></td>
+    <!-- <td><?php//$key?></td> -->
     <td>
       <a href="/myphp-backup-files/<?=$value?>">
         <?=$value?>

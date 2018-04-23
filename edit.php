@@ -1,10 +1,27 @@
 <?php
-// Databse
+// Lib
 require_once("config.db.php");
 require_once("functions.inc.php");
 
 // Save visits to edit.php into db
 saveRolls();
+
+
+/* LOGIN */
+/*
+unset($error);
+
+if ( (!empty($_POST["username"])) && (!empty($_POST["password"])) ) {
+
+  $username = trim($_POST["username"]);
+  $password = trim($_POST["password"]);
+  
+  $error = login ($username, $password);
+    
+} // ENDIF
+  
+if ( (!empty($_SESSION["username"])) && ($_SESSION["valid"] == TRUE) ) {
+*/
 ?>
 
 
@@ -17,7 +34,7 @@ saveRolls();
 <meta name="viewport" content="width=device-width, initial-scale=1">
   
 <title>\[T]/ the Edit</title>
-<base href="http://aids.gyros-mit-zaziki.de">
+<base href="http://ds.fahrzeugatelier.de">
 
 <link rel="stylesheet" href="/css/layout.css" type="text/css" media="screen">
 <link rel="stylesheet" href="/css/flex.css" type="text/css" media="screen">
@@ -59,6 +76,7 @@ saveRolls();
 </head>
 
 <body spellcheck="false" id="edit">
+  
   <header>
   <!-- <div class="header_Edit"> -->
     <h1>&raquo;<a href="/">AIDS</a>&laquo;</h1>
@@ -512,13 +530,18 @@ if ( empty($_GET["mode"]) ) :
   ENDFOREACH
 ?>
 
-  <?php
-    include("kills.inc.php");
-    include("rolls.inc.php");
-    include("todo.inc.php");
-    include("backups.inc.php");
-    include("logs.inc.php");
-  ?>
+<?php
+  include("kills.inc.php");
+?>
+
+<div class="divider">&nbsp;</div>
+
+<?php
+  include("todo.inc.php");
+  include("backups.inc.php");
+  include("rolls.inc.php");
+  include("logs.inc.php");
+?>
 
 
   
@@ -538,6 +561,10 @@ ENDIF // EOF if ( empty($_GET["mode"]) )
 <hr>
   <footer>
     <nav>
+      <span>
+        User: <?=$_SESSION["username"]?> |
+      </span>
+      <a href="/?action=logout">Logout</a> |
       <a href="/edit">&lt;</a> |
       <a href="/edit#Mobs">Mobs</a> |
       <a href="/edit#Boss">Boss</a> |
@@ -549,6 +576,17 @@ ENDIF // EOF if ( empty($_GET["mode"]) )
   </footer>
 <hr>
 
-  
+
 </body>
 </html>
+
+
+
+<?php
+/*
+// Session, Login
+} else {
+  redirect("/", $statusCode = 303);
+}
+*/
+?>
