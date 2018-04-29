@@ -26,6 +26,9 @@ if ( (!empty($_POST["mobs"])) || (!empty($_POST["boss"])) || (!empty($_POST["wea
       
       ajaxPDOInsert($table, $addDice, $addEntry);
       
+      // Copy over weapon image from fextralife
+      if ( $table == "weapons" ) copyWeaponFromFextra($addEntry);
+      
       // Log
       logAction ($table, "post.ajax", "DICE:" . $addDice, $table."Name" , "", $addEntry);
       

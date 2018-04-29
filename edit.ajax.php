@@ -39,6 +39,9 @@ if (!empty($_POST)) {
         $stmt->bindParam(":ID", $ID, PDO::PARAM_INT);
         $stmt->execute();
         
+        // Copy over weapon image from fextralife
+        if ( $table == "weapons" ) copyWeaponFromFextra($name);
+        
         // Log
         logAction ($table, "edit.ajax", $ID, $table."Name" , "", $name);
 

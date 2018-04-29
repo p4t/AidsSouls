@@ -29,12 +29,14 @@ $pdo->setAttribute( PDO::ATTR_EMULATE_PREPARES, false ); // emulate prep
 */
 
 /* BASE TABLE*/
-define("TABLE", "ds3");
+define("_TABLE", "ds3");
+define("_GAME", "ds3");
 $dbTable = TABLE;
 
-define("__DR", $_SERVER["DOCUMENT_ROOT"]);
-define("FLASKS", 15); // Number of Flasks
-define("login", TRUE)
+define( "_DR", $_SERVER["DOCUMENT_ROOT"] );
+define( "_PATH", dirname(__FILE__) );
+define( "_FLASKS", 15 ); // Number of Flasks
+define( "_LOGIN", TRUE )
   
   
 // Session

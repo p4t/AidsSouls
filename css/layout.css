@@ -45,13 +45,9 @@ html {
   -webkit-font-smoothing: antialiased; /* Fix for webkit rendering */
 	-webkit-text-size-adjust: 100%; 
   -ms-text-size-adjust: 100%;
-  
-  background-color: #000;
-  
+    
   /* DS3 Wallpaper */
-  
   background: url("/img/bg/shrine.jpg") no-repeat center center fixed;
-  
   
   /* Larry */
   /*
@@ -61,6 +57,8 @@ html {
   /* DS1 Remaster */
   /* background: url("/img/bg/ds1remaster.jpg") no-repeat center center fixed; */
   
+  background-color: black;
+
   
   -webkit-background-size: cover;
   -moz-background-size: cover;
@@ -433,6 +431,21 @@ li.noListStyle {
   font-size: 1em; /* Normalize font size for middle div, see flex-item-aids-middle */
 }
 
+#randomDiceOut {
+  width: 100px;
+  height: 100px;
+  line-height: 100px;
+  
+  font-size: 1.2em;
+
+  background: url("/dice/dice_template.png") no-repeat center;
+  
+  -webkit-background-size: contain;
+  -moz-background-size: contain;
+  -o-background-size: contain;
+  background-size: contain;
+}
+
 .dice {
   height: 236px;
 }
@@ -451,9 +464,13 @@ img.dice,
 .die,
 .dice_wrapper
 {
-    overflow: hidden;
-    transition-duration: 0.8s;
-    transition-property: transform;
+  /*
+  overflow: hidden;
+  ///////////////////// WHY!?!?!?!??!?!!?!?!
+  */
+  
+  transition-duration: 0.8s;
+  transition-property: transform;
 }
 img.dice:hover,
 .die:hover,
@@ -464,11 +481,8 @@ img.dice:hover,
   
 }
 
-
+/*
 .die {
-  /*
-  ALSO CHECKBOX IMAGE SIGN HAKE FÜR CHECKED
-  */
   width: 100px;
   height: 100px;
   
@@ -479,72 +493,154 @@ img.dice:hover,
   background: white;   
   border-radius: 15px;
   border: 1px solid chocolate;
-  /*
-  box-shadow: 1px 1px 5px #fff, 1px 1px 2px #000, -1px -1px 1px #bb754d, -1px -1px 2px #fff;
-  */
 }
+*/
 
 :root {
   --dice-size: 125px;
 }
 
 .dice_wrapper {
-  /*
-  font-family: "Trajan";
-  font-family: "OptimusPrinceps";
-  font-family: "ds1";
-  */
+  overflow: visible;
+  
   font-family: inherit;
 
+  /*
   width: var(--dice-size);
   height: var(--dice-size);
   line-height: var(--dice-size); /* the same div height */
+  width: var(--dice-size);
+  height: var(--dice-size);
+  line-height: 1em;
+  /*
+  line-height: 125px;
+  */
+  
+  /*
   font-size: 5em;
   font-weight: normal;
-
-  /*
-  color: black;
-  text-shadow: 1px 1px 10px black;
-  */
   color: white;
   text-shadow: 1px 1px 10px black;
-  /*
-  text-align: center;
-  vertical-align: middle;
   */
+  
   opacity: 1;
 
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-box;
+  display: -ms-flexbox;
   display: flex;
+  
+  -webkit-flex-align: center;
+  -ms-flex-align: center;
+  -webkit-align-items: center;
+  align-items: center;
+  
+  -webkit-justify-content: center;
+  -moz-justify-content: center;
+  justify-content: center;
+  
+  
 
+
+  
+  
   /*
-  background: url("/dice/dice.png") no-repeat center;
+  align-content: center;
   */
-  background: url("/dice/dice.png") no-repeat center;
+  
+  /* TEST : */
+  /*
+  flex-wrap: nowrap;
+  flex-flow: nowrap;
+  flex-direction: row;
+  */
+  
+  padding: 0;
+  margin: 0;
+
+  background: url("/dice/dice_brown.png") no-repeat center;
   
   -webkit-background-size: contain;
   -moz-background-size: contain;
   -o-background-size: contain;
   background-size: contain;
-
-
-  /*
-  border-radius: 15px;
-  border: 1px solid chocolate;  
-  */
 }
 
-/* Append to disable user select */
-.user-select {
+
+
+
+/* Center font on mobile fix */
+/*
+.dice_wrapper-font,
+.dice_wrapper-font img,
+*/
+#mobsRNG, #mobsRNG img,
+#bossRNG, #bossRNG img
+{
+  /*
+  margin: 0 auto;
+  */
+  
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
+  
+  
+  /*
+  text-align: center;
+  vertical-align: middle;
+  justify-content: center;
+  align-content: center;
+  align-items: center;
+  align-self: center;
+  */
+  /* text-align: center; */
 }
 
-/* Center font on mobile fix */
-.dice_wrapper-font {
-  margin: 0 auto;
+#mobsRNG img {
+   /*
+  outline: 1px solid green;
+  */
+}
+
+
+#mobsRNG,
+#bossRNG
+{
+  /*
+  font-size: 5em;
+  */
   
+  /*
+  font-weight: normal;
+  color: white;
+  text-shadow: 1px 1px 10px black;
+  */
+  text-align: center; /* center non flex-items */
+}
+
+.diceText {
+  /*
+  width: 125px;
+  height: 125px;
+  */
+  font-size: 5em;
+  
+  line-height: var(--dice-size);
+  
+}
+.diceIMG {
+}
+
+
+
+
+
+
+/* Append to disable user select */
+.user-select {
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
@@ -881,13 +977,17 @@ font-weight: normal;
 
 
 
-.delete {
+.delete,
+.edit-data
+{
   color: red;
   display: none;
   float: right;
 }
-.title:hover .delete {
-  display:block;
+.title:hover .delete,
+.title:hover .edit-data
+{
+  display: block;
 }
 
 
@@ -898,6 +998,16 @@ font-weight: normal;
 }
 
 
+.diceIconPath-font {
+  font-size: 2em;
+}
+
+td > div img {
+  display: none;
+}
+td:hover > div img {
+  display: block;
+}
 
 
 
@@ -927,7 +1037,14 @@ font-weight: normal;
 }
 */
 
-
+/*
+#reset-this-parent {
+  all: initial;
+  * {
+    all: unset;
+  }
+}
+*/
 
 /*
 * {
@@ -939,6 +1056,6 @@ font-weight: normal;
 
 /*
 * {
-  outline: 1px solid red;
+  outline: 1px solid green;
 }
 */

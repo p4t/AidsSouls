@@ -22,17 +22,28 @@ if (
 // include_once("/css/login.css");
 
 
-// Get max dice value for mt_rand()
+// Get random number
 $RNG        = getRNG();
 $mobsRNG    = $RNG[0];
 $bossRNG    = $RNG[1];
 
-$flasks     = FLASKS;
+$flasks     = _FLASKS;
 $weaponIMG  = "<img src=\"/img/weapon_icon.png\" width=\"30\" height=\"30\" alt=\"Weapon\">"; // 41, 40
 
 // DEBUG
-$mobsRNG = 22;
-$bossRNG = 17;
+// $mobsRNG = 15;
+// $bossRNG = 5;
+
+if ( !empty($_GET["RNG"]) ) {
+  $mobsRNG = $_GET["RNG"];
+  $bossRNG = $_GET["RNG"];
+}
+if ( !empty($_GET["mobsRNG"]) ) {
+  $mobsRNG = $_GET["mobsRNG"];  
+}
+if ( !empty($_GET["bossRNG"]) ) {
+  $bossRNG = $_GET["bossRNG"];
+}
 
 
 // Get Aids from mobs boss tables 
@@ -40,64 +51,9 @@ $Aids     = getAidsByRNG($mobsRNG, $bossRNG);
 $mobsAids = $Aids[0];
 $bossAids = $Aids[1];
 
-// Debug output
-/*
-echo "<pre>";
-
-echo "MobsRNG: " . $mobsRNG;
-echo "<br>";
-echo "BossRNG: " . $bossRNG;
-echo "<br>";
-echo "<br>";
-echo "MobsAids: " . $mobsAids;
-echo "<br>";
-echo "BossAids: " . $bossAids;
-
-echo "</pre>";
-*/
-
-// $aidsArray = array("Jäscher", "Feige");
-
+// Output for dice-wrapper display
 $mobsRNG_Output = replaceDiceWithSymbol ($mobsAids, $mobsRNG);
 $bossRNG_Output = replaceDiceWithSymbol ($bossAids, $bossRNG);
-
-
-
-/*
-// Handle Shots
-if ( $mobsAids == "Jäscher" || $mobsAids == "Feige" ) { // if (strcasecmp($var1, $var2) == 0) {
-  // RNG # for balloon-tip
-  $mobsRNGNR   = $mobsRNG;
-  
-  $newMobsAids = getShotsAidsByRNG("mobs");
-
-  $mobsAids = $mobsAids . ":&nbsp;" . $newMobsAids;
-  
-  // JS Hack
-  $shots = TRUE;
-  
-}
-
-if ( $bossAids == "Jäscher" || $bossAids == "Feige") {
-  // RNG # for balloon-tip
-  $bossRNGNR   = $bossRNG;
-
-  $newBossAids = getShotsAidsByRNG("boss");
-
-  $bossAids = $bossAids . ":&nbsp;" . $newBossAids;
-  
-  // JS Hack
-  $shots = TRUE;
-}
-*/
-
-// Save $boss/mobsRNG number value in var to output as balloon-tip if the dice number is replaced by image
-/*
-$c_mobs = $mobsRNGNR ?? $mobsRNG;
-$c_boss = $bossRNGNR ?? $bossRNG;
-*/
-
-
 
 // Random Weapon
 $randomWeapon = randomWeapon();
@@ -109,6 +65,9 @@ $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
 $todoID   = $row["ID"];
 $todoText = $row["todoText"];
+
+// Debug
+// $debug = debug($mobsRNG, $mobsAids, $bossRNG, $bossAids, $randomWeapon);
 
 // Write aids rolls into DB
 saveRolls($mobsAids, $bossAids); // Table/Output in edit.php
@@ -186,9 +145,37 @@ echo "bossrngout: " . $bossRNG_Output;
 
 <!-- jQuery Corner Plugin -->
 <!-- https://github.com/malsup/corner -->
-<script src="/js/jquery.corner.js"></script>
+<!-- <script src="/js/jquery.corner.js"></script> -->
 
 
+<!-- localStorage -->
+<script>
+/*
+$( document ).ready(function() {
+
+  if (typeof(Storage) !== "undefined") {
+    // Code for localStorage/sessionStorage.
+    // alert ("localStorage.true");
+    
+    // $("#status").show();
+    // $("#status").text("localStorage.true");
+
+    // Store
+    localStorage.setItem("test", "localStorage.Schnagges");
+    // Retrieve
+    // document.getElementById("status").innerHTML = localStorage.getItem("test");
+    // alert (localStorage.getItem("test"));
+    $("#status").show();
+    $("#status").text(localStorage.getItem("test"));
+    
+  } else {
+    // Sorry! No Web Storage support..
+  }
+  
+});
+*/
+</script>
+  
 <!-- Open Bonfire -->
 <script>
 function openBonfire () {
@@ -426,6 +413,7 @@ $( document ).ready(function() {
 <!-- W6, W12, W20, W30 -->
 <script>
 // Random image out of 12
+/*
 var images_w6  = [
   "1.png",
   "2.png",
@@ -505,6 +493,127 @@ var images_w30  = [
   "29.png",
   "30.png"
 ];
+*/
+/*
+var images = [
+  "1.png",
+  "2.png",
+  "3.png",
+  "4.png",
+  "5.png",
+  "6.png",
+  "7.png",
+  "8.png",
+  "9.png",
+  "10.png",
+  "11.png",
+  "12.png",
+  "13.png",
+  "14.png",
+  "15.png",
+  "16.png",
+  "17.png",
+  "18.png",
+  "19.png",
+  "20.png",
+  "21.png",
+  "22.png",
+  "23.png",
+  "24.png",
+  "25.png",
+  "26.png",
+  "27.png",
+  "28.png",
+  "29.png",
+  "30.png"
+];
+*/
+  
+  
+var dice_6 = [
+  "1",
+  "2",
+  "3",
+  "4",
+  "5",
+  "6"
+];
+  
+var dice_12  = [
+  "1",
+  "2",
+  "3",
+  "4",
+  "5",
+  "6",
+  "7",
+  "8",
+  "9",
+  "10",
+  "11",
+  "12"
+];
+
+var dice_20  = [
+  "1",
+  "2",
+  "3",
+  "4",
+  "5",
+  "6",
+  "7",
+  "8",
+  "9",
+  "10",
+  "11",
+  "12",
+  "13",
+  "14",
+  "15",
+  "16",
+  "17",
+  "18",
+  "19",
+  "20"
+];
+
+  
+  
+var dice = [
+  "1",
+  "2",
+  "3",
+  "4",
+  "5",
+  "6",
+  "7",
+  "8",
+  "9",
+  "10",
+  "11",
+  "12",
+  "13",
+  "14",
+  "15",
+  "16",
+  "17",
+  "18",
+  "19",
+  "20",
+  "21",
+  "22",
+  "23",
+  "24",
+  "25",
+  "26",
+  "27",
+  "28",
+  "29",
+  "30"
+];
+
+
+  
 
 function getRandomInt(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -519,15 +628,19 @@ function pickimg(w = 0) {
 
     // close div of rerun() if shown
     $("#rerunroll").hide();
+    // stop audio of rerun
+    stop_audio();
     // play audio
     play_audio("dice");
 
   } else {
     $("#w12").hide();
     $("#bonfire").show();
+    
   }
 
 /* Checkbox*/
+/*
 if ( $("input#dice_switch").is(":checked") ) {
   images = images_w20;
   $("#dice_h2").text("W20");
@@ -535,32 +648,49 @@ if ( $("input#dice_switch").is(":checked") ) {
   images = images_w12;
   $("#dice_h2").text("W12");
 }
+*/
  
 
 /* Select */
   // W6
 if ( $("#dice_dropdown option:selected").text() == "W6" ) {
-  images = images_w6;
+  // images = images_w6;
+  // images.length = 6;
+  // dice.length = 6;
+  diceRND = dice.slice(0, 6);
   $("#dice_h2").text("W6");
   
   // W12
 } else if ( $("#dice_dropdown option:selected").text() == "W12" ) {
-  images = images_w12;
+  // images = images_w12;
+  // images.length = 12;
+  // dice.length = 12;
+  // dice = dice_12;
+  diceRND = dice.slice(0, 12);
   $("#dice_h2").text("W12");
   
   // W20
 } else if ( $("#dice_dropdown option:selected").text() == "W20" ) {
-  images = images_w20;
+  // images = images_w20;
+  // images.length = 20;
+  // dice.length = 20;
+  // dice = dice_20;
+  diceRND = dice.slice(0, 20);
   $("#dice_h2").text("W20");
   
   // W30
 } else if ( $("#dice_dropdown option:selected").text() == "W30" ) {
-  images = images_w30;
+  // images = images_w30;
+  // images.length = 30;
+  // dice.length = 30;
+  // dice = dice_30;
+  diceRND = dice.slice(0, 30);
   $("#dice_h2").text("W30");
 }
 
 
 /* Bootstrap Dropdown */
+/*
 if ( w == 6 ) {
   images = images_w6;
   $("#dice_h2").text("W6");
@@ -577,11 +707,29 @@ if ( w == 6 ) {
   images = images_w30;
   $("#dice_h2").text("W30");
 }
-
-  
-  
+*/
+  /*
   var src = "/dice/" + images[getRandomInt(0, images.length - 1)];
   $("img#randimgw12").prop("src", src);
+  */
+  var src = diceRND[getRandomInt(0, diceRND.length - 1)];
+  $("#randomDiceOut").text(src);
+  
+  
+  $("#status").show();
+  $("#status").text(diceRND);
+  
+  
+  /*
+  var test2 = test.slice(0, 6);
+
+  $("#status").show();
+  $("#status").text(test2);
+  */
+  
+  
+  
+  
   
   /*
   var src = images[getRandomInt(0, images.length - 1)];
@@ -688,7 +836,7 @@ $( document ).ready(function() {
   * Remains = ¯\_(ツ)_/¯ (no rerun)
   */
   function rerun() {
-
+    
     var rnd = Math.floor((Math.random() * 100) + 1);
     
     if ( $("#rerunroll").css("display") === "none" ) {
@@ -726,7 +874,6 @@ $( document ).ready(function() {
         
         // Play Sound
         randomSoundEffect();
-        
         $("#bonfire").hide();
       }
 
@@ -835,8 +982,49 @@ var audio_files  = [
   "schwarzerbildschirm",
   "wernerflasche",
   "richevanslaugh",
-  "alwayssunnybell"
+  "alwayssunnybell",
+  "flanders",
+  "frieza",
+  "joker",
+  "presi1",
+  "presi2",
+  "presi3",
+  "presi4",
+  "presi5",
+  "presi6",
+  "presi7"
 ];
+  
+/*
+  "werner1",
+  "werner2",
+  "werner3",
+  "werner4",
+  "werner5",
+  "werner6",
+  "werner7",
+  "werner8",
+  "werner9",
+  "werner10",
+  "werner11",
+  "werner12",
+  "werner13",
+  "werner14",
+  "werner15",
+  "werner16",
+  "werner17",
+  "werner18",
+  "werner19",
+  "werner20",
+  "werner21",
+  "werner22",
+  "werner23",
+  "werner24",
+  "werner25",
+  "werner26",
+  "werner27"
+
+*/
 
   
   
@@ -858,14 +1046,14 @@ function randomSoundEffect() {
   var src = audio_files[getRandomInt(0, audio_files.length - 1)];
   
   // Debug
-  // var src = audio_files[33];
+  // var src = audio_files[48];
   
   // $("img#randimgw12").prop("src", src);
   
-  /*
+  
   $("#status").show();
   $("#status").text(src);
-  */
+  
   
   play_audio(src);
 
@@ -875,6 +1063,11 @@ function randomSoundEffect() {
 <!-- Play Audio -->
 <script>
   function play_audio (source) {
+    
+    // set html via jquery
+    // $("#element").html("<audio autoplay><source src=\"" + thisSound + "\" type=\"audio/mpeg\"><embed src=\"" + thisSound + "\" hidden=\"true\" autostart=\"true\" /></audio>");
+    
+    
     var myAudio = document.getElementById("audio_"+source);
     
     if (source == "shrine") {
@@ -893,10 +1086,27 @@ function randomSoundEffect() {
     
     // Loop
     $(myAudio).bind("ended", function()  {
-      if (source !== "dice" && source !== "bier" && source !== "superaids" && source !== "vader" ) {
+      if ( // don't loop these audio files
+          source !== "dice" &&
+          source !== "bier" &&
+          source !== "superaids" &&
+          source !== "vader" &&
+          source !== "aids" &&
+          source !== "Biber" &&
+          source !== "Katz" &&
+          source !== "Pat"
+         ) {
         // Debug
         // alert(source);
         myAudio.currentTime = 0;
+        
+        // Set timeout for the loop
+        /*
+        setTimeout(function() { 
+                myAudio.play();
+            }, 1250);
+        */
+        
         myAudio.play();
       }
     });
@@ -904,14 +1114,39 @@ function randomSoundEffect() {
   } // ENDFUNCTION
 </script>
 
+<!-- Stop Audio Test -->
+<script>
+/*
+document.addEventListener('play', function(e){
+    var audios = document.getElementsByTagName('audio');
+    for(var i = 0, len = audios.length; i < len;i++){
+        if(audios[i] != e.target){
+            audios[i].pause();
+        }
+    }
+}, true);
+*/
+
+/*
+$('audio').each(function(){
+    this.pause(); // Stop playing
+    this.currentTime = 0; // Reset time
+});
+*/
+</script>
+
 <!-- Stop Audio --> 
 <script>
 function stop_audio () {
+  var all_audio = document.getElementById("audio").querySelectorAll("audio");
+  // console.log(all_audio);
+  
   
   // global audio_files; @randomSoundEffect()
   var i;
   var src;
   
+  /*
   // go through all audio_files array and check if one of those is currently playing and if so, stop it
   for (i = 0; i < audio_files.length; i++) {
     // src = audio_files[i] + ".mp3";
@@ -925,7 +1160,24 @@ function stop_audio () {
       src.currentTime = 0;
     }
   }
+  */
+
+  // Get all audio by reading every audio Tag instead of audio_files array from random_sound()
+  for (i = 0; i < all_audio.length; i++) {
+    // src = audio_files[i] + ".mp3";
+    src = all_audio[i];
+    // src = document.getElementById(src)
+    
+    // alert(src);
+    // console.log(src);
+    // text += cars[i] + "<br>";
+    if (src.currentTime > 0) {
+      src.pause();
+      src.currentTime = 0;
+    }
+  }
   
+
 
   /*
   var audio_haha      = document.getElementById("audio_haha");
@@ -955,6 +1207,45 @@ $( document ).ready(function() {
 }
 ?>
   
+<!-- JS readdir -->
+<script>
+var files = <?php $out = array();
+
+$files = scan_dir("audio/werner");
+  foreach ($files as $key => $value) {
+    // echo $value . "<br>";
+    $out[] = $value;
+  }
+      
+echo json_encode($out); ?>;
+
+// alert (files);
+function json_test () {
+  $("#json").toggle();
+  $("#json").text(files);
+}
+</script>
+
+
+<?php
+// echo "<pre>";
+
+// echo "Files: " . $out;
+  
+/*
+$files = scan_dir("audio");
+    
+  $out = array();
+  foreach ($files as $key => $value) {
+    // echo $value . "<br>";
+    $out[] = $value;
+  }
+      
+echo json_encode($out);
+*/  
+  
+// echo "</pre>";
+?>
   
 <!-- [contenteditable] change font on edit -->
 
@@ -963,18 +1254,25 @@ $( document ).ready(function() {
 <body spellcheck="false">
 
 
+<?php
+  if ( !empty($debug) ) echo $debug;
+?>
+  
+
 <!-- Wrapper -->
 <div class="container">
 
-  
+
 <!-- Header -->
 <header>
-  <!-- 
-  img src="/img/ds1_logo.png" alt="Dark Souls II Logo" width="630" height="80">
-  <img src="/img/ds2_logo.png" alt="Dark Souls II Logo" width="630" height="80">
-  <img src="/img/ds1remaster_logo.png" alt="Dark Souls II Logo" width="630" height="80">
-  -->
+  <a href="/">
+    <!-- 
+    <img src="/img/ds1_logo.png" alt="Dark Souls I Logo" width="630" height="80">
+    <img src="/img/ds2_logo.png" alt="Dark Souls II Logo" width="630" height="80">
+    <img src="/img/ds1remaster_logo.png" alt="Dark Souls Remaster Logo" width="630" height="80">
+    -->
     <img src="/img/ds3_logo.png" alt="Dark Souls III Logo" width="661" height="80">
+  </a>
   <h4>mit verschärftem AIDS</h4>  
 </header>
 
@@ -996,9 +1294,7 @@ $( document ).ready(function() {
     <h2>Mobs</h2>
     <div class="bounceInDownRotate">
       <div class="dice_wrapper">
-        <div class="dice_wrapper-font">
-          <span id="mobsRNG"><?=$mobsRNG_Output?></span>
-        </div>
+        <div id="mobsRNG"><?=$mobsRNG_Output?></div>
       </div>
     </div>
   </div>
@@ -1014,7 +1310,8 @@ $( document ).ready(function() {
   <!-- W12/W20 output -->
   <div id="w12" class="flex-item-aids-middle" style="display: none;" onclick="openBonfire()">
     <h2 id="dice_h2">W12</h2>
-    <img src="/dice/0.png" class="dice flip-scale-up-diag-1" id="randimgw12" width="100" height="100" alt="Dice">
+    <div id="randomDiceOut" class="flip-scale-up-diag-1 user-select">&nbsp;</div>
+    <!-- <img src="/dice/0.png" class="dice flip-scale-up-diag-1" id="randimgw12" width="100" height="100" alt="Dice"> -->
     <!-- <div id="randimgw12" style="height: 100px"></div> -->
   </div>
   
@@ -1026,9 +1323,7 @@ $( document ).ready(function() {
     <h2>Boss</h2>
     <div class="bounceInDownRotate">
       <div class="dice_wrapper">
-        <div class="dice_wrapper-font">
-          <span id="bossRNG"><?=$bossRNG_Output?></span>
-        </div>
+        <div id="bossRNG"><?=$bossRNG_Output?></div>
       </div>
     </div>
   </div>
@@ -1045,7 +1340,7 @@ $( document ).ready(function() {
   </div>
 
   
-  <!-- <div id="randomWeapon">php$randomWeapon</div> -->
+  <!-- <div id="randomWeapon"><?php //$randomWeapon?></div> -->
   
 
   <div>
@@ -1187,14 +1482,6 @@ $(".custom-option").on("click", function() {
 <div id="jsstatus">&nbsp;</div>
 
 </div><!-- EOF aidscontent -->
-  
-
-<script>
-  // $("#jQueryCorner").corner("sculpt");
-</script>
-
-  
-<div id="status_song">&nbsp;</div>
   
   
 <hr>
@@ -1398,6 +1685,51 @@ ENDWHILE
   <audio id="audio_cundflicht"                src="/audio/WoWQuote/cundflicht.mp3"></audio>
   
   
+  
+  <!-- Presi -->
+  <audio id="audio_presi1"  src="/audio/random/presi1.mp3"></audio>
+  <audio id="audio_presi2"  src="/audio/random/presi2.mp3"></audio>
+  <audio id="audio_presi3"  src="/audio/random/presi3.mp3"></audio>
+  <audio id="audio_presi4"  src="/audio/random/presi4.mp3"></audio>
+  <audio id="audio_presi5"  src="/audio/random/presi5.mp3"></audio>
+  <audio id="audio_presi6"  src="/audio/random/presi6.mp3"></audio>
+  <audio id="audio_presi7"  src="/audio/random/presi7.mp3"></audio>
+  
+  
+  <!-- Werner -->
+  <audio id="audio_werner1"     src="/audio/werner/Wo.mp3"></audio>
+  <audio id="audio_werner2"     src="/audio/werner/Wieso.mp3"></audio>
+  <audio id="audio_werner3"     src="/audio/werner/WelchenSchluessel.mp3"></audio>
+  <audio id="audio_werner4"     src="/audio/werner/Waslos.mp3"></audio>
+  <audio id="audio_werner5"     src="/audio/werner/Verscheidenes.mp3"></audio>
+  <audio id="audio_werner6"     src="/audio/werner/SchoenWaschiWaschimachen.mp3"></audio>
+  <audio id="audio_werner7"     src="/audio/werner/Ruelps.mp3,Rohrbruch.mp3"></audio>
+  <audio id="audio_werner8"     src="/audio/werner/RoehrichFurz.mp3"></audio>
+  <audio id="audio_werner9"     src="/audio/werner/Matratzeee.mp3,Krankenhaus.mp3"></audio>
+  <audio id="audio_werner10"    src="/audio/werner/Kaaaaaaaanzler.mp3"></audio>
+  <audio id="audio_werner11"    src="/audio/werner/Kissen.mp3"></audio>
+  <audio id="audio_werner12"    src="/audio/werner/AlleseinDurcheinander.mp3"></audio>
+  <audio id="audio_werner13"    src="/audio/werner/Bettenmachen.mp3"></audio>
+  <audio id="audio_werner14"    src="/audio/werner/Jaaaahaaaaaaaaa.mp3"></audio>
+  <audio id="audio_werner15"    src="/audio/werner/IchbrauchdenSchluessel.mp3"></audio>
+  <audio id="audio_werner16"    src="/audio/werner/HerrBiernot.mp3,Furz.mp3"></audio>
+  <audio id="audio_werner17"    src="/audio/werner/FuernHeizungskeller.mp3"></audio>
+  <audio id="audio_werner18"    src="/audio/werner/Ellllllfriiiiiiiede.mp3"></audio>
+  <audio id="audio_werner19"    src="/audio/werner/Elfriiiiiiede.mp3"></audio>
+  <audio id="audio_werner20"    src="/audio/werner/Eieieiwoisserdenn.mp3"></audio>
+  <audio id="audio_werner21"    src="/audio/werner/Eckaaaaaat.mp3"></audio>
+  <audio id="audio_werner22"    src="/audio/werner/Decke.mp3"></audio>
+  <audio id="audio_werner23"    src="/audio/werner/DaobenbeiFrauHansen.mp3"></audio>
+  <audio id="audio_werner24"    src="/audio/werner/JedenMorgendasselbeTheater.mp3"></audio>
+
+  
+  
+  <!-- Random -->
+  <audio id="audio_flanders"                src="/audio/random/flanders.mp3"></audio>
+  <audio id="audio_frieza"                  src="/audio/random/frieza.mp3"></audio>
+  <audio id="audio_joker"                   src="/audio/random/Joker_Laughing.mp3"></audio>
+  
+  
   <!-- Shrine Background -->
   <audio id="audio_shrine"          src="/audio/ds3_firelinkshrine.mp3"></audio>
   
@@ -1470,9 +1802,14 @@ window.onclick = function(event) {
 </script>    
   
 
+  <button onClick="json_test()">json</button>
+  <div id="json"></div>
+  
+
 </body>
 </html>
 
+<!-- Logout -->
 <?php
 // Session/Login end
 /*

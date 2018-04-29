@@ -129,7 +129,9 @@
 
 
 
-#flex-container-edit {
+#flex-container-edit,
+#aidsList
+{
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;

@@ -37,10 +37,18 @@ function getRNG () {
   $stmt->execute();
   $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
+  // Check if there are entries in DB
+  /*
+  if ( $row["mobsCount"] == 0 || $row["bossCount"] == 0 ) {
+    echo ("Aids hinzufügen");
+    exit;
+  }
+  */
+
   // MOBS, BOSS RNG
   $mobsRNG  = mt_rand (1, $row["mobsCount"]);
   $bossRNG  = mt_rand (1, $row["bossCount"]);
-  
+    
   return array($mobsRNG, $bossRNG);
 }
 
@@ -54,12 +62,24 @@ function getAidsByRNG ($mobsRNG, $bossRNG) {
   global $flasks;
   global $weaponIMG;
   
+  // If no entries in DB
+  if ( empty($mobsRNG) || empty($bossRNG) ) {
+    // die("Aids hinzufügen!");
+    redirect("/edit");
+  }
+  
   $stmt = $pdo->prepare("SELECT mobs.name, boss.name FROM mobs, boss WHERE mobs.dice = $mobsRNG AND boss.dice = $bossRNG");
   $stmt->execute();
   $row = $stmt->fetch(PDO::FETCH_GROUP);
-
+  
   $mobsAids = $row[0];
   $bossAids = $row[1];
+  
+  /*
+  if ( (empty($mobsAIDS)) || (empty($bossAids)) ) {    
+    // Würfel fehlt
+  }
+  */
   
   // Random Weapon
   // if ( $mobsAids == "Zufällige Waffe" ) $mobsAids = randomWeapon() . $weaponIMG;
@@ -190,65 +210,239 @@ function getShotsAidsByRNG ($section) {
 
 
 
+/*
+ * Check if rolled aids is a random weapon and
+ * Sanitize file path
+ * Replace ' and white space with _
+ */
+function sanitizeWeaponsPath ($aids, $rng = false) {
+  global $pdo;
+  
+  $game = _GAME;
+  
+  // Get all weapons in an Array
+  $data = $pdo->query("SELECT name FROM weapons")->fetchAll(PDO::FETCH_ASSOC);
+
+  // Go through Array and check if rolled $aids is a weapon
+  foreach ($data as $value) {
+    if ( $aids == $value["name"] ) {
+            
+      // Replace white space and apostroph
+      $weapon = str_replace( " ", "_", strtolower($value["name"]) );
+      $weapon = str_replace( "'", "", $weapon );
+      // $weapon = str_replace([" ", "'"], "_", $string);
+      
+      $path = "/dice/icons/weapons/{$game}/{$weapon}-icon.png";
+      
+      if ( file_exists($_SERVER["DOCUMENT_ROOT"] . $path) ) {
+        $RNG  = "<img src=\"{$path}\" alt=\"{$value["name"]}\">"; // width=\"84\" height=\"130\"
+      } else {
+        $RNG = "<div class=\"diceText\">" . "?" . "</div>";
+      }
+      
+      $stop_switch = TRUE;
+      
+      return array($RNG, $stop_switch, $path, $weapon);
+    } // END IF
+    
+  } // END FOREACH
+}
+
+
+
+
+/*
+ * Sanitize file path for rolled aids
+ * Replace: ', /, white space, Umlaute
+ *
+ * Also handle special Aids: Jäscher, Feige and Flask Würfeln
+ */
+function sanitizeAids ($aids) {
+  
+
+  
+  // Sanitize and Normalize string / URL
+  $sanitize = array (
+    "ä" => "ae",
+    "ö" => "oe",
+    "ß" => "ss",
+    "ü" => "ue",
+    "æ" => "ae",
+    "ø" => "oe",
+    "å" => "aa",
+    "é" => "e",
+    "è" => "e",
+    "/" => "_",
+    " " => "_"
+  );
+  
+
+  $aids_normalized = str_replace(array_keys($sanitize), 
+                                 array_values($sanitize), 
+                                 strtolower($aids)
+                                );
+  // echo "<pre>" . "aidsnorm:" . $aids_normalized . "<br>" . "</pre>";
+  return $aids_normalized;
+}
+
+
+
 
 /*
  * Replace Dice Number with Symbol
  */
 function replaceDiceWithSymbol ($aids, $rng) {
-  global $pdo;
-  // if ( $aids == "Ohne Flask" ) $RNG = "<img src=\"/dice/icons/flask_empty.png\" width=\"84\" height=\"130\" alt=\"Ohne Flask\">";
 
-  // Get all weapons in an Array
-  $data = $pdo->query("SELECT name FROM weapons")->fetchAll(PDO::FETCH_ASSOC);
-  /*  
-  echo "<pre>";
-  print_r($data);
-  echo "</pre>";
-  */
-  // Go through Array and check if rolled $aids is a weapon
-  foreach ($data as $value) {
-    if ( $aids  == $value["name"] ) {
+  // Sanitize file path for weapons and check if $aids is a rolled random weapon
+  $sanitizeWeapon = sanitizeWeaponsPath($aids, $rng);
+  $RNG            = $sanitizeWeapon[0];
+  $stop_switch    = $sanitizeWeapon[1]; // TRUE if sanitizeWeaponsPath finds a aids was rolled as a weapon
+  
+  // if rolled aids isn't a random weapon
+  if ( $stop_switch != TRUE ) {
+    
+    /* Check for extraordinary Aids Names */
+    // Jäscher and Feige
+    // Flask Würfeln (n)
+    if (stripos($aids, "Jäscher") !== FALSE) {
+      $split_aids = explode(":", $aids);
+      $aids       = $split_aids[0];
+    }
+    elseif (stripos($aids, "Feige") !== FALSE) {
+      $split_aids = explode(":", $aids);
+      $aids       = $split_aids[0];
+    }
 
-      $weapon = str_replace( " ", "_", strtolower($value["name"]) );
-      $weapon = str_replace( "'", "", $weapon );
-      
-      // $weapon = str_replace([" ", "'"], "_", $string);
-      
-      $RNG = "<img src=\"/dice/icons/weapons/{$weapon}-icon.png\" alt=\"Q\">"; // width=\"84\" height=\"130\"
-      $stop_switch = TRUE;
+    // Check Flask Würfeln (n)
+    elseif (stripos($aids, "Flask Würfeln") !== FALSE) {
+      $split_aids = explode("(", $aids);
+      $aids       = trim($split_aids[0]);
+    }
+
+
+    // Sanitize file path for aids (no weapons) 
+    $aids_normalized = sanitizeAids($aids);
+    $extension = "png";
+    // Change file extension to gif for single entries
+    if ( stristr($aids_normalized, "Parry") ) $extension = "gif";
+    $path = $_SERVER["DOCUMENT_ROOT"] . "/dice/icons/" . $aids_normalized . "." . $extension;
+
+    // if file exists on Server instead of switch loop for every entry
+    if ( file_exists( $path ) ) {
+      // echo "DEBUG";
+      $RNG = "<img src=\"/dice/icons/{$aids_normalized}.{$extension}\" alt=\"{$aids}\">";
+    } else {
+      $RNG = "<div class=\"diceText\">" . $rng . "</div>";
     }
     
-  }
+  } // END IF (random weapon)
   
   
+  /* OLD SWITCH */
+  /*
   switch ($aids) {
-    case "Ohne Flask":
-      $RNG = "<img src=\"/dice/icons/flask_empty.png\" width=\"84\" height=\"130\" alt=\"Ohne Flask\">";      
+  // switch ( strtolower($aids) ) {
+    // width=\"\" height=\"\"
+    case stristr($aids, "Ohne Flask"):
+      $RNG = "<img src=\"/dice/icons/{$aids_normalized}.png\" alt=\"{$aids}\">";
       break;
-    case "Nur R2":
-      $RNG = "R2";
+
+    case stristr($aids, "Invade"):
+      $RNG = "<img src=\"/dice/icons/{$aids_normalized}.png\" alt=\"{$aids}\">";
       break;
-    case "Nur RT":
-      $RNG = "RT";
-      break;
-    case "Invade":
-      $RNG = "<img src=\"/dice/icons/invade.png\" width=\"99\" height=\"102\" alt=\"Invade\">";
-      break;
-    case "Symbol of Aids":
-      $RNG = "<img src=\"/dice/icons/symbolofaids.png\" width=\"126\" height=\"100\" alt=\"Symbol of Aids\">";
-      break;
-    case "Jäscher":
-      $RNG = "<img src=\"/dice/icons/jagermeister.png\" width=\"100\" height=\"100\" alt=\"Jägermeister\">";
+    case stristr($aids, "Symbol of Aids"):
+      $RNG = "<img src=\"/dice/icons/{$aids_normalized}.png\" alt=\"{$aids}\">";
       break;
       
-    default:
-      // return false;
-      if ( $stop_switch != TRUE ) $RNG = $rng;
-  }
+    case stristr($aids, "Jäscher"):
+      $RNG = "<img src=\"/dice/icons/{$aids_normalized}.png\" alt=\"{$aids}\">";
+      break;
+      
+    case stristr($aids, "Ohne Schild"):
+      $RNG = "<img src=\"/dice/icons/{$aids_normalized}.png\" alt=\"{$aids}\">";
+      break;
+      
+    case stristr($aids, "Normal"):
+      $RNG = "<img src=\"/dice/icons/{$aids_normalized}.png\" alt=\"{$aids}\">";
+      break;
+      
+    case stristr($aids, "Ohne Rüstung"):
+      $RNG = "<img src=\"/dice/icons/{$aids_normalized}.png\" alt=\"{$aids}\">";
+      break;
+      
+    case stristr($aids, "Flask Würfeln"):
+      $RNG = "<img src=\"/dice/icons/{$aids_normalized}.png\" alt=\"{$aids}\">";
+      break;
+      
+    case stristr($aids, "Fatroll"):
+      $RNG = "<img src=\"/dice/icons/{$aids_normalized}.png\" alt=\"{$aids}\">";
+      break;
+      
+    case "Crap Ringe":
+      $RNG = "<img src=\"/dice/icons/{$aids_normalized}.png\" alt=\"{$aids}\">";
+      break;
+    
+    case stristr($aids, "Crap Waffe"):
+      $RNG = "<img src=\"/dice/icons/{$aids_normalized}.png\" alt=\"{$aids}\">";
+      break;
+    
+    case stristr($aids, "Lumbe"):
+      $RNG = "<img src=\"/dice/icons/{$aids_normalized}.png\" alt=\"{$aids}\">";
+      break;
+    
+    case "No Dodge/Run":
+      $RNG = "<img src=\"/dice/icons/{$aids_normalized}.png\" alt=\"{$aids}\">";
+      break;
   
+    case stristr($aids, "Nur R2"):
+      $RNG = "<img src=\"/dice/icons/{$aids_normalized}.png\" alt=\"{$aids}\">";
+      break;
+      
+    case stristr($aids, "Ohne Ringe"):
+      $RNG = "<img src=\"/dice/icons/{$aids_normalized}.png\" alt=\"{$aids}\">";
+      break;
+      
+    case stristr($aids, "Feige"):
+      $RNG = "<img src=\"/dice/icons/{$aids_normalized}.png\" alt=\"{$aids}\">";
+      break;
+
+    case stristr($aids, "Invert Controls"):
+      $RNG = "<img src=\"/dice/icons/{$aids_normalized}.png\" alt=\"{$aids}\">";
+      break;
+      
+    case stristr($aids, "Parry"):
+      $RNG = "<img src=\"/dice/icons/{$aids_normalized}.gif\" alt=\"{$aids}\">";
+      break;
+  
+    case stristr($aids, "Ohne Alles"):
+      $RNG = "<img src=\"/dice/icons/{$aids_normalized}.png\" alt=\"{$aids}\">";
+      break;
+      
+    case stristr($aids, "Kill on Sight"):
+      $RNG = "<img src=\"/dice/icons/{$aids_normalized}.png\" alt=\"{$aids}\">";
+      break;
+      
+    case stristr($aids, "Waffe linke Hand"):
+      $RNG = "<img src=\"/dice/icons/{$aids_normalized}.png\" alt=\"{$aids}\">";
+      break;
+    
+    /*
+    default:
+      if ( $stop_switch != TRUE ) { // make sure image isn't overwritten with dice number
+        $RNG = $rng;
+        // check if dice is only a number (no image available) and assign a class to increase font-size to 5em and leave the image alone (centering shenanigans)
+        if ( is_numeric($RNG) ) {
+          $RNG = "<div class=\"diceText\">" . $RNG . "</div>";
+        }
+        
+      }
+      // return false;
+      
+  } // END SWITCH
+  */
   
   return $RNG;
-}
+} // END FUNCTION
 
 
 
@@ -455,6 +649,60 @@ function getLatestRolls () {
 }
 
 
+/*
+* Output Debug 
+*/
+function debug ($mobsRNG, $mobsAids, $bossRNG, $bossAids, $randomWeapon) {
+  $out = "<pre>";
+
+  $out .= "MobsRNG: " . $mobsRNG;
+  $out .= "<br>";
+  $out .= "BossRNG: " . $bossRNG;
+  $out .= "<br>";
+  $out .= "<br>";
+  $out .= "MobsAids: " . $mobsAids;
+  $out .= "<br>";
+  $out .= "BossAids: " . $bossAids;
+  $out .= "<br>";
+  $out .= "<br>";
+  $out .= "RandomWeapon: " . $randomWeapon;
+
+  $out .= "</pre>";
+  //  echo $out; 
+  
+  return $out;
+  
+}
+
+
+
+/*
+* Replace Umlaute and other 
+*/
+function replaceUmlaut ($word) {
+
+  // Sanitize and Normalize string
+  $umlaut = array(
+    "ä" => "ae",
+    "ö" => "oe",
+    "ß" => "ss",
+    "ü" => "ue",
+    "æ" => "ae",
+    "ø" => "oe",
+    "å" => "aa",
+    "é" => "e",
+    "è" => "e"
+  );
+  
+  $word = str_replace( array_keys($umlaut), array_values($umlaut), $word );
+  return $word;
+  
+}
+
+
+
+
+
 
 
 
@@ -507,7 +755,18 @@ function saveRolls ($mobsAids = false, $bossAids = false) {
   $stmt->bindParam(":IP", $IP, PDO::PARAM_STR);
   $stmt->bindParam(":mobs", $mobsAids, PDO::PARAM_STR);
   $stmt->bindParam(":boss", $bossAids, PDO::PARAM_STR);
-  $stmt->execute();
+  
+  try {
+    $stmt->execute();
+  } catch (PDOException $e) {
+    $existingkey = "Integrity constraint violation: 1062 Duplicate entry";
+    
+    if (strpos($e->getMessage(), $existingkey) !== FALSE) {
+      // Take some action if there is a key constraint violation, i.e. duplicate name
+    } else {
+      throw $e;
+    }
+  }
   
 }
 
@@ -652,9 +911,13 @@ function checkMissingDice () {
   $tables = array("mobs", "boss", "weapons");
   foreach($tables as $table) {
     $data = $pdo->query("SELECT dice FROM $table")->fetchAll(PDO::FETCH_COLUMN);
-
-    $missing_number = missing_number($data);
-
+    
+    if ( empty($data) ) {
+      echo "{$table} Aids hinzufügen<br>";
+    } else {
+      $missing_number = missing_number($data); 
+    }
+    
     if ( !empty($missing_number) ) {
       echo "
       <div id=\"flex-container-missingnumbers\">\n
@@ -724,6 +987,67 @@ function scan_dir($dir) {
 
     return ($files) ? $files : false;
 }
+
+
+
+
+
+
+
+
+/*
+* get filename and ext from $fextra
+* prepare filename to copy over to destination folder
+* @see functions.inc.php
+*
+* Also: Check if file exists on server, if not, copy from fextralife
+* MAKE EXTRA FOLDER FOR MODE (ds3. ds2, blood borne etc...)
+*
+*
+* ////// TODO BETTER ERROR HANDLING
+*/
+
+function copyWeaponFromFextra ($weapon) {
+  $weapon = sanitizeWeaponsPath($weapon)[3];
+  // echo "weapon: " . $weapon . "<br>";
+  $source = "http://darksouls3.wiki.fextralife.com/file/Dark-Souls-3/{$weapon}-icon.png";
+  // echo "source " . $source . "<br>";
+  $dest = _DR . "/dice/icons/weapons/" . _GAME . "/{$weapon}-icon.png";
+  // echo "dest: " . $dest . "<br>";
+  $ext = "png";
+
+  // only try to copy if file doesn't exist
+  if ( !file_exists($dest) ) {
+
+    echo "FILE NOT ON INTERNAL SERVER<br>";
+    
+    if ( !file_exists($source) ) {
+      echo "FILE DOES NOT EXIST ON FEXTRALIFE. WEAPON NAME MISSPELLED?<br>"; // weapon name misspelled
+    }
+
+    if ( !@copy($source, $dest) ) { // @ for own error handling
+
+      $errors = error_get_last();
+      
+      echo "<br>";
+      echo "COPY ERROR: ".$errors["type"];
+      echo "<br>";
+      echo $errors["message"];
+      echo "<br>";
+      echo "Copy().Error.";
+      echo "<br>";
+
+    } else {
+      // echo "Copy().Success.";
+    }
+
+  } else {
+    echo "FILE ALREADY EXISTS";
+  }
+} // END FUNCTION
+
+
+
 
 
 

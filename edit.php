@@ -3,6 +3,10 @@
 require_once("config.db.php");
 require_once("functions.inc.php");
 
+// DB Hack
+// include_once("aids.edit.ajax.php");
+// include_once("del.ajax.php");
+
 // Save visits to edit.php into db
 saveRolls();
 
@@ -71,8 +75,51 @@ if ( (!empty($_SESSION["username"])) && ($_SESSION["valid"] == TRUE) ) {
 <meta name="googlebot" content="noindex, nofollow">
 <meta name="google" content="nositelinkssearchbox">
   
-<script src="/js/jquery-3.3.1.min.js"></script>
+<!-- jQuery -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
+
+<!-- Ajax Delete -->
+<script>
+$(document).ready(function () {
+  $(".delete").click(function() {
+    var delcart = $(this).data("value");
+    var deltable = $(this).data("table");
+    
+        if (confirm("Are you sure want to delete?")) {
+          $.ajax({
+              type: "POST",
+              url: "del.ajax.php",
+              data: {ID : delcart, table : deltable},
+              success: function (data) {
+                  if (data) {
+                      //alert(data);
+                      // window.location.reload();
+                        // delete HTML instead of load()
+                        // $("tr[id="+delcart+"]").remove();
+                        $("tr[id="+deltable+"-"+delcart+"]").fadeOut();
+                        
+                        /*
+                        $(".delete").on("click",function() { 
+                          $(this).closest("tr").remove();
+                          return false;
+                        });
+                        */
+                    
+                    
+                    
+                      } else {
+                        // alert ("OHJE");
+                      }
+                        // $("#aidsList").load("aids.edit.ajax.php");
+                      }
+                      });
+        }
+        // alert($(this).data('value'));
+        });
+});
+</script>
+  
 </head>
 
 <body spellcheck="false" id="edit">
@@ -83,6 +130,7 @@ if ( (!empty($_SESSION["username"])) && ($_SESSION["valid"] == TRUE) ) {
   <!-- </div> -->
   </header>
 
+  <!--
   <nav>
     <a href="/edit#Mobs">Mobs</a> |
     <a href="/edit#Boss">Boss</a> |
@@ -90,7 +138,7 @@ if ( (!empty($_SESSION["username"])) && ($_SESSION["valid"] == TRUE) ) {
     <a href="/edit#Kills">Kills</a> |
     <a href="/edit#Rolls">Rolls</a>
   </nav>
-  
+  -->
   
   
   
@@ -100,17 +148,19 @@ if ( (!empty($_SESSION["username"])) && ($_SESSION["valid"] == TRUE) ) {
 checkMissingDice();
 ?>
 
-  
-  
-  
-
-  
-
-<?php
+<?php  
 /*
- * EDIT: MOBS, BOSS, WEAPONS
- */
+*
+*
+*  ///////// INCLUDE EDIT/ADD FORM INSTEAD OF COPY CODE @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+*
+*/
+?>
+  
 
+  
+<!-- EDIT: MOBS, BOSS, WEAPONS -->
+<?php
   if ( !empty($_GET["mode"]) && empty($_GET["action"]) && ($_GET["mode"] == "weapons" || $_GET["mode"] == "mobs" || $_GET["mode"] == "boss") ) {
     (STRING)$mode         = $_GET["mode"];
     (STRING)$table        = $mode;
@@ -130,6 +180,9 @@ checkMissingDice();
       $stmt->bindParam(":ID", $_GET["ID"], PDO::PARAM_INT);
       $stmt->execute();
       
+      // Copy over weapon image from fextralife
+      if ( $mode == "weapons" ) copyWeaponFromFextra($newName);
+    
       // log
       if ( $newDice  != $oldDice ) logAction ($table, "Edit", $ID, $parentField , $oldDice, $newDice);
       if ( $newName  != $oldName ) logAction ($table, "Edit", $ID, $parentField, $oldName, $newName);
@@ -141,38 +194,39 @@ checkMissingDice();
       $stmt = $pdo->prepare("SELECT * FROM $table WHERE ID = ".$_GET["ID"]." ");
       $stmt->execute();
       $row = $stmt->fetch(PDO::FETCH_ASSOC);
+      
     }
-?>
-<div id="flex-container">
-  <div class="flex-item">&nbsp;</div>
-    
-  <div class="flex-item">
-      <form action="/edit?mode=<?= $mode ?>&ID=<?= $_GET["ID"] ?>" method="post" id="edit">
-        <ul>
-          <li><label>Dice:</label></li>
-          <li><input type="number" name="newDice" value="<?=$row["dice"]?>" min="1" max="99" autocomplete="off" placeholder="#" required="required"></li>
-          <li><label>Entry:</label></li>
-          <li><input type="text" name="newName" value="<?=$row["name"]?>" maxlength="32" required="required"></li>
-          <li><input type="submit" value="Submit"></li>
-        </ul>
-        <input type="hidden" name="oldDice" value="<?=$row["dice"]?>">
-        <input type="hidden" name="oldName" value="<?=$row["name"]?>">
-      </form>
+    ?>
+  
+    <div id="flex-container">
+      <div class="flex-item">&nbsp;</div>
+
+      <div class="flex-item">
+        <form action="/edit?mode=<?= $mode ?>&ID=<?= $_GET["ID"] ?>" method="post" id="edit">
+          <ul>
+            <li><label>Dice:</label></li>
+            <li><input type="number" name="newDice" value="<?=$row["dice"]?>" min="1" max="99" autocomplete="off" placeholder="#" required="required"></li>
+            <li><label>Entry:</label></li>
+            <li><input type="text" name="newName" value="<?=$row["name"]?>" maxlength="32" required="required"></li>
+            <li><input type="text" name="fextra" value="" autocomplete="off" maxlength="99" placeholder="Fextra URL"></li>
+            <li><input type="submit" value="Submit"></li>
+          </ul>
+
+          <input type="hidden" name="oldDice" value="<?=$row["dice"]?>">
+          <input type="hidden" name="oldName" value="<?=$row["name"]?>">
+        </form>
+      </div>
+
+      <div class="flex-item">&nbsp;</div>
     </div>
-  
-  <div class="flex-item">&nbsp;</div>
-</div>
-  
+
+
 <?php
 } // ENDIF
 ?>
   
-  
+<!-- EDIT KILLS -->
 <?php
-/*
- * EDIT KILLS
- */
-
 if ( !empty($_GET["mode"]) && $_GET["mode"] == "kills" ) {
   (STRING)$mode       = $_GET["mode"];
   (STRING)$table      = $mode;
@@ -200,7 +254,7 @@ if ( !empty($_GET["mode"]) && $_GET["mode"] == "kills" ) {
     if ( $newSpent  != $postSpent ) logAction ($table, "Edit", $ID, "spent", $oldSpent, $postSpent);
     if ( $newBoss   != $postBoss ) logAction ($table, "Edit", $ID, "bossNames", $oldBoss, $postBoss);
     
-    redirect("/edit", $statusCode = 303);
+    // redirect("/edit", $statusCode = 303);
      
   } else {
     $stmt = $pdo->prepare("SELECT * FROM kills WHERE ID = ".$_GET["ID"]." ");
@@ -242,12 +296,8 @@ if ( !empty($_GET["mode"]) && $_GET["mode"] == "kills" ) {
   
   
   
-  
+<!-- EDIT TODO -->
 <?php
-/*
- * EDIT TODO
- */
-
 if ( !empty($_GET["mode"]) && $_GET["mode"] == "todo" ) {
     (STRING)$mode   = $_GET["mode"];
     (STRING)$table  = $mode;
@@ -271,6 +321,7 @@ if ( !empty($_GET["mode"]) && $_GET["mode"] == "todo" ) {
       $row = $stmt->fetch(PDO::FETCH_ASSOC);
     }
 ?>
+
 <div id="flex-container">
   <div class="flex-item">&nbsp;</div>
     
@@ -296,35 +347,10 @@ if ( !empty($_GET["mode"]) && $_GET["mode"] == "todo" ) {
   
   
   
+
   
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
+<!-- ADD: MOBS, BOSS, WEAPONS --> 
 <?php 
-  /*
- * ADD: MOBS, BOSS, WEAPONS
- *
- *
- */
-  
   if ( !empty($_GET["mode"]) && !empty($_GET["action"]) && ($_GET["mode"] == "weapons" || $_GET["mode"] == "mobs" || $_GET["mode"] == "boss") ) {
     (STRING)$mode   = $_GET["mode"];
     (STRING)$table  = $mode;
@@ -346,7 +372,8 @@ if ( !empty($_GET["mode"]) && $_GET["mode"] == "todo" ) {
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
         
         if ($row["dice"] != NULL ) die("Dice Wert schon vergeben!");
-      }
+      }    
+      
       // Insert Dice Value into DB
       $sql = "INSERT INTO $table (dice, name) VALUES (:dice, :name)";
       $stmt = $pdo->prepare($sql);          
@@ -354,44 +381,21 @@ if ( !empty($_GET["mode"]) && $_GET["mode"] == "todo" ) {
       $stmt->bindParam(':name', $_POST['addEntry'], PDO::PARAM_STR);
       $stmt->execute();
 
-      // redirect("/aids", $statusCode = 303);
+      // Copy over weapon image from fextralife
+      if ( $mode == "weapons" ) copyWeaponFromFextra($addEntry);
+      
       redirect("/edit", $statusCode = 303);
 
-    } else { // display form if coming from link within aids.php and no $_POST
-      ?>
-      
-      <form action="/edit?mode=<?=$table?>&action=add" method="post">
-        <table>
-          <tbody>
-            <tr>
-              <td data-balloon="Leer lassen für Würfel +1, keine doppelten Werte." data-balloon-pos="right">
-                <input type="number" name="addDice" value="" min="1" max="99" autocomplete="off" placeholder="#">
-              </td>
-              <td data-balloon="Max 32 Zeichen" data-balloon-pos="up">
-                <input type="text" name="addEntry" value="" autocomplete="off" maxlength="32" placeholder="Name" required="required">
-              </td>
-              <td data-balloon="Abschicken" data-balloon-pos="up"><input type="submit" value="Submit">
-                &nbsp;
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </form>  
-  <?php
     } // ENDIF (ELSE) $_POST["addEntry"]
-      
-  } // ENDIF
+    
+  } // ENDIF $_GET["mode"]
   ?>
   
   
   
   
-  
+ <!-- DELETE --> 
 <?php
-/*
- * DELETE 
- */
-
 if ( !empty($_GET["action"]) && $_GET["action"] == "delete" ) {
   (STRING)$mode         = $_GET["mode"];
   (STRING)$table        = $mode;
@@ -438,7 +442,6 @@ if ( !empty($_GET["action"]) && $_GET["action"] == "delete" ) {
 /*
  * TRUNCATE
  */
-
 if ( !empty($_GET["action"]) && $_GET["action"] == "truncate" ) {
   $sql = "TRUNCATE rolls";
   $stmt = $pdo->prepare($sql);
@@ -451,14 +454,12 @@ if ( !empty($_GET["action"]) && $_GET["action"] == "truncate" ) {
   
 
   
-  
-<div id="flex-container-edit">  
+<!-- STANDARD ( NO $_REQUEST[] )-->
+<div id="flex-container-edit">
+<!-- <div id="aidsList"> -->
 <?php
-/* STANDARD ANSICHT WENN NUR EDIT.PHP
-* DISPLAY ALL TABLES WHERE TO EDIT FROM
-*/
-  
-if ( empty($_GET["mode"]) ) :
+  if ( empty($_GET["mode"]) ) :
+
   $tables = array("mobs", "boss", "weapons");
 
   foreach($tables as $table) :
@@ -470,7 +471,7 @@ if ( empty($_GET["mode"]) ) :
 <table class="edit">
   <thead>
     <tr>
-      <th class="th-h" colspan="9">
+      <th class="th-h" colspan="3">
         &raquo; <?=ucfirst($table)?>
       </th>
     </tr>
@@ -478,69 +479,112 @@ if ( empty($_GET["mode"]) ) :
     <tr>
       <th scope="col"><strong>Dice</strong></th>
       <th scope="col"><strong><?=ucfirst($table)?></strong></th>
+      <th scope="col"><strong>IMG</strong></th>
       <!-- <th scope="col" class="edit_action"><strong>...</strong></th> -->
     </tr>
   </thead>
   <tbody>
     <?php while ($row = $stmt->fetch(PDO::FETCH_NUM)) : ?>
-    <tr>
+
+    <tr id="<?=$table?>-<?=$row[0]?>">
       <td><a href="/edit?mode=<?=$table?>&ID=<?=$row[0]?>"><?=$row[1]?></a></td>
       <td class="edit_col">
         <div class="title">
           <a href="/edit?mode=<?=$table?>&ID=<?=$row[0]?>"><?=$row[2]?></a>
           <!-- DELETE -->
-          <a class="delete" href="/edit?mode=<?=$table?>&action=delete&ID=<?=$row[0]?>" onClick="return confirm('SICHER???????? MACH KE SCHEISS!');" data-balloon="Löschen" data-balloon-pos="left">
+          <!-- <a data-value="<?php //$row1['id'];?>" class="remove_file">Delete</a> -->
+          <!-- href="/edit?mode=<?php //$table?>&action=delete&ID=<?php //$row[0]?>" -->
+          <!-- onClick="return confirm('SICHER???????? MACH KE SCHEISS!');" -->
+          <a data-value="<?=$row[0]?>" data-table="<?=$table?>" class="delete" data-balloon="Löschen" data-balloon-pos="left">
             <img src="/img/delete-icon.png" width="20" height="20" alt="Delete">
           </a>
           <!-- EDIT -->
-          <a class="delete" href="/edit?mode=<?=$table?>&ID=<?=$row[0]?>" data-balloon="Edit" data-balloon-pos="left">
+          <a class="edit-data" href="/edit?mode=<?=$table?>&ID=<?=$row[0]?>" data-balloon="Edit" data-balloon-pos="left">
             <img src="/img/edit-icon.png" class="edit_icon" width="20" height="20" alt="Edit">
           </a>
         </div>
       </td>
-      <!--
-      <td class="edit_action">
-        <a href="/edit?mode=<?//$table?>&ID=<?//$row[0]?>" data-balloon="Edit" data-balloon-pos="up">
-          <img src="/img/edit-icon.png" class="edit_icon" width="024" height="024" alt="Edit">
-        </a>
+      <td>       
+        <?php
+        if ( $table == "weapons" ) {
+          $path = sanitizeWeaponsPath ($row[2]);
 
-        <a href="/edit?mode=<?//$table?>&action=delete&ID=<?//$row[0]?>" onClick="return confirm('SICHER???????? MACH KE SCHEISS!');" data-balloon="Löschen" data-balloon-pos="up">
-          <img src="/img/delete-icon.png" width="024" height="024" alt="Delete">
-        </a>
+          if ( file_exists($_SERVER["DOCUMENT_ROOT"] . $path[2]) ) {
+        ?>
+            <span class="diceIconPath-font">&#10004;</span>
+            <div class="diceIconPath"><img src="<?=$path[2]?>"></div>
+            
+          <?php
+          } else {
+          ?>
+            <span class="diceIconPath-font">&times;</span>
+          <?php
+          }
+                    
+        } else {
+          
+          $file_name = sanitizeAids($row[2]);
+          $path = "/dice/icons/{$file_name}.png";
+          //echo $path;
+          
+          if ( file_exists($_SERVER["DOCUMENT_ROOT"] . $path) ) {
+          ?>
+            <span class="diceIconPath-font">&#10004;</span>
+            <div class="diceIconPath"><img src="<?=$path?>"></div>
+            
+          <?php
+          } else {
+          ?>
+            <span class="diceIconPath-font">&times;</span>
+          <?php
+          }
+          
+        }
+        ?>
       </td>
-      -->
     </tr>
     <?php ENDWHILE ?>
     <tr>
-      <td colspan="2">
-        <input type="number" name="addDice" value="" min="1" max="99" autocomplete="off" placeholder="#">
-        <input type="text" class="edit_input" name="addEntry" value="" autocomplete="off" maxlength="32" placeholder="Name" required="required">
-        <input type="submit" value="Submit">
+      <td colspan="3">
+        <ul>
+          <li>
+            <input type="number" name="addDice" value="" min="1" max="99" autocomplete="off" placeholder="#">
+            <input type="text" class="edit_input" name="addEntry" value="" autocomplete="off" maxlength="32" placeholder="Name" required="required">
+            <input type="submit" value="Submit">
+          </li>
+        </ul>
       </td>
-      <!--
-      <td data-balloon="Abschicken" data-balloon-pos="up"><input type="submit" value="Submit">
-        &nbsp;
-      </td>
-      -->
     </tr>
   </tbody>
 </table>
-</form>
+</form> 
+  
 <?php
   ENDFOREACH
 ?>
 
+<!-- </div> -->
+
+  
+
+  
+  
+  
 <?php
+  
   include("kills.inc.php");
+  
 ?>
 
 <div class="divider">&nbsp;</div>
 
 <?php
+  
   include("todo.inc.php");
   include("backups.inc.php");
   include("rolls.inc.php");
   include("logs.inc.php");
+  
 ?>
 
 
@@ -561,20 +605,18 @@ ENDIF // EOF if ( empty($_GET["mode"]) )
 <hr>
   <footer>
     <nav>
-      <span>
-        User: <?=$_SESSION["username"]?> |
-      </span>
-      <a href="/?action=logout">Logout</a> |
       <a href="/edit">&lt;</a> |
-      <a href="/edit#Mobs">Mobs</a> |
-      <a href="/edit#Boss">Boss</a> |
-      <a href="/edit#Weapons">Weapons</a> |
-      <a href="/edit#Kills">Kills</a> |
-      <a href="/edit#Rolls">Rolls</a> |
+      <span>
+        <?php //echo "User: " . $_SESSION["username"]?> <!-- | -->
+      </span>
+      <!-- <a href="/?action=logout">Logout</a> | -->
       <a href="/edit#">^</a>
     </nav>
   </footer>
 <hr>
+
+
+  
 
 
 </body>

@@ -5,3 +5,8 @@
    RewriteCond %{SCRIPT_FILENAME} !-d 
    RewriteRule ^([^\.]+)$ $1.php [NC,L] 
 </IfModule>
+
+AuthType Basic
+AuthName "Password Protected Area"
+AuthUserFile /var/www/vhosts/sachverstaendigenbuero-nauerz.de/ds.fahrzeugatelier.de/.htpasswd
+Require valid-user
