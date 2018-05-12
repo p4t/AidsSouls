@@ -1,5 +1,11 @@
 @charset "utf-8";
 
+/*
+ * Sawarabi Mincho (Japanese) https://fonts.google.com/earlyaccess
+ */
+@import url('https://fonts.googleapis.com/earlyaccess/sawarabimincho.css');
+
+
 /* Dark Souls 3 Menu Font Style */
 @font-face {
 	font-family: "Trajan";
@@ -17,7 +23,7 @@
 /* Dark Souls 1 Menu Font Style */
 @font-face {
 	font-family: "ds1";
-	src: url("/fonts/Soul_Font.ttf");
+	src: url("/fonts/Soul_Font.ttf"); /* https://drive.google.com/file/d/0B2d2i4EXszhtWmp1UzdLd051bDA/view */
 	src: local("ds1"), url("/fonts/Soul_Font.ttf") format("truetype");
 }
 
@@ -39,7 +45,12 @@ html {
 
 
 html {
+  
   font-family: "Trajan", sans-serif;
+  
+  /*
+  font-family: "Sawarabi Mincho",-apple-system,BlinkMacSystemFont,游明朝,"Yu Mincho",YuMincho,"Helvetica Neue","ヒラギノ明朝 ProN W6", HiraMinProN-W6,メイリオ,Meiryo,serif;
+  */
   font-size: 100%;
   
   -webkit-font-smoothing: antialiased; /* Fix for webkit rendering */
@@ -47,7 +58,7 @@ html {
   -ms-text-size-adjust: 100%;
     
   /* DS3 Wallpaper */
-  background: url("/img/bg/shrine.jpg") no-repeat center center fixed;
+  /* background: url("/img/bg/ds3.jpg") no-repeat center center fixed; */
   
   /* Larry */
   /*
@@ -57,14 +68,14 @@ html {
   /* DS1 Remaster */
   /* background: url("/img/bg/ds1remaster.jpg") no-repeat center center fixed; */
   
+  /*
   background-color: black;
 
-  
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
-  
+  */  
   
   /* Firefox Cover Fix */
   /*
@@ -77,11 +88,18 @@ html {
   color: #fff;
   text-shadow: 1px 1px 1px #000;
   
+  /*
+  height: 100%;
+  */
+  
   /* overflow: hidden; */
 }
 
 
 body {
+  /*
+  min-height: 100%;
+  */
 }
 
 body#edit {
@@ -112,10 +130,15 @@ nav {
   text-align: center;
 }
 
-footer {
+footer { /* :not(body#edit) */
   text-align: center;
+  margin: 25px 0;
+  /*
   background-color: rgba(0,0,0,0.1);
+  */
 }
+
+
 
 
 strong {
@@ -174,7 +197,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 
-h1 { font-size: 3.0em; line-height: 1em; }
+h1 { font-size: 2.7em; line-height: 1em; }
 h2 { font-size: 2.5em; line-height: 2em; }
 h3 { font-size: 1.7em; line-height: 1.5em; }
 h4 { font-size: 1.5em; line-height: 1.5em; }
@@ -250,6 +273,38 @@ hr {
 */
 
 
+
+/* VIDEO BG */
+/*
+#myVideo {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  min-width: 100%;
+  min-height: 100%;
+  width: auto;
+  height: auto;
+  z-index: -100;
+}
+
+
+.container {
+  position: absolute;
+  margin-left: auto;
+  margin-right: auto;
+  left: 0;
+  right: 0;
+  
+  border: 10px solid rgba(255, 255, 255, 0.5);
+
+	max-width: 1260px;
+	min-width: 780px;
+
+}
+*/
+
+
+
 .container {
 	width: 95%;
 
@@ -258,6 +313,7 @@ hr {
   
 	margin: 0 auto;
 }
+
 
 .content {
 	width: 90%; /* 90% of .container */
@@ -295,6 +351,8 @@ div#todo
   
   padding: 15px;
 }
+
+
 
 #todo {
   width: 60%;
@@ -401,6 +459,34 @@ ul.aidsList > li:focus
 }
 
 
+/* DELETE HOVER */
+
+
+.aidsList img {
+  color: red;
+  display: none;
+  
+  float: right;
+  
+}
+.aidsList:hover img {
+  display: block;
+  margin-left: 200px;
+}
+.aidsList:hover {
+  white-space: nowrap;
+}
+
+
+/*
+.title:hover .delete,
+.title:hover .edit-data
+{
+  display: block;
+}
+*/
+
+
 
 li.noListStyle {
   list-style: none;
@@ -478,6 +564,8 @@ img.dice:hover,
 {
   -webkit-transform: rotate(360deg);
   transform: rotate(360deg);
+  
+  cursor: pointer;
   
 }
 
@@ -1010,8 +1098,167 @@ td:hover > div img {
 }
 
 
+#config {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+  
+  /*
+  margin: 20px;
+  */
+  
+  line-height: 1.5em;
+  /*
+  border: 25px solid transparent;
+  border-image: url("/img/border.png") 30 round;
+  
+  background: url("/img/ds3-asset-bg.png") no-repeat center center scroll;
+  
+  -webkit-background-size: 120% 120%;
+  -moz-background-size: 120% 120%;
+  -o-background-size: 120% 120%;
+  background-size: 120% 120%;
+  
+  padding: 15px;
+  */
+  
+}
+#config ul {
+  background-color: rgba(0,0,0,0.7);
+  padding: 10px;
+  
+  border-radius: 25px;
+  border: 1px solid white;
+  
+  box-shadow: 1px 1px 1px #bb754d, 1px 1px 1px #7a4930, -1px -1px 1px #bb754d, -1px -1px 1px #7a4930;
+  
+}
+
+#config li {
+  /* margin: 5px; */
+}
 
 
+.killsList {
+  /* list-style: circle outside; */
+  list-style: square outside;
+  display: table;
+  /*
+  font-size: 1.1em;
+  */
+  /*
+  margin: 2px 15px 2px 15px;
+  */
+  /*
+  margin: 0 10px;
+  */
+  margin-left: 10px;
+}
+
+
+
+
+/* EDIT SIDE NAV */
+.sidenav {
+  height: 100%;
+  width: 0;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  /*
+  background-color: #111;
+  */
+  background: rgba(17, 17, 17, 0.7);
+  overflow-x: hidden;
+  transition: 0.5s;
+  padding-top: 60px;
+}
+
+.sidenav-icon {
+  font-size: 2em;
+  cursor: pointer;
+  
+  position: fixed;
+  /* top: 5px; */
+  
+}
+
+.sidenav a {
+  padding: 8px 8px 8px 32px;
+  text-decoration: none;
+  font-size: 25px;
+  color: #818181;
+  display: block;
+  transition: 0.3s;
+}
+
+.sidenav a:hover {
+  color: #f1f1f1;
+  /*
+  background: rgba(0, 0, 0, 0.5);
+  */
+}
+
+.sidenav .closebtn {
+  position: absolute;
+  top: 0;
+  right: 25px;
+  font-size: 36px;
+  margin-left: 50px;
+}
+
+.sidenav-toplink {
+  font-size: 1.5em;
+  line-height: 2em;
+  font-weight: bold;
+  
+  /*
+  text-decoration: underline;
+  */
+}
+.sidenav-active,
+.sidenav-active a,
+.sidenav-active a:active
+{
+  text-decoration: underline;
+  font-size: 5em;
+  color: red;
+  background: #212121;
+}
+
+.sidenav-active:before {
+  margin-right: 5px;
+  content: "\00bb";
+}
+
+
+#main {
+  transition: margin-left .5s;
+  padding: 16px;
+
+  height: 100%;
+}
+
+@media screen and (max-height: 450px) {
+  .sidenav {padding-top: 15px;}
+  .sidenav a {font-size: 18px;}
+}
+
+
+
+
+ul.autocomplete {
+  list-style: decimal outside;
+  text-align: left;
+  
+  margin: 5px;
+  padding: 10px 40px;
+  
+  background-color: rgba(0,0,0,0.6);
+
+}
 
 
 /* DEBUG */

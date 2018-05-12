@@ -129,7 +129,34 @@
 
 
 
-#flex-container-edit,
+#flex-container-edit
+{
+  /*
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin: 0 auto;
+  */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.flex-container-edit {
+  text-align: center;
+}
+
+#flex-container-edit-aids {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin: 0 auto;
+}
+
+
+
 #aidsList
 {
   display: flex;
@@ -138,12 +165,51 @@
   justify-content: space-between;
 
   margin: 0 auto;
-
-   
 }
 
 .flex-item-edit {
   margin-top: 5px;
   font-weight: 400;
 }
+
+
+
+#flex-container-autocomplete {
+  display: flex;
+
+  align-items: flex-start;
+
+  justify-content: flex-start;
+  
+}
+.flex-container-autocomplete-item {
+  /*
+  text-align: center;
+  */
+  
+}
+
+#flex-container-autocomplete {
+    display: flex;
+  
+    flex-direction: row;
+  
+    flex-wrap: wrap;
+
+    justify-content: center;
+
+    align-content: flex-start;
+
+    align-items: flex-start;
+    }
+
+.flex-container-autocomplete-item {
+
+    order: 0;
+
+    flex: 0 1 auto;
+
+    align-self: auto;
+    }
+
 

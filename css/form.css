@@ -378,7 +378,15 @@ input[type="text"].edit_input {
     }
 
 
+/* Select Game Dropdown */
+#selectGame {
+  background: rgba(22, 22, 22, 0.3);
+  color: white;
+  border: none;
+}
+#selectGame * {
+  background: black;
+  color: white;
+  border: none;
 
-
-
-/* Simple CSS JS Dropdown */
+}

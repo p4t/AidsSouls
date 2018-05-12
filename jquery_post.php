@@ -4,6 +4,7 @@ if ( (!empty($_POST["mobs"])) || (!empty($_POST["boss"])) || (!empty($_POST["wea
   // Database
   require_once("config.db.php");
   require_once("functions.inc.php");
+  require_once("globals.inc.php");
 
   // (STRING)$addEntry = $_POST["weapons"];
   // (STRING)$table    = "weapons";
@@ -20,14 +21,20 @@ if ( (!empty($_POST["mobs"])) || (!empty($_POST["boss"])) || (!empty($_POST["wea
     
     // db stuff
     if ( !empty($val) ) {
+      $mode     = $name;
       $table    = $name;
+      $table    = _GAME . "_" . $table;
       $addEntry = $val;
       $addDice  = getDiceValuePlusOne($table);
       
+      // if ( !() ) echo success
       ajaxPDOInsert($table, $addDice, $addEntry);
+      echo $table;
+      
+    
       
       // Copy over weapon image from fextralife
-      if ( $table == "weapons" ) copyWeaponFromFextra($addEntry);
+      if ( $mode == "weapons" ) copyWeaponFromFextra($addEntry);
       
       // Log
       logAction ($table, "post.ajax", "DICE:" . $addDice, $table."Name" , "", $addEntry);

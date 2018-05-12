@@ -1,19 +1,41 @@
 ﻿<?php
 // AIDS.PHP
 
+/*
+class Aids {
+  public $test;
+  
+  public function getRNG () {
+    //
+  }
+  
+  public function getAidsByRNG () {
+    //
+  }
+  
+  public function RandomWeapon () {
+    //
+  }
+  
+}
+*/
+
+
+
 
 /*
  * Random Weapons
  */
 function randomWeapon () {
   global $pdo;
+  global $GAME;
   
-  $section    = "weapons";
+  $section    = $GAME . "_weapons";
   $count      = pdoCount($section);
   $weaponRNG  = mt_rand (1, $count);
   // $weaponRNG  = 17;
   
-  $stmt = $pdo->prepare("SELECT * FROM weapons WHERE dice = $weaponRNG");
+  $stmt = $pdo->prepare("SELECT * FROM {$GAME}_weapons WHERE dice = $weaponRNG");
   $stmt->execute();
   $row = $stmt->fetch(PDO::FETCH_ASSOC);
   
@@ -31,9 +53,10 @@ function randomWeapon () {
  */
 function getRNG () {
   global $pdo;
+  global $GAME;
   
   // Get max dice value for mt_rand()
-  $stmt = $pdo->prepare( "SELECT (SELECT COUNT(dice) FROM mobs) as mobsCount, (SELECT COUNT(dice) FROM boss) as bossCount" );
+  $stmt = $pdo->prepare( "SELECT (SELECT COUNT(dice) FROM {$GAME}_mobs) as mobsCount, (SELECT COUNT(dice) FROM {$GAME}_boss) as bossCount" );
   $stmt->execute();
   $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
@@ -59,6 +82,7 @@ function getRNG () {
  */
 function getAidsByRNG ($mobsRNG, $bossRNG) {
   global $pdo;
+  global $GAME;
   global $flasks;
   global $weaponIMG;
   
@@ -68,60 +92,59 @@ function getAidsByRNG ($mobsRNG, $bossRNG) {
     redirect("/edit");
   }
   
-  $stmt = $pdo->prepare("SELECT mobs.name, boss.name FROM mobs, boss WHERE mobs.dice = $mobsRNG AND boss.dice = $bossRNG");
+  $stmt = $pdo->prepare("SELECT {$GAME}_mobs.name, {$GAME}_boss.name FROM {$GAME}_mobs, {$GAME}_boss WHERE {$GAME}_mobs.dice = $mobsRNG AND {$GAME}_boss.dice = $bossRNG");
   $stmt->execute();
   $row = $stmt->fetch(PDO::FETCH_GROUP);
   
   $mobsAids = $row[0];
-  $bossAids = $row[1];
-  
-  /*
-  if ( (empty($mobsAIDS)) || (empty($bossAids)) ) {    
-    // Würfel fehlt
-  }
-  */
-  
+  $bossAids = $row[1];  
+
+  // handle special aids: Random Weapon, Flask würfeln, Shots
+  $aids = specialAids($mobsAids, $bossAids);
+  $mobsAids = $aids[0];
+  $bossAids = $aids [1];
+
+  return array($mobsAids, $bossAids);
+}
+
+
+
+
+function specialAids ($mobsAids, $bossAids) {
+  // global $flasks; // _FLASKS
+
   // Random Weapon
-  // if ( $mobsAids == "Zufällige Waffe" ) $mobsAids = randomWeapon() . $weaponIMG;
-  // if ( $bossAids == "Zufällige Waffe" ) $bossAids = $weaponIMG . randomWeapon();
-  
   if ( $mobsAids == "Zufällige Waffe" ) $mobsAids = randomWeapon();
   if ( $bossAids == "Zufällige Waffe" ) $bossAids = randomWeapon();
-  
+
   // Shots
   if ( $mobsAids == "Jäscher" || $mobsAids == "Feige" ) { // if (strcasecmp($var1, $var2) == 0) {
     // RNG # for balloon-tip
     $mobsRNGNR   = $mobsRNG;
-
-    $newMobsAids = getShotsAidsByRNG("mobs");
-
+    $newMobsAids = getShotsAidsByRNG(_GAME."_mobs");
     $mobsAids = $mobsAids . ":&nbsp;" . $newMobsAids;
-
   }
 
   if ( $bossAids == "Jäscher" || $bossAids == "Feige") {
     // RNG # for balloon-tip
     $bossRNGNR   = $bossRNG;
-
-    $newBossAids = getShotsAidsByRNG("boss");
-
+    $newBossAids = getShotsAidsByRNG(_GAME."_boss");
     $bossAids = $bossAids . ":&nbsp;" . $newBossAids;
-
   }
-  
+
   // Flask number
   if ( $mobsAids == "Flask Würfeln" ) {
-    $flaskRNG = mt_rand(1, $flasks); // $flasks Number of flasks
+    $flaskRNG = mt_rand(1, _FLASKS); // $flasks Number of flasks
     $mobsAids = $mobsAids . " ($flaskRNG) ";
   }
 
   if ( $bossAids == "Flask Würfeln" ) {
-    $flaskRNG = mt_rand(1, $flasks); // $flasks Number of flasks
+    $flaskRNG = mt_rand(1, _FLASKS); // $flasks Number of flasks
     $bossAids = $bossAids . " ($flaskRNG) ";
-  }  
-  
+  }
+
   return array($mobsAids, $bossAids);
-}
+} // END FUNCTION
 
 
 
@@ -130,6 +153,9 @@ function getAidsByRNG ($mobsRNG, $bossRNG) {
  */
 function getMaxDiceValue ($section) {
   global $pdo;
+  // global $GAME;
+  
+  // $section = $GAME . "_" . $section;
   
   $stmt = $pdo->prepare( "SELECT count(dice) as TMP_CNT from $section" );
   $stmt->execute();
@@ -146,6 +172,9 @@ function getMaxDiceValue ($section) {
  */
 function getDiceValuesWhereNameIsShots($section) {
   global $pdo;
+  // global $GAME;
+  
+  // $section = $GAME . "_" . $section;
   
   $stmt = $pdo->prepare("
   SELECT (SELECT dice
@@ -167,7 +196,10 @@ function getDiceValuesWhereNameIsShots($section) {
  */
 function getShotsAidsByRNG ($section) {
   global $pdo;
-  global $flasks;
+  // global $GAME;
+  
+  // $section = $GAME . "_" . $section;
+  // global $flasks; // _FLASKS
     
   // Get Max Dice Value fir mt_rand()
   $TMP_CNT = getMaxDiceValue($section);
@@ -199,7 +231,7 @@ function getShotsAidsByRNG ($section) {
 
   // Flask number
   if ( $TMP_AIDS == "Flask Würfeln" ) {
-    $flaskRNG = mt_rand(1, $flasks); // $flasks Number of flasks
+    $flaskRNG = mt_rand(1, _FLASKS); // $flasks Number of flasks
     $TMP_AIDS = $TMP_AIDS . " ($flaskRNG) ";
   }
     
@@ -217,22 +249,31 @@ function getShotsAidsByRNG ($section) {
  */
 function sanitizeWeaponsPath ($aids, $rng = false) {
   global $pdo;
-  
-  $game = _GAME;
+  global $GAME;
   
   // Get all weapons in an Array
-  $data = $pdo->query("SELECT name FROM weapons")->fetchAll(PDO::FETCH_ASSOC);
+  $data = $pdo->query("SELECT name FROM {$GAME}_weapons")->fetchAll(PDO::FETCH_ASSOC);
 
   // Go through Array and check if rolled $aids is a weapon
   foreach ($data as $value) {
     if ( $aids == $value["name"] ) {
             
       // Replace white space and apostroph
-      $weapon = str_replace( " ", "_", strtolower($value["name"]) );
+      $weapon = str_replace( " ", "_", $value["name"] );
       $weapon = str_replace( "'", "", $weapon );
+      if ( _GAME != "ds2" ) $weapon = strtolower($weapon);
+      // if ( _GAME != "ds1" ) $weapon = strtolower($weapon);
       // $weapon = str_replace([" ", "'"], "_", $string);
       
-      $path = "/dice/icons/weapons/{$game}/{$weapon}-icon.png";
+      /*
+      if ( _GAME == "ds1" ) {
+        $path = "/dice/icons/weapons/{$GAME}/{$weapon}.png";
+      } else {
+        $path = "/dice/icons/weapons/{$GAME}/{$weapon}-icon.png";
+      }
+      */
+      $path = "/dice/icons/weapons/{$GAME}/{$weapon}.png";
+      
       
       if ( file_exists($_SERVER["DOCUMENT_ROOT"] . $path) ) {
         $RNG  = "<img src=\"{$path}\" alt=\"{$value["name"]}\">"; // width=\"84\" height=\"130\"
@@ -490,6 +531,9 @@ function replaceCheeseWithEmoji ($text) {
  */
 function pdoCount ($table) {
   global $pdo;
+  // global $GAME;
+  
+  // $table = $GAME . "_" . $table;
 
   return $pdo->query("SELECT count(dice) FROM $table")->fetchColumn();
 }
@@ -566,6 +610,15 @@ function replaceBrWithComma ($text) {
   return $text;
 }
 
+/*
+ * Replace <br> with comma for data-tip
+ */
+function replaceLineBreakWithList ($text) {
+  $text = str_replace("\r\n", "<li>", $text);
+  // $text = "<li>" . $text . "</li>";
+  return $text;
+}
+
 
 /*
  * Replace dash - with <br>
@@ -618,9 +671,10 @@ function getIpAddr() {
 */
 function getLatestRoll () {
   global $pdo;
+  global $GAME;
   global $weaponIMG;
   
-  $stmt = $pdo->prepare("SELECT mobs, boss FROM rolls WHERE mobs != '' AND boss != '' ORDER BY ID DESC LIMIT 1,1");
+  $stmt = $pdo->prepare("SELECT mobs, boss FROM {$GAME}_rolls WHERE mobs != '' AND boss != '' ORDER BY ID DESC LIMIT 1,1");
   $stmt->execute();
   $row = $stmt->fetch(PDO::FETCH_ASSOC);
   
@@ -638,8 +692,9 @@ function getLatestRoll () {
 */
 function getLatestRolls () {
   global $pdo;
+  global $GAME;
   
-  $stmt = $pdo->prepare("SELECT date, IP, mobs, boss FROM rolls ORDER BY ID DESC LIMIT 1, 10");
+  $stmt = $pdo->prepare("SELECT date, IP, mobs, boss FROM {$GAME}_rolls ORDER BY ID DESC LIMIT 1, 10");
   $stmt->execute();
   $row = $stmt->fetch(PDO::FETCH_ASSOC);
   
@@ -741,13 +796,14 @@ function ajaxPDOInsert ($table, $addDice, $addEntry) {
 */
 function saveRolls ($mobsAids = false, $bossAids = false) {
   global $pdo;
+  global $GAME;
   
   $userID = $_SESSION["userID"];
   $username = $_SESSION["username"];
-  
+    
   $date = date("Y-m-d H:i:s");
   $IP   = getIpAddr();
-  $sql  = "INSERT INTO rolls (date, userID, username, IP, mobs, boss) VALUES (:date, :userID, :username, :IP, :mobs, :boss)";
+  $sql  = "INSERT INTO {$GAME}_rolls (date, userID, username, IP, mobs, boss) VALUES (:date, :userID, :username, :IP, :mobs, :boss)";
   $stmt = $pdo->prepare($sql);                                  
   $stmt->bindParam(":date", $date, PDO::PARAM_STR);
   $stmt->bindParam(":userID", $userID, PDO::PARAM_INT);
@@ -764,7 +820,8 @@ function saveRolls ($mobsAids = false, $bossAids = false) {
     if (strpos($e->getMessage(), $existingkey) !== FALSE) {
       // Take some action if there is a key constraint violation, i.e. duplicate name
     } else {
-      throw $e;
+      // throw $e;
+      echo "MISSING DICE!!!";
     }
   }
   
@@ -791,6 +848,7 @@ function saveRolls ($mobsAids = false, $bossAids = false) {
 
 function logAction ($section, $action, $parentID, $parentField, $old, $new) {
   global $pdo;
+  global $GAME;
   // global $_SESSION["username"];
   
   // diff()?
@@ -804,7 +862,7 @@ function logAction ($section, $action, $parentID, $parentField, $old, $new) {
   $date     = date("Y-m-d H:i:s");
   $IP       = getIpAddr();
   
-  $sql  = "INSERT INTO log (section, action, parentID, parentField, old, new, userID, username, IP, date) VALUES (:section, :action, :parentID, :parentField, :old, :new, :userID, :username, :IP, :date)";
+  $sql  = "INSERT INTO {$GAME}_log (section, action, parentID, parentField, old, new, userID, username, IP, date) VALUES (:section, :action, :parentID, :parentField, :old, :new, :userID, :username, :IP, :date)";
   $stmt = $pdo->prepare($sql);   
   
   $stmt->bindParam(":section", $section, PDO::PARAM_STR);
@@ -903,12 +961,13 @@ function pdoDelete ($table, $post, $ID) {
 
 
 /*
-* CHeck if a number between 1 and max dice vlaue in db is missing
+* Check if a number between 1 and max dice vlaue in db is missing
 */
 function checkMissingDice () {
   global $pdo;
+  global $GAME;
   
-  $tables = array("mobs", "boss", "weapons");
+  $tables = array($GAME."_mobs", $GAME."_boss", $GAME."_weapons");
   foreach($tables as $table) {
     $data = $pdo->query("SELECT dice FROM $table")->fetchAll(PDO::FETCH_COLUMN);
     
@@ -992,6 +1051,17 @@ function scan_dir($dir) {
 
 
 
+function checkExternalFile($url)
+{
+    $ch = curl_init($url);
+    curl_setopt($ch, CURLOPT_NOBODY, true);
+    curl_exec($ch);
+    $retCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+    curl_close($ch);
+
+    return $retCode;
+}
+
 
 
 
@@ -1007,28 +1077,76 @@ function scan_dir($dir) {
 * ////// TODO BETTER ERROR HANDLING
 */
 
-function copyWeaponFromFextra ($weapon) {
+function copyWeaponFromFextra ($weapon, $res = "") {
+// function copyWeaponFromFextra ($weapon, $err_mode = "") {
+  global $GAME; 
+  
   $weapon = sanitizeWeaponsPath($weapon)[3];
-  // echo "weapon: " . $weapon . "<br>";
-  $source = "http://darksouls3.wiki.fextralife.com/file/Dark-Souls-3/{$weapon}-icon.png";
-  // echo "source " . $source . "<br>";
-  $dest = _DR . "/dice/icons/weapons/" . _GAME . "/{$weapon}-icon.png";
-  // echo "dest: " . $dest . "<br>";
-  $ext = "png";
+  
+  // Set Fextralife URL depending on Game
+  switch ($GAME) {
+    case "ds1":
+      $fextraURL = "http://darksouls.wiki.fextralife.com/file/Dark-Souls/";
+      $source = "{$fextraURL}{$weapon}.png";
+      break;
+    case "ds1r":
+      $fextraURL = "http://darksouls.wiki.fextralife.com/file/Dark-Souls/";
+      $source = "{$fextraURL}{$weapon}.png";
+      break;
+    case "ds2":
+      $fextraURL = "http://darksouls2.wiki.fextralife.com/file/Dark-Souls-2/";
+      $source = "{$fextraURL}{$weapon}.png";
+      break;
+    case "ds3":
+      $fextraURL = "http://darksouls3.wiki.fextralife.com/file/Dark-Souls-3/";
+      // $source = "{$fextraURL}{$weapon}-icon.png"; // IF FILE IS TO LARGE
+      $source = "{$fextraURL}{$weapon}.png";
+      break;
+    case "bb":
+      $fextraURL = "http://bloodborne.wiki.fextralife.com/file/Bloodborne/";
+      $source = "{$fextraURL}{$weapon}.png";
+      break;
+    default:
+      echo "FEXTRA URL FEHLER";
+}
+  
+  // if URL is provided because of fextra shenanigans
+  if ( !empty($res) ) $source = $res;
+  
 
+  // $source = "http://darksouls3.wiki.fextralife.com/file/Dark-Souls-3/{$weapon}-icon.png";
+  // $source = "{$fextraURL}{$weapon}-icon.png";
+  
+  $dest = _DR . "/dice/icons/weapons/" . _GAME . "/{$weapon}.png";
+  $ext = "png";
+  
+  // Debug
+  /*
+  echo "weapon: " . $weapon . "<br>";
+  echo "source: " . $source . "<br>";
+  echo "dest: " . $dest . "<br>";
+  */
+  
   // only try to copy if file doesn't exist
   if ( !file_exists($dest) ) {
 
-    echo "FILE NOT ON INTERNAL SERVER<br>";
+    $msg = "FILE NOT ON INTERNAL SERVER<br>";
     
+    // SEEMS TO BE NOT WORKING
+    // $fileExists = checkExternalFile("http://example.com/your/url/here.jpg");
+    
+    /*
     if ( !file_exists($source) ) {
-      echo "FILE DOES NOT EXIST ON FEXTRALIFE. WEAPON NAME MISSPELLED?<br>"; // weapon name misspelled
+      // $msg = "FILE DOES NOT EXIST ON FEXTRALIFE. WEAPON NAME MISSPELLED?<br>"; // weapon name misspelled
+      echo $msg;
     }
+    */
 
     if ( !@copy($source, $dest) ) { // @ for own error handling
 
       $errors = error_get_last();
       
+      /*
       echo "<br>";
       echo "COPY ERROR: ".$errors["type"];
       echo "<br>";
@@ -1036,14 +1154,18 @@ function copyWeaponFromFextra ($weapon) {
       echo "<br>";
       echo "Copy().Error.";
       echo "<br>";
+      */
 
     } else {
-      // echo "Copy().Success.";
+      $msg = "Copy().Success.<br>";
+      // echo $msg;
     }
 
   } else {
-    echo "FILE ALREADY EXISTS";
+    $msg = "FILE ALREADY EXISTS<br>";
   }
+  // echo $msg;
+  return array($msg, $errors);
 } // END FUNCTION
 
 
@@ -1106,5 +1228,39 @@ function logout() {
 	session_destroy();
   redirect("/", $statusCode = 303);
 }
+
+
+
+
+
+
+
+
+/* CONFIG */
+function getGame () {
+  global $pdo;
+  
+  $stmt = $pdo->prepare("SELECT game FROM config");
+  $stmt->execute();
+  $row = $stmt->fetch(PDO::FETCH_ASSOC);
+  
+  return $row["game"];
+}
+
+function changeGame ($game) {
+  global $pdo;
+  
+  // all available Games
+  $games = array("ds1", "ds2", "ds3", "bb", "ds1r");
+  // Check if var = in $games
+  if ( !in_array($game, $games) || empty($game) ) die("OH GOTT WAS ISSN PASSIERT? @changeGame()" . "<br>" .'$game: ' . $game);
+  
+  $sql = "UPDATE config SET game = :game WHERE ID = 1";
+  $stmt = $pdo->prepare($sql);                                  
+  $stmt->bindParam(":game", $game, PDO::PARAM_STR);
+  // $stmt->bindParam(":ID", $ID, PDO::PARAM_INT);
+  $stmt->execute();
+}
+
 
 ?>

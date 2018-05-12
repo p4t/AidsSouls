@@ -333,3 +333,17 @@ table.edit th.th-h {
   font-size: 1.8em;
   text-align: center;
 }
+
+table.edit thead:hover {
+  
+  cursor: pointer;
+  
+}
+
+.toggleTable,
+.toggleTableIndicatorMinus
+{
+  /*
+  display: none;
+  */
+}

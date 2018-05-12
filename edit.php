@@ -2,41 +2,33 @@
 // Lib
 require_once("config.db.php");
 require_once("functions.inc.php");
+require_once("globals.inc.php");
 
 // DB Hack
-// include_once("aids.edit.ajax.php");
 // include_once("del.ajax.php");
 
+// include_once("inc/edit/kills.inc.php");
+// include_once("inc/edit/todo.inc.php");
+// include_once("inc/edit/backups.inc.php");
+// include_once("inc/edit/rolls.inc.php");
+// include_once("inc/edit/logs.inc.php");
+// include_once("inc/edit/autocomplete.inc.php");
+
+// include_once("inc/edit/aids.inc.php");
+
+
+
 // Save visits to edit.php into db
-saveRolls();
-
-
-/* LOGIN */
-/*
-unset($error);
-
-if ( (!empty($_POST["username"])) && (!empty($_POST["password"])) ) {
-
-  $username = trim($_POST["username"]);
-  $password = trim($_POST["password"]);
-  
-  $error = login ($username, $password);
-    
-} // ENDIF
-  
-if ( (!empty($_SESSION["username"])) && ($_SESSION["valid"] == TRUE) ) {
-*/
+// saveRolls();
 ?>
-
 
 <!doctype html>
 <html lang="de">
 <head>
-  
+
 <meta charset="utf-8">
-<!-- <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=yes, user-scalable=yes"> -->
-<meta name="viewport" content="width=device-width, initial-scale=1">
-  
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=yes, user-scalable=yes">
+
 <title>\[T]/ the Edit</title>
 <base href="http://ds.fahrzeugatelier.de">
 
@@ -45,7 +37,14 @@ if ( (!empty($_SESSION["username"])) && ($_SESSION["valid"] == TRUE) ) {
 <link rel="stylesheet" href="/css/button.css" type="text/css" media="screen">
 <link rel="stylesheet" href="/css/table.css" type="text/css" media="screen">
 <link rel="stylesheet" href="/css/form.css" type="text/css" media="screen">
+<link rel="stylesheet" href="/css/dice_animations.css" type="text/css" media="screen">
 <link rel="stylesheet" href="/css/mobile.css" type="text/css" media="screen">
+  
+<!-- Font Awesome -->
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.12/css/all.css" integrity="sha384-G0fIWCsCzJIMAVNQPfjH08cyYaUtMwjJwqiRKxxE/rx96Uroj1BtIQ6MLJuheaO9" crossorigin="anonymous">
+
+<!-- jQuery UI CSS -->
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 
 <!--
 <link rel="stylesheet" href="/css/login.css" type="text/css" media="screen">
@@ -77,7 +76,589 @@ if ( (!empty($_SESSION["username"])) && ($_SESSION["valid"] == TRUE) ) {
   
 <!-- jQuery -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
+</head>
+
+<body spellcheck="false" id="edit">
+<div id="main">
+
+  <!-- SIDENAV -->
+  <div id="mySidenav" class="sidenav">
+    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+
+    <span class="sidenav-toplink">
+      <a href="/" data-balloon="Zur Aids Hauptseite" data-balloon-pos="up">Aids</a>
+      <!-- <a href="/edit">Edit</a> -->
+    </span>
+
+    <a href="/edit?show=aids" <?=( $_GET["show"] == "aids" || !$_GET["show"] ) ? "class='sidenav-active'"  : ""?>>Mobs</a>
+    <a href="/edit?show=aids" <?=( $_GET["show"] == "aids" || !$_GET["show"] ) ? "class='sidenav-active'"  : ""?>>Boss</a>
+    <a href="/edit?show=aids" <?=( $_GET["show"] == "aids" || !$_GET["show"] ) ? "class='sidenav-active'"  : ""?>>Weapons</a>
+
+    <span>&nbsp;</span>
+
+    <a href="/edit?show=kills" <?=( $_GET["show"]         == "kills"    ) ? "class='sidenav-active'"  : ""?>>Kills</a>
+    <a href="/edit?show=rolls" <?=( $_GET["show"]         == "rolls"    ) ? "class='sidenav-active'"  : ""?>>Rolls</a>
+    <a href="/edit?show=logs" <?=( $_GET["show"]          == "logs"     ) ? "class='sidenav-active'"  : ""?>>Logs</a>
+    <a href="/edit?show=todo" <?=( $_GET["show"]          == "todo"     ) ? "class='sidenav-active'"  : ""?>>Todo</a>
+    <a href="/edit?show=backups" <?=( $_GET["show"]       == "backups"  ) ? "class='sidenav-active'"  : ""?>>Backup</a>
+    
+    <span>&nbsp;</span>
+    
+    <a href="/edit?show=autocomplete" <?=( $_GET["show"]  == "autocomplete"   ) ? "class='sidenav-active'"  : ""?>>Autocomplete</a>
+
+    <span>&nbsp;</span>
+    
+    <a href="/edit?show=config" <?=( $_GET["show"]        == "config"         ) ? "class='sidenav-active'"  : ""?>>
+      <i class="fas fa-cog"></i>
+    </a>
+  </div>
+
+  <span id="sidenav-icon" class="sidenav-icon" onclick="openNav()">
+    <!-- &#9776; --> <!-- Menü -->
+    <i class="fas fa-bars"></i>
+  </span>
+  
+  
+  
+
+
+<?php
+/*
+ * EDIT: MOBS, BOSS, WEAPONS
+ */
+  if ( !empty($_GET["mode"]) && empty($_GET["action"]) && ($_GET["mode"] == "weapons" || $_GET["mode"] == "mobs" || $_GET["mode"] == "boss") ) {
+    (STRING)$mode         = $_GET["mode"];
+    (STRING)$table        = _GAME . "_" . $mode;
+    (STRING)$parentField  = $table."Name";
+    (INT)$ID              = $_GET["ID"];  
+  
+    // if ( isset($_POST["newName"]) ) {
+    if ( !empty($_POST["newName"]) ) {
+      (STRING)$newName  = $_POST["newName"];
+      (STRING)$oldName  = $_POST["oldName"];
+      (INT)$newDice     = $_POST["newDice"];
+      (INT)$oldDice     = $_POST["oldDice"];
+      
+      $sql = "UPDATE $table SET name = :name, dice = :dice WHERE ID = :ID";
+      $stmt = $pdo->prepare($sql);                                  
+      $stmt->bindParam(":name", $_POST["newName"], PDO::PARAM_STR);
+      $stmt->bindParam(":dice", $_POST["newDice"], PDO::PARAM_INT);
+      $stmt->bindParam(":ID", $_GET["ID"], PDO::PARAM_INT);
+      $stmt->execute();
+      
+      // Copy over weapon image from fextralife
+      // if ( $mode == "weapons" ) copyWeaponFromFextra($newName);
+      // ERROR MESSAGE:
+      if ( $mode == "weapons" ) {
+        
+        // echo "fextraPOST: " . $_POST["fextra"];
+        
+        if ( empty($_POST["fextra"]) ) copyWeaponFromFextra($newName);
+        else copyWeaponFromFextra($newName, $_POST["fextra"]);
+      }
+      
+      // https://darksouls.wiki.fextralife.com/file/Dark-Souls/Wpn_Priscilla's_Dagger.png
+    
+      // log
+      if ( $newDice  != $oldDice ) logAction ($table, "Edit", $ID, $parentField , $oldDice, $newDice);
+      if ( $newName  != $oldName ) logAction ($table, "Edit", $ID, $parentField, $oldName, $newName);
+      
+      redirect("/edit", $statusCode = 303);
+      
+    } else {
+      
+      $stmt = $pdo->prepare("SELECT * FROM $table WHERE ID = ".$_GET["ID"]." ");
+      $stmt->execute();
+      $row = $stmt->fetch(PDO::FETCH_ASSOC);
+      
+    }
+    ?>
+  
+<div id="flex-container">
+  <div class="flex-item">&nbsp;</div>
+
+  <div class="flex-item">
+    <form action="/edit?mode=<?= $mode ?>&ID=<?= $_GET["ID"] ?>" method="post" id="edit">
+      <ul>
+        <li><label>Dice:</label></li>
+        <li><input type="number" name="newDice" value="<?=$row["dice"]?>" min="1" max="99" autocomplete="off" placeholder="#" required="required"></li>
+        <li><label>Entry:</label></li>
+        <li><input type="text" name="newName" id="tags-<?=$mode?>" value="<?=$row["name"]?>" maxlength="32" required="required"></li>
+        <li><input type="text" name="fextra" value="" autocomplete="off" maxlength="99" placeholder="Fextra URL"></li>
+        
+        
+        <li><input type="submit" value="Submit"></li>
+      </ul>
+
+      <input type="hidden" name="oldDice" value="<?=$row["dice"]?>">
+      <input type="hidden" name="oldName" value="<?=$row["name"]?>">
+    </form>
+  </div>
+
+  <div class="flex-item">&nbsp;</div>
+</div>
+<?php
+} // ENDIF
+?>
+
+
+
+
+<?php
+/*
+ * EDIT: KILLS
+ */
+if ( !empty($_GET["mode"]) && $_GET["mode"] == "kills" ) {
+  (STRING)$mode       = $_GET["mode"];
+  (STRING)$table      = _GAME . "_" . $mode;
+  (INT)$ID            = $_GET["ID"];
+  
+  if ( !empty($_POST["newJoker"])) {
+    (INT)$postJoker   = $_POST["newJoker"];
+    (INT)$oldJoker    = $_POST["oldJoker"];
+    (INT)$postSpent   = $_POST["newSpent"];
+    (INT)$oldSpent    = $_POST["oldSpent"];
+    // (STRING)$postName = $_POST["newName"];
+    (STRING)$postBoss = $_POST["newBossNames"];
+    (STRING)$oldBoss  = $_POST["oldBossNames"];
+    
+    $sql = "UPDATE {$GAME}_kills SET joker = :joker, spent = :spent, bossNames = :bossNames WHERE ID = :ID";
+    $stmt = $pdo->prepare($sql);                                  
+    $stmt->bindParam(':joker', $_POST['newJoker'], PDO::PARAM_INT);
+    $stmt->bindParam(':spent', $_POST['newSpent'], PDO::PARAM_INT);
+    $stmt->bindParam(':bossNames', $_POST['newBossNames'], PDO::PARAM_STR);
+    $stmt->bindParam(':ID', $_GET['ID'], PDO::PARAM_INT);
+    $stmt->execute();
+    
+    // log
+    if ( $newJoker  != $postJoker ) logAction ($table, "Edit", $ID, "joker", $oldJoker, $postJoker);
+    if ( $newSpent  != $postSpent ) logAction ($table, "Edit", $ID, "spent", $oldSpent, $postSpent);
+    if ( $newBoss   != $postBoss ) logAction ($table, "Edit", $ID, "bossNames", $oldBoss, $postBoss);
+    
+    redirect("/edit", $statusCode = 303);
+     
+  } else {
+    $stmt = $pdo->prepare("SELECT * FROM {$GAME}_kills WHERE ID = ".$_GET["ID"]." ");
+    $stmt->execute();
+    $row = $stmt->fetch(PDO::FETCH_ASSOC);
+  }
+?>
+
+<div id="flex-container">
+  <div class="flex-item">&nbsp;</div>
+    
+  <div class="flex-item">
+      <form action="/edit?mode=kills&ID=<?=$_GET["ID"]?>" method="post" id="edit">
+        <ul>
+          <li><label>Joker:</label></li>
+          <li><input type="number" name="newJoker" value="<?=$row["joker"]?>" min="0" max="99" autocomplete="off" placeholder="Joker insgesamt" required="required"></li>
+
+          <li><label>Ausgegeben:</label></li>
+          <li><input type="number" name="newSpent" value="<?=$row["spent"]?>" min="0" max="99" autocomplete="off" placeholder="Joker ausgegeben" required="required"></li>
+
+          <li><label>bossNames:</label></li>
+          <li><textarea rows="15" name="newBossNames" cols="50" required="required"><?=$row["bossNames"]?></textarea></li>
+
+          <li><input type="submit" value="Submit"></li>
+          
+        </ul>
+        <input type="hidden" name="oldJoker" value="<?=$row["joker"]?>">
+        <input type="hidden" name="oldSpent" value="<?=$row["spent"]?>">
+        <input type="hidden" name="oldBossNames" value="<?=$row["bossNames"]?>">
+      </form>
+    </div>
+  
+  <div class="flex-item">&nbsp;</div>
+</div>
+
+<?php
+} // ENDIF
+?>
+
+
+
+
+<?php
+/*
+ * EDIT: TODO
+ */
+if ( !empty($_GET["mode"]) && $_GET["mode"] == "todo" ) {
+    (STRING)$mode   = $_GET["mode"];
+    (STRING)$table  = _GAME . "_" . $mode;
+    (INT)$ID        = $_GET["ID"];  
+  
+    if ( !empty($_POST["newTodo"]) ) {
+      (STRING)$newTodo  = $_POST["newTodo"];
+      
+      $sql = "UPDATE $table SET todoText = :todoText WHERE ID = :ID";
+      $stmt = $pdo->prepare($sql);                                  
+      $stmt->bindParam(":todoText", $_POST["newTodo"], PDO::PARAM_STR);
+      $stmt->bindParam(":ID", $_GET["ID"], PDO::PARAM_INT);
+      $stmt->execute();
+      
+      redirect("/edit", $statusCode = 303);
+
+    } else {
+      
+      $stmt = $pdo->prepare("SELECT * FROM $table WHERE ID = ".$_GET["ID"]." ");
+      $stmt->execute();
+      $row = $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+?>
+
+<div id="flex-container">
+  <div class="flex-item">&nbsp;</div>
+    
+  <div class="flex-item">
+      <form action="/edit?mode=<?=$mode?>&ID=<?=$_GET["ID"]?>" method="post" id="edit">
+        <ul>
+          <li><label>Entry:</label></li>
+          <li><textarea rows="15" name="newTodo" cols="50" required="required"><?=$row["todoText"]?></textarea></li>
+          <li><input type="submit" value="Submit"></li>
+        </ul>
+      </form>
+    </div>
+  
+  <div class="flex-item">&nbsp;</div>
+</div>
+
+<?php
+} // ENDIF
+?>
+
+
+
+
+<?php
+/*
+ * ADD: MOBS, BOSS, WEAPONS
+ */
+  if ( !empty($_GET["mode"]) && !empty($_GET["action"]) && ($_GET["mode"] == "weapons" || $_GET["mode"] == "mobs" || $_GET["mode"] == "boss") ) {
+    (STRING)$mode   = $_GET["mode"];
+    (STRING)$table  = _GAME . "_" . $mode;
+    // (INT)$ID        = $_GET["ID"];
+  
+    if ( !empty($_POST["addEntry"]) ) {
+      (STRING)$addEntry = $_POST["addEntry"];
+      (INT)$addDice     = $_POST["addDice"];
+      
+      if ( empty($_POST["addDice"]) ) { // if field for dice value wasn't filled
+        $stmt = $pdo->prepare("SELECT * FROM $table ORDER BY dice DESC LIMIT 1"); // get max value from field dice
+        $stmt->execute();
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        (INT)$addDice = $row["dice"] + 1; // +1 of max dice value
+      } else { 
+        // cherck if dice alrerady exists
+        $stmt = $pdo->prepare("SELECT dice FROM $table WHERE dice = $addDice"); // get max value from field dice
+        $stmt->execute();
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        
+        if ($row["dice"] != NULL ) die("Dice Wert schon vergeben!");
+      }    
+      
+      // Insert Dice Value into DB
+      $sql = "INSERT INTO $table (dice, name) VALUES (:dice, :name)";
+      $stmt = $pdo->prepare($sql);          
+      $stmt->bindParam(':dice', $addDice, PDO::PARAM_INT);
+      $stmt->bindParam(':name', $_POST['addEntry'], PDO::PARAM_STR);
+      $stmt->execute();
+
+      // Copy over weapon image from fextralife
+      if ( $mode == "weapons" ) copyWeaponFromFextra($addEntry);
+      
+      redirect("/edit", $statusCode = 303);
+
+    } // ENDIF (ELSE) $_POST["addEntry"]
+    
+  } // ENDIF $_GET["mode"]
+?>
+
+
+<?php
+/*
+ * DELETE
+ */
+if ( !empty($_GET["action"]) && $_GET["action"] == "delete" ) {
+  (STRING)$mode         = $_GET["mode"];
+  (STRING)$table        = $mode;
+  (STRING)$parentField  = $table . "Name";
+  (INT)$ID              = $_GET["ID"];
+
+  $sql = "DELETE FROM $table WHERE ID = :ID";
+  $stmt = $pdo->prepare($sql);
+  $stmt->bindParam(":ID", $ID, PDO::PARAM_INT);
+  $stmt->execute();
+  
+  // log
+  logAction ($table, "Del", $ID, $parentField, "", "");
+  
+  // Check if number in dice is missing
+  /*
+  $data = $pdo->query("SELECT dice FROM $table")->fetchAll(PDO::FETCH_COLUMN);
+  $missing_number = missing_number($data);
+  missing_number($data);
+  */ 
+  
+  $count = pdoCount($table);
+  if ( $ID != $count ) {
+    $data = $pdo->query("SELECT dice FROM $table")->fetchAll(PDO::FETCH_COLUMN);
+    $missing_number = missing_number($data);
+    print_r( $missing_number);
+  }
+  
+  
+  // $stmt = $pdo->prepare("SELECT dice FROM $table ORDER BY dice DESC LIMIT 1"); // get max value from field dice
+  //$stmt = $pdo->prepare("SELECT dice FROM $table WHERE ID = $ID"); // get max value from field dice
+  //$stmt->execute();
+  //$row = $stmt->fetch(PDO::FETCH_ASSOC);
+  //$row["dice"] + 1; // +1 of max dice value
+  
+  
+  
+  redirect("/edit", $statusCode = 303);
+}
+?>
+
+
+<?php
+/*
+ * TRUNCATE
+ */
+if ( !empty($_GET["action"]) && $_GET["action"] == "truncate" ) {
+  $sql = "TRUNCATE {$GAME}_rolls";
+  $stmt = $pdo->prepare($sql);
+  $stmt->execute();
+  
+  redirect("/edit", $statusCode = 303);
+}
+?>
+
+
+<?php
+/*
+ * CHANGE GAME
+ */
+if (
+  
+  ( !empty($_GET["mode"]) && $_GET["mode"] == "selectGame" )
+  &&
+  // ( !empty($_POST["selectGame"]) )
+  ( !empty($_GET["game"]) )
+  
+   ) {
+  // $selectGame = $_POST["selectGame"];
+  $selectGame = $_GET["game"];
+  
+  changeGame($selectGame);
+  redirect("/edit");
+}
+?>
+
+  
+
+
+
+
+
+<?php
+/*
+* NO $_REQUEST, STANDARD VIEW
+*/
+if ( empty($_REQUEST) || !empty($_GET["show"]) ) :
+?>
+
+
+  
+
+
+
+  <!-- Header -->
+  <header>
+  <!-- <div class="header_Edit"> -->
+      <a href="/">
+        <img src="/img/<?=_GAME?>_logo.png" alt="Dark Souls Logo" style="margin-top: -25px;"> <!--  width="661" height="80" -->
+      </a>
+    <h1 style="margin-top: 15px;">
+      &raquo;
+      <a href="/">AIDS</a>
+      |
+      <a href="/edit">EDIT</a>
+      &laquo;
+    </h1>
+  <!-- </div> -->
+  </header>
+
+  <!-- !!!CONFIG -->
+  <div id="config">
+    <ul>
+      <li>
+        <strong>Spiel:</strong>
+        <?php
+        if     ( _GAME == "ds1"  ) echo "Dark Souls I";
+        elseif ( _GAME == "ds1r" ) echo "Dark Souls Remastered";
+        elseif ( _GAME == "ds2"  ) echo "Dark Souls II";
+        elseif ( _GAME == "ds3"  ) echo "Dark Souls III";
+        elseif ( _GAME == "bb"   ) echo "Bloodborne";
+        ?>
+      </li>
+      <li><strong>Datenbank:</strong> <?=_GAME?></li>
+      <li><strong>Login:</strong> Disabled</li>
+      <li><strong>User:</strong> {Admin}</li>
+      <li><strong>Change Game:</strong></li>
+      <li>
+        <select id="selectGame" name="selectGame">
+          <option value="ds1"   <?=( _GAME == "ds1"  ) ? "selected"  : ""?>>Dark Souls I</option>
+          <option value="ds1r"  <?=( _GAME == "ds1r" ) ? "selected"  : ""?>>Dark Souls Remastered</option>
+          <option value="ds2"   <?=( _GAME == "ds2"  ) ? "selected"  : ""?>>Dark Souls II</option>
+          <option value="ds3"   <?=( _GAME == "ds3"  ) ? "selected"  : ""?>>Dark Souls III</option>
+          <option value="bb"    <?=( _GAME == "bb"   ) ? "selected"  : ""?>>Bloodborne</option>
+        </select>
+        <!-- <input type="submit" value="Submit"> --> 
+      </li>
+    </ul>
+  </div>
+
+
+
+
+
+
+<?php
+  // CHECK MISSING DICE
+  checkMissingDice();
+?>
+
+
+  <!-- INC CONTENT -->
+  <div id="flex-container-edit">
+    <div class="flex-container-edit">
+  <?php
+    if ( !empty($_GET["show"]) && $_GET["show"] == "kills"        ) include("inc/edit/kills.inc.php");
+    if ( !empty($_GET["show"]) && $_GET["show"] == "todo"         ) include("inc/edit/todo.inc.php");
+    if ( !empty($_GET["show"]) && $_GET["show"] == "backups"      ) include("inc/edit/backups.inc.php");
+    if ( !empty($_GET["show"]) && $_GET["show"] == "rolls"        ) include("inc/edit/rolls.inc.php");
+    if ( !empty($_GET["show"]) && $_GET["show"] == "logs"         ) include("inc/edit/logs.inc.php");
+    if ( !empty($_GET["show"]) && $_GET["show"] == "autocomplete" ) include("inc/edit/autocomplete.inc.php");
+    
+    elseif (
+      empty($_GET["show"]) && 
+      empty($_REQUEST) ||
+      $_GET["show"] == "aids"
+    )                                                               include("inc/edit/aids.inc.php");
+
+    // include("autocomplete/ALLAUTOCOMPLETEDATA.php");
+  ?>
+    </div>
+  </div>
+
+
+
+<?php
+ENDIF
+?>
+
+
+<?php
+$request_uri = htmlspecialchars($_SERVER["REQUEST_URI"], ENT_QUOTES, "utf-8")
+?>
+
+<!-- FOOTER -->
+<footer>
+  <nav style="font-size: 2em;">
+    <script>
+    document.write('<a href="' + document.referrer + '" data-balloon="Zurück" data-balloon-pos="up"><i class="fas fa-arrow-left"></i></a>');
+    </script>
+    | 
+    <a href="<?=$request_uri?>#" data-balloon="Nach oben" data-balloon-pos="up">
+      <i class="fas fa-arrow-up"></i>
+    </a>
+    |
+    <a href="/edit" data-balloon="Zu Edit" data-balloon-pos="up">
+      <i class="fas fa-arrow-right"></i>
+    </a>
+  </nav>
+</footer>
+
+
+
+<!-- Sidenav -->
+<script>
+function toggleNav () {
+  
+}
+
+function openNav() {
+  document.getElementById("mySidenav").style.width = "250px";
+  document.getElementById("main").style.marginLeft = "250px";
+  document.body.style.backgroundColor = "rgba(0,0,0,0.4)";
+  
+  /*
+    window.setTimeout(function(){
+      $("#sidenav-icon").css('transform', 'rotate(90deg)');
+    },500);
+  */
+  
+  $("#sidenav-icon").css({'transform': 'rotate(90deg)'});
+}
+
+function closeNav() {
+  document.getElementById("mySidenav").style.width = "0";
+  document.getElementById("main").style.marginLeft= "0";
+  // document.body.style.backgroundColor = "white";
+  // document.body.style.backgroundColor.remove();
+  // document.body.style.backgroundColor = "trapnsparent";
+  document.body.style.backgroundColor = "rgba(0,0,0,0)";
+  
+  $("#sidenav-icon").css({'transform': 'rotate(0deg)'});
+}
+</script>
+
+<!-- jQuery Autocomplete -->
+<script>
+$( function() {
+  var availableTags = <?php include("autocomplete.jQuery.php")?>;
+  var availableTagsMobsBoss = <?php include("autocomplete/aids.php"); echo json_encode( $aids ); ?>;
+  $( "#tags-weapons" ).autocomplete({
+    source: availableTags
+  });
+  $( "#tags-mobs, #tags-boss" ).autocomplete({
+    source: availableTagsMobsBoss
+  });
+} );
+</script>
+
+<!-- Toggle Table -->
+<script>
+function toggleTable () {
+  event.preventDefault();
+  
+  $(".toggleTable").toggle("slow");
+  
+  $(".toggleTableIndicatorPlus").toggle("slow");
+  $(".toggleTableIndicatorMinus").toggle("slow");
+
+  // console.log($(".toggleTableIndicator").text());
+  
+}
+</script>
+
+<!-- Change Game Dropdown -->
+<script>
+$(function(){
+  // bind change event to select
+  $("#selectGame").on("change", function () {
+    // var url = $(this).val(); // get selected value
+    var game = $(this).val(); // get selected value
+    var url = "/edit?mode=selectGame&game="+game;
+    if (url) { // require a URL
+        window.location = url; // redirect
+    }
+    return false;
+  });
+});
+</script>
 
 <!-- Ajax Delete -->
 <script>
@@ -119,516 +700,33 @@ $(document).ready(function () {
         });
 });
 </script>
-  
-</head>
 
-<body spellcheck="false" id="edit">
-  
-  <header>
-  <!-- <div class="header_Edit"> -->
-    <h1>&raquo;<a href="/">AIDS</a>&laquo;</h1>
-  <!-- </div> -->
-  </header>
+<!-- animate-sidenav-icon() -->
 
-  <!--
-  <nav>
-    <a href="/edit#Mobs">Mobs</a> |
-    <a href="/edit#Boss">Boss</a> |
-    <a href="/edit#Weapons">Weapons</a> |
-    <a href="/edit#Kills">Kills</a> |
-    <a href="/edit#Rolls">Rolls</a>
-  </nav>
-  -->
-  
-  
-  
-  
-<?php
-/* Check for missing dice in sequence */
-checkMissingDice();
-?>
-
-<?php  
-/*
-*
-*
-*  ///////// INCLUDE EDIT/ADD FORM INSTEAD OF COPY CODE @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-*
-*/
-?>
-  
-
-  
-<!-- EDIT: MOBS, BOSS, WEAPONS -->
-<?php
-  if ( !empty($_GET["mode"]) && empty($_GET["action"]) && ($_GET["mode"] == "weapons" || $_GET["mode"] == "mobs" || $_GET["mode"] == "boss") ) {
-    (STRING)$mode         = $_GET["mode"];
-    (STRING)$table        = $mode;
-    (STRING)$parentField  = $table."Name";
-    (INT)$ID              = $_GET["ID"];  
-  
-    if ( isset($_POST["newName"]) ) {
-      (STRING)$newName  = $_POST["newName"];
-      (STRING)$oldName  = $_POST["oldName"];
-      (INT)$newDice     = $_POST["newDice"];
-      (INT)$oldDice     = $_POST["oldDice"];
-      
-      $sql = "UPDATE $table SET name = :name, dice = :dice WHERE ID = :ID";
-      $stmt = $pdo->prepare($sql);                                  
-      $stmt->bindParam(":name", $_POST["newName"], PDO::PARAM_STR);
-      $stmt->bindParam(":dice", $_POST["newDice"], PDO::PARAM_INT);
-      $stmt->bindParam(":ID", $_GET["ID"], PDO::PARAM_INT);
-      $stmt->execute();
-      
-      // Copy over weapon image from fextralife
-      if ( $mode == "weapons" ) copyWeaponFromFextra($newName);
-    
-      // log
-      if ( $newDice  != $oldDice ) logAction ($table, "Edit", $ID, $parentField , $oldDice, $newDice);
-      if ( $newName  != $oldName ) logAction ($table, "Edit", $ID, $parentField, $oldName, $newName);
-      
-      redirect("/edit", $statusCode = 303);
-
-    } else {
-      
-      $stmt = $pdo->prepare("SELECT * FROM $table WHERE ID = ".$_GET["ID"]." ");
-      $stmt->execute();
-      $row = $stmt->fetch(PDO::FETCH_ASSOC);
-      
-    }
-    ?>
-  
-    <div id="flex-container">
-      <div class="flex-item">&nbsp;</div>
-
-      <div class="flex-item">
-        <form action="/edit?mode=<?= $mode ?>&ID=<?= $_GET["ID"] ?>" method="post" id="edit">
-          <ul>
-            <li><label>Dice:</label></li>
-            <li><input type="number" name="newDice" value="<?=$row["dice"]?>" min="1" max="99" autocomplete="off" placeholder="#" required="required"></li>
-            <li><label>Entry:</label></li>
-            <li><input type="text" name="newName" value="<?=$row["name"]?>" maxlength="32" required="required"></li>
-            <li><input type="text" name="fextra" value="" autocomplete="off" maxlength="99" placeholder="Fextra URL"></li>
-            <li><input type="submit" value="Submit"></li>
-          </ul>
-
-          <input type="hidden" name="oldDice" value="<?=$row["dice"]?>">
-          <input type="hidden" name="oldName" value="<?=$row["name"]?>">
-        </form>
-      </div>
-
-      <div class="flex-item">&nbsp;</div>
-    </div>
-
-
-<?php
-} // ENDIF
-?>
-  
-<!-- EDIT KILLS -->
-<?php
-if ( !empty($_GET["mode"]) && $_GET["mode"] == "kills" ) {
-  (STRING)$mode       = $_GET["mode"];
-  (STRING)$table      = $mode;
-  (INT)$ID            = $_GET["ID"];
-  
-  if ( isset($_POST["newJoker"])) {
-    (INT)$postJoker   = $_POST["newJoker"];
-    (INT)$oldJoker    = $_POST["oldJoker"];
-    (INT)$postSpent   = $_POST["newSpent"];
-    (INT)$oldSpent    = $_POST["oldSpent"];
-    // (STRING)$postName = $_POST["newName"];
-    (STRING)$postBoss = $_POST["newBossNames"];
-    (STRING)$oldBoss  = $_POST["oldBossNames"];
-    
-    $sql = "UPDATE kills SET joker = :joker, spent = :spent, bossNames = :bossNames WHERE ID = :ID";
-    $stmt = $pdo->prepare($sql);                                  
-    $stmt->bindParam(':joker', $_POST['newJoker'], PDO::PARAM_INT);
-    $stmt->bindParam(':spent', $_POST['newSpent'], PDO::PARAM_INT);
-    $stmt->bindParam(':bossNames', $_POST['newBossNames'], PDO::PARAM_STR);
-    $stmt->bindParam(':ID', $_GET['ID'], PDO::PARAM_INT);
-    $stmt->execute();
-    
-    // log
-    if ( $newJoker  != $postJoker ) logAction ($table, "Edit", $ID, "joker", $oldJoker, $postJoker);
-    if ( $newSpent  != $postSpent ) logAction ($table, "Edit", $ID, "spent", $oldSpent, $postSpent);
-    if ( $newBoss   != $postBoss ) logAction ($table, "Edit", $ID, "bossNames", $oldBoss, $postBoss);
-    
-    // redirect("/edit", $statusCode = 303);
-     
-  } else {
-    $stmt = $pdo->prepare("SELECT * FROM kills WHERE ID = ".$_GET["ID"]." ");
-    $stmt->execute();
-    $row = $stmt->fetch(PDO::FETCH_ASSOC);
-  }
-?>
-
-<div id="flex-container">
-  <div class="flex-item">&nbsp;</div>
-    
-  <div class="flex-item">
-      <form action="/edit?mode=kills&ID=<?=$_GET["ID"]?>" method="post" id="edit">
-        <ul>
-          <li><label>Joker:</label></li>
-          <li><input type="number" name="newJoker" value="<?=$row["joker"]?>" min="0" max="99" autocomplete="off" placeholder="Joker insgesamt" required="required"></li>
-
-          <li><label>Ausgegeben:</label></li>
-          <li><input type="number" name="newSpent" value="<?=$row["spent"]?>" min="0" max="99" autocomplete="off" placeholder="Joker ausgegeben" required="required"></li>
-
-          <li><label>bossNames:</label></li>
-          <li><textarea rows="15" name="newBossNames" cols="50" required="required"><?=$row["bossNames"]?></textarea></li>
-
-          <li><input type="submit" value="Submit"></li>
-          
-        </ul>
-        <input type="hidden" name="oldJoker" value="<?=$row["joker"]?>">
-        <input type="hidden" name="oldSpent" value="<?=$row["spent"]?>">
-        <input type="hidden" name="oldBossNames" value="<?=$row["bossNames"]?>">
-      </form>
-    </div>
-  
-  <div class="flex-item">&nbsp;</div>
-</div>
-
-<?php
-} // ENDIF
-?>
-  
-  
-  
-<!-- EDIT TODO -->
-<?php
-if ( !empty($_GET["mode"]) && $_GET["mode"] == "todo" ) {
-    (STRING)$mode   = $_GET["mode"];
-    (STRING)$table  = $mode;
-    (INT)$ID        = $_GET["ID"];  
-  
-    if ( isset($_POST["newTodo"]) ) {
-      (STRING)$newTodo  = $_POST["newTodo"];
-      
-      $sql = "UPDATE $table SET todoText = :todoText WHERE ID = :ID";
-      $stmt = $pdo->prepare($sql);                                  
-      $stmt->bindParam(":todoText", $_POST["newTodo"], PDO::PARAM_STR);
-      $stmt->bindParam(":ID", $_GET["ID"], PDO::PARAM_INT);
-      $stmt->execute();
-      
-      redirect("/edit", $statusCode = 303);
-
-    } else {
-      
-      $stmt = $pdo->prepare("SELECT * FROM $table WHERE ID = ".$_GET["ID"]." ");
-      $stmt->execute();
-      $row = $stmt->fetch(PDO::FETCH_ASSOC);
-    }
-?>
-
-<div id="flex-container">
-  <div class="flex-item">&nbsp;</div>
-    
-  <div class="flex-item">
-      <form action="/edit?mode=<?=$mode?>&ID=<?=$_GET["ID"]?>" method="post" id="edit">
-        <ul>
-          <li><label>Entry:</label></li>
-          <li><textarea rows="15" name="newTodo" cols="50" required="required"><?=$row["todoText"]?></textarea></li>
-          <li><input type="submit" value="Submit"></li>
-        </ul>
-      </form>
-    </div>
-  
-  <div class="flex-item">&nbsp;</div>
-</div>
-  
-<?php
-} // ENDIF
-?>
-  
-  
-  
-  
-  
-  
-
-  
-<!-- ADD: MOBS, BOSS, WEAPONS --> 
-<?php 
-  if ( !empty($_GET["mode"]) && !empty($_GET["action"]) && ($_GET["mode"] == "weapons" || $_GET["mode"] == "mobs" || $_GET["mode"] == "boss") ) {
-    (STRING)$mode   = $_GET["mode"];
-    (STRING)$table  = $mode;
-    // (INT)$ID        = $_GET["ID"];
-  
-    if ( isset($_POST["addEntry"]) ) {
-      (STRING)$addEntry = $_POST["addEntry"];
-      (INT)$addDice     = $_POST["addDice"];
-      
-      if ( empty($_POST["addDice"]) ) { // if field for dice value wasn't filled
-        $stmt = $pdo->prepare("SELECT * FROM $table ORDER BY dice DESC LIMIT 1"); // get max value from field dice
-        $stmt->execute();
-        $row = $stmt->fetch(PDO::FETCH_ASSOC);
-        (INT)$addDice = $row["dice"] + 1; // +1 of max dice value
-      } else { 
-        // cherck if dice alrerady exists
-        $stmt = $pdo->prepare("SELECT dice FROM $table WHERE dice = $addDice"); // get max value from field dice
-        $stmt->execute();
-        $row = $stmt->fetch(PDO::FETCH_ASSOC);
-        
-        if ($row["dice"] != NULL ) die("Dice Wert schon vergeben!");
-      }    
-      
-      // Insert Dice Value into DB
-      $sql = "INSERT INTO $table (dice, name) VALUES (:dice, :name)";
-      $stmt = $pdo->prepare($sql);          
-      $stmt->bindParam(':dice', $addDice, PDO::PARAM_INT);
-      $stmt->bindParam(':name', $_POST['addEntry'], PDO::PARAM_STR);
-      $stmt->execute();
-
-      // Copy over weapon image from fextralife
-      if ( $mode == "weapons" ) copyWeaponFromFextra($addEntry);
-      
-      redirect("/edit", $statusCode = 303);
-
-    } // ENDIF (ELSE) $_POST["addEntry"]
-    
-  } // ENDIF $_GET["mode"]
-  ?>
-  
-  
-  
-  
- <!-- DELETE --> 
-<?php
-if ( !empty($_GET["action"]) && $_GET["action"] == "delete" ) {
-  (STRING)$mode         = $_GET["mode"];
-  (STRING)$table        = $mode;
-  (STRING)$parentField  = $table . "Name";
-  (INT)$ID              = $_GET["ID"];
-
-  $sql = "DELETE FROM $table WHERE ID = :ID";
-  $stmt = $pdo->prepare($sql);
-  $stmt->bindParam(":ID", $ID, PDO::PARAM_INT);
-  $stmt->execute();
-  
-  // log
-  logAction ($table, "Del", $ID, $parentField, "", "");
-  
-  // Check if number in dice is missing
+<script>
   /*
-  $data = $pdo->query("SELECT dice FROM $table")->fetchAll(PDO::FETCH_COLUMN);
-  $missing_number = missing_number($data);
-  missing_number($data);
-  */ 
-  
-  $count = pdoCount($table);
-  if ( $ID != $count ) {
-    $data = $pdo->query("SELECT dice FROM $table")->fetchAll(PDO::FETCH_COLUMN);
-    $missing_number = missing_number($data);
-    print_r( $missing_number);
-  }
-  
-  
-  // $stmt = $pdo->prepare("SELECT dice FROM $table ORDER BY dice DESC LIMIT 1"); // get max value from field dice
-  //$stmt = $pdo->prepare("SELECT dice FROM $table WHERE ID = $ID"); // get max value from field dice
-  //$stmt->execute();
-  //$row = $stmt->fetch(PDO::FETCH_ASSOC);
-  //$row["dice"] + 1; // +1 of max dice value
-  
-  
-  
-  redirect("/edit", $statusCode = 303);
-}
-
-
-
-
-/*
- * TRUNCATE
- */
-if ( !empty($_GET["action"]) && $_GET["action"] == "truncate" ) {
-  $sql = "TRUNCATE rolls";
-  $stmt = $pdo->prepare($sql);
-  $stmt->execute();
-  
-  redirect("/edit", $statusCode = 303);
-}
-?>
-  
-  
+$( "#sidenav-icon" ).click(function() {
+  console.log("click");
+  $("#sidenav-icon").css({'transform': 'rotate(90deg)'});
+});
+*/
+</script>
 
   
-<!-- STANDARD ( NO $_REQUEST[] )-->
-<div id="flex-container-edit">
-<!-- <div id="aidsList"> -->
-<?php
-  if ( empty($_GET["mode"]) ) :
-
-  $tables = array("mobs", "boss", "weapons");
-
-  foreach($tables as $table) :
-    $stmt = $pdo->prepare("SELECT * FROM $table ORDER BY dice");
-    $stmt->execute();
-?>
-<a id="<?=ucfirst($table)?>"></a>
-<form action="/edit?mode=<?=$table?>&action=add" method="post">
-<table class="edit">
-  <thead>
-    <tr>
-      <th class="th-h" colspan="3">
-        &raquo; <?=ucfirst($table)?>
-      </th>
-    </tr>
+<!-- Background Image per _GAME -->
+<style>
+  html {
+    background: url("/img/bg/<?=$GAME?>.jpg") no-repeat center center fixed;
     
-    <tr>
-      <th scope="col"><strong>Dice</strong></th>
-      <th scope="col"><strong><?=ucfirst($table)?></strong></th>
-      <th scope="col"><strong>IMG</strong></th>
-      <!-- <th scope="col" class="edit_action"><strong>...</strong></th> -->
-    </tr>
-  </thead>
-  <tbody>
-    <?php while ($row = $stmt->fetch(PDO::FETCH_NUM)) : ?>
+    background-color: black;
 
-    <tr id="<?=$table?>-<?=$row[0]?>">
-      <td><a href="/edit?mode=<?=$table?>&ID=<?=$row[0]?>"><?=$row[1]?></a></td>
-      <td class="edit_col">
-        <div class="title">
-          <a href="/edit?mode=<?=$table?>&ID=<?=$row[0]?>"><?=$row[2]?></a>
-          <!-- DELETE -->
-          <!-- <a data-value="<?php //$row1['id'];?>" class="remove_file">Delete</a> -->
-          <!-- href="/edit?mode=<?php //$table?>&action=delete&ID=<?php //$row[0]?>" -->
-          <!-- onClick="return confirm('SICHER???????? MACH KE SCHEISS!');" -->
-          <a data-value="<?=$row[0]?>" data-table="<?=$table?>" class="delete" data-balloon="Löschen" data-balloon-pos="left">
-            <img src="/img/delete-icon.png" width="20" height="20" alt="Delete">
-          </a>
-          <!-- EDIT -->
-          <a class="edit-data" href="/edit?mode=<?=$table?>&ID=<?=$row[0]?>" data-balloon="Edit" data-balloon-pos="left">
-            <img src="/img/edit-icon.png" class="edit_icon" width="20" height="20" alt="Edit">
-          </a>
-        </div>
-      </td>
-      <td>       
-        <?php
-        if ( $table == "weapons" ) {
-          $path = sanitizeWeaponsPath ($row[2]);
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+  }
+</style>
 
-          if ( file_exists($_SERVER["DOCUMENT_ROOT"] . $path[2]) ) {
-        ?>
-            <span class="diceIconPath-font">&#10004;</span>
-            <div class="diceIconPath"><img src="<?=$path[2]?>"></div>
-            
-          <?php
-          } else {
-          ?>
-            <span class="diceIconPath-font">&times;</span>
-          <?php
-          }
-                    
-        } else {
-          
-          $file_name = sanitizeAids($row[2]);
-          $path = "/dice/icons/{$file_name}.png";
-          //echo $path;
-          
-          if ( file_exists($_SERVER["DOCUMENT_ROOT"] . $path) ) {
-          ?>
-            <span class="diceIconPath-font">&#10004;</span>
-            <div class="diceIconPath"><img src="<?=$path?>"></div>
-            
-          <?php
-          } else {
-          ?>
-            <span class="diceIconPath-font">&times;</span>
-          <?php
-          }
-          
-        }
-        ?>
-      </td>
-    </tr>
-    <?php ENDWHILE ?>
-    <tr>
-      <td colspan="3">
-        <ul>
-          <li>
-            <input type="number" name="addDice" value="" min="1" max="99" autocomplete="off" placeholder="#">
-            <input type="text" class="edit_input" name="addEntry" value="" autocomplete="off" maxlength="32" placeholder="Name" required="required">
-            <input type="submit" value="Submit">
-          </li>
-        </ul>
-      </td>
-    </tr>
-  </tbody>
-</table>
-</form> 
-  
-<?php
-  ENDFOREACH
-?>
-
-<!-- </div> -->
-
-  
-
-  
-  
-  
-<?php
-  
-  include("kills.inc.php");
-  
-?>
-
-<div class="divider">&nbsp;</div>
-
-<?php
-  
-  include("todo.inc.php");
-  include("backups.inc.php");
-  include("rolls.inc.php");
-  include("logs.inc.php");
-  
-?>
-
-
-  
-
-<?php
-ENDIF // EOF if ( empty($_GET["mode"]) )
-?>
-
-</div>
-  
-  
-  
-
-
-  
-<!-- FOOTER -->  
-<hr>
-  <footer>
-    <nav>
-      <a href="/edit">&lt;</a> |
-      <span>
-        <?php //echo "User: " . $_SESSION["username"]?> <!-- | -->
-      </span>
-      <!-- <a href="/?action=logout">Logout</a> | -->
-      <a href="/edit#">^</a>
-    </nav>
-  </footer>
-<hr>
-
-
-  
-
-
+</div> <!-- EOF #main -->
 </body>
 </html>
-
-
-
-<?php
-/*
-// Session, Login
-} else {
-  redirect("/", $statusCode = 303);
-}
-*/
-?>

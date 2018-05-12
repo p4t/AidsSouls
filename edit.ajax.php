@@ -3,6 +3,7 @@ if (!empty($_POST)) {
 	// Database
   require_once("config.db.php");
   require_once("functions.inc.php");
+  require_once("globals.inc.php");
   
 	foreach ($_POST as $field => $val) {
     // echo htmlspecialchars("Fieldname: $field_name VAL:  $val <br>");

@@ -3,6 +3,7 @@ if ( !empty($_POST) ) {
 	// Database
   require_once("config.db.php");
   require_once("functions.inc.php");
+  require_once("globals.inc.php");
   
   (STRING)$table        = $_POST["table"];
   (STRING)$parentField  = $table . "Name";
