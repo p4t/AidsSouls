@@ -44,7 +44,7 @@ if (!empty($_POST)) {
         if ( $table == "weapons" ) copyWeaponFromFextra($name);
         
         // Log
-        logAction ($table, "edit.ajax", $ID, $table."Name" , "", $name);
+        logAction ($table, "edit.ajax", $ID, "name" , "", $name);
 
         echo "Updated";
       }

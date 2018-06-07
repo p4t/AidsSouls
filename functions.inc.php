@@ -4,7 +4,7 @@
 /*
 class Aids {
   public $test;
-  
+  co
   public function getRNG () {
     //
   }
@@ -516,11 +516,15 @@ function replaceNameWithEmoji ($emoji) {
 
 
 /*
- * Replace (Cheese) from field text in DB Table Kills
+ * Replace (Cheese) from field text in DB Table Kills - ignore case sensitivity
  */
 function replaceCheeseWithEmoji ($text) {
-  $text = str_replace("Cheese", "🧀", $text);
-  $text = str_replace("0", "<img src=\"/img/curlup.png\" width=\"62\" height=\"51\" alt=\"Curl Up\">", $text);
+  $curl_up_img = "<img src=\"/img/curlup.png\" width=\"62\" height=\"51\" alt=\"Curl Up\">";
+  
+  $text = str_ireplace("Cheese", "🧀", $text);
+  $text = str_ireplace("0", $curl_up_img, $text);
+  
+  if ( empty($text) ) $text = $curl_up_img;
   
   return $text;
 }
@@ -576,9 +580,9 @@ function pdoQuery ($query, $mode) {
 function numberToTally ($number) {
   $x = 1; 
 
-    if ( $number == 0 ) {
-      echo "<img src=\"/img/curlup.png\" width=\"62\" height=\"51\" alt=\"Curl Up\">";      
-    } else {
+  if ( $number == 0 ) {
+    echo "<img src=\"/img/curlup.png\" width=\"62\" height=\"51\" alt=\"Curl Up\">";      
+  } else {
     while ($x <= $number) {
       if ($x % 5 == 1) echo "<br>";
       echo "I";
@@ -611,7 +615,7 @@ function replaceBrWithComma ($text) {
 }
 
 /*
- * Replace <br> with comma for data-tip
+ * Replace New line break with <li> item
  */
 function replaceLineBreakWithList ($text) {
   $text = str_replace("\r\n", "<li>", $text);
@@ -621,7 +625,7 @@ function replaceLineBreakWithList ($text) {
 
 
 /*
- * Replace dash - with <br>
+ * Replace dash - with <br> (for Todo)
  */
 function replaceDashWithBr ($text) {
   $text = str_replace("-", "<br>", $text);
@@ -845,7 +849,6 @@ function saveRolls ($mobsAids = false, $bossAids = false) {
 *  `IP` varchar(255) NOT NULL,
 *  `date` datetime NOT NULL
 */
-
 function logAction ($section, $action, $parentID, $parentField, $old, $new) {
   global $pdo;
   global $GAME;
@@ -859,8 +862,8 @@ function logAction ($section, $action, $parentID, $parentField, $old, $new) {
   if ( !empty($_SESSION["userID"]) ) $userID = $_SESSION["userID"];
   else $userID = "0";
     
-  $date     = date("Y-m-d H:i:s");
-  $IP       = getIpAddr();
+  $date = date("Y-m-d H:i:s");
+  $IP   = getIpAddr();
   
   $sql  = "INSERT INTO {$GAME}_log (section, action, parentID, parentField, old, new, userID, username, IP, date) VALUES (:section, :action, :parentID, :parentField, :old, :new, :userID, :username, :IP, :date)";
   $stmt = $pdo->prepare($sql);   
@@ -896,13 +899,13 @@ function logAction ($section, $action, $parentID, $parentField, $old, $new) {
 function buildQuery ($get_var) {
     switch ($get_var) {
       case "weapons":
-        $tbl = 'weapons';
+        $tbl = "weapons";
       break;
       case "mobs":
-        $tbl = 'mobs';
+        $tbl = "mobs";
       break;
       case "boss":
-        $tbl = 'boss';
+        $tbl = "boss";
       break;
     }
 
@@ -1050,23 +1053,30 @@ function scan_dir($dir) {
 
 
 
+/*
+ * Check if file exists on external server
+ */
+function checkExternalFile($url) {
+  $ch = curl_init($url);
+  curl_setopt($ch, CURLOPT_NOBODY, true);
+  curl_exec($ch);
+  $retCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+  curl_close($ch);
 
-function checkExternalFile($url)
-{
-    $ch = curl_init($url);
-    curl_setopt($ch, CURLOPT_NOBODY, true);
-    curl_exec($ch);
-    $retCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-    curl_close($ch);
+  return $retCode;
+  /*
+  $fileExists = checkExternalFile("http://example.com/your/url/here.jpg");
 
-    return $retCode;
+  // $fileExists > 400 = not found
+  // $fileExists = 200 = found.
+  */
 }
 
 
 
 
 /*
-* get filename and ext from $fextra
+* Get filename and ext from $fextra
 * prepare filename to copy over to destination folder
 * @see functions.inc.php
 *
@@ -1104,18 +1114,22 @@ function copyWeaponFromFextra ($weapon, $res = "") {
       break;
     case "bb":
       $fextraURL = "http://bloodborne.wiki.fextralife.com/file/Bloodborne/";
+      // http://bloodborne.wikidot.com/weapons
       $source = "{$fextraURL}{$weapon}.png";
       break;
+    // Not implemented:
+    case "des":
+      $fextraURL = "https://demonssouls.wiki.fextralife.com/file/Demons-Souls/";
+      $source = "{$fextraURL}{$weapon}.png";
+      break;
+    
     default:
-      echo "FEXTRA URL FEHLER";
+      die("FEXTRA URL FEHLER");
 }
   
   // if URL is provided because of fextra shenanigans
   if ( !empty($res) ) $source = $res;
   
-
-  // $source = "http://darksouls3.wiki.fextralife.com/file/Dark-Souls-3/{$weapon}-icon.png";
-  // $source = "{$fextraURL}{$weapon}-icon.png";
   
   $dest = _DR . "/dice/icons/weapons/" . _GAME . "/{$weapon}.png";
   $ext = "png";
@@ -1134,13 +1148,14 @@ function copyWeaponFromFextra ($weapon, $res = "") {
     
     // SEEMS TO BE NOT WORKING
     // $fileExists = checkExternalFile("http://example.com/your/url/here.jpg");
-    
-    /*
-    if ( !file_exists($source) ) {
-      // $msg = "FILE DOES NOT EXIST ON FEXTRALIFE. WEAPON NAME MISSPELLED?<br>"; // weapon name misspelled
-      echo $msg;
-    }
-    */
+    // $msg = "FILE DOES NOT EXIST ON FEXTRALIFE. WEAPON NAME MISSPELLED?<br>"; // weapon name misspelled
+    // echo $msg;
+    // TRY LOWER CASE UPPER CASE
+    // @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+    // @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+    // @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+    // @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+    // @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 
     if ( !@copy($source, $dest) ) { // @ for own error handling
 
@@ -1171,10 +1186,36 @@ function copyWeaponFromFextra ($weapon, $res = "") {
 
 
 
+// @rtrim()
+function replaceLastRN ($str) {
+  // \r\n
+  // $str = preg_replace('/\bblank$/', '', $str);
+  $str = preg_replace('/\bblank$/', '', $str);
+  return $str;
+}
+
+function str_lreplace($search, $replace, $subject) {
+  $pos = strrpos($subject, $search);
+
+  if($pos !== false) {
+      $subject = substr_replace($subject, $replace, $pos, strlen($search));
+  }
+
+  return $subject;
+}
 
 
-
-
+function strrtrim($message, $strip) {
+  // break message apart by strip string
+  $lines = explode($strip, $message);
+  $last  = "";
+  // pop off empty strings at the end
+  do {
+    $last = array_pop($lines);
+  } while (empty($last) && (count($lines)));
+  // re-assemble what remains
+  return implode($strip, array_merge($lines, array($last)));
+}
 
 
 
@@ -1186,8 +1227,6 @@ function copyWeaponFromFextra ($weapon, $res = "") {
 
 
 /******************** LOGIN ***********************/
-
-
 
 /*
  * Login, check if username and password entered are valid (Database)
@@ -1220,6 +1259,10 @@ function login (string $username, string $password) {
   }
 }
 
+
+/*
+ * Logout, Destroy all sessions
+ */
 function logout() {
   session_start();
   unset($_SESSION["userID"]);
@@ -1237,6 +1280,9 @@ function logout() {
 
 
 /* CONFIG */
+/*
+ * Get the game currently set in DB
+ */
 function getGame () {
   global $pdo;
   
@@ -1247,11 +1293,23 @@ function getGame () {
   return $row["game"];
 }
 
+
+/*
+ * Change the Game in DB
+ *
+ * GAMES:
+ * Dark Souls 1
+ * Dark Souls 2
+ * Dark Souls 3
+ * Bloodborne
+ * Dark Souls 1 Remastered
+ * Demon's Souls
+ */
 function changeGame ($game) {
   global $pdo;
   
   // all available Games
-  $games = array("ds1", "ds2", "ds3", "bb", "ds1r");
+  $games = array("ds1", "ds2", "ds3", "bb", "ds1r", "des");
   // Check if var = in $games
   if ( !in_array($game, $games) || empty($game) ) die("OH GOTT WAS ISSN PASSIERT? @changeGame()" . "<br>" .'$game: ' . $game);
   
@@ -1261,6 +1319,10 @@ function changeGame ($game) {
   // $stmt->bindParam(":ID", $ID, PDO::PARAM_INT);
   $stmt->execute();
 }
+
+
+
+
 
 
 ?>

@@ -33,7 +33,7 @@
   while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) { 
   ?>
       
-  <tr>
+  <tr contenteditable="true">
     <td><?=$row["ID"]?></td>
     <td><?=$row["section"]?></td>
     <td><?=$row["action"]?></td>

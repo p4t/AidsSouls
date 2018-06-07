@@ -334,11 +334,16 @@ table.edit th.th-h {
   text-align: center;
 }
 
+/*
 table.edit thead:hover {
-  
   cursor: pointer;
-  
 }
+*/
+table.edit tbody tr:nth-child(2):hover {
+  cursor: pointer;
+}
+
+
 
 .toggleTable,
 .toggleTableIndicatorMinus
@@ -346,4 +351,31 @@ table.edit thead:hover {
   /*
   display: none;
   */
+}
+
+
+
+/* Tablesorter jQuery plugin*/
+
+table.tablesorter thead tr .header {
+
+  /*
+	background-repeat: no-repeat;
+	background-position: center right;
+  */
+    
+	cursor: pointer;
+}
+
+table.tablesorter thead tr .headerSortUp {
+	background-image: url("/img/asc.gif");
+}
+table.tablesorter thead tr .headerSortDown {
+	background-image: url("/img/desc.gif");
+}
+table.tablesorter thead tr .headerSortDown, table.tablesorter thead tr .headerSortUp {
+	background-repeat: no-repeat;
+	background-position: center right;
+  
+  background-color: #8dbdd8;
 }

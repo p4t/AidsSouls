@@ -63,7 +63,7 @@ require_once("globals.inc.php");
 
   <!-- jQuery Form: Add Mobs, Boss, Weapons -->
   <!-- <form id="form" method="post" onsubmit="return false"> -->
-    <div id="flex-container-ajax-form">
+    <!-- <div id="flex-container-ajax-form"> -->
       
       <!-- Mobs -->
       <!--
@@ -93,4 +93,4 @@ require_once("globals.inc.php");
       -->
       <!-- </form> -->
       
-    </div>
+    <!-- </div> -->

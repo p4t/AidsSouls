@@ -37,7 +37,7 @@ if ( (!empty($_POST["mobs"])) || (!empty($_POST["boss"])) || (!empty($_POST["wea
       if ( $mode == "weapons" ) copyWeaponFromFextra($addEntry);
       
       // Log
-      logAction ($table, "post.ajax", "DICE:" . $addDice, $table."Name" , "", $addEntry);
+      logAction ($table, "post.ajax", "DICE:" . $addDice, "name" , "", $addEntry);
       
       // log
       // log ($table, "add", "", $addEntry);

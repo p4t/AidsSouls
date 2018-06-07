@@ -44,5 +44,5 @@ $aids = array (
   "Cosplay"
 );
 sort($aids);
-// echo json_encode( $aids );
+echo json_encode( $aids );
 ?>

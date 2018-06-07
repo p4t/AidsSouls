@@ -5,7 +5,7 @@ define( "_GAME", $GAME );
 
 define( "_DR", $_SERVER["DOCUMENT_ROOT"] );
 define( "_PATH", dirname(__FILE__) );
-define( "_FLASKS", 15 ); // Number of Flasks
+define( "_FLASKS", 10 ); // Number of Flasks
 define( "_LOGIN", FALSE );
 define( "_SHOWTODO", FALSE );
 

@@ -5,10 +5,15 @@ $_DR = $_SERVER["DOCUMENT_ROOT"];
 require_once($_DR . "/config.db.php");
 require_once($_DR . "/functions.inc.php");
 require_once($_DR . "/globals.inc.php");
+?>
 
+<div style="display: none;">
+<?php
 // Aids
 include_once($_DR . "/autocomplete/aids.php");
-
+?>
+</div>
+<?
 /*
 include( $_DR . "/autocomplete/ds1.php" );
 $ds1_weapons = $weapons;

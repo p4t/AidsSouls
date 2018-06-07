@@ -1,11 +1,5 @@
 @charset "utf-8";
 
-/*
- * Sawarabi Mincho (Japanese) https://fonts.google.com/earlyaccess
- */
-@import url('https://fonts.googleapis.com/earlyaccess/sawarabimincho.css');
-
-
 /* Dark Souls 3 Menu Font Style */
 @font-face {
 	font-family: "Trajan";
@@ -451,11 +445,13 @@ ul.aidsList > li:focus
   outline-color: #3f292b;
   outline-style: 2px dotted;
   
+  /*
   background: url("/img/button_bg.png") no-repeat center center fixed;  
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
+  */
 }
 
 
@@ -474,7 +470,9 @@ ul.aidsList > li:focus
   margin-left: 200px;
 }
 .aidsList:hover {
-  white-space: nowrap;
+  /*
+  white-space: nowrap;#######################################
+  */
 }
 
 
@@ -530,6 +528,17 @@ li.noListStyle {
   -moz-background-size: contain;
   -o-background-size: contain;
   background-size: contain;
+}
+#randomDiceOut.stat, .stat {
+  width: initial;
+  height: initial;
+  min-height: 120px;
+  line-height: initial;
+  
+  font-size: 2em;
+  
+  /* remove Dice Background etc */
+  background: none;
 }
 
 .dice {
@@ -1090,11 +1099,12 @@ font-weight: normal;
   font-size: 2em;
 }
 
-td > div img {
+/* TABLE EDIT AIDS.PHP ?????? @@@@@@@ DEBUG TODO */
+table.edit td > div img {
   display: none;
 }
-td:hover > div img {
-  display: block;
+table.edit td:hover > div img {
+  display: inline-block;
 }
 
 
@@ -1258,6 +1268,36 @@ ul.autocomplete {
   
   background-color: rgba(0,0,0,0.6);
 
+}
+
+
+.text-center {
+  text-align: center;
+}
+
+.number-font {
+  /*
+  font-family: "Kameron", serif;
+  */
+  font-family: "Varela Round", sans-serif;
+}
+
+
+
+.max-width-height {
+  /*
+  max-width: 50%;
+  max-height: 50%;
+  
+  width: auto;
+  height: auto;  
+  */
+  max-width: 500px;
+  max-height: 500px;
+}
+
+img.border {
+  border: 1px solid #846731;
 }
 
 

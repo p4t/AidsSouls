@@ -7,6 +7,7 @@ require_once("globals.inc.php");
 // DB Hack
 // include_once("del.ajax.php");
 
+// include_once("inc/edit/aids.inc.php");
 // include_once("inc/edit/kills.inc.php");
 // include_once("inc/edit/todo.inc.php");
 // include_once("inc/edit/backups.inc.php");
@@ -40,17 +41,14 @@ require_once("globals.inc.php");
 <link rel="stylesheet" href="/css/dice_animations.css" type="text/css" media="screen">
 <link rel="stylesheet" href="/css/mobile.css" type="text/css" media="screen">
   
-<!-- Font Awesome -->
-<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.12/css/all.css" integrity="sha384-G0fIWCsCzJIMAVNQPfjH08cyYaUtMwjJwqiRKxxE/rx96Uroj1BtIQ6MLJuheaO9" crossorigin="anonymous">
-
 <!-- jQuery UI CSS -->
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 
-<!--
-<link rel="stylesheet" href="/css/login.css" type="text/css" media="screen">
--->
+<!-- Font Awesome -->
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.12/css/all.css" integrity="sha384-G0fIWCsCzJIMAVNQPfjH08cyYaUtMwjJwqiRKxxE/rx96Uroj1BtIQ6MLJuheaO9" crossorigin="anonymous">
   
-<link rel="stylesheet" href="/css/balloon.css">
+<!-- Balloon Tooltip -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/balloon-css/0.5.0/balloon.min.css">
   
 <link rel="apple-touch-icon" sizes="180x180" href="/img/favico/apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="32x32" href="/img/favico/favicon-32x32.png">
@@ -60,6 +58,9 @@ require_once("globals.inc.php");
   
 <!-- Font for Edit.php and Input Fields -->
 <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
+<!-- Font for Numbers: -->
+<link href="https://fonts.googleapis.com/css?family=Kameron" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Varela+Round" rel="stylesheet">
 
 <meta name="theme-color" content="#3f292b">
 <meta name="msapplication-TileColor" content="#3f292b"> 
@@ -77,51 +78,58 @@ require_once("globals.inc.php");
 <!-- jQuery -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src="/js/jquery.tablesorter.js"></script><!-- http://tablesorter.com/docs/ -->
 
 </head>
 
 <body spellcheck="false" id="edit">
 <div id="main">
 
-  <!-- SIDENAV -->
-  <div id="mySidenav" class="sidenav">
-    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+<!-- SIDENAV -->
+<div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">
+    <!-- &times; -->
+    <i class="fas fa-times"></i>
+  </a>
 
-    <span class="sidenav-toplink">
-      <a href="/" data-balloon="Zur Aids Hauptseite" data-balloon-pos="up">Aids</a>
-      <!-- <a href="/edit">Edit</a> -->
-    </span>
-
-    <a href="/edit?show=aids" <?=( $_GET["show"] == "aids" || !$_GET["show"] ) ? "class='sidenav-active'"  : ""?>>Mobs</a>
-    <a href="/edit?show=aids" <?=( $_GET["show"] == "aids" || !$_GET["show"] ) ? "class='sidenav-active'"  : ""?>>Boss</a>
-    <a href="/edit?show=aids" <?=( $_GET["show"] == "aids" || !$_GET["show"] ) ? "class='sidenav-active'"  : ""?>>Weapons</a>
-
-    <span>&nbsp;</span>
-
-    <a href="/edit?show=kills" <?=( $_GET["show"]         == "kills"    ) ? "class='sidenav-active'"  : ""?>>Kills</a>
-    <a href="/edit?show=rolls" <?=( $_GET["show"]         == "rolls"    ) ? "class='sidenav-active'"  : ""?>>Rolls</a>
-    <a href="/edit?show=logs" <?=( $_GET["show"]          == "logs"     ) ? "class='sidenav-active'"  : ""?>>Logs</a>
-    <a href="/edit?show=todo" <?=( $_GET["show"]          == "todo"     ) ? "class='sidenav-active'"  : ""?>>Todo</a>
-    <a href="/edit?show=backups" <?=( $_GET["show"]       == "backups"  ) ? "class='sidenav-active'"  : ""?>>Backup</a>
-    
-    <span>&nbsp;</span>
-    
-    <a href="/edit?show=autocomplete" <?=( $_GET["show"]  == "autocomplete"   ) ? "class='sidenav-active'"  : ""?>>Autocomplete</a>
-
-    <span>&nbsp;</span>
-    
-    <a href="/edit?show=config" <?=( $_GET["show"]        == "config"         ) ? "class='sidenav-active'"  : ""?>>
-      <i class="fas fa-cog"></i>
+  <span class="sidenav-toplink">
+    <a href="/" data-balloon="Zur Aids Hauptseite" data-balloon-pos="up">
+      Aids <i class="fas fa-external-link-alt"></i>
     </a>
-  </div>
+    <!-- <a href="/edit">Edit</a> -->
+  </span>    
 
-  <span id="sidenav-icon" class="sidenav-icon" onclick="openNav()">
-    <!-- &#9776; --> <!-- Menü -->
-    <i class="fas fa-bars"></i>
-  </span>
-  
-  
-  
+  <a href="/edit?show=aids" <?=( $_GET["show"] == "aids" || !$_GET["show"] ) ? "class='sidenav-active'" : ""?>>Mobs</a>
+  <a href="/edit?show=aids" <?=( $_GET["show"] == "aids" || !$_GET["show"] ) ? "class='sidenav-active'" : ""?>>Boss</a>
+  <a href="/edit?show=aids" <?=( $_GET["show"] == "aids" || !$_GET["show"] ) ? "class='sidenav-active'" : ""?>>Weapons</a>
+
+  <span>&nbsp;</span>
+
+  <a href="/edit?show=kills"    <?=( $_GET["show"]  == "kills"    ) ? "class='sidenav-active'" : ""?>>Kills</a>
+  <a href="/edit?show=rolls"    <?=( $_GET["show"]  == "rolls"    ) ? "class='sidenav-active'" : ""?>>Rolls</a>
+  <a href="/edit?show=logs"     <?=( $_GET["show"]  == "logs"     ) ? "class='sidenav-active'" : ""?>>Logs</a>
+  <a href="/edit?show=todo"     <?=( $_GET["show"]  == "todo"     ) ? "class='sidenav-active'" : ""?>>Todo</a>
+  <a href="/edit?show=backups"  <?=( $_GET["show"]  == "backups"  ) ? "class='sidenav-active'" : ""?>>Backup</a>
+
+  <span>&nbsp;</span>
+
+  <a href="/edit?show=autocomplete" <?=( $_GET["show"]  == "autocomplete" ) ? "class='sidenav-active'" : ""?>>Autocomplete</a>
+  <a href="/edit?show=aidsglobal"   <?=( $_GET["show"]  == "aidsglobal"   ) ? "class='sidenav-active'" : ""?>>Global Aids</a>
+
+  <span>&nbsp;</span>
+
+  <a href="/edit?show=config" <?=( $_GET["show"]        == "config"       ) ? "class='sidenav-active'" : ""?>>
+    <i class="fas fa-cog"></i>
+  </a>
+</div>
+
+<span id="sidenav-icon" class="sidenav-icon" onclick="openNav()">
+  <!-- &#9776; --> <!-- Menü -->
+  <i class="fas fa-bars"></i>
+</span>
+
+
+
 
 
 <?php
@@ -180,14 +188,39 @@ require_once("globals.inc.php");
   <div class="flex-item">&nbsp;</div>
 
   <div class="flex-item">
-    <form action="/edit?mode=<?= $mode ?>&ID=<?= $_GET["ID"] ?>" method="post" id="edit">
+    <form action="/edit?mode=<?=$mode?>&ID=<?=$_GET["ID"]?>" method="post" id="edit">
       <ul>
         <li><label>Dice:</label></li>
         <li><input type="number" name="newDice" value="<?=$row["dice"]?>" min="1" max="99" autocomplete="off" placeholder="#" required="required"></li>
         <li><label>Entry:</label></li>
         <li><input type="text" name="newName" id="tags-<?=$mode?>" value="<?=$row["name"]?>" maxlength="32" required="required"></li>
-        <li><input type="text" name="fextra" value="" autocomplete="off" maxlength="99" placeholder="Fextra URL"></li>
-        
+        <?php
+        if ($mode == "weapons") {
+          $path = sanitizeWeaponsPath ($row["name"]);
+          if ( !file_exists($_SERVER["DOCUMENT_ROOT"] . $path[2]) ) {
+        ?>
+        <li><input type="text" name="fextra" autocomplete="off" placeholder="(Fextra) IMG URL"></li>
+        <?php
+          }
+        }
+        ?>
+        <li><label>IMG:</label></li>
+        <li class="text-center">
+          <?php
+          if ( $mode =="weapons" ) {
+            // $path = sanitizeWeaponsPath ($row["name"]);
+          ?>
+            <img class="max-width-height border" src="<?=$path[2]?>" alt="<?=$path[3]?>">
+          <?php
+          } else {
+            $file_name = sanitizeAids($row["name"]);
+            $path = "/dice/icons/{$file_name}.png";
+          ?>
+            <img class="max-width-height border" src="<?=$path?>" alt="<?=$file_name?>">
+          <?php
+          } // ENDIF
+          ?>
+        </li>
         
         <li><input type="submit" value="Submit"></li>
       </ul>
@@ -211,33 +244,49 @@ require_once("globals.inc.php");
  * EDIT: KILLS
  */
 if ( !empty($_GET["mode"]) && $_GET["mode"] == "kills" ) {
+  
   (STRING)$mode       = $_GET["mode"];
   (STRING)$table      = _GAME . "_" . $mode;
   (INT)$ID            = $_GET["ID"];
   
-  if ( !empty($_POST["newJoker"])) {
+  // if ( (!empty($_POST["newJoker"])) || (!empty($_POST["newSpent"])) || (!empty($_POST["newBossNames"])) ) {
+  if ( !empty($_POST) ) {
+    
     (INT)$postJoker   = $_POST["newJoker"];
     (INT)$oldJoker    = $_POST["oldJoker"];
     (INT)$postSpent   = $_POST["newSpent"];
     (INT)$oldSpent    = $_POST["oldSpent"];
     // (STRING)$postName = $_POST["newName"];
+    
     (STRING)$postBoss = $_POST["newBossNames"];
     (STRING)$oldBoss  = $_POST["oldBossNames"];
     
-    $sql = "UPDATE {$GAME}_kills SET joker = :joker, spent = :spent, bossNames = :bossNames WHERE ID = :ID";
-    $stmt = $pdo->prepare($sql);                                  
-    $stmt->bindParam(':joker', $_POST['newJoker'], PDO::PARAM_INT);
-    $stmt->bindParam(':spent', $_POST['newSpent'], PDO::PARAM_INT);
-    $stmt->bindParam(':bossNames', $_POST['newBossNames'], PDO::PARAM_STR);
-    $stmt->bindParam(':ID', $_GET['ID'], PDO::PARAM_INT);
-    $stmt->execute();
+    // remove last new line \r\n (jQuery Autocomplete)
+    $postBoss = rtrim($postBoss); // rtrim($postBoss, "\r\n");
     
-    // log
-    if ( $newJoker  != $postJoker ) logAction ($table, "Edit", $ID, "joker", $oldJoker, $postJoker);
-    if ( $newSpent  != $postSpent ) logAction ($table, "Edit", $ID, "spent", $oldSpent, $postSpent);
-    if ( $newBoss   != $postBoss ) logAction ($table, "Edit", $ID, "bossNames", $oldBoss, $postBoss);
+    // echo "postBoss DEBUG: " . $postBoss;
     
-    redirect("/edit", $statusCode = 303);
+    // More Jokers spent than earned
+    if ( $postJoker >= $postSpent ) {
+    
+      $sql = "UPDATE {$GAME}_kills SET joker = :joker, spent = :spent, bossNames = :bossNames WHERE ID = :ID";
+      $stmt = $pdo->prepare($sql);                                  
+      $stmt->bindParam(":joker", $postJoker, PDO::PARAM_INT);
+      $stmt->bindParam(":spent", $postSpent, PDO::PARAM_INT);
+      $stmt->bindParam(":bossNames", $postBoss, PDO::PARAM_STR);
+      $stmt->bindParam(":ID", $ID, PDO::PARAM_INT);
+      $stmt->execute();
+
+      // log
+      if ( $newJoker  != $postJoker ) logAction ($table, "Edit", $ID, "joker", $oldJoker, $postJoker);
+      if ( $newSpent  != $postSpent ) logAction ($table, "Edit", $ID, "spent", $oldSpent, $postSpent);
+      if ( $newBoss   != $postBoss ) logAction ($table, "Edit", $ID, "bossNames", $oldBoss, $postBoss);
+
+      redirect("/edit?show=kills", $statusCode = 303); // http://ds.fahrzeugatelier.de/edit?show=kills
+      
+    } else {
+      echo ("ERROR: Mehr Joker ausgegeben als erhalten");
+    }
      
   } else {
     $stmt = $pdo->prepare("SELECT * FROM {$GAME}_kills WHERE ID = ".$_GET["ID"]." ");
@@ -259,7 +308,9 @@ if ( !empty($_GET["mode"]) && $_GET["mode"] == "kills" ) {
           <li><input type="number" name="newSpent" value="<?=$row["spent"]?>" min="0" max="99" autocomplete="off" placeholder="Joker ausgegeben" required="required"></li>
 
           <li><label>bossNames:</label></li>
-          <li><textarea rows="15" name="newBossNames" cols="50" required="required"><?=$row["bossNames"]?></textarea></li>
+          <li>
+            <textarea id="tags-bosses" rows="15" name="newBossNames" cols="50" required="required"><?=$row["bossNames"]?></textarea>
+          </li>
 
           <li><input type="submit" value="Submit"></li>
           
@@ -298,7 +349,7 @@ if ( !empty($_GET["mode"]) && $_GET["mode"] == "todo" ) {
       $stmt->bindParam(":ID", $_GET["ID"], PDO::PARAM_INT);
       $stmt->execute();
       
-      redirect("/edit", $statusCode = 303);
+      redirect("/edit?show=todo", $statusCode = 303);
 
     } else {
       
@@ -431,7 +482,7 @@ if ( !empty($_GET["action"]) && $_GET["action"] == "truncate" ) {
   $stmt = $pdo->prepare($sql);
   $stmt->execute();
   
-  redirect("/edit", $statusCode = 303);
+  redirect("/edit?show=rolls", $statusCode = 303);
 }
 ?>
 
@@ -494,7 +545,7 @@ if ( empty($_REQUEST) || !empty($_GET["show"]) ) :
   <div id="config">
     <ul>
       <li>
-        <strong>Spiel:</strong>
+        <strong>Game:</strong>
         <?php
         if     ( _GAME == "ds1"  ) echo "Dark Souls I";
         elseif ( _GAME == "ds1r" ) echo "Dark Souls Remastered";
@@ -503,7 +554,7 @@ if ( empty($_REQUEST) || !empty($_GET["show"]) ) :
         elseif ( _GAME == "bb"   ) echo "Bloodborne";
         ?>
       </li>
-      <li><strong>Datenbank:</strong> <?=_GAME?></li>
+      <li><strong>DB:</strong> <?=_GAME?></li>
       <li><strong>Login:</strong> Disabled</li>
       <li><strong>User:</strong> {Admin}</li>
       <li><strong>Change Game:</strong></li>
@@ -531,25 +582,29 @@ if ( empty($_REQUEST) || !empty($_GET["show"]) ) :
 ?>
 
 
-  <!-- INC CONTENT -->
-  <div id="flex-container-edit">
-    <div class="flex-container-edit">
-  <?php
-    if ( !empty($_GET["show"]) && $_GET["show"] == "kills"        ) include("inc/edit/kills.inc.php");
-    if ( !empty($_GET["show"]) && $_GET["show"] == "todo"         ) include("inc/edit/todo.inc.php");
-    if ( !empty($_GET["show"]) && $_GET["show"] == "backups"      ) include("inc/edit/backups.inc.php");
-    if ( !empty($_GET["show"]) && $_GET["show"] == "rolls"        ) include("inc/edit/rolls.inc.php");
-    if ( !empty($_GET["show"]) && $_GET["show"] == "logs"         ) include("inc/edit/logs.inc.php");
-    if ( !empty($_GET["show"]) && $_GET["show"] == "autocomplete" ) include("inc/edit/autocomplete.inc.php");
-    
-    elseif (
-      empty($_GET["show"]) && 
-      empty($_REQUEST) ||
-      $_GET["show"] == "aids"
-    )                                                               include("inc/edit/aids.inc.php");
 
-    // include("autocomplete/ALLAUTOCOMPLETEDATA.php");
-  ?>
+  <div id="flex-container-edit">
+    <div class="flex-container-edit-item">
+      <?php
+        /*
+        * INC
+        */
+        if ( !empty($_GET["show"]) && $_GET["show"] == "kills"        ) include("inc/edit/kills.inc.php");
+        if ( !empty($_GET["show"]) && $_GET["show"] == "todo"         ) include("inc/edit/todo.inc.php");
+        if ( !empty($_GET["show"]) && $_GET["show"] == "backups"      ) include("inc/edit/backups.inc.php");
+        if ( !empty($_GET["show"]) && $_GET["show"] == "rolls"        ) include("inc/edit/rolls.inc.php");
+        if ( !empty($_GET["show"]) && $_GET["show"] == "logs"         ) include("inc/edit/logs.inc.php");
+        if ( !empty($_GET["show"]) && $_GET["show"] == "autocomplete" ) include("inc/edit/autocomplete.inc.php");
+        if ( !empty($_GET["show"]) && $_GET["show"] == "aidsglobal"   ) include("inc/edit/aids.global.inc.php");
+
+        elseif (
+          empty($_GET["show"]) && 
+          empty($_REQUEST) ||
+          $_GET["show"] == "aids"
+        )                                                               include("inc/edit/aids.inc.php");
+
+        // include("autocomplete/ALLAUTOCOMPLETEDATA.php");
+      ?>
     </div>
   </div>
 
@@ -581,7 +636,77 @@ $request_uri = htmlspecialchars($_SERVER["REQUEST_URI"], ENT_QUOTES, "utf-8")
   </nav>
 </footer>
 
+<!-- Sort Alphabetically -->
+<script>
+/*
+$(document).ready(function() {
+  $("#mobs, #boss, #weapons").tablesorter();
+});
+*/
 
+
+$(document).ready(function() { 
+    $("#mobs, #boss, #weapons").tablesorter({ 
+        // pass the headers argument and assing a object 
+        headers: { 
+            // assign the secound column (we start counting zero) 
+            3: { 
+                // disable it by setting the property sorter to false 
+                sorter: false 
+            }, 
+            // assign the third column (we start counting zero)
+        } 
+    }); 
+});
+
+
+/* LIST */
+/*
+$(document).ready(function() {
+  $('.link-sort-list').click(function(e) {
+      var $sort = this;
+      var $list = $('#sort-list');
+      var $listLi = $('li',$list);
+      $listLi.sort(function(a, b){
+          var keyA = $(a).text();
+          var keyB = $(b).text();
+          if($($sort).hasClass('asc')){
+              return (keyA > keyB) ? 1 : 0;
+          } else {
+              return (keyA < keyB) ? 1 : 0;
+          }
+      });
+      $.each($listLi, function(index, row){
+          $list.append(row);
+      });
+      e.preventDefault();
+  });
+});
+*/
+
+/* TABLE */
+/*
+function sortTable(table, order) {
+  console.log("click");
+  
+    table = $(table);
+    var asc   = order === 'asc',
+        tbody = table.find('tbody');
+    
+    tbody.find('tr').sort(function(a, b) {
+        if (asc) {
+            // return $('td:first', a).text().localeCompare($('td:first', b).text());
+            return $('td:nth-child(2)', a).text().localeCompare($('td:nth-child(2)', b).text());
+        } else {
+            // return $('td:first', b).text().localeCompare($('td:first', a).text());
+            return $('td:nth-child(2)', b).text().localeCompare($('td:nth-child(2)', a).text());
+        }
+    }).appendTo(tbody);
+}
+// $('.myclass tr:nth-child(2)')
+// sortTable($('#mobs'),'asc');
+*/
+</script>
 
 <!-- Sidenav -->
 <script>
@@ -618,17 +743,78 @@ function closeNav() {
 <!-- jQuery Autocomplete -->
 <script>
 $( function() {
-  var availableTags = <?php include("autocomplete.jQuery.php")?>;
-  var availableTagsMobsBoss = <?php include("autocomplete/aids.php"); echo json_encode( $aids ); ?>;
+  
+  var availableTags         = <?php include("autocomplete.jQuery.php")?>;
+  var availableTagsMobsBoss = <?php include("autocomplete/aids.php");?>;
+  var availableTagsBosses   = <?php include("autocomplete/bosses.php");?>;
+  
   $( "#tags-weapons" ).autocomplete({
+    minLength: 0,
     source: availableTags
   });
+  
   $( "#tags-mobs, #tags-boss" ).autocomplete({
+    minLength: 0,
     source: availableTagsMobsBoss
   });
+    
+  /*
+  $( "textarea#tags-bosses" ).autocomplete({
+    source: availableTagsBosses
+  });
+  */
+  
+  /*
+  * Autocomplete multiple: https://jqueryui.com/autocomplete/#multiple
+  * <textarea>
+  * modified for new line break instead of comma
+  */
+  
+  function split( val ) {
+    // return val.split( /,\s*/ );
+    return val.split( /\n\s*/ ); // activate autocomplete on new line break
+  }
+  function extractLast( term ) {
+    return split( term ).pop();
+  }
+
+  $( "#tags-bosses" )
+    // don't navigate away from the field on tab when selecting an item
+    .bind( "keydown", function( event ) {
+      if ( event.keyCode === $.ui.keyCode.TAB &&
+          $( this ).autocomplete( "instance" ).menu.active ) {
+        event.preventDefault();
+      }
+    })
+    .autocomplete({
+      minLength: 0,
+      source: function( request, response ) {
+        // delegate back to autocomplete, but extract the last term
+        response( $.ui.autocomplete.filter(
+          availableTagsBosses, extractLast( request.term ) ) ); // !!! AVAILABLETAGS
+      },
+      focus: function() {
+        // prevent value inserted on focus
+        return false;
+      },
+      select: function( event, ui ) {
+        var terms = split( this.value );
+        // remove the current input
+        terms.pop();
+        // add the selected item
+        terms.push( ui.item.value );
+        // add placeholder to get the comma-and-space at the end
+        terms.push( "" );
+        // this.value = terms.join( ", " ); // comma
+        this.value = terms.join( "\n" ); // new line
+        return false;
+      }
+      });
+  
+
 } );
 </script>
-
+  
 <!-- Toggle Table -->
 <script>
 function toggleTable () {
