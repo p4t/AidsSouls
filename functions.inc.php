@@ -1286,11 +1286,11 @@ function logout() {
 function getGame () {
   global $pdo;
   
-  $stmt = $pdo->prepare("SELECT game FROM config");
+  $stmt = $pdo->prepare("SELECT name, abbr FROM games WHERE active=1");
   $stmt->execute();
   $row = $stmt->fetch(PDO::FETCH_ASSOC);
   
-  return $row["game"];
+  return $row["abbr"]; // get abbrevation (ds1, bb, etc) for db prefix
 }
 
 
@@ -1308,15 +1308,21 @@ function getGame () {
 function changeGame ($game) {
   global $pdo;
   
+  /*
   // all available Games
   $games = array("ds1", "ds2", "ds3", "bb", "ds1r", "des");
   // Check if var = in $games
   if ( !in_array($game, $games) || empty($game) ) die("OH GOTT WAS ISSN PASSIERT? @changeGame()" . "<br>" .'$game: ' . $game);
+  */
   
-  $sql = "UPDATE config SET game = :game WHERE ID = 1";
+  echo $game;
+  
+  $sql = "UPDATE games SET active = IF (id = :ID,1,0)";
+  // $sql  = "UPDATE games SET active = 0 WHERE active = 1";
+  // UPDATE games SET active = IF (id = 1,1,0);
   $stmt = $pdo->prepare($sql);                                  
-  $stmt->bindParam(":game", $game, PDO::PARAM_STR);
-  // $stmt->bindParam(":ID", $ID, PDO::PARAM_INT);
+  // $stmt->bindParam(":abbr", $game, PDO::PARAM_STR);
+  $stmt->bindParam(":ID", $game, PDO::PARAM_INT);
   $stmt->execute();
 }
 
