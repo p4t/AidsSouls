@@ -5,9 +5,10 @@ define( "_GAME", $GAME );
 
 define( "_DR", $_SERVER["DOCUMENT_ROOT"] );
 define( "_PATH", dirname(__FILE__) );
-define( "_FLASKS", 10 ); // Number of Flasks
+define( "_FLASKS", 20 ); // Number of Flasks
 define( "_LOGIN", FALSE );
 define( "_SHOWTODO", FALSE );
+define( "_NEWGAMEPLUS", FALSE );
 
 // Set default Timezone
 // date_default_timezone_set("Europe/Berlin");
