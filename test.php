@@ -1,49 +1,34 @@
 <?php
-$time = microtime();
-$time = explode(" ", $time);
-$time = $time[1] + $time[0];
-$start = $time;
-?>
+// Set up DB and connect
+$host     = "127.0.0.1";
+$db       = "";
+$user     = "";
+$pass     = "";
+$charset  = "utf8";
 
+$dsn = "mysql:host=$host;dbname=$db;charset=$charset";
 
-<?php
-require_once("config.db.php");
+$opt = [
+  PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
+  PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_BOTH,
+  PDO::ATTR_EMULATE_PREPARES   => false,
+];
+
+$pdo = new PDO ($dsn, $user, $pass, $opt);
+
 require_once("functions.inc.php");
+//require_once("globals.inc.php");
 ?>
 
 <!doctype html>
 <html>
+  
 <head>
 <meta charset="utf-8">
 <title>Schniedel</title>
-
-
-<!-- Code highlighting (Prism) -->
-<!--
-Markup 
-CSS 
-C-like 
-JavaScript
-PHP
-HTTP
-SQL
-JAVA
-JSON
-----
-Line Numbers
-Show Language
-Highlight Keywords
-Toolbar
-Copy to Clipboard Button
--->
-<link href="/css/prism.css" rel="stylesheet" />
-<script src="/js/prism.js"></script>
-  
-  
 </head>
 
 <body>
-
 
 <pre class="line-numbers"><code class="language-php">
 <?php
@@ -71,7 +56,7 @@ foreach ($data as $value) {
 }
 */
 
-$data = $pdo->query("SELECT * FROM test")->fetchAll(PDO::FETCH_ASSOC); // BOTH >ASSOC< GROUP
+$data = $pdo->query("SELECT * FROM aids")->fetchAll(PDO::FETCH_ASSOC); // BOTH >ASSOC< GROUP
 print_r($data);
 ?>
 </code></pre>
@@ -105,7 +90,7 @@ print_r($data);
     <?php
     // BOSS
     foreach ($data as $value) {
-      if ( $value["bossDice"] != NULL ) {
+      if ( $value["aids"] != NULL ) {
         echo "<li>" . "bossDice:" . $value["bossDice"] . " bossName:" . $value["bossName"] . "</li>";
       }
     }
@@ -134,15 +119,3 @@ print_r($data);
   
 </body>
 </html>
-
-
-
-
-<?php
-$time = microtime();
-$time = explode(" ", $time);
-$time = $time[1] + $time[0];
-$finish = $time;
-$total_time = round(($finish - $start), 4);
-echo 'Page generated in '.$total_time.' seconds.';
-?>
