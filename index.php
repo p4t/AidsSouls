@@ -221,11 +221,13 @@ echo "bossrngout: " . $bossRNG_Output;
 <!-- Nav: Select Game -->
 <nav>
   <select id="selectGame" name="selectGame">
-    <option value="ds1"   <?=(_GAME == "ds1")   ? "selected"  :""?>>Dark Souls I</option>
-    <option value="ds1r"  <?=(_GAME == "ds1r")  ? "selected"  :""?>>Dark Souls Remastered</option>
-    <option value="ds2"   <?=(_GAME == "ds2")   ? "selected"  :""?>>Dark Souls II</option>
-    <option value="ds3"   <?=(_GAME == "ds3")   ? "selected"  :""?>>Dark Souls III</option>
-    <option value="bb"    <?=(_GAME == "bb")    ? "selected"  :""?>>Bloodborne</option>
+    <option value="1" <?=(_GAME == "des")   ? "selected"  :""?> disabled>Demon's Souls</option>
+    
+    <option value="2" <?=(_GAME == "ds1")   ? "selected"  :""?>>Dark Souls I</option>
+    <option value="3" <?=(_GAME == "ds2")   ? "selected"  :""?>>Dark Souls II</option>
+    <option value="4" <?=(_GAME == "ds3")   ? "selected"  :""?>>Dark Souls III</option>
+    <option value="5" <?=(_GAME == "ds1r")  ? "selected"  :""?>>Dark Souls Remastered</option>
+    <option value="6" <?=(_GAME == "bb")    ? "selected"  :""?>>Bloodborne</option>
   </select>
 </nav>
 
