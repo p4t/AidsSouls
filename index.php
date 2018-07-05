@@ -47,6 +47,11 @@ $RNG        = getRNG();
 $mobsRNG    = $RNG[0];
 $bossRNG    = $RNG[1];
 
+// Get random number for NG+
+$RNGNGP        = getRNG();
+$mobsRNGNGP    = $RNGNGP[0];
+$bossRNGNGP    = $RNGNGP[1];
+
 $flasks     = _FLASKS;
 $weaponIMG  = "<img src=\"/img/weapon_icon.png\" width=\"30\" height=\"30\" alt=\"Weapon\">"; // 41, 40
 
@@ -71,12 +76,17 @@ $Aids     = getAidsByRNG($mobsRNG, $bossRNG);
 $mobsAids = $Aids[0];
 $bossAids = $Aids[1];
 
+// Get aids from mobs boss tables for NG+
+$AidsNGP     = getAidsByRNG($mobsRNGNGP, $bossRNGNGP);
+$mobsAidsNGP = $AidsNGP[0];
+$bossAidsNGP = $AidsNGP[1];
+
 // Output for dice-wrapper display
 $mobsRNG_Output = replaceDiceWithSymbol ($mobsAids, $mobsRNG);
 $bossRNG_Output = replaceDiceWithSymbol ($bossAids, $bossRNG);
 
 // Random Weapon
-$randomWeapon = randomWeapon();
+// $randomWeapon = randomWeapon();
 
 // Get Todo List from DB
 if ( _SHOWTODO !== FALSE ) {
@@ -287,16 +297,28 @@ echo "bossrngout: " . $bossRNG_Output;
   <div>
     <div class="aidsText tracking-in-expand">
       <span id="mobsAids" data-balloon="{Description}" data-balloon-pos="right"><?=$mobsAids?></span>
+      <br>
+      <?php
+        if ( _NEWGAMEPLUS === TRUE ) {
+      ?>
+      <span id="mobsAidsNGP" data-balloon="{Description}" data-balloon-pos="right"><?=$mobsAidsNGP?></span>
+      <?php
+        }
+      ?>
     </div>
   </div>
-
-  
-  <!-- <div id="randomWeapon"><?php //$randomWeapon?></div> -->
-  
 
   <div>
     <div class="aidsText tracking-in-expand">
       <span id="bossAids" data-balloon="{Description}" data-balloon-pos="left"><?=$bossAids?></span>
+      <br>
+      <?php
+        if ( _NEWGAMEPLUS === TRUE ) {
+      ?>
+      <span id="bossAidsNGP" data-balloon="{Description}" data-balloon-pos="left"><?=$bossAidsNGP?></span>
+      <?php
+        }
+      ?>
     </div>
   </div>
 </div><!-- EOF flex-container-aids -->
