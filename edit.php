@@ -232,6 +232,7 @@ require_once("globals.inc.php");
 
   <div class="flex-item">&nbsp;</div>
 </div>
+
 <?php
 } // ENDIF
 ?>
@@ -560,11 +561,13 @@ if ( empty($_REQUEST) || !empty($_GET["show"]) ) :
       <li><strong>Change Game:</strong></li>
       <li>
         <select id="selectGame" name="selectGame">
-          <option value="ds1"   <?=( _GAME == "ds1"  ) ? "selected"  : ""?>>Dark Souls I</option>
-          <option value="ds1r"  <?=( _GAME == "ds1r" ) ? "selected"  : ""?>>Dark Souls Remastered</option>
-          <option value="ds2"   <?=( _GAME == "ds2"  ) ? "selected"  : ""?>>Dark Souls II</option>
-          <option value="ds3"   <?=( _GAME == "ds3"  ) ? "selected"  : ""?>>Dark Souls III</option>
-          <option value="bb"    <?=( _GAME == "bb"   ) ? "selected"  : ""?>>Bloodborne</option>
+          <option value="1" <?=(_GAME == "des")   ? "selected"  :""?> disabled>Demon's Souls</option>
+
+          <option value="2" <?=(_GAME == "ds1")   ? "selected"  :""?>>Dark Souls I</option>
+          <option value="3" <?=(_GAME == "ds2")   ? "selected"  :""?>>Dark Souls II</option>
+          <option value="4" <?=(_GAME == "ds3")   ? "selected"  :""?>>Dark Souls III</option>
+          <option value="5" <?=(_GAME == "ds1r")  ? "selected"  :""?>>Dark Souls Remastered</option>
+          <option value="6" <?=(_GAME == "bb")    ? "selected"  :""?>>Bloodborne</option>
         </select>
         <!-- <input type="submit" value="Submit"> --> 
       </li>
@@ -596,6 +599,8 @@ if ( empty($_REQUEST) || !empty($_GET["show"]) ) :
         if ( !empty($_GET["show"]) && $_GET["show"] == "logs"         ) include("inc/edit/logs.inc.php");
         if ( !empty($_GET["show"]) && $_GET["show"] == "autocomplete" ) include("inc/edit/autocomplete.inc.php");
         if ( !empty($_GET["show"]) && $_GET["show"] == "aidsglobal"   ) include("inc/edit/aids.global.inc.php");
+      
+        if ( !empty($_GET["show"]) && $_GET["show"] == "config"       ) include("inc/edit/config.inc.php");
 
         elseif (
           empty($_GET["show"]) && 
