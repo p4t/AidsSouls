@@ -1,6 +1,8 @@
+_notes
+audio/
+dice/
+img/
 
 config.db.php
 backup.php
 restore.php
-audio/
-_notes
