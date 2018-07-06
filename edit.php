@@ -13,6 +13,7 @@ require_once("globals.inc.php");
 // include_once("inc/edit/backups.inc.php");
 // include_once("inc/edit/rolls.inc.php");
 // include_once("inc/edit/logs.inc.php");
+// include_once("inc/edit/config.inc.php");
 // include_once("inc/edit/autocomplete.inc.php");
 
 // include_once("inc/edit/aids.inc.php");
