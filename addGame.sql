@@ -13,21 +13,6 @@ CREATE TABLE IF NOT EXISTS `TMP_kills` (
   `bossNames` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-CREATE TABLE IF NOT EXISTS `TMP_log` (
-  `ID` int(10) NOT NULL AUTO_INCREMENT,
-  `section` varchar(255) NOT NULL,
-  `action` varchar(255) NOT NULL,
-  `parentID` int(10) NOT NULL,
-  `parentField` varchar(255) NOT NULL,
-  `old` varchar(255) NOT NULL,
-  `new` varchar(255) NOT NULL,
-  `userID` int(10) NOT NULL,
-  `username` varchar(255) NOT NULL,
-  `IP` varchar(255) NOT NULL,
-  `date` datetime NOT NULL,
-  PRIMARY KEY (`ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
 CREATE TABLE IF NOT EXISTS `TMP_mobs` (
   `ID` int(10) NOT NULL AUTO_INCREMENT,
   `dice` int(10) NOT NULL,
@@ -43,12 +28,6 @@ CREATE TABLE IF NOT EXISTS `TMP_rolls` (
   `IP` varchar(255) NOT NULL,
   `mobs` varchar(255) NOT NULL,
   `boss` varchar(255) NOT NULL,
-  PRIMARY KEY (`ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-CREATE TABLE IF NOT EXISTS `TMP_todo` (
-  `ID` int(10) NOT NULL,
-  `todoText` text NOT NULL,
   PRIMARY KEY (`ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
