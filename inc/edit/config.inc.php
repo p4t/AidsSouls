@@ -15,6 +15,7 @@
       <th scope="col"><strong>Abbr</strong></th>
       <th scope="col"><strong>Active</strong></th>
       <th scope="col"><strong>NG+</strong></th>
+      <th scope="col"><strong>BG IMG</strong></th>
     </tr>
   </thead>
   
@@ -36,11 +37,9 @@
             <a href="/edit?mode=config&item=games&ID=<?=$row["ID"]?>"><?=$row["name"]?></a>
 
             <!-- DELETE -->
-            <!--
-            <a data-value="<?php//$row[0]?>" data-table="<?php//$table?>" class="delete" data-balloon="Löschen" data-balloon-pos="left">
+            <a data-value="<?=$row["ID"]?>" data-table="games" class="delete" data-balloon="Löschen" data-balloon-pos="left">
               <i class="fas fa-minus-circle"></i>
             </a>
-            -->
 
             &nbsp;
 
@@ -55,6 +54,7 @@
       <td><?=$row["abbr"]?></td>
       <td><?=$row["active"]?></td>
       <td><?=$row["ngp"]?></td>
+      <td>X</td>
     </tr>
 
     <?php
