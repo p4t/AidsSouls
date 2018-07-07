@@ -397,3 +397,8 @@ form input[type="text"]#newAbbr
 {
   text-transform: lowercase;
 }
+
+/* Cursor for disabled field */
+form input[type="text"].disabled {
+  cursor: not-allowed;
+}
