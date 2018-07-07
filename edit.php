@@ -421,10 +421,7 @@ if ( !empty($_GET["mode"]) && $_GET["mode"] == "config" ) { // mode config
       // Rename SQL String
       $sql  = "RENAME TABLE {$oldAbbr}_boss TO {$newAbbr}_boss;";
       $sql .= "RENAME TABLE {$oldAbbr}_kills TO {$newAbbr}_kills;";
-      // $sql .= "RENAME TABLE {$oldAbbr}_log TO {$newAbbr}_log;";
       $sql .= "RENAME TABLE {$oldAbbr}_mobs TO {$newAbbr}_mobs;";
-      $sql .= "RENAME TABLE {$oldAbbr}_rolls TO {$newAbbr}_rolls;";
-      // $sql .= "RENAME TABLE {$oldAbbr}_todo TO {$newAbbr}_todo;";
       $sql .= "RENAME TABLE {$oldAbbr}_weapons TO {$newAbbr}_weapons;";
       
       $stmt = $pdo->exec($sql);
