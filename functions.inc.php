@@ -971,22 +971,24 @@ function checkMissingDice () {
   global $pdo;
   global $GAME;
   
+  $warning = FALSE;
+  
   $tables = array($GAME."_mobs", $GAME."_boss", $GAME."_weapons");
   foreach($tables as $table) {
     $data = $pdo->query("SELECT dice FROM $table")->fetchAll(PDO::FETCH_COLUMN);
     
     if ( empty($data) ) {
       echo "{$table} Aids hinzufügen<br>";
+      $warning = TRUE;
+      $warning_msg .= "Missing Aids\n";
     } else {
       $missing_number = missing_number($data); 
     }
     
     if ( !empty($missing_number) ) {
       
-      $subject = "Missing Dice Warning";
-      $msg = "Game {$GAME} (Section {$table}) is missing one or more Dice!\n";
-      
-      mail_warning ($subject, $msg);  
+      $warning = TRUE;
+      $warning_msg .= "Missing Dice\n";
       
       echo "
       <div id=\"flex-container-missingnumbers\">\n
@@ -1007,6 +1009,16 @@ function checkMissingDice () {
       ";
     } // ENDIF
   } // ENDFOREACH
+  
+  if ( $warning == TRUE ) {
+    $subject = "WARNING";
+    // $msg = "Game {$GAME} (Section {$table}) is missing one or more Dice!\n";
+    $msg = $warning_msg . "\n" . "Game: {$GAME}";
+
+    mail_warning ($subject, $msg);
+  }
+  
+  
 } // ENDFUNCTION
  
 
