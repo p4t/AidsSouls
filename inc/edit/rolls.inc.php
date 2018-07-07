@@ -22,7 +22,7 @@
   <tbody class="toggleTable">
       
   <?php
-  $sql = "SELECT * FROM {$GAME}_rolls ORDER BY ID DESC LIMIT 10"; // Only show latest 10 entries
+  $sql = "SELECT * FROM rolls WHERE gameID = $GAMEID ORDER BY ID DESC LIMIT 10"; // Only show latest 10 entries
   $stmt = $pdo->prepare($sql);
   $stmt->execute();
         
