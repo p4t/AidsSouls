@@ -221,13 +221,15 @@ echo "bossrngout: " . $bossRNG_Output;
 <!-- Nav: Select Game -->
 <nav>
   <select id="selectGame" name="selectGame">
-    <option value="1" <?=(_GAME == "des")   ? "selected"  :""?> disabled>Demon's Souls</option>
-    
-    <option value="2" <?=(_GAME == "ds1")   ? "selected"  :""?>>Dark Souls I</option>
-    <option value="3" <?=(_GAME == "ds2")   ? "selected"  :""?>>Dark Souls II</option>
-    <option value="4" <?=(_GAME == "ds3")   ? "selected"  :""?>>Dark Souls III</option>
-    <option value="5" <?=(_GAME == "ds1r")  ? "selected"  :""?>>Dark Souls Remastered</option>
-    <option value="6" <?=(_GAME == "bb")    ? "selected"  :""?>>Bloodborne</option>
+    <?php
+    $data = $pdo->query("SELECT * FROM games")->fetchAll(PDO::FETCH_ASSOC);
+
+    foreach ($data as $value) {
+    ?>
+    <option value="<?=$value["ID"]?>" <?=($value["abbr"] == _GAME) ? "selected" : ""?>><?=$value["name"]?></option>
+    <?php
+    }
+    ?>
   </select>
 </nav>
 
