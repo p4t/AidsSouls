@@ -390,3 +390,10 @@ input[type="text"].edit_input {
   border: none;
 
 }
+
+/* Force lowercase on field */
+form input[type="text"]#abbr,
+form input[type="text"]#newAbbr
+{
+  text-transform: lowercase;
+}
