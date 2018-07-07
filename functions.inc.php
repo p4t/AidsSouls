@@ -993,7 +993,7 @@ function checkMissingDice () {
       echo "
       <div id=\"flex-container-missingnumbers\">\n
       <div class=\"flex-item-missingnumbers\">\n
-      Folgende Würfel fehlen in der Tabelle <strong>{$table}</strong>:\n
+      Dice missing in Table <strong>{$table}</strong>:\n
       <p>\n
       ";
       // print_r($missing_number);
