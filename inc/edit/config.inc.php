@@ -27,9 +27,10 @@
 
     // Check if DB Tables exist
     
-    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) { 
+    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
     ?> 
-    <tr id="games-<?=$row["ID"]?>">
+    <tr id="games-<?=$row["ID"]?>" <?=($row["active"] == 1) ? "class='active_game'" : ""?>>
+      
       <td><?=$row["ID"]?></td>
 
         <td class="edit_col">
@@ -37,7 +38,7 @@
             <a href="/edit?mode=config&item=games&ID=<?=$row["ID"]?>"><?=$row["name"]?></a>
 
             <?php
-            if ( $row["ID"] > 6 && $row["active"] != 1 ) {
+            if ( $row["ID"] > 6 && $row["active"] != 1 ) { // only show delete icon if game is no active and not preexisting SoulsBorne
             ?>
             <!-- DELETE -->
             <a data-value="<?=$row["ID"]?>" data-table="games" class="delete" data-balloon="Löschen" data-balloon-pos="left">

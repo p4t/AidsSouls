@@ -1312,6 +1312,11 @@ img.border {
 }
 
 
+tr.active_game {
+  background-color: rgba(0,255,0,0.2);
+}
+
+
 /* DEBUG */
 /*
 * {
