@@ -384,6 +384,146 @@ if ( !empty($_GET["mode"]) && $_GET["mode"] == "todo" ) {
 
 
 
+
+<?php
+/*
+ * EDIT: CONFIG>>GAME
+ */
+if ( !empty($_GET["mode"]) && $_GET["mode"] == "config" ) { // mode config
+  (STRING)$mode   = $_GET["mode"];
+  (INT)$ID        = $_GET["ID"];  
+  
+  /*
+  // handle game 
+  if ( !empty($_GET["item"]) && $_GET["item"] == "games" ) {
+    //
+    echo "games";
+  }
+  
+  // handle settings
+  if ( !empty($_GET["item"]) && $_GET["item"] == "settings" ) {
+    //
+  }
+  */
+  
+  if ( !empty($_POST) ) {
+    (STRING)$newName    = $_POST["newName"];
+    (STRING)$newAbbr    = $_POST["newAbbr"];
+    (INT)$newActive     = $_POST["newActive"];
+    (INT)$newNgp        = $_POST["newNgp"];
+    
+    (STRING)$oldActive  = $_POST["oldActive"];
+    
+    (INT)$ID          = $_GET["ID"];
+
+    // if field active has changed use function @changeGame()
+    if ( $newActive !== $oldActive ) {
+      changeGame($ID);
+    }
+    
+    // Update name, abbr and ngp
+    $sql = "UPDATE games SET name = :name, abbr = :abbr, ngp = :ngp WHERE ID = :ID";
+    $stmt = $pdo->prepare($sql);                                  
+    $stmt->bindParam(":name", $newName, PDO::PARAM_STR);
+    $stmt->bindParam(":abbr", $newAbbr, PDO::PARAM_STR);
+    $stmt->bindParam(":ngp", $newNgp, PDO::PARAM_INT);
+    
+    $stmt->bindParam(":ID", $_GET["ID"], PDO::PARAM_INT);
+    $stmt->execute();
+    
+
+    redirect("/edit?show=config", $statusCode = 303);
+
+  } else {
+
+    $stmt = $pdo->prepare("SELECT * FROM games WHERE ID = ".$_GET["ID"]." ");
+    $stmt->execute();
+    $row = $stmt->fetch(PDO::FETCH_ASSOC);
+  }
+?>
+
+<div id="flex-container">
+  <div class="flex-item">&nbsp;</div>
+    
+    <div class="flex-item">
+      <form action="/edit?mode=config&item=games&ID=<?=$_GET["ID"]?>" method="post" id="edit">
+        <ul>
+          
+          <li><label>Name:</label></li>
+          <li><input type="text" name="newName" value="<?=$row["name"]?>" maxlength="32" required="required"></li>
+
+          <li><label>Abbr:</label></li>
+          <li><input type="text" name="newAbbr" value="<?=$row["abbr"]?>" maxlength="32" required="required"></li>
+          
+          <li><label>Active:</label></li>
+          <li><input type="number" name="newActive" value="<?=$row["active"]?>" min="0" max="1" autocomplete="off" placeholder="#" required="required"></li>
+          <input type="hidden" name="oldActive" value="<?=$row["active"]?>">
+          
+          <li><label>NG+:</label></li>
+          <li><input type="number" name="newNgp" value="<?=$row["ngp"]?>" min="0" max="1" autocomplete="off" placeholder="#" required="required"></li>
+
+          <li><input type="submit" value="Submit"></li>
+        </ul>
+      </form>
+    </div>
+  
+  <div class="flex-item">&nbsp;</div>
+</div>
+  
+<?php
+} // ENDIF
+?>
+  
+  
+  
+<?php
+/*
+ * ADD: CONFIG>>GAMES
+ */
+
+  if ( !empty($_GET["mode"]) && !empty($_GET["action"]) && ($_GET["mode"] == "games") ) {
+    
+    (STRING)$mode   = $_GET["mode"];
+    (INT)$ID        = $_GET["ID"];
+  
+    if ( !empty($_POST["addGame"]) ) {
+      (STRING)$addGame  = $_POST["addGame"];
+      (STRING)$addAbbr  = $_POST["addAbbr"];
+      
+      /*
+      // cherck if entry alrerady exists
+      $stmt = $pdo->prepare("SELECT name, abbr FROM games WHERE ID = $ID");
+      $stmt->execute();
+      $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+      if ($row["name"] != NULL || $row["abbr"] != NULL) die("Dice Wert schon vergeben!");
+      }    
+      */
+      
+      // Insert into DB
+      $sql = "INSERT INTO games (name, abbr) VALUES (:name, :abbr)";
+      $stmt = $pdo->prepare($sql);          
+      $stmt->bindParam(":name", $addGame, PDO::PARAM_STR);
+      $stmt->bindParam(":abbr", $addAbbr, PDO::PARAM_STR);
+      $stmt->execute();
+      
+      
+      // Add Tables into DB
+      $SQLFile = "";
+      
+      
+      
+      // redirect("/edit", $statusCode = 303);
+
+    } // ENDIF (ELSE) $_POST["addGame"]
+    
+  } // ENDIF $_GET["mode"]
+?>
+
+
+
+
+
 <?php
 /*
  * ADD: MOBS, BOSS, WEAPONS
