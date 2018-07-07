@@ -1,6 +1,5 @@
 <a id="Config"></a>
-
-<form action="/edit?mode=config&action=add" method="post">
+<form action="/edit?mode=games&action=add" method="post">
 
 <table class="edit">
   <thead onclick="toggleTable()">
@@ -32,7 +31,7 @@
 
         <td class="edit_col">
           <div class="title">
-            <a href="/edit?mode=config&ID=<?=$row["ID"]?>"><?=$row["name"]?></a>
+            <a href="/edit?mode=config&item=games&ID=<?=$row["ID"]?>"><?=$row["name"]?></a>
 
             <!-- DELETE -->
             <!--
@@ -44,7 +43,7 @@
             &nbsp;
 
             <!-- EDIT -->
-            <a class="edit-data" href="/edit?mode=config&ID=<?=$row["ID"]?>" data-balloon="Edit" data-balloon-pos="left">
+            <a class="edit-data" href="/edit?mode=config&item=games&ID=<?=$row["ID"]?>" data-balloon="Edit" data-balloon-pos="left">
               <i class="fas fa-edit"></i>
             </a>
 
@@ -74,6 +73,7 @@
   <li>
     <!-- <input type="number" name="addDice" value="" min="1" max="99" autocomplete="off" placeholder="#"> -->
     <input type="text" id="game" class="edit_input" name="addGame" value="" autocomplete="off" maxlength="32" placeholder="Game" required="required">
+    <input type="text" id="abbr" class="edit_input" name="addAbbr" value="" autocomplete="off" maxlength="5" placeholder="Abbr" required="required">
   </li>
   <li><input type="submit" value="Submit"></li>
 </ul>
