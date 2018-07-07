@@ -469,7 +469,7 @@ if ( !empty($_GET["mode"]) && $_GET["mode"] == "config" ) { // mode config
           <li><input type="text" name="newAbbr" id="newAbbr" value="<?=$row["abbr"]?>" maxlength="5" required="required" <?=($row["ID"] <= 6) ? "disabled class='disabled'" : ""?>></li>
           
           <li><label>Active:</label></li>
-          <li><input type="number" name="newActive" value="<?=$row["active"]?>" min="0" max="1" autocomplete="off" placeholder="#" required="required"></li>
+          <li><input type="number" name="newActive" value="<?=$row["active"]?>" min="0" max="1" autocomplete="off" placeholder="#" required="required" <?=($row["active"] == 1) ? "disabled class='disabled'" : ""?>></li>
           
           <li><label>NG+:</label></li>
           <li><input type="number" name="newNgp" value="<?=$row["ngp"]?>" min="0" max="1" autocomplete="off" placeholder="#" required="required"></li>
