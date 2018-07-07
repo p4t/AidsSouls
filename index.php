@@ -88,16 +88,6 @@ $bossRNG_Output = replaceDiceWithSymbol ($bossAids, $bossRNG);
 // Random Weapon
 // $randomWeapon = randomWeapon();
 
-// Get Todo List from DB
-if ( _SHOWTODO !== FALSE ) {
-  $stmt = $pdo->prepare( "SELECT * FROM {$GAME}_todo" );
-  $stmt->execute();
-  $row = $stmt->fetch(PDO::FETCH_ASSOC);
-
-  $todoID   = $row["ID"];
-  $todoText = $row["todoText"];
-}
-
 // Debug
 // $debug = debug($mobsRNG, $mobsAids, $bossRNG, $bossAids, $randomWeapon);
 
@@ -597,21 +587,6 @@ ENDWHILE
   </table>
 </div><!-- EOF killedBosses -->
 
-
-<!-- Todo -->
-<?php
-if (_SHOWTODO == TRUE) {
-?>
-<hr>  
-  
-<h5 id="Todo">Todo</h5>
-<div id="todo" contenteditable="true" data-balloon="2x Enter für Zeilenumbruch" data-balloon-pos="up">
-  <?=$todoText?>
-</div>
-<?php
-}
-?>
-
   
 <!-- Ajax Success Msg fixed -->
 <div id="status">&nbsp;</div>
@@ -930,43 +905,6 @@ $(document).ready(function () {
         });
     });
 });
-</script>
-  
-<!-- jQuery Ajax inline edit TODO -->
-<script>
-$(document).ready(function () {
-    // acknowledgement message
-      var message_status = $("#status");
-
-      $("div[contenteditable=true]").blur(function(){
-      // $("#todo").blur(function(){
-          var field = $(this).attr("id");
-
-        // NLB Hack
-        var updatedHTML = $(this).html();
-        var replacement = updatedHTML.trim()
-                .replace(/<br(\s*)\/*>/ig, '\n')
-                .replace(/<[p|div]\s/ig, '\n$0')
-                .replace(/(<([^>]+)>)/ig,"");
-        var value = replacement;
-
-          // var value = $(this).text();
-          // var value = $(this).text();
-          // New line hack
-          // var value = console.log($(this).innerText);
-          $.post("todo.ajax.php" , field + "=" + value, function(data){
-            
-            if (data != "") {
-              message_status.show();
-              message_status.text(data);
-              // hide the message
-              setTimeout(function(){message_status.hide()},3000); // 3000
-           }
-           
-
-          });
-      });
-  });
 </script>
 
 <!-- jQuery Ajax Form -->
