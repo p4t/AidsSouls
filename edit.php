@@ -410,6 +410,31 @@ if ( !empty($_GET["mode"]) && $_GET["mode"] == "config" ) { // mode config
       changeGame($ID);
     }
     
+    // If Abbr changes alter tables in db
+    // TABLE `aaa_boss`, `aaa_kills`, `aaa_log`, `aaa_mobs`, `aaa_rolls`, `aaa_todo`, `aaa_weapons`
+    if ( $oldAbbr !== $newAbbr ) {
+      
+      // check if entry alrerady exist
+      checkIfAbbrIsTaken($newAbbr);
+      
+      // Try to write tables into DB just to make sure they exist if adding failed previously
+      // writeSQL($oldAbbr);
+      
+      // Rename SQL String
+      $sql  = "RENAME TABLE {$oldAbbr}_boss TO {$newAbbr}_boss;";
+      $sql .= "RENAME TABLE {$oldAbbr}_kills TO {$newAbbr}_kills;";
+      // $sql .= "RENAME TABLE {$oldAbbr}_log TO {$newAbbr}_log;";
+      $sql .= "RENAME TABLE {$oldAbbr}_mobs TO {$newAbbr}_mobs;";
+      $sql .= "RENAME TABLE {$oldAbbr}_rolls TO {$newAbbr}_rolls;";
+      // $sql .= "RENAME TABLE {$oldAbbr}_todo TO {$newAbbr}_todo;";
+      $sql .= "RENAME TABLE {$oldAbbr}_weapons TO {$newAbbr}_weapons;";
+      
+      $stmt = $pdo->exec($sql);
+      
+      echo "<br><br><br><br><br>";
+      echo "stmt: " . $stmt;
+    }
+    
     // Update name, abbr and ngp
     $sql = "UPDATE games SET name = :name, abbr = :abbr, ngp = :ngp WHERE ID = :ID";
     $stmt = $pdo->prepare($sql);                                  
@@ -420,26 +445,6 @@ if ( !empty($_GET["mode"]) && $_GET["mode"] == "config" ) { // mode config
     $stmt->bindParam(":ID", $_GET["ID"], PDO::PARAM_INT);
     $stmt->execute();
     
-    // If Abbr changes alter tables in db
-    // TABLE `aaa_boss`, `aaa_kills`, `aaa_log`, `aaa_mobs`, `aaa_rolls`, `aaa_todo`, `aaa_weapons`
-    if ( $oldAbbr !== $newAbbr ) {
-      
-      $sql  = "RENAME TABLE {$oldAbbr}_boss TO {$newAbbr}_boss;";
-      $sql .= "RENAME TABLE {$oldAbbr}_kills TO {$newAbbr}_kills;";
-      $sql .= "RENAME TABLE {$oldAbbr}_log TO {$newAbbr}_log;";
-      $sql .= "RENAME TABLE {$oldAbbr}_mobs TO {$newAbbr}_mobs;";
-      $sql .= "RENAME TABLE {$oldAbbr}_rolls TO {$newAbbr}_rolls;";
-      $sql .= "RENAME TABLE {$oldAbbr}_todo TO {$newAbbr}_todo;";
-      $sql .= "RENAME TABLE {$oldAbbr}_weapons TO {$newAbbr}_weapons;";
-      
-      echo "<br><br><br><br><br><br><br>";
-      echo $sql;
-      
-      $stmt = $pdo->exec($sql);
-      
-      exit();
-    }
-
     redirect("/edit?show=config", $statusCode = 303);
 
   } else {
@@ -501,59 +506,23 @@ if ( !empty($_GET["mode"]) && $_GET["mode"] == "config" ) { // mode config
       (STRING)$addGame  = $_POST["addGame"];
       (STRING)$addAbbr  = trim(strtolower($_POST["addAbbr"]));
       
-      /*
-      // cherck if entry alrerady exists
-      $stmt = $pdo->prepare("SELECT name, abbr FROM games WHERE ID = $ID");
-      $stmt->execute();
-      $row = $stmt->fetch(PDO::FETCH_ASSOC);
-
-      if ($row["name"] != NULL || $row["abbr"] != NULL) die("Dice Wert schon vergeben!");
-      }    
-      */  
-      
-      // TABLES:
-      /*
-      TABLE `TMP_boss`, `TMP_kills`, `TMP_log`, `TMP_mobs`, `TMP_rolls`, `TMP_todo`, `TMP_weapons`
-      */
+      // check if entry alrerady exist
+      $abbrAvailable = checkIfAbbrIsTaken($addAbbr);
       
       // Add Tables into DB
-      $SQLFile = "";
-      // Get Template
-      $SQLFile = file_get_contents(_DR . "/addGame.sql");
-      
-      // Replace TMP with Abbr
-      $SQLString = str_replace("TMP", $addAbbr, $SQLFile);
+      $writeSQL = writeSQL($addAbbr);
             
-      $sql = $SQLString;
-      
-      // No error output
-      $stmt = $pdo->exec($sql);
-            
-      // If there is no error with the SQL template
-      if ( !empty($SQLString) && $stmt == 0) {
+      // If there is no error with the SQL template and abbr is not taken
+      if ( $abbrAvailable = TRUE && $writeSQL == 0 ) {
         // Insert into DB
         $sql = "INSERT INTO games (name, abbr) VALUES (:name, :abbr)";
         $stmt = $pdo->prepare($sql);          
         $stmt->bindParam(":name", $addGame, PDO::PARAM_STR);
         $stmt->bindParam(":abbr", $addAbbr, PDO::PARAM_STR);
         $stmt->execute();
-        
-        echo "
-        <div id='flex-container'>
-          <div class='flex-item'>&nbsp;</div>
-
-            <div class='flex-item'>
-              Added game and Tables into DB.<br>
-              <a href='/edit?show=config'>Zurück</a>
-            </div>
-
-          <div class='flex-item'>&nbsp;</div>
-        </div>
-        ";
-
       }
       
-      // redirect("/edit", $statusCode = 303);
+      redirect("/edit?show=config", $statusCode = 303);
 
     } // ENDIF (ELSE) $_POST["addGame"]
     
