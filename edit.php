@@ -575,7 +575,7 @@ if ( !empty($_GET["mode"]) && $_GET["mode"] == "config" ) { // mode config
  * TRUNCATE
  */
 if ( !empty($_GET["action"]) && $_GET["action"] == "truncate" ) {
-  $sql = "TRUNCATE {$GAME}_rolls";
+  $sql = "TRUNCATE rolls";
   $stmt = $pdo->prepare($sql);
   $stmt->execute();
   
