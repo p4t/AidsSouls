@@ -1,6 +1,6 @@
 <?php
 if ( !empty($_POST) ) {
-	// Database
+  // Database
   require_once("config.db.php");
   require_once("functions.inc.php");
   require_once("globals.inc.php");
@@ -8,7 +8,32 @@ if ( !empty($_POST) ) {
   (STRING)$table        = $_POST["table"];
   (STRING)$parentField  = $table . "Name";
   (INT)$ID              = $_POST["ID"];
+  
+  // check if request comes from config>>games>>delete
+  if ( $table == "games" ) {
+    // DROP TABLE `TMP_boss`, `TMP_kills`, `TMP_mobs`, `TMP_rolls`, `TMP_weapons`
+    
+    // get abbr
+    $stmt = $pdo->prepare("SELECT abbr FROM games WHERE ID = $ID");
+    $stmt->execute();
+    $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
+    $abbr = $row["abbr"];  
+    
+    // form sql to drop tables
+    $sql  = "DROP TABLE {$abbr}_boss;";
+    $sql .= "DROP TABLE {$abbr}_kills;";
+    // $sql .= "DROP TABLE {$abbr}_log;";
+    $sql .= "DROP TABLE {$abbr}_mobs;";
+    $sql .= "DROP TABLE {$abbr}_rolls;";
+    // $sql .= "DROP TABLE {$abbr}_todo;";
+    $sql .= "DROP TABLE {$abbr}_weapons;";
+
+    if ( $ID > 6 ) $stmt = $pdo->exec($sql); // Hack so existing SoulsBorne data won't be deleted
+    
+  }
+  
+  
   $sql = "DELETE FROM $table WHERE ID = :ID";
   $stmt = $pdo->prepare($sql);
   $stmt->bindParam(":ID", $ID, PDO::PARAM_INT);
