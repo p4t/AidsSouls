@@ -37,7 +37,7 @@
             <a href="/edit?mode=config&item=games&ID=<?=$row["ID"]?>"><?=$row["name"]?></a>
 
             <?php
-            if ( $row["ID"] > 6 ) {
+            if ( $row["ID"] > 6 && $row["active"] != 1 ) {
             ?>
             <!-- DELETE -->
             <a data-value="<?=$row["ID"]?>" data-table="games" class="delete" data-balloon="Löschen" data-balloon-pos="left">
