@@ -654,29 +654,32 @@ if ( empty($_REQUEST) || !empty($_GET["show"]) ) :
       <li>
         <strong>Game:</strong>
         <?php
-        if     ( _GAME == "ds1"  ) echo "Dark Souls I";
-        elseif ( _GAME == "ds1r" ) echo "Dark Souls Remastered";
-        elseif ( _GAME == "ds2"  ) echo "Dark Souls II";
-        elseif ( _GAME == "ds3"  ) echo "Dark Souls III";
-        elseif ( _GAME == "bb"   ) echo "Bloodborne";
+          $stmt = $pdo->prepare( 'SELECT * FROM games WHERE abbr = "'.$GAME.'"' );
+          $stmt->execute();
+          $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+          echo $row["name"];
         ?>
       </li>
       <li><strong>DB:</strong> <?=_GAME?></li>
       <li><strong>Login:</strong> Disabled</li>
       <li><strong>User:</strong> {Admin}</li>
       <li><strong>Change Game:</strong></li>
+
       <li>
         <select id="selectGame" name="selectGame">
-          <option value="1" <?=(_GAME == "des")   ? "selected"  :""?> disabled>Demon's Souls</option>
-
-          <option value="2" <?=(_GAME == "ds1")   ? "selected"  :""?>>Dark Souls I</option>
-          <option value="3" <?=(_GAME == "ds2")   ? "selected"  :""?>>Dark Souls II</option>
-          <option value="4" <?=(_GAME == "ds3")   ? "selected"  :""?>>Dark Souls III</option>
-          <option value="5" <?=(_GAME == "ds1r")  ? "selected"  :""?>>Dark Souls Remastered</option>
-          <option value="6" <?=(_GAME == "bb")    ? "selected"  :""?>>Bloodborne</option>
+          <?php
+          $data = $pdo->query("SELECT * FROM games")->fetchAll(PDO::FETCH_ASSOC);
+        
+          foreach ($data as $value) {
+          ?>
+          <option value="<?=$value["ID"]?>" <?=($value["abbr"] == _GAME) ? "selected" : ""?>><?=$value["name"]?></option>
+          <?php
+          }
+          ?>
         </select>
-        <!-- <input type="submit" value="Submit"> --> 
       </li>
+      
     </ul>
   </div>
 
@@ -688,6 +691,8 @@ if ( empty($_REQUEST) || !empty($_GET["show"]) ) :
 <?php
   // CHECK MISSING DICE
   checkMissingDice();
+  // CHECK IF THERE IS AN ACTIVE GAME
+  // checkActiveGame();
 ?>
 
 
