@@ -849,6 +849,7 @@ function saveRolls ($mobsAids = false, $bossAids = false) {
 *  `IP` varchar(255) NOT NULL,
 *  `date` datetime NOT NULL
 */
+/*
 function logAction ($section, $action, $parentID, $parentField, $old, $new) {
   global $pdo;
   global $GAME;
@@ -882,7 +883,7 @@ function logAction ($section, $action, $parentID, $parentField, $old, $new) {
   
   $stmt->execute();
 }
-
+*/
 
 
 
@@ -1305,7 +1306,7 @@ function getGame () {
  * Dark Souls 1 Remastered
  * Demon's Souls
  */
-function changeGame ($game) {
+function changeGame ($game) { // $game = INT(ID)
   global $pdo;
   
   /*
@@ -1325,10 +1326,5 @@ function changeGame ($game) {
   $stmt->bindParam(":ID", $game, PDO::PARAM_INT);
   $stmt->execute();
 }
-
-
-
-
-
 
 ?>
