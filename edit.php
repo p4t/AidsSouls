@@ -488,7 +488,7 @@ if ( !empty($_GET["mode"]) && $_GET["mode"] == "config" ) { // mode config
   
     if ( !empty($_POST["addGame"]) ) {
       (STRING)$addGame  = $_POST["addGame"];
-      (STRING)$addAbbr  = $_POST["addAbbr"];
+      (STRING)$addAbbr  = trim(strtolower($_POST["addAbbr"]));
       
       /*
       // cherck if entry alrerady exists
@@ -498,20 +498,62 @@ if ( !empty($_GET["mode"]) && $_GET["mode"] == "config" ) { // mode config
 
       if ($row["name"] != NULL || $row["abbr"] != NULL) die("Dice Wert schon vergeben!");
       }    
+      */  
+      
+      // TABLES:
+      /*
+      TABLE `TMP_boss`, `TMP_kills`, `TMP_log`, `TMP_mobs`, `TMP_rolls`, `TMP_todo`, `TMP_weapons`
       */
-      
-      // Insert into DB
-      $sql = "INSERT INTO games (name, abbr) VALUES (:name, :abbr)";
-      $stmt = $pdo->prepare($sql);          
-      $stmt->bindParam(":name", $addGame, PDO::PARAM_STR);
-      $stmt->bindParam(":abbr", $addAbbr, PDO::PARAM_STR);
-      $stmt->execute();
-      
       
       // Add Tables into DB
       $SQLFile = "";
+      // Get Template
+      $SQLFile = file_get_contents(_DR . "/addGame.sql");
       
+      // Replace TMP with Abbr
+      $SQLString = str_replace("TMP", $addAbbr, $SQLFile);
       
+      // DEBUG
+      // echo $SQLString;
+      
+      $sql = $SQLString;
+      /*
+      $stmt = $pdo->prepare($sql);          
+      $stmt->execute();
+      */
+      
+      // No error output
+      $stmt = $pdo->exec($sql);
+            
+      // If there is no error with the SQL template
+      if ( !empty($SQLString) && $stmt == 0) {
+        // Insert into DB
+        $sql = "INSERT INTO games (name, abbr) VALUES (:name, :abbr)";
+        $stmt = $pdo->prepare($sql);          
+        $stmt->bindParam(":name", $addGame, PDO::PARAM_STR);
+        $stmt->bindParam(":abbr", $addAbbr, PDO::PARAM_STR);
+        $stmt->execute();
+        
+        echo "
+        <div id='flex-container'>
+          <div class='flex-item'>&nbsp;</div>
+
+            <div class='flex-item'>
+              Added game and Tables into DB.<br>
+              <a href='/edit?show=config'>Zurück</a>
+            </div>
+
+          <div class='flex-item'>&nbsp;</div>
+        </div>
+        ";
+        
+        /*
+        echo "<br><br><br><br><br>";
+        echo "Added game and Tables into DB";
+        echo "";
+        echo "<a href='/edit?show=config'>Zurück</a>";
+        */
+      }
       
       // redirect("/edit", $statusCode = 303);
 
