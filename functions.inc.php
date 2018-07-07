@@ -968,6 +968,9 @@ function pdoDelete ($table, $post, $ID) {
 * Check if a number between 1 and max dice vlaue in db is missing
 */
 function checkMissingDice () {
+  
+  // SEND MAIL IF DICE IS MISSING TODO GIT
+  
   global $pdo;
   global $GAME;
   
@@ -1312,15 +1315,8 @@ function getGame () {
 /*
  * Change the Game in DB
  *
- * GAMES:
- * Dark Souls 1
- * Dark Souls 2
- * Dark Souls 3
- * Bloodborne
- * Dark Souls 1 Remastered
- * Demon's Souls
  */
-function changeGame ($game) { // $game = INT(ID)
+function changeGame ($gameID) {
   global $pdo;
   
   /*
@@ -1330,14 +1326,13 @@ function changeGame ($game) { // $game = INT(ID)
   if ( !in_array($game, $games) || empty($game) ) die("OH GOTT WAS ISSN PASSIERT? @changeGame()" . "<br>" .'$game: ' . $game);
   */
   
-  echo $game;
   
   $sql = "UPDATE games SET active = IF (id = :ID,1,0)";
   // $sql  = "UPDATE games SET active = 0 WHERE active = 1";
   // UPDATE games SET active = IF (id = 1,1,0);
   $stmt = $pdo->prepare($sql);                                  
   // $stmt->bindParam(":abbr", $game, PDO::PARAM_STR);
-  $stmt->bindParam(":ID", $game, PDO::PARAM_INT);
+  $stmt->bindParam(":ID", $gameID, PDO::PARAM_INT);
   $stmt->execute();
 }
 
@@ -1363,6 +1358,9 @@ function writeSQL ($abbr) {
 }
 
 
+/*
+* Check if Abbr is already taken
+*/
 function checkIfAbbrIsTaken ($abbr) {
   global $pdo;
 
