@@ -18,3 +18,5 @@ restore.php
 
 #Files
 test.php
+.htaccess
+.htpasswd
