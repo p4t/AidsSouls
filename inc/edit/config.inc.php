@@ -29,7 +29,7 @@
     
     while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) { 
     ?> 
-    <tr>    
+    <tr id="games-<?=$row["ID"]?>">
       <td><?=$row["ID"]?></td>
 
         <td class="edit_col">
