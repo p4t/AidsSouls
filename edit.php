@@ -393,26 +393,15 @@ if ( !empty($_GET["mode"]) && $_GET["mode"] == "config" ) { // mode config
   (STRING)$mode   = $_GET["mode"];
   (INT)$ID        = $_GET["ID"];  
   
-  /*
-  // handle game 
-  if ( !empty($_GET["item"]) && $_GET["item"] == "games" ) {
-    //
-    echo "games";
-  }
-  
-  // handle settings
-  if ( !empty($_GET["item"]) && $_GET["item"] == "settings" ) {
-    //
-  }
-  */
-  
+  // Games
   if ( !empty($_POST) ) {
-    (STRING)$newName    = $_POST["newName"];
-    (STRING)$newAbbr    = $_POST["newAbbr"];
-    (INT)$newActive     = $_POST["newActive"];
-    (INT)$newNgp        = $_POST["newNgp"];
+    (STRING)$newName  = $_POST["newName"];
+    (STRING)$newAbbr  = trim(strtolower($_POST["newAbbr"]));
+    (INT)$newActive   = $_POST["newActive"];
+    (INT)$newNgp      = $_POST["newNgp"];
     
-    (STRING)$oldActive  = $_POST["oldActive"];
+    (STRING)$oldAbbr  = $_POST["oldAbbr"];
+    (INT)$oldActive   = $_POST["oldActive"];
     
     (INT)$ID          = $_GET["ID"];
 
@@ -431,6 +420,25 @@ if ( !empty($_GET["mode"]) && $_GET["mode"] == "config" ) { // mode config
     $stmt->bindParam(":ID", $_GET["ID"], PDO::PARAM_INT);
     $stmt->execute();
     
+    // If Abbr changes alter tables in db
+    // TABLE `aaa_boss`, `aaa_kills`, `aaa_log`, `aaa_mobs`, `aaa_rolls`, `aaa_todo`, `aaa_weapons`
+    if ( $oldAbbr !== $newAbbr ) {
+      
+      $sql  = "RENAME TABLE {$oldAbbr}_boss TO {$newAbbr}_boss;";
+      $sql .= "RENAME TABLE {$oldAbbr}_kills TO {$newAbbr}_kills;";
+      $sql .= "RENAME TABLE {$oldAbbr}_log TO {$newAbbr}_log;";
+      $sql .= "RENAME TABLE {$oldAbbr}_mobs TO {$newAbbr}_mobs;";
+      $sql .= "RENAME TABLE {$oldAbbr}_rolls TO {$newAbbr}_rolls;";
+      $sql .= "RENAME TABLE {$oldAbbr}_todo TO {$newAbbr}_todo;";
+      $sql .= "RENAME TABLE {$oldAbbr}_weapons TO {$newAbbr}_weapons;";
+      
+      echo "<br><br><br><br><br><br><br>";
+      echo $sql;
+      
+      $stmt = $pdo->exec($sql);
+      
+      exit();
+    }
 
     redirect("/edit?show=config", $statusCode = 303);
 
@@ -453,17 +461,20 @@ if ( !empty($_GET["mode"]) && $_GET["mode"] == "config" ) { // mode config
           <li><input type="text" name="newName" value="<?=$row["name"]?>" maxlength="32" required="required"></li>
 
           <li><label>Abbr:</label></li>
-          <li><input type="text" name="newAbbr" value="<?=$row["abbr"]?>" maxlength="32" required="required"></li>
+          <li><input type="text" name="newAbbr" id="newAbbr" value="<?=$row["abbr"]?>" maxlength="5" required="required"></li>
           
           <li><label>Active:</label></li>
           <li><input type="number" name="newActive" value="<?=$row["active"]?>" min="0" max="1" autocomplete="off" placeholder="#" required="required"></li>
-          <input type="hidden" name="oldActive" value="<?=$row["active"]?>">
           
           <li><label>NG+:</label></li>
           <li><input type="number" name="newNgp" value="<?=$row["ngp"]?>" min="0" max="1" autocomplete="off" placeholder="#" required="required"></li>
 
           <li><input type="submit" value="Submit"></li>
         </ul>
+        
+        <input type="hidden" name="oldAbbr" value="<?=$row["abbr"]?>">
+        <input type="hidden" name="oldActive" value="<?=$row["active"]?>">
+        
       </form>
     </div>
   
@@ -512,15 +523,8 @@ if ( !empty($_GET["mode"]) && $_GET["mode"] == "config" ) { // mode config
       
       // Replace TMP with Abbr
       $SQLString = str_replace("TMP", $addAbbr, $SQLFile);
-      
-      // DEBUG
-      // echo $SQLString;
-      
+            
       $sql = $SQLString;
-      /*
-      $stmt = $pdo->prepare($sql);          
-      $stmt->execute();
-      */
       
       // No error output
       $stmt = $pdo->exec($sql);
@@ -546,13 +550,7 @@ if ( !empty($_GET["mode"]) && $_GET["mode"] == "config" ) { // mode config
           <div class='flex-item'>&nbsp;</div>
         </div>
         ";
-        
-        /*
-        echo "<br><br><br><br><br>";
-        echo "Added game and Tables into DB";
-        echo "";
-        echo "<a href='/edit?show=config'>Zurück</a>";
-        */
+
       }
       
       // redirect("/edit", $statusCode = 303);
