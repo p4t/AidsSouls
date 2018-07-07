@@ -968,9 +968,6 @@ function pdoDelete ($table, $post, $ID) {
 * Check if a number between 1 and max dice vlaue in db is missing
 */
 function checkMissingDice () {
-  
-  // SEND MAIL IF DICE IS MISSING TODO GIT
-  
   global $pdo;
   global $GAME;
   
@@ -985,6 +982,12 @@ function checkMissingDice () {
     }
     
     if ( !empty($missing_number) ) {
+      
+      $subject = "Missing Dice Warning";
+      $msg = "Game {$GAME} (Section {$table}) is missing one or more Dice!\n";
+      
+      mail_warning ($subject, $msg);  
+      
       echo "
       <div id=\"flex-container-missingnumbers\">\n
       <div class=\"flex-item-missingnumbers\">\n
@@ -1017,6 +1020,22 @@ function missing_number($num_list) {
   $new_arr = range($num_list, max($num_list));
   // use array_diff to find the missing elements 
   return array_diff($new_arr, $num_list);
+}
+
+
+/*
+ * Send mail if an important warning occurs
+ */
+function mail_warning ($subject, $msg) {
+  
+  $to = "patrick@nauerz.net";
+  $from = "From: Aids Warning <aids@aids.aids>";
+  
+  // use wordwrap() if lines are longer than 70 characters
+  $msg = wordwrap($msg, 70);
+
+  // send email
+  mail($to, $subject, $msg, $from);
 }
 
 
