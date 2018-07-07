@@ -1301,6 +1301,17 @@ img.border {
 }
 
 
+.error {
+  width: 99%;
+  background: red;
+  font: white;
+  border: 1px solid white;
+  
+  margin: 5px;
+  padding: 5px;
+}
+
+
 /* DEBUG */
 /*
 * {
