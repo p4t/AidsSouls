@@ -1396,6 +1396,21 @@ function writeSQL ($abbr) {
 
 
 /*
+* Rename SQL Tables prefix (abbr)
+*/
+function renameSQLTable ($old, $new) {
+  global $pdo;
+  
+  $sql  = "RENAME TABLE {$old}_boss TO {$new}_boss;";
+  $sql .= "RENAME TABLE {$old}_kills TO {$new}_kills;";
+  $sql .= "RENAME TABLE {$old}_mobs TO {$new}_mobs;";
+  $sql .= "RENAME TABLE {$old}_weapons TO {$new}_weapons;";
+
+  $stmt = $pdo->exec($sql);
+}
+
+
+/*
 * Check if Abbr is already taken
 */
 function checkIfAbbrIsTaken ($abbr) {

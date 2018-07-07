@@ -418,13 +418,8 @@ if ( !empty($_GET["mode"]) && $_GET["mode"] == "config" ) { // mode config
       // Try to write tables into DB just to make sure they exist if adding failed previously
       // writeSQL($oldAbbr);
       
-      // Rename SQL String
-      $sql  = "RENAME TABLE {$oldAbbr}_boss TO {$newAbbr}_boss;";
-      $sql .= "RENAME TABLE {$oldAbbr}_kills TO {$newAbbr}_kills;";
-      $sql .= "RENAME TABLE {$oldAbbr}_mobs TO {$newAbbr}_mobs;";
-      $sql .= "RENAME TABLE {$oldAbbr}_weapons TO {$newAbbr}_weapons;";
-      
-      $stmt = $pdo->exec($sql);
+      // rename SQL Tables
+      renameSQLTable($oldAbbr, $newAbbr);
       
       echo "<br><br><br><br><br>";
       echo "stmt: " . $stmt;
