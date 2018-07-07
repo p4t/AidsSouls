@@ -578,50 +578,6 @@ if ( !empty($_GET["mode"]) && $_GET["mode"] == "config" ) { // mode config
 ?>
 
 
-<?php
-/*
- * DELETE
- */
-if ( !empty($_GET["action"]) && $_GET["action"] == "delete" ) {
-  (STRING)$mode         = $_GET["mode"];
-  (STRING)$table        = $mode;
-  (STRING)$parentField  = $table . "Name";
-  (INT)$ID              = $_GET["ID"];
-
-  $sql = "DELETE FROM $table WHERE ID = :ID";
-  $stmt = $pdo->prepare($sql);
-  $stmt->bindParam(":ID", $ID, PDO::PARAM_INT);
-  $stmt->execute();
-  
-  // log
-  // logAction ($table, "Del", $ID, $parentField, "", "");
-  
-  // Check if number in dice is missing
-  /*
-  $data = $pdo->query("SELECT dice FROM $table")->fetchAll(PDO::FETCH_COLUMN);
-  $missing_number = missing_number($data);
-  missing_number($data);
-  */ 
-  
-  $count = pdoCount($table);
-  if ( $ID != $count ) {
-    $data = $pdo->query("SELECT dice FROM $table")->fetchAll(PDO::FETCH_COLUMN);
-    $missing_number = missing_number($data);
-    print_r( $missing_number);
-  }
-  
-  
-  // $stmt = $pdo->prepare("SELECT dice FROM $table ORDER BY dice DESC LIMIT 1"); // get max value from field dice
-  //$stmt = $pdo->prepare("SELECT dice FROM $table WHERE ID = $ID"); // get max value from field dice
-  //$stmt->execute();
-  //$row = $stmt->fetch(PDO::FETCH_ASSOC);
-  //$row["dice"] + 1; // +1 of max dice value
-  
-  
-  
-  redirect("/edit", $statusCode = 303);
-}
-?>
 
 
 <?php
