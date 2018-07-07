@@ -1,8 +1,20 @@
+#DW _notes folders
 _notes
-audio/
-dice/
-img/
 
+#Folders
+audio/
+Backup/
+dice/
+DS3 ASSETS/
+fonts/
+img/
+myphp-backup-files/
+res/
+
+#Sensitive Data
 config.db.php
 backup.php
 restore.php
+
+#Files
+test.php
