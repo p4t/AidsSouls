@@ -735,7 +735,7 @@ ENDWHILE
     <div class="message">
       <div class="message_line">
         <?php
-        $data = $pdo->query("SELECT date, IP, mobs, boss FROM {$GAME}_rolls WHERE mobs != '' AND boss != '' ORDER BY ID DESC LIMIT 1, 4")->fetchAll(PDO::FETCH_ASSOC);
+        $data = $pdo->query("SELECT date, IP, mobs, boss FROM rolls WHERE mobs != '' AND boss != '' AND gameID = $GAMEID ORDER BY ID DESC LIMIT 1, 4")->fetchAll(PDO::FETCH_ASSOC);
         foreach ($data as $value) :
         ?>
         <div class="row">

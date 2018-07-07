@@ -3,6 +3,7 @@
 $GAME   = getGame()[1];
 $GAMEID = getGame()[0];
 define( "_GAME", $GAME );
+define( "_GAMEID", $GAMEID );
 
 define( "_DR", $_SERVER["DOCUMENT_ROOT"] );
 define( "_PATH", dirname(__FILE__) );

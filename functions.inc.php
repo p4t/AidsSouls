@@ -676,9 +676,11 @@ function getIpAddr() {
 function getLatestRoll () {
   global $pdo;
   global $GAME;
+  global $GAMEID;
+  
   global $weaponIMG;
   
-  $stmt = $pdo->prepare("SELECT mobs, boss FROM {$GAME}_rolls WHERE mobs != '' AND boss != '' ORDER BY ID DESC LIMIT 1,1");
+  $stmt = $pdo->prepare("SELECT mobs, boss FROM rolls WHERE mobs != '' AND boss != '' AND gameID = $GAMEID ORDER BY ID DESC LIMIT 1,1");
   $stmt->execute();
   $row = $stmt->fetch(PDO::FETCH_ASSOC);
   
