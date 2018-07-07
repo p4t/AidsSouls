@@ -801,16 +801,20 @@ function ajaxPDOInsert ($table, $addDice, $addEntry) {
 function saveRolls ($mobsAids = false, $bossAids = false) {
   global $pdo;
   global $GAME;
+  global $GAMEID;
   
   $userID = $_SESSION["userID"];
   $username = $_SESSION["username"];
     
   $date = date("Y-m-d H:i:s");
   $IP   = getIpAddr();
-  $sql  = "INSERT INTO {$GAME}_rolls (date, userID, username, IP, mobs, boss) VALUES (:date, :userID, :username, :IP, :mobs, :boss)";
+  $sql  = "INSERT INTO rolls (date, userID, gameID, username, IP, mobs, boss) VALUES (:date, :userID, :gameID, :username, :IP, :mobs, :boss)";
   $stmt = $pdo->prepare($sql);                                  
   $stmt->bindParam(":date", $date, PDO::PARAM_STR);
   $stmt->bindParam(":userID", $userID, PDO::PARAM_INT);
+  
+  $stmt->bindParam(":gameID", $GAMEID, PDO::PARAM_INT);
+  
   $stmt->bindParam(":username", $username, PDO::PARAM_STR);
   $stmt->bindParam(":IP", $IP, PDO::PARAM_STR);
   $stmt->bindParam(":mobs", $mobsAids, PDO::PARAM_STR);
@@ -824,8 +828,8 @@ function saveRolls ($mobsAids = false, $bossAids = false) {
     if (strpos($e->getMessage(), $existingkey) !== FALSE) {
       // Take some action if there is a key constraint violation, i.e. duplicate name
     } else {
-      // throw $e;
-      echo "MISSING DICE!!!";
+      throw $e;
+      // echo "SAVE ROLLS NOT WORKING";
     }
   }
   
@@ -1335,11 +1339,11 @@ function logout() {
 function getGame () {
   global $pdo;
   
-  $stmt = $pdo->prepare("SELECT name, abbr FROM games WHERE active=1");
+  $stmt = $pdo->prepare("SELECT ID, name, abbr FROM games WHERE active=1");
   $stmt->execute();
   $row = $stmt->fetch(PDO::FETCH_ASSOC);
   
-  return $row["abbr"]; // get abbrevation (ds1, bb, etc) for db prefix
+  return array($row["ID"], $row["abbr"]); // get abbrevation (ds1, bb, etc) for db prefix
 }
 
 

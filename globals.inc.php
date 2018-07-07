@@ -1,6 +1,7 @@
 <?php
 // Globals
-$GAME = getGame();
+$GAME   = getGame()[1];
+$GAMEID = getGame()[0];
 define( "_GAME", $GAME );
 
 define( "_DR", $_SERVER["DOCUMENT_ROOT"] );
