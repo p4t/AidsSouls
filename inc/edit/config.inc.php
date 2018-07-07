@@ -24,6 +24,8 @@
     $stmt = $pdo->prepare($sql);
     $stmt->execute();
 
+    // Check if DB Tables exist
+    
     while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) { 
     ?> 
     <tr>    
@@ -52,7 +54,7 @@
 
       <td><?=$row["abbr"]?></td>
       <td><?=$row["active"]?></td>
-      <td><?=$row["ng+"]?></td>
+      <td><?=$row["ngp"]?></td>
     </tr>
 
     <?php
