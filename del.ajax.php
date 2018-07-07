@@ -17,7 +17,7 @@ if ( !empty($_POST) ) {
   echo "Success!";
   
   // log
-  logAction ($table, "Del", $ID, $parentField, "", "");
+  // logAction ($table, "Del", $ID, $parentField, "", "");
   
   // Check if number in dice is missing
   /*
