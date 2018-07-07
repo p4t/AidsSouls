@@ -36,10 +36,16 @@
           <div class="title">
             <a href="/edit?mode=config&item=games&ID=<?=$row["ID"]?>"><?=$row["name"]?></a>
 
+            <?php
+            if ( $row["ID"] > 6 ) {
+            ?>
             <!-- DELETE -->
             <a data-value="<?=$row["ID"]?>" data-table="games" class="delete" data-balloon="Löschen" data-balloon-pos="left">
               <i class="fas fa-minus-circle"></i>
             </a>
+            <?php
+            }
+            ?>
 
             &nbsp;
 
