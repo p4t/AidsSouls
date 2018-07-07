@@ -399,6 +399,6 @@ form input[type="text"]#newAbbr
 }
 
 /* Cursor for disabled field */
-form input[type="text"].disabled {
+form input.disabled {
   cursor: not-allowed;
 }
