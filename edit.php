@@ -171,8 +171,8 @@ require_once("globals.inc.php");
       // https://darksouls.wiki.fextralife.com/file/Dark-Souls/Wpn_Priscilla's_Dagger.png
     
       // log
-      if ( $newDice  != $oldDice ) logAction ($table, "Edit", $ID, $parentField , $oldDice, $newDice);
-      if ( $newName  != $oldName ) logAction ($table, "Edit", $ID, $parentField, $oldName, $newName);
+      // if ( $newDice  != $oldDice ) logAction ($table, "Edit", $ID, $parentField , $oldDice, $newDice);
+      // if ( $newName  != $oldName ) logAction ($table, "Edit", $ID, $parentField, $oldName, $newName);
       
       redirect("/edit", $statusCode = 303);
       
@@ -280,9 +280,9 @@ if ( !empty($_GET["mode"]) && $_GET["mode"] == "kills" ) {
       $stmt->execute();
 
       // log
-      if ( $newJoker  != $postJoker ) logAction ($table, "Edit", $ID, "joker", $oldJoker, $postJoker);
-      if ( $newSpent  != $postSpent ) logAction ($table, "Edit", $ID, "spent", $oldSpent, $postSpent);
-      if ( $newBoss   != $postBoss ) logAction ($table, "Edit", $ID, "bossNames", $oldBoss, $postBoss);
+      // if ( $newJoker  != $postJoker ) logAction ($table, "Edit", $ID, "joker", $oldJoker, $postJoker);
+      // if ( $newSpent  != $postSpent ) logAction ($table, "Edit", $ID, "spent", $oldSpent, $postSpent);
+      // if ( $newBoss   != $postBoss ) logAction ($table, "Edit", $ID, "bossNames", $oldBoss, $postBoss);
 
       redirect("/edit?show=kills", $statusCode = 303); // http://ds.fahrzeugatelier.de/edit?show=kills
       
@@ -594,7 +594,7 @@ if ( !empty($_GET["action"]) && $_GET["action"] == "delete" ) {
   $stmt->execute();
   
   // log
-  logAction ($table, "Del", $ID, $parentField, "", "");
+  // logAction ($table, "Del", $ID, $parentField, "", "");
   
   // Check if number in dice is missing
   /*
