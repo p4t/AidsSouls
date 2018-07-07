@@ -20,17 +20,6 @@ CREATE TABLE IF NOT EXISTS `TMP_mobs` (
   PRIMARY KEY (`ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-CREATE TABLE IF NOT EXISTS `TMP_rolls` (
-  `ID` int(10) NOT NULL AUTO_INCREMENT,
-  `date` datetime NOT NULL,
-  `userID` int(10) DEFAULT NULL,
-  `username` varchar(255) DEFAULT NULL,
-  `IP` varchar(255) NOT NULL,
-  `mobs` varchar(255) NOT NULL,
-  `boss` varchar(255) NOT NULL,
-  PRIMARY KEY (`ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
 CREATE TABLE IF NOT EXISTS `TMP_weapons` (
   `ID` int(10) NOT NULL AUTO_INCREMENT,
   `dice` int(10) NOT NULL,
