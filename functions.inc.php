@@ -1220,7 +1220,21 @@ function strrtrim($message, $strip) {
 
 
 
+function print_error ($msg) {
+  echo "
+  <div id='flex-container'>
+    <div class='flex-item'>&nbsp;</div>
 
+      <div class='flex-item'>
+        <span class='error'>
+          {$msg}
+        </span>
+      </div>
+
+    <div class='flex-item'>&nbsp;</div>
+  </div>
+  ";
+}
 
 
 
@@ -1325,6 +1339,46 @@ function changeGame ($game) { // $game = INT(ID)
   // $stmt->bindParam(":abbr", $game, PDO::PARAM_STR);
   $stmt->bindParam(":ID", $game, PDO::PARAM_INT);
   $stmt->execute();
+}
+
+
+/*
+ * Write tables for a new game
+ * TABLES: `TMP_boss`, `TMP_kills`, `TMP_log`, `TMP_mobs`, `TMP_rolls`, `TMP_todo`, `TMP_weapons`
+ */
+function writeSQL ($abbr) {
+  global $pdo;
+  
+  $SQLFile = "";
+  // Get Template
+  $SQLFile = file_get_contents(_DR . "/addGame.sql");
+
+  // Replace TMP with Abbr
+  $SQLString = str_replace("TMP", $abbr, $SQLFile);
+
+  $sql = $SQLString;
+
+  // No error output
+  return $stmt = $pdo->exec($sql);
+}
+
+
+function checkIfAbbrIsTaken ($abbr) {
+  global $pdo;
+
+  $sql = 'SELECT abbr FROM games WHERE abbr = "'.$abbr.'"';
+  
+  $stmt = $pdo->prepare($sql);
+  $stmt->execute();
+  $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+  if ($row["abbr"] != NULL) {
+    print_error("ABBR ALREADY TAKEN");
+    die();
+  }
+  
+  // return $row["abbr"];
+  return TRUE;
 }
 
 ?>
