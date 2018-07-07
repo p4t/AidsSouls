@@ -106,8 +106,6 @@ require_once("globals.inc.php");
 
   <a href="/edit?show=kills"    <?=( $_GET["show"]  == "kills"    ) ? "class='sidenav-active'" : ""?>>Kills</a>
   <a href="/edit?show=rolls"    <?=( $_GET["show"]  == "rolls"    ) ? "class='sidenav-active'" : ""?>>Rolls</a>
-  <a href="/edit?show=logs"     <?=( $_GET["show"]  == "logs"     ) ? "class='sidenav-active'" : ""?>>Logs</a>
-  <a href="/edit?show=todo"     <?=( $_GET["show"]  == "todo"     ) ? "class='sidenav-active'" : ""?>>Todo</a>
   <a href="/edit?show=backups"  <?=( $_GET["show"]  == "backups"  ) ? "class='sidenav-active'" : ""?>>Backup</a>
 
   <span>&nbsp;</span>
@@ -694,10 +692,10 @@ if ( empty($_REQUEST) || !empty($_GET["show"]) ) :
         * INC
         */
         if ( !empty($_GET["show"]) && $_GET["show"] == "kills"        ) include("inc/edit/kills.inc.php");
-        if ( !empty($_GET["show"]) && $_GET["show"] == "todo"         ) include("inc/edit/todo.inc.php");
+        // if ( !empty($_GET["show"]) && $_GET["show"] == "todo"         ) include("inc/edit/todo.inc.php");
         if ( !empty($_GET["show"]) && $_GET["show"] == "backups"      ) include("inc/edit/backups.inc.php");
         if ( !empty($_GET["show"]) && $_GET["show"] == "rolls"        ) include("inc/edit/rolls.inc.php");
-        if ( !empty($_GET["show"]) && $_GET["show"] == "logs"         ) include("inc/edit/logs.inc.php");
+        // if ( !empty($_GET["show"]) && $_GET["show"] == "logs"         ) include("inc/edit/logs.inc.php");
         if ( !empty($_GET["show"]) && $_GET["show"] == "autocomplete" ) include("inc/edit/autocomplete.inc.php");
         if ( !empty($_GET["show"]) && $_GET["show"] == "aidsglobal"   ) include("inc/edit/aids.global.inc.php");
       
