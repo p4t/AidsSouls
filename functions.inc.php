@@ -1410,6 +1410,18 @@ function renameSQLTable ($old, $new) {
 }
 
 
+function dropSQLTable ($abbr) {
+  global $pdo;
+  
+  $sql  = "DROP TABLE {$abbr}_boss;";
+  $sql .= "DROP TABLE {$abbr}_kills;";
+  $sql .= "DROP TABLE {$abbr}_mobs;";
+  $sql .= "DROP TABLE {$abbr}_weapons;";
+  
+  $stmt = $pdo->exec($sql);
+}
+
+
 /*
 * Check if Abbr is already taken
 */

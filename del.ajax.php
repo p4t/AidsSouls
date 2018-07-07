@@ -21,12 +21,8 @@ if ( !empty($_POST) ) {
     $abbr = $row["abbr"];  
     
     // form sql to drop tables
-    $sql  = "DROP TABLE {$abbr}_boss;";
-    $sql .= "DROP TABLE {$abbr}_kills;";
-    $sql .= "DROP TABLE {$abbr}_mobs;";
-    $sql .= "DROP TABLE {$abbr}_weapons;";
-
-    if ( $ID > 6 ) $stmt = $pdo->exec($sql); // Hack so existing SoulsBorne data won't be deleted
+    // Hack so existing SoulsBorne data won't be deleted
+    if ( $ID > 6 ) dropSQLTable($abbr);
     
   }
   
