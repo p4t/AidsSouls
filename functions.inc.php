@@ -1353,6 +1353,8 @@ function getActiveGame () {
  * Get all games listed in `games`
  */
 function getGames () {
+  global $pdo;
+  
   return $pdo->query("SELECT * FROM games")->fetchAll(PDO::FETCH_ASSOC);
 }
 
