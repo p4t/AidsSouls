@@ -13,10 +13,12 @@ define( "_LOGIN", FALSE );
 define( "_SHOWTODO", FALSE );
 define( "_NEWGAMEPLUS", FALSE );
 
-// Set default Timezone
-// date_default_timezone_set("Europe/Berlin");
+define( "_WARNINGMAIL", TRUE );
+define( "_EMAIL", "patrick@nauerz.net" );
+
+define( "_TIMEZONE", "Europe/Berlin" );
 
 // Check timezone
 $timezone = date_default_timezone_get();
-if ( strcmp($timezone, "Europe/Berlin") ) date_default_timezone_set("Europe/Berlin");
+if ( strcmp($timezone, _TIMEZONE) ) date_default_timezone_set("Europe/Berlin");
 ?>
