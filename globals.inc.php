@@ -1,7 +1,8 @@
 <?php
 // Globals
-$GAME   = getGame()[1];
-$GAMEID = getGame()[0];
+$GAME   = getActiveGame()[1];
+$GAMEID = getActiveGame()[0];
+
 define( "_GAME", $GAME );
 define( "_GAMEID", $GAMEID );
 
