@@ -365,7 +365,8 @@ if ( !empty($_GET["mode"]) && $_GET["mode"] == "config" ) { // mode config
       // writeSQL($oldAbbr);
       
       // rename SQL Tables
-      renameSQLTable($oldAbbr, $newAbbr);
+      // only if not pre-existing SoulsBorne
+      if ( $ID > 6 ) renameSQLTable($oldAbbr, $newAbbr);
       
       echo "<br><br><br><br><br>";
       echo "stmt: " . $stmt;
