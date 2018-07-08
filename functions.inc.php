@@ -1336,16 +1336,24 @@ function logout() {
 
 /* CONFIG */
 /*
- * Get the game currently set in DB
+ * Get active game
  */
-function getGame () {
+function getActiveGame () {
   global $pdo;
   
-  $stmt = $pdo->prepare("SELECT ID, name, abbr FROM games WHERE active=1");
+  $stmt = $pdo->prepare("SELECT ID, abbr FROM games WHERE active = 1");
   $stmt->execute();
   $row = $stmt->fetch(PDO::FETCH_ASSOC);
   
   return array($row["ID"], $row["abbr"]); // get abbrevation (ds1, bb, etc) for db prefix
+}
+
+
+/*
+ * Get all games listed in `games`
+ */
+function getGames () {
+  return $pdo->query("SELECT * FROM games")->fetchAll(PDO::FETCH_ASSOC);
 }
 
 
