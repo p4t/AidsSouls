@@ -331,58 +331,6 @@ if ( !empty($_GET["mode"]) && $_GET["mode"] == "kills" ) {
 
 <?php
 /*
- * EDIT: TODO
- */
-if ( !empty($_GET["mode"]) && $_GET["mode"] == "todo" ) {
-    (STRING)$mode   = $_GET["mode"];
-    (STRING)$table  = _GAME . "_" . $mode;
-    (INT)$ID        = $_GET["ID"];  
-  
-    if ( !empty($_POST["newTodo"]) ) {
-      (STRING)$newTodo  = $_POST["newTodo"];
-      
-      $sql = "UPDATE $table SET todoText = :todoText WHERE ID = :ID";
-      $stmt = $pdo->prepare($sql);                                  
-      $stmt->bindParam(":todoText", $_POST["newTodo"], PDO::PARAM_STR);
-      $stmt->bindParam(":ID", $_GET["ID"], PDO::PARAM_INT);
-      $stmt->execute();
-      
-      redirect("/edit?show=todo", $statusCode = 303);
-
-    } else {
-      
-      $stmt = $pdo->prepare("SELECT * FROM $table WHERE ID = ".$_GET["ID"]." ");
-      $stmt->execute();
-      $row = $stmt->fetch(PDO::FETCH_ASSOC);
-    }
-?>
-
-<div id="flex-container">
-  <div class="flex-item">&nbsp;</div>
-    
-  <div class="flex-item">
-      <form action="/edit?mode=<?=$mode?>&ID=<?=$_GET["ID"]?>" method="post" id="edit">
-        <ul>
-          <li><label>Entry:</label></li>
-          <li><textarea rows="15" name="newTodo" cols="50" required="required"><?=$row["todoText"]?></textarea></li>
-          <li><input type="submit" value="Submit"></li>
-        </ul>
-      </form>
-    </div>
-  
-  <div class="flex-item">&nbsp;</div>
-</div>
-
-<?php
-} // ENDIF
-?>
-
-
-
-
-
-<?php
-/*
  * EDIT: CONFIG>>GAME
  */
 if ( !empty($_GET["mode"]) && $_GET["mode"] == "config" ) { // mode config
@@ -715,7 +663,7 @@ if ( empty($_REQUEST) || !empty($_GET["show"]) ) :
 
 
 <?php
-ENDIF
+ENDIF // if ( empty($_REQUEST) || !empty($_GET["show"]) ) :
 ?>
 
 
