@@ -1,4 +1,4 @@
-<a id="Config"></a>
+<a id="Games"></a>
 <form action="/edit?mode=games&action=add" method="post">
 
 <table class="edit">
@@ -70,7 +70,19 @@
 
     <tr>
       <td colspan="6">
-        <a href="edit.php?action=schnagges" onClick="return confirm('SICHER???????? MACH KE SCHEISS!');" data-balloon="Tabelle leeren" data-balloon-pos="up">Leeren</a>
+        <label>Duplicate Game:</label>
+          <select id="duplicateGame" name="duplicateGame">
+            <option selected></option>
+            <?php
+            $data = getGames();
+
+            foreach ($data as $value) {
+            ?>
+            <option value="<?=$value["abbr"]?>"><?=$value["name"]?></option>
+            <?php
+            }
+            ?>
+          </select>
       </td>
     </tr>
 
@@ -87,4 +99,4 @@
   <li><input type="submit" value="Submit"></li>
 </ul>
 
-</form> 
+</form>

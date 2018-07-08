@@ -467,6 +467,69 @@ if ( !empty($_GET["mode"]) && $_GET["mode"] == "config" ) { // mode config
 ?>
 
 
+<?php
+/*
+ * DUPLICATE GAME
+ * TABLES: boss, kills, mobs, weapons
+ */
+if (
+  
+  ( !empty($_GET["mode"]) && $_GET["mode"] == "duplicateGame" )
+  &&
+  // ( !empty($_POST["selectGame"]) )
+  ( !empty($_GET["abbr"]) )
+  
+   ) {
+  // $selectGame = $_POST["selectGame"];
+  $abbr           = $_GET["abbr"];
+  $abbr_suffix    = "c"; // predefined hardcoded suffix
+  // $random_suffix  = substr(str_shuffle("abcdefghijklmnopqrstuvwxyz"), 0, 1); // random one letter suffix
+  
+  $abbr_new = $abbr . $abbr_suffix;
+    
+  checkIfAbbrIsTaken($abbr_new);
+  
+  // CREATE TABLE Table2 LIKE Table1;
+  // INSERT INTO Table2 SELECT * from Table1;
+  
+  // Create
+  $sql  = "CREATE TABLE {$abbr_new}_boss     LIKE            {$abbr}_boss;";
+  $sql .= "CREATE TABLE {$abbr_new}_kills    LIKE            {$abbr}_kills;";
+  $sql .= "CREATE TABLE {$abbr_new}_mobs     LIKE            {$abbr}_mobs;";
+  $sql .= "CREATE TABLE {$abbr_new}_weapons  LIKE            {$abbr}_weapons;";
+  
+  // Insert data
+  $sql .= "INSERT INTO  {$abbr_new}_boss     SELECT * FROM   {$abbr}_boss;";
+  $sql .= "INSERT INTO  {$abbr_new}_kills    SELECT * FROM   {$abbr}_kills;";
+  $sql .= "INSERT INTO  {$abbr_new}_mobs     SELECT * FROM   {$abbr}_mobs;";
+  $sql .= "INSERT INTO  {$abbr_new}_weapons  SELECT * FROM   {$abbr}_weapons;";
+
+  echo "<br><br><br><br>";
+  echo "<pre>";
+  echo "SQL:<br>" . $sql;
+  echo "</pre>";
+  
+  $stmt = $pdo->exec($sql);
+  
+  if ( $stmt == 0 ) {
+    $addGame = $abbr . " Copy";
+    $addAbbr = $abbr . "c";
+    
+    $sql = "INSERT INTO games (name, abbr) VALUES (:name, :abbr)";
+    $stmt = $pdo->prepare($sql);          
+    $stmt->bindParam(":name", $addGame, PDO::PARAM_STR);
+    $stmt->bindParam(":abbr", $addAbbr, PDO::PARAM_STR);
+    $stmt->execute();
+  }
+  
+  
+  // changeGame($selectGame);
+  // redirect("/edit");
+}
+?>
+
+
+
 
 
 
@@ -899,6 +962,23 @@ $(function(){
 });
 </script>
 
+<!-- Duplicate Game Dropdown -->
+<script>
+$(function(){
+  // bind change event to select
+  $("#duplicateGame").on("change", function () {
+    // var url = $(this).val(); // get selected value
+    var game = $(this).val(); // get selected value
+    var url = "/edit?mode=duplicateGame&abbr="+game;
+    // if (confirm("Are you sure want to delete?")) {
+    if (url && confirm("Are you sure you want to duplicate this game?") ) { // require a URL and confirmation
+        window.location = url; // redirect
+    }
+    return false;
+  });
+});
+</script>
+
 <!-- Ajax Delete -->
 <script>
 $(document).ready(function () {
@@ -925,7 +1005,8 @@ $(document).ready(function () {
                           return false;
                         });
                         */
-                    
+                    // debug
+                    console.log(data);
                     
                     
                       } else {
