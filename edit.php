@@ -96,26 +96,26 @@ require_once("globals.inc.php");
       Aids <i class="fas fa-external-link-alt"></i>
     </a>
     <!-- <a href="/edit">Edit</a> -->
-  </span>    
+  </span>
 
-  <a href="/edit?show=aids" <?=( $_GET["show"] == "aids" || !$_GET["show"] ) ? "class='sidenav-active'" : ""?>>Mobs</a>
-  <a href="/edit?show=aids" <?=( $_GET["show"] == "aids" || !$_GET["show"] ) ? "class='sidenav-active'" : ""?>>Boss</a>
-  <a href="/edit?show=aids" <?=( $_GET["show"] == "aids" || !$_GET["show"] ) ? "class='sidenav-active'" : ""?>>Weapons</a>
-
-  <span>&nbsp;</span>
-
-  <a href="/edit?show=kills"    <?=( $_GET["show"]  == "kills"    ) ? "class='sidenav-active'" : ""?>>Kills</a>
-  <a href="/edit?show=rolls"    <?=( $_GET["show"]  == "rolls"    ) ? "class='sidenav-active'" : ""?>>Rolls</a>
-  <a href="/edit?show=backups"  <?=( $_GET["show"]  == "backups"  ) ? "class='sidenav-active'" : ""?>>Backup</a>
+  <a href="/edit?show=aids" <?=( isset($_GET["show"]) && ($_GET["show"] == "aids" || !$_GET["show"]) ) ? "class='sidenav-active'" : ""?>>Mobs</a>
+  <a href="/edit?show=aids" <?=( isset($_GET["show"]) && ($_GET["show"] == "aids" || !$_GET["show"]) ) ? "class='sidenav-active'" : ""?>>Boss</a>
+  <a href="/edit?show=aids" <?=( isset($_GET["show"]) && ($_GET["show"] == "aids" || !$_GET["show"]) ) ? "class='sidenav-active'" : ""?>>Weapons</a>
 
   <span>&nbsp;</span>
 
-  <a href="/edit?show=autocomplete" <?=( $_GET["show"]  == "autocomplete" ) ? "class='sidenav-active'" : ""?>>Autocomplete</a>
-  <a href="/edit?show=aidsglobal"   <?=( $_GET["show"]  == "aidsglobal"   ) ? "class='sidenav-active'" : ""?>>Global Aids</a>
+  <a href="/edit?show=kills"    <?=( isset($_GET["show"]) && $_GET["show"]  == "kills"    ) ? "class='sidenav-active'" : ""?>>Kills</a>
+  <a href="/edit?show=rolls"    <?=( isset($_GET["show"]) && $_GET["show"]  == "rolls"    ) ? "class='sidenav-active'" : ""?>>Rolls</a>
+  <a href="/edit?show=backups"  <?=( isset($_GET["show"]) && $_GET["show"]  == "backups"  ) ? "class='sidenav-active'" : ""?>>Backup</a>
 
   <span>&nbsp;</span>
 
-  <a href="/edit?show=config" <?=( $_GET["show"]        == "config"       ) ? "class='sidenav-active'" : ""?>>
+  <a href="/edit?show=autocomplete" <?=( isset($_GET["show"]) && $_GET["show"]  == "autocomplete" ) ? "class='sidenav-active'" : ""?>>Autocomplete</a>
+  <a href="/edit?show=aidsglobal"   <?=( isset($_GET["show"]) && $_GET["show"]  == "aidsglobal"   ) ? "class='sidenav-active'" : ""?>>Global Aids</a>
+
+  <span>&nbsp;</span>
+
+  <a href="/edit?show=config" <?=( isset($_GET["show"]) && $_GET["show"]        == "config"       ) ? "class='sidenav-active'" : ""?>>
     <i class="fas fa-cog"></i>
   </a>
 </div>
@@ -504,10 +504,12 @@ if (
   $sql .= "INSERT INTO  {$abbr_new}_mobs     SELECT * FROM   {$abbr}_mobs;";
   $sql .= "INSERT INTO  {$abbr_new}_weapons  SELECT * FROM   {$abbr}_weapons;";
 
+  /*
   echo "<br><br><br><br>";
   echo "<pre>";
   echo "SQL:<br>" . $sql;
   echo "</pre>";
+  */
   
   $stmt = $pdo->exec($sql);
   
@@ -522,9 +524,7 @@ if (
     $stmt->execute();
   }
   
-  
-  // changeGame($selectGame);
-  // redirect("/edit");
+  redirect("/edit?show=config");
 }
 ?>
 

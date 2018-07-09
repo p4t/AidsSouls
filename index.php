@@ -595,7 +595,7 @@ ENDWHILE
 <footer>
   <nav>
     <span>
-      User: <?=$_SESSION["username"]?> |
+      User: {Admin} |
     </span>
     <a href="/?action=logout">Logout</a> |
     <a href="#" id="myBtn">Zuletzt gewürfelt</a> |

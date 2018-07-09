@@ -120,14 +120,14 @@ function specialAids ($mobsAids, $bossAids) {
   // Shots
   if ( $mobsAids == "Jäscher" || $mobsAids == "Feige" ) { // if (strcasecmp($var1, $var2) == 0) {
     // RNG # for balloon-tip
-    $mobsRNGNR   = $mobsRNG;
+    // $mobsRNGNR   = $mobsRNG;
     $newMobsAids = getShotsAidsByRNG(_GAME."_mobs");
     $mobsAids = $mobsAids . ":&nbsp;" . $newMobsAids;
   }
 
   if ( $bossAids == "Jäscher" || $bossAids == "Feige") {
     // RNG # for balloon-tip
-    $bossRNGNR   = $bossRNG;
+    // $bossRNGNR   = $bossRNG;
     $newBossAids = getShotsAidsByRNG(_GAME."_boss");
     $bossAids = $bossAids . ":&nbsp;" . $newBossAids;
   }
@@ -805,8 +805,14 @@ function saveRolls ($mobsAids = false, $bossAids = false) {
   global $GAME;
   global $GAMEID;
   
-  $userID = $_SESSION["userID"];
-  $username = $_SESSION["username"];
+  
+  if ( _LOGIN == TRUE ) {
+    $userID = $_SESSION["userID"];
+    $username = $_SESSION["username"];
+  } else {
+  $userID = 0;
+  $username = "Admin";
+  }
     
   $date = date("Y-m-d H:i:s");
   $IP   = getIpAddr();
