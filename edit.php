@@ -333,7 +333,7 @@ if ( !empty($_GET["mode"]) && $_GET["mode"] == "kills" ) {
 /*
  * EDIT: CONFIG>>GAME
  */
-if ( !empty($_GET["mode"]) && $_GET["mode"] == "config" ) { // mode config
+if ( !empty($_GET["mode"]) && $_GET["mode"] == "config" && empty($_GET["action"]) ) { // mode config
   (STRING)$mode   = $_GET["mode"];
   (INT)$ID        = $_GET["ID"];  
   
