@@ -8,7 +8,7 @@ error_reporting(E_ALL);
 // ini_set("error_reporting", E_ALL);
 
 // Set up DB and connect
-$host     = "127.0.0.1";
+$host     = "";
 $db       = "";
 $user     = "";
 $pass     = "";
@@ -22,8 +22,8 @@ $opt = [
   PDO::ATTR_EMULATE_PREPARES   => false,
 ];
 
-
 $pdo = new PDO ($dsn, $user, $pass, $opt); // pdo instance
+
 /*
 // PHP 5
 $pdo->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION ); // error handling
