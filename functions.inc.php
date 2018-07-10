@@ -1183,6 +1183,17 @@ function getGames () {
 
 
 /*
+ * Get Globals from config
+ */
+function getGlobals () {
+  global $pdo;
+  
+  return $pdo->query("SELECT * FROM config")->fetchAll(PDO::FETCH_ASSOC);
+}
+
+
+
+/*
  * Change the Game in DB
  *
  */
