@@ -333,7 +333,7 @@ if ( !empty($_GET["mode"]) && $_GET["mode"] == "kills" ) {
 /*
  * EDIT: CONFIG>>GAME
  */
-if ( !empty($_GET["mode"]) && $_GET["mode"] == "config" && empty($_GET["action"]) ) { // mode config
+if ( !empty($_GET["mode"]) && $_GET["mode"] == "config" && $_GET["item"] == "games" && empty($_GET["action"]) ) { // mode config
   (STRING)$mode   = $_GET["mode"];
   (INT)$ID        = $_GET["ID"];  
   
@@ -426,6 +426,79 @@ if ( !empty($_GET["mode"]) && $_GET["mode"] == "config" && empty($_GET["action"]
 <?php
 } // ENDIF
 ?>
+
+
+
+
+
+<?php
+/*
+ * EDIT: CONFIG>>GLOBAL
+ */
+if ( !empty($_GET["mode"]) && $_GET["mode"] == "config" && $_GET["item"] == "global" && empty($_GET["action"]) ) { // mode config
+  (STRING)$mode   = $_GET["mode"];
+  (INT)$ID        = $_GET["ID"];  
+  
+  // Games
+  if ( !empty($_POST) ) {
+    (STRING)$newGlobal      = $_POST["newGlobal"];
+    (STRING)$newGlobalValue = $_POST["newGlobalValue"];
+    
+    (STRING)$oldGobal       = $_POST["oldGlobal"];
+    (STRING)$oldGlobalValue = $_POST["oldGlobalValue"];
+    
+    (INT)$ID                = $_GET["ID"];
+    
+    // Update name, abbr and ngp
+    $sql = "UPDATE config SET global = :global, value = :value WHERE ID = :ID";
+    $stmt = $pdo->prepare($sql);                                  
+    $stmt->bindParam(":global", $newGlobal, PDO::PARAM_STR);
+    $stmt->bindParam(":value", $newGlobalValue, PDO::PARAM_STR);
+    
+    $stmt->bindParam(":ID", $_GET["ID"], PDO::PARAM_INT);
+    $stmt->execute();
+    
+    redirect("/edit?show=config", $statusCode = 303);
+
+  } else {
+
+    $stmt = $pdo->prepare("SELECT * FROM config WHERE ID = ".$_GET["ID"]." ");
+    $stmt->execute();
+    $row = $stmt->fetch(PDO::FETCH_ASSOC);
+  }
+?>
+
+<div id="flex-container">
+  <div class="flex-item">&nbsp;</div>
+    
+    <div class="flex-item">
+      <form action="/edit?mode=config&item=global&ID=<?=$_GET["ID"]?>" method="post" id="edit">
+        <ul>
+          
+          <li><label>Name:</label></li>
+          <li><input type="text" name="newGlobal" value="<?=$row["global"]?>" maxlength="32" required="required"></li>
+
+          <li><label>Abbr:</label></li>
+          <li><input type="text" name="newGlobalValue" id="newGlobalValue" value="<?=$row["value"]?>" maxlength="5" required="required"></li>
+
+          <li><input type="submit" value="Submit"></li>
+        </ul>
+        
+        <input type="hidden" name="oldGlobal" value="<?=$row["global"]?>">
+        <input type="hidden" name="oldGlobalValue" value="<?=$row["value"]?>">
+        
+      </form>
+    </div>
+  
+  <div class="flex-item">&nbsp;</div>
+</div>
+  
+<?php
+} // ENDIF
+?>
+
+
+
   
   
   
@@ -459,6 +532,36 @@ if ( !empty($_GET["mode"]) && $_GET["mode"] == "config" && empty($_GET["action"]
         $stmt->execute();
       }
       
+      redirect("/edit?show=config", $statusCode = 303);
+
+    } // ENDIF (ELSE) $_POST["addGame"]
+    
+  } // ENDIF $_GET["mode"]
+?>
+
+
+<?php
+/*
+ * ADD: CONFIG>>GLOBAL
+ */
+
+  if ( !empty($_GET["mode"]) && !empty($_GET["action"]) && ($_GET["mode"] == "config") && $_GET["action"] == "add" ) {
+    echo "ADD GLBOAL";
+    
+    (STRING)$mode   = $_GET["mode"];
+    // (INT)$ID        = $_GET["ID"];
+  
+    if ( !empty($_POST["addGlobal"]) ) {
+      (STRING)$addGlobal      = trim(strtoupper($_POST["addGlobal"]));
+      (STRING)$addGlobalValue = trim(strtoupper($_POST["addGlobalValue"]));
+      
+      // Insert into DB
+      $sql = "INSERT INTO config (global, value) VALUES (:global, :value)";
+      $stmt = $pdo->prepare($sql);          
+      $stmt->bindParam(":global", $addGlobal, PDO::PARAM_STR);
+      $stmt->bindParam(":value", $addGlobalValue, PDO::PARAM_STR);
+      $stmt->execute();
+
       redirect("/edit?show=config", $statusCode = 303);
 
     } // ENDIF (ELSE) $_POST["addGame"]
@@ -529,10 +632,6 @@ if (
 ?>
 
 
-
-
-
-
 <?php
 /*
  * ADD: MOBS, BOSS, WEAPONS
@@ -576,6 +675,8 @@ if (
     
   } // ENDIF $_GET["mode"]
 ?>
+
+
 
 
 
