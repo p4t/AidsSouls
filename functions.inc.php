@@ -2,28 +2,6 @@
 // AIDS.PHP
 
 /*
-class Aids {
-  public $test;
-  co
-  public function getRNG () {
-    //
-  }
-  
-  public function getAidsByRNG () {
-    //
-  }
-  
-  public function RandomWeapon () {
-    //
-  }
-  
-}
-*/
-
-
-
-
-/*
  * Random Weapons
  */
 function randomWeapon () {
@@ -46,7 +24,8 @@ function randomWeapon () {
   
   return $weapon;
 }
-	
+
+
 
 /*
  * Get RNG for Mobs and Boss
@@ -109,7 +88,9 @@ function getAidsByRNG ($mobsRNG, $bossRNG) {
 
 
 
-
+/*
+ * Handle special Aids: Random Weapon, Flask, Shots
+ */
 function specialAids ($mobsAids, $bossAids) {
   // global $flasks; // _FLASKS
 
@@ -167,7 +148,7 @@ function getMaxDiceValue ($section) {
 
 
 /*
- * Get dice values where field name = jäscher and feige to exclude in mt_rand()
+ * Get dice values where field name = jäscher and feige (shots) to exclude in mt_rand()
  * Jäscher, Feige
  */
 function getDiceValuesWhereNameIsShots($section) {
@@ -189,6 +170,7 @@ function getDiceValuesWhereNameIsShots($section) {
   
   return array($row["feige"], $row["jager"]);
 }
+
 
 
 /*
@@ -237,8 +219,6 @@ function getShotsAidsByRNG ($section) {
     
   return $TMP_AIDS;
 }
-
-
 
 
 
@@ -291,7 +271,6 @@ function sanitizeWeaponsPath ($aids, $rng = false) {
 
 
 
-
 /*
  * Sanitize file path for rolled aids
  * Replace: ', /, white space, Umlaute
@@ -299,8 +278,6 @@ function sanitizeWeaponsPath ($aids, $rng = false) {
  * Also handle special Aids: Jäscher, Feige and Flask Würfeln
  */
 function sanitizeAids ($aids) {
-  
-
   
   // Sanitize and Normalize string / URL
   $sanitize = array (
@@ -325,7 +302,6 @@ function sanitizeAids ($aids) {
   // echo "<pre>" . "aidsnorm:" . $aids_normalized . "<br>" . "</pre>";
   return $aids_normalized;
 }
-
 
 
 
@@ -377,126 +353,9 @@ function replaceDiceWithSymbol ($aids, $rng) {
     }
     
   } // END IF (random weapon)
-  
-  
-  /* OLD SWITCH */
-  /*
-  switch ($aids) {
-  // switch ( strtolower($aids) ) {
-    // width=\"\" height=\"\"
-    case stristr($aids, "Ohne Flask"):
-      $RNG = "<img src=\"/dice/icons/{$aids_normalized}.png\" alt=\"{$aids}\">";
-      break;
-
-    case stristr($aids, "Invade"):
-      $RNG = "<img src=\"/dice/icons/{$aids_normalized}.png\" alt=\"{$aids}\">";
-      break;
-    case stristr($aids, "Symbol of Aids"):
-      $RNG = "<img src=\"/dice/icons/{$aids_normalized}.png\" alt=\"{$aids}\">";
-      break;
-      
-    case stristr($aids, "Jäscher"):
-      $RNG = "<img src=\"/dice/icons/{$aids_normalized}.png\" alt=\"{$aids}\">";
-      break;
-      
-    case stristr($aids, "Ohne Schild"):
-      $RNG = "<img src=\"/dice/icons/{$aids_normalized}.png\" alt=\"{$aids}\">";
-      break;
-      
-    case stristr($aids, "Normal"):
-      $RNG = "<img src=\"/dice/icons/{$aids_normalized}.png\" alt=\"{$aids}\">";
-      break;
-      
-    case stristr($aids, "Ohne Rüstung"):
-      $RNG = "<img src=\"/dice/icons/{$aids_normalized}.png\" alt=\"{$aids}\">";
-      break;
-      
-    case stristr($aids, "Flask Würfeln"):
-      $RNG = "<img src=\"/dice/icons/{$aids_normalized}.png\" alt=\"{$aids}\">";
-      break;
-      
-    case stristr($aids, "Fatroll"):
-      $RNG = "<img src=\"/dice/icons/{$aids_normalized}.png\" alt=\"{$aids}\">";
-      break;
-      
-    case "Crap Ringe":
-      $RNG = "<img src=\"/dice/icons/{$aids_normalized}.png\" alt=\"{$aids}\">";
-      break;
     
-    case stristr($aids, "Crap Waffe"):
-      $RNG = "<img src=\"/dice/icons/{$aids_normalized}.png\" alt=\"{$aids}\">";
-      break;
-    
-    case stristr($aids, "Lumbe"):
-      $RNG = "<img src=\"/dice/icons/{$aids_normalized}.png\" alt=\"{$aids}\">";
-      break;
-    
-    case "No Dodge/Run":
-      $RNG = "<img src=\"/dice/icons/{$aids_normalized}.png\" alt=\"{$aids}\">";
-      break;
-  
-    case stristr($aids, "Nur R2"):
-      $RNG = "<img src=\"/dice/icons/{$aids_normalized}.png\" alt=\"{$aids}\">";
-      break;
-      
-    case stristr($aids, "Ohne Ringe"):
-      $RNG = "<img src=\"/dice/icons/{$aids_normalized}.png\" alt=\"{$aids}\">";
-      break;
-      
-    case stristr($aids, "Feige"):
-      $RNG = "<img src=\"/dice/icons/{$aids_normalized}.png\" alt=\"{$aids}\">";
-      break;
-
-    case stristr($aids, "Invert Controls"):
-      $RNG = "<img src=\"/dice/icons/{$aids_normalized}.png\" alt=\"{$aids}\">";
-      break;
-      
-    case stristr($aids, "Parry"):
-      $RNG = "<img src=\"/dice/icons/{$aids_normalized}.gif\" alt=\"{$aids}\">";
-      break;
-  
-    case stristr($aids, "Ohne Alles"):
-      $RNG = "<img src=\"/dice/icons/{$aids_normalized}.png\" alt=\"{$aids}\">";
-      break;
-      
-    case stristr($aids, "Kill on Sight"):
-      $RNG = "<img src=\"/dice/icons/{$aids_normalized}.png\" alt=\"{$aids}\">";
-      break;
-      
-    case stristr($aids, "Waffe linke Hand"):
-      $RNG = "<img src=\"/dice/icons/{$aids_normalized}.png\" alt=\"{$aids}\">";
-      break;
-    
-    /*
-    default:
-      if ( $stop_switch != TRUE ) { // make sure image isn't overwritten with dice number
-        $RNG = $rng;
-        // check if dice is only a number (no image available) and assign a class to increase font-size to 5em and leave the image alone (centering shenanigans)
-        if ( is_numeric($RNG) ) {
-          $RNG = "<div class=\"diceText\">" . $RNG . "</div>";
-        }
-        
-      }
-      // return false;
-      
-  } // END SWITCH
-  */
-  
   return $RNG;
 } // END FUNCTION
-
-
-
-
-
-
-
-/*
- * Replace Name with Emoji because MySQL sucks
- */
-function getFlasks () {
-  // 
-}
 
 
 
@@ -530,6 +389,7 @@ function replaceCheeseWithEmoji ($text) {
 }
 
 
+
 /*
  * Count rows from Database for mt_rand(MAX)
  */
@@ -541,6 +401,7 @@ function pdoCount ($table) {
 
   return $pdo->query("SELECT count(dice) FROM $table")->fetchColumn();
 }
+
 
 
 /*
@@ -614,6 +475,8 @@ function replaceBrWithComma ($text) {
   return $text;
 }
 
+
+
 /*
  * Replace New line break with <li> item
  */
@@ -622,6 +485,7 @@ function replaceLineBreakWithList ($text) {
   // $text = "<li>" . $text . "</li>";
   return $text;
 }
+
 
 
 /*
@@ -653,6 +517,7 @@ function replaceIntWithFlasks ($number) {
 }
 
 
+
 /*
 * Get IP
 */
@@ -668,6 +533,7 @@ function getIpAddr() {
   }
   return $ip;
 }
+
 
 
 /*
@@ -693,6 +559,8 @@ function getLatestRoll () {
   return $latestMobsAids . " - " . $latestBossAids;
 }
 
+
+
 /*
 * Get x amount of latest Rolls (10)
 */
@@ -710,11 +578,12 @@ function getLatestRolls () {
 }
 
 
+
 /*
 * Output Debug 
 */
 function debug ($mobsRNG, $mobsAids, $bossRNG, $bossAids, $randomWeapon) {
-  $out = "<pre>";
+  $out  = "<pre>";
 
   $out .= "MobsRNG: " . $mobsRNG;
   $out .= "<br>";
@@ -729,6 +598,7 @@ function debug ($mobsRNG, $mobsAids, $bossRNG, $bossAids, $randomWeapon) {
   $out .= "RandomWeapon: " . $randomWeapon;
 
   $out .= "</pre>";
+  
   //  echo $out; 
   
   return $out;
@@ -762,11 +632,6 @@ function replaceUmlaut ($word) {
 
 
 
-
-
-
-
-
 // AJAX
 /*
 * Get max dice value and add 1 to insert into DB via ajaxPDOInsert
@@ -780,6 +645,7 @@ function getDiceValuePlusOne ($table) {
 
   return $row["dice"] + 1;
 }
+
 
 
 /*
@@ -845,67 +711,8 @@ function saveRolls ($mobsAids = false, $bossAids = false) {
 
 
 
-
-
-/*
-* Log actions
-*
-* TABLE `log` (
-*  `ID` int(10) NOT NULL,
-*  `section` varchar(255) NOT NULL,
-*  `action` varchar(255) NOT NULL,
-*  `parentID` int(10) NOT NULL,
-*  `parentField` varchar(255) NOT NULL,
-*  `old` varchar(255) NOT NULL,
-*  `new` varchar(255) NOT NULL,
-*  `IP` varchar(255) NOT NULL,
-*  `date` datetime NOT NULL
-*/
-/*
-function logAction ($section, $action, $parentID, $parentField, $old, $new) {
-  global $pdo;
-  global $GAME;
-  // global $_SESSION["username"];
-  
-  // diff()?
-  
-  if ( !empty($_SESSION["username"]) ) $username = $_SESSION["username"];
-  else $username = "0";
-  
-  if ( !empty($_SESSION["userID"]) ) $userID = $_SESSION["userID"];
-  else $userID = "0";
-    
-  $date = date("Y-m-d H:i:s");
-  $IP   = getIpAddr();
-  
-  $sql  = "INSERT INTO {$GAME}_log (section, action, parentID, parentField, old, new, userID, username, IP, date) VALUES (:section, :action, :parentID, :parentField, :old, :new, :userID, :username, :IP, :date)";
-  $stmt = $pdo->prepare($sql);   
-  
-  $stmt->bindParam(":section", $section, PDO::PARAM_STR);
-  $stmt->bindParam(":action", $action, PDO::PARAM_STR);
-  $stmt->bindParam(":parentID", $parentID, PDO::PARAM_INT);
-  $stmt->bindParam(":parentField", $parentField, PDO::PARAM_STR);
-  $stmt->bindParam(":old", $old, PDO::PARAM_STR);
-  $stmt->bindParam(":new", $new, PDO::PARAM_STR);
-  $stmt->bindParam(":userID", $userID, PDO::PARAM_INT);
-  $stmt->bindParam(":username", $username, PDO::PARAM_STR);
-  
-  $stmt->bindParam(":IP", $IP, PDO::PARAM_STR);
-  $stmt->bindParam(":date", $date, PDO::PARAM_STR);
-  
-  $stmt->execute();
-}
-*/
-
-
-
-/**********************************************************************************/
-
-
-
-
-
 // EDIT.PHP
+
 /*
 * Sanitize Query
 */
@@ -926,6 +733,7 @@ function buildQuery ($get_var) {
 } 
 
 
+
 /*
 * Clean String
 */
@@ -935,6 +743,7 @@ function clean_string ($string) {
   // $mode = preg_replace('![^a-z]!', '', $mode); 
 
 }
+
 
 
 /*
@@ -976,6 +785,7 @@ function pdoDelete ($table, $post, $ID) {
 }
 
 
+
 /*
 * Check if a number between 1 and max dice vlaue in db is missing
 */
@@ -992,7 +802,7 @@ function checkMissingDice () {
     if ( empty($data) ) {
       echo "{$table} Aids hinzufügen<br>";
       $warning = TRUE;
-      $warning_msg .= "Missing Aids\n";
+      $warning_msg = "Missing Aids\n";
     } else {
       $missing_number = missing_number($data); 
     }
@@ -1000,7 +810,7 @@ function checkMissingDice () {
     if ( !empty($missing_number) ) {
       
       $warning = TRUE;
-      $warning_msg .= "Missing Dice\n";
+      $warning_msg = "Missing Dice\n";
       
       echo "
       <div id=\"flex-container-missingnumbers\">\n
@@ -1024,8 +834,7 @@ function checkMissingDice () {
   
   if ( $warning == TRUE ) {
     $subject = "WARNING";
-    // $msg = "Game {$GAME} (Section {$table}) is missing one or more Dice!\n";
-    $msg = $warning_msg . "\n" . "Game: {$GAME}";
+    $msg = $warning_msg . "\n" . "Game: {$GAME}" . "\n";
 
     mail_warning ($subject, $msg);
   }
@@ -1047,6 +856,7 @@ function missing_number($num_list) {
 }
 
 
+
 /*
  * Send mail if an important warning occurs
  */
@@ -1057,6 +867,7 @@ function mail_warning ($subject, $msg) {
   
   // use wordwrap() if lines are longer than 70 characters
   $msg = wordwrap($msg, 70);
+  $msg .= "\n\nIP: " . getIpAddr();
 
   // send email
   mail($to, $subject, $msg, $from);
@@ -1099,7 +910,6 @@ function scan_dir($dir) {
 
 
 
-
 /*
  * Check if file exists on external server
  */
@@ -1118,7 +928,6 @@ function checkExternalFile($url) {
   // $fileExists = 200 = found.
   */
 }
-
 
 
 
@@ -1232,8 +1041,9 @@ function copyWeaponFromFextra ($weapon, $res = "") {
 
 
 
-
-// @rtrim()
+/*
+ * Replace last new line break (\n\r)
+ */
 function replaceLastRN ($str) {
   // \r\n
   // $str = preg_replace('/\bblank$/', '', $str);
@@ -1241,6 +1051,11 @@ function replaceLastRN ($str) {
   return $str;
 }
 
+
+
+/*
+ * Replace last occurance of %search within string
+ */
 function str_lreplace($search, $replace, $subject) {
   $pos = strrpos($subject, $search);
 
@@ -1252,6 +1067,10 @@ function str_lreplace($search, $replace, $subject) {
 }
 
 
+/*
+ * Strip whitespace (or other characters) from the end of a string
+ * @ rtrim()
+ */
 function strrtrim($message, $strip) {
   // break message apart by strip string
   $lines = explode($strip, $message);
@@ -1265,7 +1084,9 @@ function strrtrim($message, $strip) {
 }
 
 
-
+/*
+ * Simple print error $msg
+ */
 function print_error ($msg) {
   echo "
   <div id='flex-container'>
@@ -1281,9 +1102,6 @@ function print_error ($msg) {
   </div>
   ";
 }
-
-
-
 
 
 
@@ -1321,6 +1139,7 @@ function login (string $username, string $password) {
 }
 
 
+
 /*
  * Logout, Destroy all sessions
  */
@@ -1332,10 +1151,6 @@ function logout() {
 	session_destroy();
   redirect("/", $statusCode = 303);
 }
-
-
-
-
 
 
 
@@ -1355,6 +1170,7 @@ function getActiveGame () {
 }
 
 
+
 /*
  * Get all games listed in `games`
  */
@@ -1363,6 +1179,7 @@ function getGames () {
   
   return $pdo->query("SELECT * FROM games")->fetchAll(PDO::FETCH_ASSOC);
 }
+
 
 
 /*
@@ -1390,6 +1207,7 @@ function changeGame ($gameID) {
 }
 
 
+
 /*
  * Write tables for a new game
  * TABLES: `TMP_boss`, `TMP_kills`, `TMP_log`, `TMP_mobs`, `TMP_rolls`, `TMP_todo`, `TMP_weapons`
@@ -1411,6 +1229,7 @@ function writeSQL ($abbr) {
 }
 
 
+
 /*
 * Rename SQL Tables prefix (abbr)
 */
@@ -1426,6 +1245,10 @@ function renameSQLTable ($old, $new) {
 }
 
 
+
+/*
+* Drop Table for given abbr (foreign key `games`)
+*/
 function dropSQLTable ($abbr) {
   global $pdo;
   
