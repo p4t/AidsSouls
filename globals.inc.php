@@ -3,11 +3,19 @@
 $GAME   = getActiveGame()[1];
 $GAMEID = getActiveGame()[0];
 
+$globals = getGlobals();
+
+foreach ($globals as $value) {  
+  define ( "_" . $value["global"], $value["value"] );
+}
+
 define( "_GAME", $GAME );
 define( "_GAMEID", $GAMEID );
 
 define( "_DR", $_SERVER["DOCUMENT_ROOT"] );
 define( "_PATH", dirname(__FILE__) );
+
+/*
 define( "_FLASKS", 20 ); // Number of Flasks
 define( "_LOGIN", FALSE );
 define( "_SHOWTODO", FALSE );
@@ -17,6 +25,7 @@ define( "_WARNINGMAIL", TRUE );
 define( "_EMAIL", "patrick@nauerz.net" );
 
 define( "_TIMEZONE", "Europe/Berlin" );
+*/
 
 // Check timezone
 $timezone = date_default_timezone_get();
