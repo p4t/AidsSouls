@@ -434,7 +434,7 @@ if ( !empty($_GET["mode"]) && $_GET["mode"] == "config" && empty($_GET["action"]
  * ADD: CONFIG>>GAMES
  */
 
-  if ( !empty($_GET["mode"]) && !empty($_GET["action"]) && ($_GET["mode"] == "games") ) {
+  if ( !empty($_GET["mode"]) && !empty($_GET["action"]) && ($_GET["mode"] == "games") && $_GET["action"] == "add" ) {
     
     (STRING)$mode   = $_GET["mode"];
     (INT)$ID        = $_GET["ID"];
