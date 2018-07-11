@@ -671,13 +671,12 @@ function saveRolls ($mobsAids = false, $bossAids = false) {
   global $GAME;
   global $GAMEID;
   
-  
-  if ( _LOGIN == TRUE ) {
+  if ( _LOGIN == TRUE && session_status() == 2 ) { // Login enabled in config and session = ACTIVE
     $userID = $_SESSION["userID"];
     $username = $_SESSION["username"];
   } else {
-  $userID = 0;
-  $username = "Admin";
+    $userID = 0;
+    $username = "Admin";
   }
     
   $date = date("Y-m-d H:i:s");
@@ -979,8 +978,10 @@ function copyWeaponFromFextra ($weapon, $res = "") {
       $source = "{$fextraURL}{$weapon}.png";
       break;
     
+    /*
     default:
       die("FEXTRA URL FEHLER");
+    */
 }
   
   // if URL is provided because of fextra shenanigans
