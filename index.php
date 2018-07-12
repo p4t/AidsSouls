@@ -362,59 +362,8 @@ echo "bossrngout: " . $bossRNG_Output;
       <option value="W30">W30</option>
     </select>
  
-<!-- Custom Select jQuery -->
-<script>
-$(".custom-select").each(function() {
-  var classes = $(this).attr("class"),
-      id      = $(this).attr("id"),
-      name    = $(this).attr("name");
-  var template =  '<div class="' + classes + '">';
-      template += '<span class="custom-select-trigger">' + $(this).attr("placeholder") + '</span>';
-      template += '<div class="custom-options">';
-      $(this).find("option").each(function() {
-        template += '<span class="custom-option ' + $(this).attr("class") + '" data-value="' + $(this).attr("value") + '">' + $(this).html() + '</span>';
-      });
-  template += '</div></div>';
-  
-  $(this).wrap('<div class="custom-select-wrapper"></div>');
-  $(this).hide();
-  $(this).after(template);
-});
-$(".custom-option:first-of-type").hover(function() {
-  $(this).parents(".custom-options").addClass("option-hover");
-}, function() {
-  $(this).parents(".custom-options").removeClass("option-hover");
-});
-$(".custom-select-trigger").on("click", function() {
-  $('html').one('click',function() {
-    $(".custom-select").removeClass("opened");
-    
-    // Fix Text on Button
-    $("#dice_switch_button").text($("#dice_dropdown").val());
-    
-    // W12 etc
-    pickimg();
-    // Check if some other function shows bonfire
-    
-  });
-  $(this).parents(".custom-select").toggleClass("opened");
-  
-  // show bonfire on select click to show dropdown options
-  $("#rerunroll").hide();
-  $("#w12").hide();
-  $("#bonfire").show();
-  // pickimg();
-  
-  event.stopPropagation();
-});
-$(".custom-option").on("click", function() {
-  $(this).parents(".custom-select-wrapper").find("select").val($(this).data("value"));
-  $(this).parents(".custom-options").find(".custom-option").removeClass("selection");
-  $(this).addClass("selection");
-  $(this).parents(".custom-select").removeClass("opened");
-  $(this).parents(".custom-select").find(".custom-select-trigger").text($(this).text());
-});
-</script>
+<!-- Custom Select jQuery @Scripts -->
+
 
       
     
@@ -726,8 +675,6 @@ ENDWHILE
   -->
 </div>
 
-
-
 <!-- LATEST ROLLS MODAL POPUP -->
 <div id="myModal" class="modal animate">
   <div class="modal-content">
@@ -749,57 +696,27 @@ ENDWHILE
       </div>
     </div>
   </div>
-</div><!--  EOF MODAL -->
-
-<script>
-// Get the modal
-var modal = document.getElementById('myModal');
-var modal_content = document.getElementsByClassName("modal-content")[0];
-
-// Get the button that opens the modal
-var btn = document.getElementById("myBtn");
-
-// Get the <span> element that closes the modal
-var span = document.getElementsByClassName("close")[0];
-
-// When the user clicks on the button, open the modal 
-btn.onclick = function() {
-  modal.style.display = "block";
-}
-
-// When the user clicks on <span> (x), close the modal
-span.onclick = function() {
-  modal.style.display = "none";
-}
-
-// When User clicks content in Modal
-modal_content.onclick = function() {
-  modal.style.display = "none";
-}
-
-// When the user clicks anywhere outside of the modal, close it
-window.onclick = function(event) {
-  if (event.target == modal) { 
-    modal.style.display = "none";
-  }
-}
-</script>    
+</div>
 
 
-
-<!-- Json Test -->
-<!--
-<button onClick="json_test()">json</button>
-<div id="json"></div>
--->
-
-
-<script src="/js/ajax.js">
-
+<!-- JavaScript/jQuery -->
+<script src="/js/ajax.js"></script>
+<script src="/js/audio.js"></script>
+<script src="/js/rerun.js"></script>
+<script src="/js/reroll.js"></script>
+<script src="/js/run.js"></script>
+<script src="/js/changeGame.js"></script>
+<script src="/js/dropdown.js"></script>
+<script src="/js/showRNG.js"></script>
+<script src="/js/bonfire.js"></script>
+<script src="/js/modal.js"></script>
 
 
 <!-- jQuery Autocomplete -->
 <script>
+
+"use strict";
+
 $( function() {
 
   var availableTagsWeapons  = <?php include("autocomplete.jQuery.php");?>;
@@ -828,150 +745,8 @@ $( function() {
 } );
 </script>
 
-<!-- localStorage -->
-<script>
-/*
-$( document ).ready(function() {
-
-  if (typeof(Storage) !== "undefined") {
-    // Code for localStorage/sessionStorage.
-    // alert ("localStorage.true");
-    
-    // $("#status").show();
-    // $("#status").text("localStorage.true");
-
-    // Store
-    localStorage.setItem("test", "localStorage.Schnagges");
-    // Retrieve
-    // document.getElementById("status").innerHTML = localStorage.getItem("test");
-    // alert (localStorage.getItem("test"));
-    $("#status").show();
-    $("#status").text(localStorage.getItem("test"));
-    
-  } else {
-    // Sorry! No Web Storage support..
-  }
-  
-});
-*/
-</script>
-  
-<!-- Open Bonfire -->
-<script>
-function openBonfire () {
-  if ( $("#bonfire").css("display") == "none" ) {
-    $("#w12").hide();
-    $("#rerunroll").hide();
-    $("#bonfire").show();
-  }
-}
-</script>
-
-<!-- Show Modal on hover -->
-<script>
-function showModal() {
-  var modal = document.getElementById('myModal');
-  if ( modal.style.display = "none" ) {
-    modal.style.display = "block";  
-  } else {
-    modal.style.display = "none";
-  }
-  
-}
-</script>
- 
-
-<!-- Checkbox Switch Text -->
-<script>
-$( document ).ready(function() {
-  // Select
-  $("select#dice_dropdown").change(function() {
-    if ($(this).val() == "W6") {
-      $("#dice_switch_button").text("W6");
-      return;
-     }        
-  });
-  $("select[id='dice_dropdown']").change(function() {
-    if ($(this).val() == "W12") {
-      $("#dice_switch_button").text("W12");
-      return;
-     }        
-  });
-  $("select[id='dice_dropdown']").change(function() {
-    if ($(this).val() == "W20") {
-      $("#dice_switch_button").text("W20");
-      return;
-     }        
-  });
-  $("select[id='dice_dropdown']").change(function() {
-    if ($(this).val() == "W30") {
-      $("#dice_switch_button").text("W30");
-      return;
-     }        
-  });
-
-  // W20
-  $("#dice_switch").change(function () {
-    if ( $("#dice_switch").is(":checked") ) {
-      // "checked"
-      // alert("DEBUG");
-      $("#dice_switch_button").text("W20");
-
-      return;
-    }
-    // "unchecked"
-    // alert("DEBUG");
-    $("#dice_switch_button").text("W12");
-  });
-  
-  // W12, W20
-  $("#rerun_switch").change(function () {
-    if ( $("#rerun_switch").is(":checked") ) {
-      // "checked"
-      // alert("DEBUG");
-      $("#rerun_switch_button").text("Rerun?");
-
-      return;
-    }
-    // "unchecked"
-    // alert("DEBUG");
-    $("#rerun_switch_button").text("Run");
-  });
-  
-
-  // Reroll
-  $("#reroll_switch").change(function () {
-    if ( $("#reroll_switch").is(":checked") ) {
-      // "checked"
-      // alert("DEBUG");
-      $("#reroll_switch_button").text("-((()))");
-
-      return;
-    }
-    // "unchecked"
-    // alert("DEBUG");
-    $("#reroll_switch_button").text("Roll");
-  });
-  
-  
-  
-});
-</script>
-
-<!-- Get Game Json -->
-<script>
-// Get active _GAME
-/*
-$( document ).ready(function() {
-  var _GAME = include("getGame.json.php"); ;
-  console.log("_GAME: " + _GAME);
-});
-*/
-</script>
-
 <!-- W6, W12, W20, W30 -->
 <script>
-
 var _GAME = '<?=_GAME;?>';
 
 // Random image out of 12
@@ -1119,465 +894,12 @@ function pickimg(w = 0) {
 } // ENDFUNCTION
 </script>
 
-<!-- Run -->
-<script>
-function replaceAidsWithX () {
-  $("#mobsRNG").html("&times;");
-  $("#bossRNG").html("&times;");
-  $("#mobsAids").html("&times;");
-  $("#bossAids").html("&times;");
-}
-  
-$( document ).ready(function() {
-  // var run_rnd = Math.floor((Math.random() * 100) + 1);
-  var run_rnd = Math.floor((Math.random() * 100) + 1);
-  
-  /* DEBUG */
-  // run_rnd = 1;
-  <?php
-  if ( (!empty($_GET["debug"])) && ($_GET["debug"] == "vader") ) {
-  ?>
-  run_rnd = 1;
-  <?php
-  } else if ( (!empty($_GET["debug"])) && ($_GET["debug"] == "superaids") ) {
-  ?>
-  run_rnd = 99;
-  <?php
-  }
-  ?>
-  
-  <?php
-  if ( !empty($_GET["rnd"]) && is_numeric($_GET["rnd"]) ) {
-  ?>
-  run_rnd = "<?=$_GET["rnd"]?>";
-  <?php
-  }
-  ?>
-  
-  // Display run_rnd on hover button
-  $("#rerun_switch_button").prop("title", run_rnd);
-  // $("#rerun_switch_button").prop("data-balloon", run_rnd);
-  $("#rerun_button").prop("data-balloon", run_rnd);
-  
-  // alert(run_rnd);
-  // $("#jsstatus").show();
-  // $("#jsstatus").text("run_rnd: " + run_rnd);
-  
-  
-  // VADER
-  if (run_rnd == 1 || run_rnd == 100) {
-    if ( $("#bonfire").css("display") === "block" ) {
-      $("#bonfire").hide();
-      $("#rerunroll").show();
-      $("#rerunroll").html("<img src='/img/vader.jpg' width='323' height='203' alt='Vader'> <br>" + run_rnd);
-      // Handle Dice and text
-      replaceAidsWithX();
-      play_audio("vader");
-    }
-  
-  // Curse
-  } else if (run_rnd == 66) {
-    $("#bonfire").hide();
-    $("#rerunroll").show();
-    // $("#rerunroll").html("<img src='/img/curse.png' width='384' height='320' alt='Curse Basilisk'> <br>" + run_rnd);
-    $("#rerunroll").html("<img src='/img/curse.png' width='384' height='320' alt='Curse Basilisk'> <br>");
-    play_audio("superaids");
-    
-  // SUPERAIDS
-  } else if (run_rnd == 99) {
-    $("#bonfire").hide();
-    $("#rerunroll").show();
-    $("#rerunroll").html("SUPERAIDS <br>" + run_rnd);
-    play_audio("superaids");
-
-    // $("#rerunroll").load("superaids.inc.php"); // Ajax load superaids php
-  } else {
-    // NIX
-  }
-  
-  
-  
-});
-</script>
-
-<!-- Rerun -->
-<script>
-  /*
-  * Roll dice 1-100
-  * 1, 100  = Vader (skip turn)
-  * 7, 77   = Epic Sax Guy (new chance after death)
-  * 99      = Superaids (2 items of aids instead of one)
-  * Remains = ¯\_(ツ)_/¯ (no rerun)
-  */
-  function rerun() {
-    
-    var rnd = Math.floor((Math.random() * 100) + 1);
-    
-    if ( $("#rerunroll").css("display") === "none" ) {
-      $("#w12").hide();
-      $("#bonfire").hide(); // ???
-      $("#rerunroll").show();      
-    } else {
-      $("#rerunroll").hide();
-      $("#bonfire").show();
-      
-      // stop audio
-      stop_audio();
-    }
-     
-    /* DEBUG */
-    // rnd = 7;
-    
-    // check for special output in rnd (1, 7, 77, 99, 100)
-    if ( rnd == 7 || rnd == 77 ) {
-      $("#rerunroll").html("<img src='/img/EpicSaxGuy.gif' width='186' height='234' alt='Epic Sax Guy'> <br>" + rnd);        
-
-      if ( $("#rerunroll").css("display") === "block" ) {
-        play_audio("epicsaxguy");
-        $("#bonfire").hide();
-        // $("#bonfire").hide();
-      }
-    } else {
-      /* ¯\_(ツ)_/¯ SAD TROMBONE */
-      // every rnd value except: 1, 100, 7, 77, 99
-      $("#rerunroll").html("¯\\_(ツ)_/¯ <br>" + rnd);
-
-      if ( $("#rerunroll").css("display") === "block" ) {
-        // play_audio("haha");
-        // play_audio("fail");
-        
-        // Play Sound
-        randomSoundEffect();
-        $("#bonfire").hide();
-      }
-
-        
-        // VADER
-        /* } else if (rnd == 1 || rnd == 100) {
-        $("#rerunroll").html("<img src='/img/vader.jpg' width='323' height='203' alt='Vader'> <br>" + rnd);
-
-        if ( $("#rerunroll").css("display") === "block" ) {
-          play_audio("vader");
-          $("#bonfire").hide();
-        }  
-        
-        // SUPERAIDS
-      } else if (rnd == 99) {
-        $("#rerunroll").html("SUPERAIDS<br>" + rnd);
-      
-        if ( $("#rerunroll").css("display") === "block" ) { 
-          play_audio("superaids");
-          $("#bonfire").hide();
-          // $("#rerunroll").load("superaids.inc.php"); // Ajax load superaids php
-        }
-      }
-      */
-      
-    } // ENDIF
-    
-    /* always uncheck checkbox "rerun_only" on every click if bonfire is hidden */
-    /*
-    if ( $("input#rerun_switch").is(":checked") && $("#bonfire").css("display") == "block" ) {
-      $("input#rerun_switch").prop("checked", false);
-      
-      $("#rerun_switch_button").text("Run"); // Fix Text on the button
-    }
-    */
-  } // EOF RERUN()
-</script> 
- 
-<!-- Reload Page -->
-<script>
-function reload_page () {
-  location.reload();
-}
-  
-function reroll () {
-  $(document).ready(function () {
-    /*
-    play_audio("aids");
-    var myAudio = document.getElementById("audio_aids");
-
-    myAudio.onended = function() {
-      location.reload();
-    }
-    */
-
-    // setTimeout(function() { reload_page(); }, 1800); // time to play rich evans aids (default: 1800)
-
-    if ( $("input#reroll_switch").is(":checked") ) {
-      location.reload();
-    } else {
-      play_audio("aids");
-
-      var myAudio = document.getElementById("audio_aids");
-      myAudio.onended = function() {
-        location.reload();
-      }
-    }
-  });
-}
-</script>  
-
-<!-- Random Audio -->
-<script>
-
-// ASSI TONI, STAR WARS UFF PÄLZISCH
-
-// Random audio file
-var audio_files  = [
-  "fail",
-  "sadtrombone",
-  "dolphin",
-  "evillaugh",
-  "hagay",
-  "hahaha(nelson)",
-  "sadmusic",
-  "sadmusic2",
-  "zackgalifianakislaugh",
-  "Cheep_1",
-  "Cheep_2",
-  "IDidNotHitHer",
-  "JustAChickenCheep",
-  "TearingMeApartLisa",
-  "TommyLaugh_1",
-  "TommyLaugh_2",
-  "TommyLaugh_3",
-  "WhyWhyLisa",
-  "YouMustBeKidding",
-  "200Puls",
-  "badesalz1",
-  "badesalzWAS",
-  "draufdruecken",
-  "drecksack",
-  "gehtdicheinscheissdreckan",
-  "kotzinstreppenhaus",
-  "mimimi",
-  "mundstuhl",
-  "blamage",
-  "scheisse",
-  "schwarzerbildschirm",
-  "wernerflasche",
-  "richevanslaugh",
-  "alwayssunnybell",
-  "flanders",
-  "frieza",
-  "joker",
-  "presi1",
-  "presi2",
-  "presi3",
-  "presi4",
-  "presi5",
-  "presi6",
-  "presi7",
-  "rlmwhistle"
-];
-  
-/*
-  "werner1",
-  "werner2",
-  "werner3",
-  "werner4",
-  "werner5",
-  "werner6",
-  "werner7",
-  "werner8",
-  "werner9",
-  "werner10",
-  "werner11",
-  "werner12",
-  "werner13",
-  "werner14",
-  "werner15",
-  "werner16",
-  "werner17",
-  "werner18",
-  "werner19",
-  "werner20",
-  "werner21",
-  "werner22",
-  "werner23",
-  "werner24",
-  "werner25",
-  "werner26",
-  "werner27"
-
-*/
-
-  
-  
-function ImageExist(url) {
-   var img = new Image();
-   img.src = url;
-   return img.height != 0;
-}  
-  
-
-function getRandomInt(min, max) {
-  return Math.floor(Math.random() * (max - min + 1)) + min;
-}
-
-function randomSoundEffect() {
-
-  // alert(audio_files.length);
-  
-  console.log(audio_files);
-  
-  var src = audio_files[getRandomInt(0, audio_files.length - 1)];
-  
-  // Debug
-  // var src = audio_files[48];
-  
-  // $("img#randimgw12").prop("src", src);
-  
-  /*
-  $("#status").show();
-  $("#status").text(src);
-  */
-  
-  console.log(src);
-  
-  play_audio(src);
-
-} // ENDFUNCTION
-</script>
-
-<!-- Play Audio -->
-<script>
-  function play_audio (source) {
-    
-    // set html via jquery
-    // $("#element").html("<audio autoplay><source src=\"" + thisSound + "\" type=\"audio/mpeg\"><embed src=\"" + thisSound + "\" hidden=\"true\" autostart=\"true\" /></audio>");
-        
-    var myAudio = document.getElementById("audio_"+source);
-    
-    if (source == "shrine") {
-      
-      if (myAudio.paused) {
-        myAudio.play();
-        $(".play").html("&#10074;&#10074;"); // Pause Button
-      } else {
-        myAudio.pause();
-        $(".play").html("&#9658;"); // Play button
-      }
-      
-    } else {
-      myAudio.play();
-    } // END IF SHRINE
-    
-    
-    /*
-    // Loop Timer
-    // loop only x amount of time (maxPlay) to solve problem with stopping audio when timer is active
-    var played = 0;
-    var maxPlay = 3;
-    
-    myAudio.onplay = function() {
-      // played counter
-      played++;
-    };
-
-    // Loop
-    $(myAudio).bind("ended", function() {
-      if ( // don't loop these audio files
-          source !== "dice" &&
-          source !== "bier" &&
-          source !== "superaids" &&
-          source !== "vader" &&
-          source !== "aids" &&
-          source !== "Biber" &&
-          source !== "Katz" &&
-          source !== "Pat"
-         ) {
-        // reset to start point
-        myAudio.currentTime = 0;
-        if (played < maxPlay) {
-          // myAudio.play();
-          setTimeout(function() { myAudio.play() }, 2000); // 1250
-        } else {
-          played = 0;
-        }
-
-      }
-    });
-    */
-  
-  } // ENDFUNCTION
-</script>
-
-<!-- Stop Audio --> 
-<script>
-function stopAllAudio() {
-  var all_audio = document.getElementById("audio").querySelectorAll("audio");
-  
-	all_audio.forEach(function(audio){
-		audio.pause();
-	});
-}
-  
-
-function stop_audio () {
-  var all_audio = document.getElementById("audio").querySelectorAll("audio");
-  // console.log(all_audio);
-  
-  
-  // global audio_files; @randomSoundEffect()
-  var i;
-  var src;
-  
-  /*
-  // go through all audio_files array and check if one of those is currently playing and if so, stop it
-  for (i = 0; i < audio_files.length; i++) {
-    // src = audio_files[i] + ".mp3";
-    src = "audio_" + audio_files[i];
-    src = document.getElementById(src)
-    
-    // alert(src);
-    // text += cars[i] + "<br>";
-    if (src.currentTime > 0) {
-      src.pause();
-      src.currentTime = 0;
-    }
-  }
-  */
-
-  // Get all audio by reading every audio Tag instead of audio_files array from random_sound()
-  for (i = 0; i < all_audio.length; i++) {
-    // src = audio_files[i] + ".mp3";
-    src = all_audio[i];
-    // src = document.getElementById(src)
-    
-    // alert(src);
-    // console.log(src);
-    // text += cars[i] + "<br>";
-    if (src.currentTime > 0) {
-      src.pause();
-      src.currentTime = 0;
-    }
-  }
-  
-
-
-  /*
-  var audio_haha      = document.getElementById("audio_haha");
-  var audio_yes       = document.getElementById("audio_yes");
-  var audio_no        = document.getElementById("audio_no");
-  var audio_superaids = document.getElementById("audio_superaids");
-  
-  if (audio_haha.currentTime > 0) {
-    audio_haha.pause();
-    audio_haha.currentTime = 0;
-  }
-  */
-}
-</script>  
-
 <!-- SHOTS -->
 <?php
 if ( !empty($shots) && $shots == TRUE  ) {
 ?>  
 <script>
-// alert("BIER");
+"use strict";
 $( document ).ready(function() {
     play_audio("bier");
 });
@@ -1605,45 +927,30 @@ function json_test () {
 }
 </script>
   
-
-<!-- RNG Hover -->
-<script>
-function showRNG () {
+<!-- run.js debug -->
+  <?php
+  /* run.js Debug */
+  /*
+  if ( (!empty($_GET["debug"])) && ($_GET["debug"] == "vader") ) {
+  ?>
+  run_rnd = 1;
+  <?php
+  } else if ( (!empty($_GET["debug"])) && ($_GET["debug"] == "superaids") ) {
+  ?>
+  run_rnd = 99;
+  <?php
+  }
+  ?>
   
-  $("#mobsRNG, #bossRNG").toggle();
-  $("#mobsRNGNumber, #bossRNGNumber").toggle();
-  
-}
+  <?php
+  if ( !empty($_GET["rnd"]) && is_numeric($_GET["rnd"]) ) {
+  ?>
+  run_rnd = "<?=$_GET["rnd"]?>";
+  <?php
+  }
+  */
+  ?>
 
-/*
-$( "#mobsRNG, #bossRNG, #mobsRNGNumber, #bossRNGNumber" ).click(function() {
-  alert( "Handler for .click() called." );
-});
-*/
-
-</script>
-
-<!-- Change Game -->
-<script>
-$(function(){
-  // bind change event to select
-  $("#selectGame").on("change", function () {
-    
-    // var game = $(this).val(); // get selected value (not working because of autocomplete)
-    var game = document.getElementById("selectGame").value;
-    var url = "/?mode=selectGame&game="+game;
-    
-    console.log("ON CHANGE");
-    console.log("GAME: "+game);
-    console.log("URL: "+url);
-    
-    if (url) { // require a URL
-        window.location = url; // redirect
-    }
-    return false;
-  });
-});
-</script>
 
 </body>
 </html>

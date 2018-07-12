@@ -1,9 +1,10 @@
 // Ajax
 
-// "use strict";
+"use strict";
 
 /* jQuery Ajax inline edit AIDS */
 $(document).ready(function () {
+  
 	// acknowledgement message
     var message_status = $("#status");
   
@@ -20,11 +21,11 @@ $(document).ready(function () {
         var value = $(this).text() ;
         $.post("edit.ajax.php" , field + "=" + value, function(data){
           
-          if (data != "") {
+          if (data !== "") {
             message_status.show();
             message_status.text(data);
             // hide the message
-            setTimeout(function(){message_status.hide()},30000); // 3000
+            setTimeout(function(){message_status.hide();},30000); // 3000
 			   }
           
         });
@@ -65,7 +66,7 @@ $(document).ready(function () {
   
 
     
-    if ($.trim(vmobs) == "" && $.trim(vboss) == "" && $.trim(vweapons) == "") {
+    if ($.trim(vmobs) === "" && $.trim(vboss) === "" && $.trim(vweapons) === "") {
       //alert("Mindestens 1 Feld ausfüllen!");
       
       // $("#status").replaceWith( "Mindestens 1 Feld ausfüllen!" );
@@ -73,7 +74,7 @@ $(document).ready(function () {
       message_status.show();
       message_status.text("Mindestens 1 Feld ausfüllen!");
       // hide the message
-      setTimeout(function(){message_status.hide()},3000); // 3000
+      setTimeout(function(){message_status.hide();},3000); // 3000
       
       // discombobulate();
     } else {
@@ -94,12 +95,12 @@ $(document).ready(function () {
           // alert(status);
       
         
-          if (status != "") {
+          if (status !== "") {
             message_status.show();
             // message_status.text("Hinzugefügt.");
             message_status.text(response);
             // hide the message
-            setTimeout(function(){message_status.hide()},30000); // 3000
+            setTimeout(function(){message_status.hide();},30000); // 3000
          }
         
         
@@ -112,9 +113,9 @@ $(document).ready(function () {
         // if (vmobs != "") console.log("debug: "+vmobs);
         
         var post_data;
-        if ( vmobs != "" ) post_data = vmobs;
-        else if (vboss != "" ) post_data = vboss;
-        else if ( vweapons != "" ) post_data = vweapons;
+        if ( vmobs !== "" ) post_data = vmobs;
+        else if (vboss !== "" ) post_data = vboss;
+        else if ( vweapons !== "" ) post_data = vweapons;
         
         $("#"+response).append("<li>" +post_data+ "</li>");
         
@@ -128,6 +129,8 @@ $(document).ready(function () {
 
 /* Ajax Delete */
 $(document).ready(function () {
+
+
   $(".aidsListAjaxDel").click(function() {
     var delcart = $(this).data("value");
     var deltable = $(this).data("table");
