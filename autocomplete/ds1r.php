@@ -13,7 +13,7 @@ $Bows = array (
   "Composite Bow",
   "Darkmoon Bow",
   "Dragonslayer Greatbow",
-  "Gough's Greatbow ",
+  "Gough's Greatbow",
   "Longbow",
   "Short Bow"
 );
@@ -33,7 +33,7 @@ $CurvedGreatswords = array (
 
 $CurvedSwords = array (
   "Falchion",
-  "Gold Tracer ",
+  "Gold Tracer",
   "Jagged Ghost Blade",
   "Painting Guardian Sword",
   "Quelaag's Furysword",
@@ -44,7 +44,7 @@ $CurvedSwords = array (
 $Daggers = array(
   "Bandit's Knife",
   "Dagger",
-  "Dark Silver Tracer ",
+  "Dark Silver Tracer",
   "Ghost Blade",
   "Parrying Dagger",
   "Priscilla's Dagger"
@@ -76,7 +76,7 @@ $Greataxes = array (
 );
 
 $Greatswords = array (
-  "Abyss Greatsword ",
+  "Abyss Greatsword",
   "Bastard Sword",
   "Black Knight Sword",
   "Claymore",
@@ -87,7 +87,7 @@ $Greatswords = array (
   "Greatsword of Artorias (Cursed)",
   "Man-serpent Greatsword",
   "Moonlight Greatsword",
-  "Obsidian Greatsword ",
+  "Obsidian Greatsword",
   "Stone Greatsword"
 );
 
@@ -126,7 +126,7 @@ $Spears = array (
   "Channeler's Trident",
   "Demon's Spear",
   "Dragonslayer Spear",
-  "Four-Pronged Plow ",
+  "Four-Pronged Plow",
   "Moonlight Butterfly Horn",
   "Partizan",
   "Pike",
@@ -168,7 +168,7 @@ $UltraGreatswords = array (
 );
 
 $Whips = array (
-  "Guardian Tail ",
+  "Guardian Tail",
   "Notched Whip",
   "Whip"
 );
@@ -178,8 +178,8 @@ $Catalysts = array (
   "Demon's Catalyst",
   "Izalith Catalyst",
   "Logan's Catalyst",
-  "Manus Catalyst ",
-  "Oolacile Catalyst ",
+  "Manus Catalyst",
+  "Oolacile Catalyst",
   "Oolacile Ivory Catalyst",
   "Sorcerer's Catalyst",
   "Tin Banishment Catalyst",

@@ -32,8 +32,8 @@ $Crossbows = array (
   "Avelyn",
   "Heavy Crossbow",
   "Light Crossbow",
-  "Sanctum Crossbow ",
-  "Sanctum Repeating Crossbow ",
+  "Sanctum Crossbow",
+  "Sanctum Repeating Crossbow",
   "Shield Crossbow"
 );
 
@@ -60,7 +60,7 @@ $CurvedSwords = array (
 $Daggers = array (
   "Bandit's Knife",
   "Black Flamestone Dagger",
-  "Blue Dagger ",
+  "Blue Dagger",
   "Broken Thief Sword",
   "Dagger",
   "Manikin Knife",
@@ -93,7 +93,7 @@ $Greataxes = array (
 $Greatbows = array (
   "Alonne Greatbow",
   "Dragonslayer Greatbow",
-  "Possessed Armor Greatbow ",
+  "Possessed Armor Greatbow",
   "Twin-headed Greatbow"
 );
 
@@ -125,12 +125,12 @@ $Greatswords = array (
   "Charred Loyce Greatsword",
   "Claymore",
   "Defender Greatsword",
-  "Drakeblood Greatsword ",
+  "Drakeblood Greatsword",
   "Drangleic Sword",
   "Flamberge",
   "Key to the Embedded",
   "Loyce Greatsword",
-  "Majestic Greatsword ",
+  "Majestic Greatsword",
   "Mastodon Greatsword",
   "Mirrah Greatsword",
   "Moonlight Greatsword",
@@ -176,7 +176,7 @@ $Hammers = array (
 
 $Katanas = array (
   "Berserker Blade",
-  "Bewitched Alonne Sword ",
+  "Bewitched Alonne Sword",
   "Blacksteel Katana",
   "Chaos Blade",
   "Darkdrift",
@@ -212,7 +212,7 @@ $Spears = array (
   "Partizan",
   "Pate's Spear",
   "Pike",
-  "Pilgrim's Spontoon ",
+  "Pilgrim's Spontoon",
   "Silverblack Spear",
   "Spear",
   "Spitfire Spear",
@@ -222,19 +222,19 @@ $Spears = array (
 );
 
 $StraightSwords = array (
-  "Ashen Warrior Sword ",
+  "Ashen Warrior Sword",
   "Black Dragon Sword",
   "Blue Flame",
   "Broadsword",
   "Broken Straight Sword",
   "Drakekeeper's Sword",
   "Foot Soldier Sword",
-  "Fume Sword ",
+  "Fume Sword",
   "Heide Knight Sword",
   "Ivory Straight Sword",
   "Longsword",
-  "Possessed Armor Sword ",
-  "Puzzling Stone Sword ",
+  "Possessed Armor Sword",
+  "Puzzling Stone Sword",
   "Red Rust Sword",
   "Shortsword",
   "Sun Sword",
@@ -268,7 +268,7 @@ $UltraGreatswords = array (
   "Crypt Blacksword",
   "Drakekeeper's Ultra Greatsword",
   "Drakewing Ultra Greatsword",
-  "Fume Ultra Greatsword ",
+  "Fume Ultra Greatsword",
   "Greatsword",
   "Ivory King Ultra Greatsword",
   "King's Ultra Greatsword",
@@ -307,7 +307,7 @@ $Staves = array (
 $SacredChimes = array (
   "Archdrake Chime",
   "Caitha's Chime",
-  "Chime of Screams ",
+  "Chime of Screams",
   "Chime of Want",
   "Cleric's Sacred Chime",
   "Disc Chime",
