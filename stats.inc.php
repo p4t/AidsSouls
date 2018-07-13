@@ -1,5 +1,8 @@
 <?php
-require_once( "globals.inc.php" );
+// Lib
+require_once( $_SERVER["DOCUMENT_ROOT"] . "/config.db.php" );
+require_once( $_SERVER["DOCUMENT_ROOT"] . "/functions.inc.php" );
+require_once( $_SERVER["DOCUMENT_ROOT"] . "/globals.inc.php" );
 
 $ds1 = array (
   "VIT",
