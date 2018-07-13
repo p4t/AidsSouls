@@ -710,40 +710,8 @@ ENDWHILE
 <script src="/js/showRNG.js"></script>
 <script src="/js/bonfire.js"></script>
 <script src="/js/modal.js"></script>
+<script src="js/autocomplete.js"></script>
 
-
-<!-- jQuery Autocomplete -->
-<script>
-
-"use strict";
-
-$( function() {
-
-  var availableTagsWeapons  = <?php include("autocomplete.jQuery.php");?>;
-  var availableTagsMobsBoss = <?php include("autocomplete/aids.php");?>;
-  
-  $( "input[data-jQAutocomplete=mobs], input[data-jQAutocomplete=boss]" ).autocomplete({
-    minLength: 0,
-    source: availableTagsMobsBoss
-  });
-  
-  $( "input[data-jQAutocomplete=weapons]" ).autocomplete({
-    minLength: 0,
-    source: availableTagsWeapons
-  });
-  
-  // $.fn.val = $.fn.html; // <li> Hack
-  $( "li[data-autocomplete=weapons]" ).autocomplete({
-    minLength: 0,
-    source: availableTagsWeapons
-  });
-  $( "li[data-autocomplete=mobs], li[data-autocomplete=boss]" ).autocomplete({
-    minLength: 0,
-    source: availableTagsMobsBoss
-  });
-
-} );
-</script>
 
 <!-- W6, W12, W20, W30 -->
 <script>
