@@ -1200,7 +1200,7 @@ function getGlobals () {
  */
 function changeGame ($gameID) {
   global $pdo;
-  
+
   /*
   // all available Games
   $games = array("ds1", "ds2", "ds3", "bb", "ds1r", "des");
@@ -1216,8 +1216,29 @@ function changeGame ($gameID) {
   // $stmt->bindParam(":abbr", $game, PDO::PARAM_STR);
   $stmt->bindParam(":ID", $gameID, PDO::PARAM_INT);
   $stmt->execute();
+  
+  if ( $stmt == TRUE ) createActiveGameJSON($gameID);
 }
 
+
+/*
+ * Create/Edit JSON file with active GAME abbr
+ */
+function createActiveGameJSON ($gameID) {
+  global $pdo;
+  
+  // get abbr for new ID
+  $stmt = $pdo->prepare("SELECT abbr FROM games WHERE ID = $gameID");
+  $stmt->execute();
+  $row = $stmt->fetch(PDO::FETCH_ASSOC);
+  
+  // Create JSON file
+  $file = "activeGame.json";
+  // content
+  $content = "{" . $row["abbr"] . "}";
+  // Write the contents back to the file
+  file_put_contents($file, $content);
+}
 
 
 /*
@@ -1240,6 +1261,30 @@ function writeSQL ($abbr) {
   return $stmt = $pdo->exec($sql);
 }
 
+
+/*
+* Create Game Folder (abbr) for @copyWeaponFromFextra
+* Path: /dice/icons/weapons/
+*/
+function createGameFolder($abbr) {
+  if (!file_exists(_DR . "/dice/icons/weapons/$abbr")) {
+    $oldmask = umask(0);
+    mkdir(_DR . "/dice/icons/weapons/$abbr", 0777, true);
+    umask($oldmask);
+  }
+}
+
+
+/*
+* Delete Game Folder (abbr) for @copyWeaponFromFextra
+* Path: /dice/icons/weapons/
+*/
+function deleteGameFolder($abbr) {
+  if (file_exists(_DR . "/dice/icons/weapons/$abbr")) {
+    array_map('unlink', glob("/dice/icons/weapons/$abbr/*.*"));
+    rmdir(_DR . "/dice/icons/weapons/$abbr");
+  }
+}
 
 
 /*

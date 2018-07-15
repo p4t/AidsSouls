@@ -410,6 +410,9 @@ if ( !empty($_GET["mode"]) && $_GET["mode"] == "config" && $_GET["item"] == "gam
           
           <li><label>NG+:</label></li>
           <li><input type="number" name="newNgp" value="<?=$row["ngp"]?>" min="0" max="1" autocomplete="off" placeholder="#" required="required"></li>
+          
+          <li><label>BG:</label></li>
+          <li></li>
 
           <li><input type="submit" value="Submit"></li>
         </ul>
@@ -530,6 +533,8 @@ if ( !empty($_GET["mode"]) && $_GET["mode"] == "config" && $_GET["item"] == "glo
         $stmt->bindParam(":name", $addGame, PDO::PARAM_STR);
         $stmt->bindParam(":abbr", $addAbbr, PDO::PARAM_STR);
         $stmt->execute();
+        if ( $stmt == TRUE ) createGameFolder($addAbbr);
+        
       }
       
       redirect("/edit?show=config", $statusCode = 303);

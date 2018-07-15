@@ -31,6 +31,9 @@ if ( !empty($_POST) ) {
     
     $pdo->exec($sql); // temporarily use exec() because shenanigans
     
+    // delete games folder
+    deleteGameFolder($abbr);
+    
   }
   
   // All other Delete requests
