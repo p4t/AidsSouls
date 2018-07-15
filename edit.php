@@ -367,9 +367,7 @@ if ( !empty($_GET["mode"]) && $_GET["mode"] == "config" && $_GET["item"] == "gam
       // rename SQL Tables
       // only if not pre-existing SoulsBorne
       if ( $ID > 6 ) renameSQLTable($oldAbbr, $newAbbr);
-      
-      echo "<br><br><br><br><br>";
-      echo "stmt: " . $stmt;
+
     }
     
     // Update name, abbr and ngp
@@ -382,6 +380,16 @@ if ( !empty($_GET["mode"]) && $_GET["mode"] == "config" && $_GET["item"] == "gam
     $stmt->bindParam(":ID", $_GET["ID"], PDO::PARAM_INT);
     $stmt->execute();
     
+    if ( $stmt == TRUE && !empty($_FILES["file"]) ) {
+      $filename     = $_FILES["file"]["name"];
+      $dir          = _DR . "/img/bg/";
+      $filesize     = $_FILES["file"]["size"];
+      $newfilename  = $newAbbr . ".jpg"; // force jpg
+      
+      // Upload
+      uploadIMG($filename, $dir, $filesize, $newfilename);
+    }
+
     redirect("/edit?show=config", $statusCode = 303);
 
   } else {
@@ -396,7 +404,7 @@ if ( !empty($_GET["mode"]) && $_GET["mode"] == "config" && $_GET["item"] == "gam
   <div class="flex-item">&nbsp;</div>
     
     <div class="flex-item">
-      <form action="/edit?mode=config&item=games&ID=<?=$_GET["ID"]?>" method="post" id="edit">
+      <form action="/edit?mode=config&item=games&ID=<?=$_GET["ID"]?>" method="post" id="edit" enctype="multipart/form-data">
         <ul>
           
           <li><label>Name:</label></li>
@@ -412,7 +420,22 @@ if ( !empty($_GET["mode"]) && $_GET["mode"] == "config" && $_GET["item"] == "gam
           <li><input type="number" name="newNgp" value="<?=$row["ngp"]?>" min="0" max="1" autocomplete="off" placeholder="#" required="required"></li>
           
           <li><label>BG:</label></li>
-          <li></li>
+          <li>
+            <?php
+            // Check BG
+            $path = _DR . "/img/bg/{$row["abbr"]}.jpg";
+            if ( file_exists($path) ) {
+            ?>
+              <i class="fas fa-check-circle"></i>
+            <?php
+            } else {
+            ?>
+              <input id="file" name="file" type="file">
+            <?php
+            }
+            ?>
+          
+          </li>
 
           <li><input type="submit" value="Submit"></li>
         </ul>
