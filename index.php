@@ -710,12 +710,12 @@ ENDWHILE
 <script src="/js/showRNG.js"></script>
 <script src="/js/bonfire.js"></script>
 <script src="/js/modal.js"></script>
-<script src="js/autocomplete.js"></script>
+<script src="/js/autocomplete.js"></script>
 
 
 <!-- W6, W12, W20, W30 -->
 <script>
-var _GAME = '<?=_GAME;?>';
+var _GAME = '<?=_GAME;?>'; // TODO
 
 // Random image out of 12
 var dice = [
@@ -724,14 +724,28 @@ var dice = [
   "21","22","23","24","25","26","27","28","29","30"
 ];
 
-/*
-var stats = [
-  "VIT", "ATT", "END", "STR", "DEX", "RES", "INT", "FTH", "FFA", "FFA", "FFA", "FFA"
-];
-*/
-
 // Get stats depending on active _GAME
-var stats = <?php include("stats.inc.php");?>;
+// var stats = <?php //include("stats.inc.php");?>;
+
+//$( function() {
+
+  // Get stats
+  var stats;
+  $.ajax({
+    async: false,
+    type: "GET",
+    global: false,
+    dataType: "json",
+    url: "/stats.inc.php",
+    success: function (data) {
+      stats = data;
+    }
+  });
+  
+  console.log("stats: " + stats);
+
+//});
+  
 
 function getRandomInt(min, max) {
   if ( $("#dice_dropdown option:selected").text() == "W6" ) max = 6;
@@ -862,19 +876,6 @@ function pickimg(w = 0) {
 } // ENDFUNCTION
 </script>
 
-<!-- SHOTS -->
-<?php
-if ( !empty($shots) && $shots == TRUE  ) {
-?>  
-<script>
-"use strict";
-$( document ).ready(function() {
-    play_audio("bier");
-});
-</script>
-<?php  
-}
-?>
   
 <!-- JS readdir -->
 <script>
