@@ -27,6 +27,7 @@ CREATE TABLE IF NOT EXISTS `TMP_weapons` (
   PRIMARY KEY (`ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+TRUNCATE `TMP_kills`;
 
 INSERT INTO `TMP_kills` (`ID`, `name`, `joker`, `spent`, `bossNames`) VALUES
 (1, 'Biber', 0, 0, '0'),
