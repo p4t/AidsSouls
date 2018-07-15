@@ -355,7 +355,6 @@ if ( !empty($_GET["mode"]) && $_GET["mode"] == "config" && $_GET["item"] == "gam
     }
     
     // If Abbr changes alter tables in db
-    // TABLE `aaa_boss`, `aaa_kills`, `aaa_log`, `aaa_mobs`, `aaa_rolls`, `aaa_todo`, `aaa_weapons`
     if ( $oldAbbr !== $newAbbr ) {
       
       // check if entry alrerady exist
@@ -440,6 +439,7 @@ if ( !empty($_GET["mode"]) && $_GET["mode"] == "config" && $_GET["item"] == "gam
           <li><input type="submit" value="Submit"></li>
         </ul>
         
+        <input type="hidden" name="newAbbr" value="<?=$row["abbr"]?>"><!-- disabled input vallue workaround -->
         <input type="hidden" name="oldAbbr" value="<?=$row["abbr"]?>">
         <input type="hidden" name="oldActive" value="<?=$row["active"]?>">
         
