@@ -349,6 +349,9 @@ if ( !empty($_GET["mode"]) && $_GET["mode"] == "config" && $_GET["item"] == "gam
     
     (INT)$ID          = $_GET["ID"];
 
+    // Exit if abbr is empty
+    if ( empty($newAbbr) ) die("ABBR EMPTY, ABORT ABORT ABORT!");
+    
     // if field active has changed use function @changeGame()
     if ( $newActive !== $oldActive ) {
       changeGame($ID);
