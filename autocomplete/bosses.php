@@ -10,6 +10,7 @@ elseif ( _GAME == "ds2"   ) include( $_SERVER["DOCUMENT_ROOT"] . "/autocomplete/
 elseif ( _GAME == "ds3"   ) include( $_SERVER["DOCUMENT_ROOT"] . "/autocomplete/ds3.bosses.php"  );
 elseif ( _GAME == "ds1r"  ) include( $_SERVER["DOCUMENT_ROOT"] . "/autocomplete/ds1r.bosses.php" );
 elseif ( _GAME == "bb"    ) include( $_SERVER["DOCUMENT_ROOT"] . "/autocomplete/bb.bosses.php"   );
+else                        $bosses = "";
 
 echo json_encode( $bosses );
 ?>
