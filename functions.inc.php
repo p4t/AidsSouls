@@ -1261,7 +1261,8 @@ function createActiveGameJSON ($gameID) {
   // Create JSON file
   $file = "activeGame.json";
   // content
-  $content = "{" . $row["abbr"] . "}";
+  // $content = "{" . $row["abbr"] . "}";
+  $content = json_encode( $row["abbr"] );
   // Write the contents back to the file
   file_put_contents($file, $content);
 }
