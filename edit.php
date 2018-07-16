@@ -577,7 +577,6 @@ if ( !empty($_GET["mode"]) && $_GET["mode"] == "config" && $_GET["item"] == "glo
  */
 
   if ( !empty($_GET["mode"]) && !empty($_GET["action"]) && ($_GET["mode"] == "config") && $_GET["action"] == "add" ) {
-    echo "ADD GLBOAL";
     
     (STRING)$mode   = $_GET["mode"];
     // (INT)$ID        = $_GET["ID"];
