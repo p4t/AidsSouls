@@ -1,0 +1,177 @@
+// W6, W12, W20, W30, Stats
+
+"use strict";
+
+// Get active Game
+  var _GAME;
+  $.ajax({
+    async: false,
+    type: "GET",
+    global: false,
+    dataType: "json",
+    url: "/activeGame.json",
+    success: function (data) {
+      _GAME = data;
+    }
+  });
+  
+  console.log("GAME: " + _GAME);
+
+
+// Random image out of 12
+var dice = [
+  "1","2","3","4","5","6","7","8","9","10",
+  "11","12","13","14","15","16","17","18","19","20",
+  "21","22","23","24","25","26","27","28","29","30"
+];
+
+// Get stats depending on active _GAME
+// var stats = <?php //include("stats.inc.php");?>;
+
+//$( function() {
+
+  // Get stats
+  var stats;
+  $.ajax({
+    async: false,
+    type: "GET",
+    global: false,
+    dataType: "json",
+    url: "/stats.inc.php",
+    success: function (data) {
+      stats = data;
+    }
+  });
+  
+  console.log("stats: " + stats);
+
+//});
+  
+
+function getRandomInt(min, max) {
+  if ( $("#dice_dropdown option:selected").text() == "W6" ) max = 6;
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+function pickimg(w = 0) {
+  
+  if ( $("#w12").css("display") == "none" ) {
+
+    $("#w12").show();
+    $("#bonfire").hide();
+
+    // close div of rerun() if shown
+    $("#rerunroll").hide();
+    // stop audio of rerun
+    stop_audio();
+    // play audio
+    play_audio("dice");
+
+  } else {
+    // Disable hiding w12, showing bonfire when clicking on dice
+    // and add in jQuery animation for dice on click
+    play_audio("dice");
+    $("#randomDiceOut").addClass( "flip-scale-up-diag-1" ).one("webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend", function(){
+        $(this).removeClass( "flip-scale-up-diag-1" );
+    });
+    
+  }
+
+ 
+
+/* Select */
+  // W6
+  if ( $("#dice_dropdown").val() == "W1" ) { // if ( $("#dice_dropdown option:selected").text() == "W6" ) {
+  diceRND = stats;
+  $("#dice_h2").text("Stats");
+  
+  // set var to let function no a Stat was rolled
+  var stat_css = true;
+  
+} else if ( $("#dice_dropdown").val() == "W6" ) {
+  diceRND = dice.slice(0, 6);
+  $("#dice_h2").html("W6");
+  
+  // W12
+} else if ( $("#dice_dropdown").val() == "W12" ) {
+  diceRND = dice.slice(0, 12);
+  $("#dice_h2").text("W12");
+  
+  // W20
+} else if ( $("#dice_dropdown").val() == "W20" ) {
+  diceRND = dice.slice(0, 20);
+  $("#dice_h2").text("W20");
+  
+  // W30
+} else if ( $("#dice_dropdown").val() == "W30" ) {
+  diceRND = dice.slice(0, 30);
+  $("#dice_h2").text("W30");
+}
+
+
+  /*
+  var src = "/dice/" + images[getRandomInt(0, images.length - 1)];
+  $("img#randimgw12").prop("src", src);
+  */
+  // var src = diceRND[getRandomInt(0, diceRND.length - 1)];
+  
+  
+  var src = diceRND[getRandomInt(0, diceRND.length - 1)];
+  
+  // if stat instead of rnd dice add class to enhance dice img class #randomDiceOut
+  // also remove class for the dice
+  if ( stat_css == true ) {
+    
+    // console.log("STATS");
+      
+    $( "#randomDiceOut" ).addClass( "stat" );
+    
+    // $( "img#statIMG" ).prop( "src", "/img/stats/ds1/"+src+".jpg" );
+    // $("#randomDiceOut").html("<img src='/img/stats/ds1/"+src+".jpg'>"+src);
+    // $( "img#statIMG" ).prop( "src", "/img/stats/ds1/"+src+".jpg" );
+    
+    // console.log("_GAME: " + _GAME);
+    
+    $("#randomDiceOut").html( " <div><img src='/img/stats/"+_GAME+"/"+src+".png' alt='"+src+"'></div><div>" + src + "</div> ");
+  } else {
+    
+    // console.log("DICE");
+    
+    // remove .stat to show dice symbol bg again
+    if ( $("#randomDiceOut").hasClass("stat") ) $( "#randomDiceOut" ).removeClass( "stat" );
+    
+    $("#randomDiceOut").text(src);
+  } 
+  
+  // Original single output without STATS rolling
+  // $("#randomDiceOut").text(src);
+  
+  console.log("diceRND: " + diceRND);
+  console.log("src: " + src);
+  
+  /*
+  $("#status").show();
+  $("#status").text(diceRND);
+  */
+  
+  
+  
+  /*
+  var src = images[getRandomInt(0, images.length - 1)];
+  $("#randimgw12").text(src);
+  */
+  
+  // Debug
+  /*
+  $("#status").show();
+  $("#status").text(images);
+  */
+  
+  /* always uncheck checkbox "rerun_only" on every click if bonfire is hidden */
+  /*
+  if ( $("input#dice_switch").is(":checked") && $("#bonfire").css("display") == "block" ) {
+  $("input#dice_switch").prop("checked", false);
+  }
+  */
+
+} // ENDFUNCTION
