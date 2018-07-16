@@ -1106,6 +1106,32 @@ function print_error ($msg) {
 
 
 
+/*
+ * Create JSON file
+ */
+function createJSON ($filename, $content) {
+  $dir = _DR . "/";
+  
+  // Create JSON file
+  $file = $filename . ".json";
+  // check if string is in JSON format
+  isJSON($content);
+  // Write the contents back to the file
+  file_put_contents($file, $content);
+}
+
+
+/*
+* Check if string is in JSON format
+*/
+function isJSON($string) {
+ json_decode($string);
+ return (json_last_error() == JSON_ERROR_NONE);
+}
+
+
+
+
 /******************** LOGIN ***********************/
 
 /*
