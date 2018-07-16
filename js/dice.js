@@ -1,6 +1,6 @@
 // W6, W12, W20, W30, Stats
 
-"use strict";
+// "use strict";
 
 // Get active Game
   var _GAME;
