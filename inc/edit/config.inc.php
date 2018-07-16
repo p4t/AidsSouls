@@ -217,3 +217,19 @@
 
   </form>
 </div>
+
+
+<hr>
+
+
+<a id="SQL"></a>
+<div id="flex-container-edit-config">
+  <form action="/edit?mode=config&action=sql" method="post">
+    <h3>SQL</h3>
+    
+    <ul class="text-center">
+      <li><textarea id="sql" rows="15" name="sql" cols="50" placeholder="MySQL Query" required></textarea></li>
+      <li><input type="submit" value="Submit"></li>
+    </ul>
+  </form>
+</div>

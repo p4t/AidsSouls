@@ -600,6 +600,29 @@ if ( !empty($_GET["mode"]) && $_GET["mode"] == "config" && $_GET["item"] == "glo
   } // ENDIF $_GET["mode"]
 ?>
 
+<?php
+/*
+ * ADD: CONFIG>>SQL
+ */
+
+  if ( !empty($_GET["mode"]) && !empty($_GET["action"]) && ($_GET["mode"] == "config") && $_GET["action"] == "sql" ) {
+    
+    (STRING)$mode = $_GET["mode"];
+  
+    if ( !empty($_POST["sql"]) ) {
+      (STRING)$SQL_Query = trim($_POST["sql"]);
+      
+      // replace {GAME} WITH _GAME
+            
+      // Exec MySQL Query
+      $pdo->exec($SQL_Query);
+      
+      redirect("/edit?show=config", $statusCode = 303);
+
+    } // ENDIF (ELSE) $_POST["sql"]
+    
+  } // ENDIF $_GET["mode"]
+?>
 
 <?php
 /*
