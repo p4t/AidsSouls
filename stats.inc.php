@@ -4,6 +4,23 @@ require_once( $_SERVER["DOCUMENT_ROOT"] . "/config.db.php" );
 require_once( $_SERVER["DOCUMENT_ROOT"] . "/functions.inc.php" );
 require_once( $_SERVER["DOCUMENT_ROOT"] . "/globals.inc.php" );
 
+$des = array (
+  "VIT",
+  "INT",
+  "END",
+  "STR",
+  "DEX",
+  "MAG",
+  "FTH",
+  "LCK",
+  "FFA",
+  "FFA",
+  "FFA",
+  "FFA",
+  "FFA",
+  "FFA"
+);
+
 $ds1 = array (
   "VIT",
   "ATT",
