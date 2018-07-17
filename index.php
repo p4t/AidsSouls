@@ -93,6 +93,32 @@ $bossRNG_Output = replaceDiceWithSymbol ($bossAids, $bossRNG);
 // Write aids rolls into DB
 saveRolls($mobsAids, $bossAids); // Table/Output in edit.php
 
+// No HUD
+if ( $mobsAids == "No HUD" || $bossAids == "No HUD" ) {
+  $HUD_CSS = TRUE;
+}
+
+// Invert Controls
+if ( $mobsAids == "Invert Controls" || $bossAids == "Invert Controls" ) {
+  $INVERT_CSS = TRUE;
+}
+
+// Shots
+$shots = array("Feige", "Jäscher");
+$bothAids = array($mobsAids, $bossAids);
+
+if (
+  strpos($mobsAids, "Feige") !== false
+  ||
+  strpos($bossAids, "Feige") !== false
+  ||
+  strpos($mobsAids, "Jäscher") !== false
+  ||
+  strpos($bossAids, "Jäscher") !== false
+) {
+  $BLUR_CSS = TRUE;
+}
+
 /* LOGIN */
 /*
 unset($error);
@@ -155,6 +181,113 @@ echo "bossrngout: " . $bossRNG_Output;
     background-size: cover;
   }
 </style>
+
+<?php
+  if ( !empty($HUD_CSS) && $HUD_CSS == TRUE ) {
+?>
+  <style>
+  *,
+  html, body, 
+  .aidscontent,
+  .aidsListing,
+  .container,
+  .content,
+  #todo,
+  #flex-container-aids
+  {
+    background: black !important;
+    border-image: none !important;
+    
+    /* No pointer events */
+    /* pointer-events: none; */
+  }
+  table,
+  .aidsListing,
+  #Kills,
+  #Aids,
+  footer,
+  nav
+  {
+    /* visibility: hidden; */
+    display: none;
+  }
+  
+  header {
+    visibility: hidden;
+  }
+  
+  .flex-item-aids-left,
+  .flex-item-aids-right,
+  #flex-container-aids-text,
+  #flex-container-roll
+  {
+    visibility: hidden;
+  }
+  
+  /* Hide text*/
+  #mobsAids,
+  #bossAids,
+  #reroll_switch_button,
+  #rerun_switch_button,
+  .diceText
+  {
+    color: black;
+    text-shadow: none;
+  }
+  
+  .aidscontent {
+    opacity: 0.2;
+  }
+  
+  .aidscontent:hover .dice_wrapper,
+  /* Do not show Aids Text on hover */
+  /*
+  .aidscontent:hover #mobsAids,
+  .aidscontent:hover #bossAids,
+  */
+  .aidscontent:hover #flex-container-roll
+  {
+    visibility: visible;
+  }
+</style>
+<?php
+  }
+?>
+
+
+<?php
+/* Rotate whole site 160° */
+  if ( !empty($INVERT_CSS) && $INVERT_CSS == TRUE ) {
+?>
+  <style>
+    #mobsAids, #bossAids
+    {
+      display: inline-block;
+    }
+    html, body, header, header img, nav, footer, div, span, button, select, option,
+    h1, h4, h5, h6, h7, h8,
+    background
+    {
+      transform:rotate(180deg);
+    }
+    footer, hr {
+      display: none;
+    }
+</style>
+<?php
+  }
+?>
+
+
+<?php
+  if ( !empty($BLUR_CSS) && $BLUR_CSS == TRUE) {
+?>
+  <style>
+    * {filter: blur(1.5px)}
+  </style>
+<?php
+  }
+?>
 
 
 <link rel="apple-touch-icon" sizes="180x180" href="/img/favico/apple-touch-icon.png">
@@ -756,6 +889,49 @@ function json_test () {
   }
   */
   ?>
+
+
+<!-- AJAX JSON Test -->
+<script>
+$( document ).ready(function() {
+  
+  var callback = [];
+  $.ajax({
+    async: false,
+    type: "GET",
+    global: false,
+    dataType: "json",
+    url: "/autocomplete/data.json",
+    success: function (data) {
+      $.each(data, function (index, value) {
+        callback.push(value);
+      });
+      
+      // nest $.each for more than one element
+      /*
+      $.each(data, function(key, value){
+        $.each(value, function(key, value){
+          console.log(key, value);
+        });
+      });
+      */
+
+      /*
+      console.log( data );
+      console.log( "----" );
+      console.log( "aids: " + data["Aids"] );
+      */
+      
+      // callback = data;
+      callback = data;
+    }
+  });
+  
+  console.log("----");
+  console.log("callback: " + callback["ds1"][0]["weapons"]);
+  
+});
+</script>
 
 
 </body>
