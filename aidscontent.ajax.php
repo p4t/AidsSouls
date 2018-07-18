@@ -68,7 +68,7 @@ include_once( $_SERVER["DOCUMENT_ROOT"] . "/aids.css.php" );
       <span id="mobsAids" data-balloon="{Description}" data-balloon-pos="right"><?=$mobsAids?></span>
       <br>
       <?php
-        if ( _NEWGAMEPLUS === TRUE ) {
+        if ( _NEWGAMEPLUS == "TRUE" ) {
       ?>
       <span id="mobsAidsNGP" data-balloon="{Description}" data-balloon-pos="right"><?=$mobsAidsNGP?></span>
       <?php
@@ -82,7 +82,7 @@ include_once( $_SERVER["DOCUMENT_ROOT"] . "/aids.css.php" );
       <span id="bossAids" data-balloon="{Description}" data-balloon-pos="left"><?=$bossAids?></span>
       <br>
       <?php
-        if ( _NEWGAMEPLUS === TRUE ) {
+        if ( _NEWGAMEPLUS == "TRUE" ) {
       ?>
       <span id="bossAidsNGP" data-balloon="{Description}" data-balloon-pos="left"><?=$bossAidsNGP?></span>
       <?php
