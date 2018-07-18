@@ -186,69 +186,72 @@ echo "bossrngout: " . $bossRNG_Output;
   if ( !empty($HUD_CSS) && $HUD_CSS == TRUE ) {
 ?>
   <style>
-  *,
-  html, body, 
-  .aidscontent,
-  .aidsListing,
-  .container,
-  .content,
-  #todo,
-  #flex-container-aids
-  {
-    background: black !important;
-    border-image: none !important;
-    
-    /* No pointer events */
-    /* pointer-events: none; */
-  }
-  table,
-  .aidsListing,
-  #Kills,
-  #Aids,
-  footer,
-  nav
-  {
-    /* visibility: hidden; */
-    display: none;
-  }
-  
-  header {
-    visibility: hidden;
-  }
-  
-  .flex-item-aids-left,
-  .flex-item-aids-right,
-  #flex-container-aids-text,
-  #flex-container-roll
-  {
-    visibility: hidden;
-  }
-  
-  /* Hide text*/
-  #mobsAids,
-  #bossAids,
-  #reroll_switch_button,
-  #rerun_switch_button,
-  .diceText
-  {
-    color: black;
-    text-shadow: none;
-  }
-  
-  .aidscontent {
-    opacity: 0.2;
-  }
-  
-  .aidscontent:hover .dice_wrapper,
-  /* Do not show Aids Text on hover */
-  /*
-  .aidscontent:hover #mobsAids,
-  .aidscontent:hover #bossAids,
-  */
-  .aidscontent:hover #flex-container-roll
-  {
-    visibility: visible;
-  }
+    *,
+    html, body, 
+    .aidscontent,
+    .aidsListing,
+    .container,
+    .content,
+    #todo,
+    #flex-container-aids
+    {
+      background: black !important;
+      border-image: none !important;
+
+      /* No pointer events */
+      /* pointer-events: none; */
+    }
+    table,
+    .aidsListing,
+    #Kills,
+    #Aids,
+    footer,
+    nav,
+    #mySidenav,
+    #sidenav-icon,
+    h2
+    {
+      /* visibility: hidden; */
+      display: none;
+    }
+
+    header {
+      visibility: hidden;
+    }
+
+    .flex-item-aids-left,
+    .flex-item-aids-right,
+    #flex-container-aids-text,
+    #flex-container-roll
+    {
+      visibility: hidden;
+    }
+
+    /* Hide text*/
+    #mobsAids,
+    #bossAids,
+    #reroll_switch_button,
+    #rerun_switch_button,
+    .diceText
+    {
+      color: black;
+      text-shadow: none;
+    }
+
+    .aidscontent {
+      opacity: 0.2;
+    }
+
+    .aidscontent:hover .dice_wrapper,
+    /* Do not show Aids Text on hover */
+    /*
+    .aidscontent:hover #mobsAids,
+    .aidscontent:hover #bossAids,
+    */
+    .aidscontent:hover #flex-container-roll
+    {
+      visibility: visible;
+    }
 </style>
 <?php
   }
@@ -283,7 +286,7 @@ echo "bossrngout: " . $bossRNG_Output;
   if ( !empty($BLUR_CSS) && $BLUR_CSS == TRUE) {
 ?>
   <style>
-    * {filter: blur(1.5px)}
+    * {filter: blur(1px)}
   </style>
 <?php
   }
@@ -893,6 +896,7 @@ function json_test () {
 
 <!-- AJAX JSON Test -->
 <script>
+/*
 $( document ).ready(function() {
   
   var callback = [];
@@ -923,6 +927,7 @@ $( document ).ready(function() {
       */
       
       // callback = data;
+/*
       callback = data;
     }
   });
@@ -931,6 +936,7 @@ $( document ).ready(function() {
   console.log("callback: " + callback["ds1"][0]["weapons"]);
   
 });
+*/
 </script>
 
 
