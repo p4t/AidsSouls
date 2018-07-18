@@ -51,29 +51,33 @@ $bossRNG_Output = replaceDiceWithSymbol ($bossAids, $bossRNG);
 // Write aids rolls into DB
 saveRolls($mobsAids, $bossAids); // Table/Output in edit.php
 
-// No HUD
-if ( $mobsAids == "No HUD" || $bossAids == "No HUD" ) {
-  $HUD_CSS = TRUE;
-}
+if ( _CSSAIDS == "TRUE" ) {
 
-// Invert Controls
-if ( $mobsAids == "Invert Controls" || $bossAids == "Invert Controls" ) {
-  $INVERT_CSS = TRUE;
-}
+  // No HUD
+  if ( $mobsAids == "No HUD" || $bossAids == "No HUD" ) {
+    $HUD_CSS = TRUE;
+  }
 
-// Shots
-$shots = array("Feige", "Jäscher");
-$bothAids = array($mobsAids, $bossAids);
+  // Invert Controls
+  if ( $mobsAids == "Invert Controls" || $bossAids == "Invert Controls" ) {
+    $INVERT_CSS = TRUE;
+  }
 
-if (
-  strpos($mobsAids, "Feige") !== false
-  ||
-  strpos($bossAids, "Feige") !== false
-  ||
-  strpos($mobsAids, "Jäscher") !== false
-  ||
-  strpos($bossAids, "Jäscher") !== false
-) {
-  $BLUR_CSS = TRUE;
+  // Shots
+  $shots = array("Feige", "Jäscher");
+  $bothAids = array($mobsAids, $bossAids);
+
+  if (
+    strpos($mobsAids, "Feige") !== false
+    ||
+    strpos($bossAids, "Feige") !== false
+    ||
+    strpos($mobsAids, "Jäscher") !== false
+    ||
+    strpos($bossAids, "Jäscher") !== false
+  ) {
+    $BLUR_CSS = TRUE;
+  }
+
 }
 ?>
