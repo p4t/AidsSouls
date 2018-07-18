@@ -1,8 +1,8 @@
 <?php
 // Lib
-require_once("config.db.php");
-require_once("functions.inc.php");
-require_once("globals.inc.php");
+require_once( $_SERVER["DOCUMENT_ROOT"] . "/config.db.php" );
+require_once( $_SERVER["DOCUMENT_ROOT"] . "/functions.inc.php" );
+require_once( $_SERVER["DOCUMENT_ROOT"] . "/globals.inc.php" );
 
 
 // DB Hack
@@ -35,7 +35,7 @@ if (
 }
 
 // Main AIDS Handling
-include_once( "roll.inc.php" );
+include_once( $_SERVER["DOCUMENT_ROOT"] . "/roll.inc.php" );
 ?>
 
 <!doctype html>
@@ -688,7 +688,6 @@ $( "#aidsAJAXTest" ).click(function() {
   console.log( "#aidsAJAXTest clicked" );
   $("#aidsAJAX").load("/aidscontent.ajax.php");
 });
-
 </script>
 
 </body>

@@ -1,8 +1,8 @@
 <?php
 // Lib
-require_once("config.db.php");
-require_once("functions.inc.php");
-require_once("globals.inc.php");
+require_once( $_SERVER["DOCUMENT_ROOT"] . "/config.db.php" );
+require_once( $_SERVER["DOCUMENT_ROOT"] . "/functions.inc.php" );
+require_once( $_SERVER["DOCUMENT_ROOT"] . "/globals.inc.php" );
 
 // DB Hack
 // include_once("del.ajax.php");
