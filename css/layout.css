@@ -528,6 +528,8 @@ li.noListStyle {
   -moz-background-size: contain;
   -o-background-size: contain;
   background-size: contain;
+  
+  cursor: pointer;
 }
 #randomDiceOut.stat, .stat {
   width: initial;
