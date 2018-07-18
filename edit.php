@@ -333,7 +333,7 @@ if ( !empty($_GET["mode"]) && $_GET["mode"] == "kills" ) {
 /*
  * EDIT: CONFIG>>GAME
  */
-if ( !empty($_GET["mode"]) && $_GET["mode"] == "config" && $_GET["item"] == "games" && empty($_GET["action"]) ) { // mode config
+if ( !empty($_GET["mode"]) && $_GET["mode"] == "config" && !empty($_GET["item"]) && $_GET["item"] == "games" && empty($_GET["action"]) ) { // mode config
   (STRING)$mode   = $_GET["mode"];
   (INT)$ID        = $_GET["ID"];  
   
@@ -464,7 +464,7 @@ if ( !empty($_GET["mode"]) && $_GET["mode"] == "config" && $_GET["item"] == "gam
 /*
  * EDIT: CONFIG>>GLOBAL
  */
-if ( !empty($_GET["mode"]) && $_GET["mode"] == "config" && $_GET["item"] == "global" && empty($_GET["action"]) ) { // mode config
+if ( !empty($_GET["mode"]) && $_GET["mode"] == "config" && !empty($_GET["item"]) && $_GET["item"] == "global" && empty($_GET["action"]) ) { // mode config
   (STRING)$mode   = $_GET["mode"];
   (INT)$ID        = $_GET["ID"];  
   
