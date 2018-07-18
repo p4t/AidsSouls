@@ -115,7 +115,7 @@ include_once( "aids.css.php" );
 
 
 <body spellcheck="false">
-<button id="aidsAJAXTest">aidsAJAXTest</button>
+<button id="aidsAJAXTest" style="width: 100px; height: 50px;">aidsAJAXTest</button>
 
 <?php
   /* DEBUG OUTPUT */
@@ -158,6 +158,7 @@ include_once( "aids.css.php" );
 
 
 <div class="content">
+
 <div class="aidscontent" id="aidscontent">
 
 <div id="aidsAJAX">
@@ -220,7 +221,7 @@ include_once( "aids.css.php" );
       <span id="mobsAids" data-balloon="{Description}" data-balloon-pos="right"><?=$mobsAids?></span>
       <br>
       <?php
-        if ( _NEWGAMEPLUS === TRUE ) {
+        if ( _NEWGAMEPLUS == "TRUE" ) {
       ?>
       <span id="mobsAidsNGP" data-balloon="{Description}" data-balloon-pos="right"><?=$mobsAidsNGP?></span>
       <?php
@@ -234,7 +235,7 @@ include_once( "aids.css.php" );
       <span id="bossAids" data-balloon="{Description}" data-balloon-pos="left"><?=$bossAids?></span>
       <br>
       <?php
-        if ( _NEWGAMEPLUS === TRUE ) {
+        if ( _NEWGAMEPLUS == "TRUE" ) {
       ?>
       <span id="bossAidsNGP" data-balloon="{Description}" data-balloon-pos="left"><?=$bossAidsNGP?></span>
       <?php
@@ -636,7 +637,6 @@ function json_test () {
   */
   ?>
 
-
 <!-- AJAX JSON Test -->
 <script>
 /*
@@ -682,6 +682,14 @@ $( document ).ready(function() {
 */
 </script>
 
+
+<script>
+$( "#aidsAJAXTest" ).click(function() {
+  console.log( "#aidsAJAXTest clicked" );
+  $("#aidsAJAX").load("/aidscontent.ajax.php");
+});
+
+</script>
 
 </body>
 </html>
