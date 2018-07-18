@@ -4,14 +4,18 @@ require_once("config.db.php");
 require_once("functions.inc.php");
 require_once("globals.inc.php");
 
-// Logout
-if (
-    (!empty($_GET["action"])) &&
-    ($_GET["action"] == "logout") &&
-    ($_SESSION["valid"] == true)
-   ) {
-  logout();
-}
+
+// DB Hack
+// include_once("aids.ajax.php");
+// include_once("jquery_post.php");
+// include_once("edit.ajax.php");
+// include_once("autocomplete.jQuery.php");
+
+// include_once("aidscontent.ajax.php");
+// include_once("roll.inc.php");
+// include_once("aids.css.php");
+
+// include_once("/css/login.css");
 
 
 // Change Game
@@ -30,115 +34,8 @@ if (
   redirect("/");
 }
 
-
-
-// DB Hack
-// include_once("aids.ajax.php");
-// include_once("jquery_post.php");
-// include_once("edit.ajax.php");
-// include_once("autocomplete.jQuery.php");
-
-// include_once("/css/login.css");
-
-
-// Get random number
-$RNG        = getRNG();
-$mobsRNG    = $RNG[0];
-$bossRNG    = $RNG[1];
-
-// Get random number for NG+
-$RNGNGP        = getRNG();
-$mobsRNGNGP    = $RNGNGP[0];
-$bossRNGNGP    = $RNGNGP[1];
-
-$flasks     = _FLASKS;
-$weaponIMG  = "<img src=\"/img/weapon_icon.png\" width=\"30\" height=\"30\" alt=\"Weapon\">"; // 41, 40
-
-// DEBUG
-// $mobsRNG = 15;
-// $bossRNG = 5;
-
-if ( !empty($_GET["RNG"]) ) {
-  $mobsRNG = $_GET["RNG"];
-  $bossRNG = $_GET["RNG"];
-}
-if ( !empty($_GET["mobsRNG"]) ) {
-  $mobsRNG = $_GET["mobsRNG"];  
-}
-if ( !empty($_GET["bossRNG"]) ) {
-  $bossRNG = $_GET["bossRNG"];
-}
-
-
-// Get Aids from mobs boss tables 
-$Aids     = getAidsByRNG($mobsRNG, $bossRNG);
-$mobsAids = $Aids[0];
-$bossAids = $Aids[1];
-
-// Get aids from mobs boss tables for NG+
-$AidsNGP     = getAidsByRNG($mobsRNGNGP, $bossRNGNGP);
-$mobsAidsNGP = $AidsNGP[0];
-$bossAidsNGP = $AidsNGP[1];
-
-// Output for dice-wrapper display
-$mobsRNG_Output = replaceDiceWithSymbol ($mobsAids, $mobsRNG);
-$bossRNG_Output = replaceDiceWithSymbol ($bossAids, $bossRNG);
-
-// Random Weapon
-// $randomWeapon = randomWeapon();
-
-// Debug
-// $debug = debug($mobsRNG, $mobsAids, $bossRNG, $bossAids, $randomWeapon);
-
-// Write aids rolls into DB
-saveRolls($mobsAids, $bossAids); // Table/Output in edit.php
-
-// No HUD
-if ( $mobsAids == "No HUD" || $bossAids == "No HUD" ) {
-  $HUD_CSS = TRUE;
-}
-
-// Invert Controls
-if ( $mobsAids == "Invert Controls" || $bossAids == "Invert Controls" ) {
-  $INVERT_CSS = TRUE;
-}
-
-// Shots
-$shots = array("Feige", "Jäscher");
-$bothAids = array($mobsAids, $bossAids);
-
-if (
-  strpos($mobsAids, "Feige") !== false
-  ||
-  strpos($bossAids, "Feige") !== false
-  ||
-  strpos($mobsAids, "Jäscher") !== false
-  ||
-  strpos($bossAids, "Jäscher") !== false
-) {
-  $BLUR_CSS = TRUE;
-}
-
-/* LOGIN */
-/*
-unset($error);
-
-if ( (!empty($_POST["username"])) && (!empty($_POST["password"])) ) {
-
-  $username = trim($_POST["username"]);
-  $password = trim($_POST["password"]);
-  
-  $error = login ($username, $password);
-    
-} // ENDIF
-if ( (!empty($_SESSION["username"])) && ($_SESSION["valid"] == TRUE) ) {
-*/
-
-/*
-echo "mobsrngout: " . $mobsRNG_Output;
-echo "<br><br>";
-echo "bossrngout: " . $bossRNG_Output;
-*/
+// Main AIDS Handling
+include_once( "roll.inc.php" );
 ?>
 
 <!doctype html>
@@ -183,115 +80,9 @@ echo "bossrngout: " . $bossRNG_Output;
 </style>
 
 <?php
-  if ( !empty($HUD_CSS) && $HUD_CSS == TRUE ) {
+// CSS for special Aids (No HUD, Jäscher + Feige, Invert Controls)
+include_once( "aids.css.php" );
 ?>
-  <style>
-    *,
-    html, body, 
-    .aidscontent,
-    .aidsListing,
-    .container,
-    .content,
-    #todo,
-    #flex-container-aids
-    {
-      background: black !important;
-      border-image: none !important;
-
-      /* No pointer events */
-      /* pointer-events: none; */
-    }
-    table,
-    .aidsListing,
-    #Kills,
-    #Aids,
-    footer,
-    nav,
-    #mySidenav,
-    #sidenav-icon,
-    h2
-    {
-      /* visibility: hidden; */
-      display: none;
-    }
-
-    header {
-      visibility: hidden;
-    }
-
-    .flex-item-aids-left,
-    .flex-item-aids-right,
-    #flex-container-aids-text,
-    #flex-container-roll
-    {
-      visibility: hidden;
-    }
-
-    /* Hide text*/
-    #mobsAids,
-    #bossAids,
-    #reroll_switch_button,
-    #rerun_switch_button,
-    .diceText
-    {
-      color: black;
-      text-shadow: none;
-    }
-
-    .aidscontent {
-      opacity: 0.2;
-    }
-
-    .aidscontent:hover .dice_wrapper,
-    /* Do not show Aids Text on hover */
-    /*
-    .aidscontent:hover #mobsAids,
-    .aidscontent:hover #bossAids,
-    */
-    .aidscontent:hover #flex-container-roll
-    {
-      visibility: visible;
-    }
-</style>
-<?php
-  }
-?>
-
-
-<?php
-/* Rotate whole site 160° */
-  if ( !empty($INVERT_CSS) && $INVERT_CSS == TRUE ) {
-?>
-  <style>
-    #mobsAids, #bossAids
-    {
-      display: inline-block;
-    }
-    html, body, header, header img, nav, footer, div, span, button, select, option,
-    h1, h4, h5, h6, h7, h8,
-    background
-    {
-      transform:rotate(180deg);
-    }
-    footer, hr {
-      display: none;
-    }
-</style>
-<?php
-  }
-?>
-
-
-<?php
-  if ( !empty($BLUR_CSS) && $BLUR_CSS == TRUE) {
-?>
-  <style>
-    * {filter: blur(1px)}
-  </style>
-<?php
-  }
-?>
-
 
 <link rel="apple-touch-icon" sizes="180x180" href="/img/favico/apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="32x32" href="/img/favico/favicon-32x32.png">
@@ -324,7 +115,7 @@ echo "bossrngout: " . $bossRNG_Output;
 
 
 <body spellcheck="false">
-
+<button id="aidsAJAXTest">aidsAJAXTest</button>
 
 <?php
   /* DEBUG OUTPUT */
@@ -367,8 +158,9 @@ echo "bossrngout: " . $bossRNG_Output;
 
 
 <div class="content">
-<div class="aidscontent">
-  
+<div class="aidscontent" id="aidscontent">
+
+<div id="aidsAJAX">
 <!-- !!!AIDS: MOBS, MIDDLE, BOSS -->
 <div id="flex-container-aids">
 
@@ -451,45 +243,20 @@ echo "bossrngout: " . $bossRNG_Output;
     </div>
   </div>
 </div><!-- EOF flex-container-aids -->
-
+</div>
   
 <!-- !!!BUTTONS -->
 <div id="flex-container-roll">
   
   <!-- Reroll / Reload page -->
   <div class="flex-item-button">
-
-    <button class="button" onClick="reroll()" data-balloon="<?=getLatestRoll()?>" data-balloon-pos="right">
+    <button class="button" onClick="reroll()" id="reroll_button" data-balloon="<?=getLatestRoll()?>" data-balloon-pos="right">
       <span id="reroll_switch_button">Roll</span>
     </button>
-    
-    <!--
-    <label for="reroll_switch" class="switch" data-balloon="Checked: Ohne (((Aids)))" data-balloon-pos="down">
-      <input type="checkbox" id="reroll_switch" onClick="play_audio('toggle')">
-      <span class="slider"></span>
-    </label>
-    -->
-    
   </div>
   
   <!-- W12 -->
   <div class="flex-item-button">
-    
-    <!--
-    <button class="button" onClick="pickimg()">
-      <span id="dice_switch_button">W12</span>
-    </button>
-    -->
-    
-    <!--
-    <select id="dice_dropdown" name="dice_dropdown">
-      <option value="W6">W6</option>
-      <option value="W12" selected>W12</option>
-      <option value="W20">W20</option>
-      <option value="W30">W30</option>
-    </select>
-    -->
-    
     <select id="dice_dropdown" name="dice_dropdown" class="custom-select dice_dropdown" placeholder="🎲">
       <option value="W1">Stats</option>
       <option value="W6">W6</option>
@@ -497,39 +264,15 @@ echo "bossrngout: " . $bossRNG_Output;
       <option value="W20">W20</option>
       <option value="W30">W30</option>
     </select>
- 
-<!-- Custom Select jQuery @Scripts -->
-
-
-      
-    
-    <!--
-    <label for="dice_switch" class="switch" data-balloon="Wechsel zwischen w12 und w20" data-balloon-pos="down">
-      <input type="checkbox" id="dice_switch" onClick="play_audio('toggle')">
-      <span class="slider"></span>
-    </label>
-    -->
-        
   </div>
-  
   
   <!-- Rerun? -->
   <div class="flex-item-button">
-
     <button class="button" onClick="rerun()" id="rerun_button" title="" data-balloon="" data-balloon-pos="left">
       <span id="rerun_switch_button">Rerun?</span>
     </button>
-  
-    <!--
-    <label for="rerun_switch" class="switch" data-balloon="Checked: Nur Rerun (Epic Sax Guy, ¯\_(ツ)_/¯)" data-balloon-pos="down">
-      <input type="checkbox" id="rerun_switch" onClick="play_audio('toggle')">
-      <span class="slider"></span>
-    </label>
-    -->
-    
   </div>
 
-  
 </div><!-- EOF #flex-container-roll-->
 
 <!-- Debug Status Msg -->
