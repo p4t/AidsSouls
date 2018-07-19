@@ -177,37 +177,6 @@ include_once( "aids.css.php" );
   include_once( $_SERVER["DOCUMENT_ROOT"] . "/flex-container-aids.tpl.php" ); // aids output HTML
 ?>
 
-  
-<!-- !!!OUTPUT ROLLED AIDS -->
-<div id="flex-container-aids-text">
-  <div>
-    <div class="aidsText tracking-in-expand">
-      <span id="mobsAids" data-balloon="{Description}" data-balloon-pos="right"><?=$mobsAids?></span>
-      <br>
-      <?php
-        if ( _NEWGAMEPLUS == "TRUE" ) {
-      ?>
-      <span id="mobsAidsNGP" data-balloon="{Description}" data-balloon-pos="right"><?=$mobsAidsNGP?></span>
-      <?php
-        }
-      ?>
-    </div>
-  </div>
-
-  <div>
-    <div class="aidsText tracking-in-expand">
-      <span id="bossAids" data-balloon="{Description}" data-balloon-pos="left"><?=$bossAids?></span>
-      <br>
-      <?php
-        if ( _NEWGAMEPLUS == "TRUE" ) {
-      ?>
-      <span id="bossAidsNGP" data-balloon="{Description}" data-balloon-pos="left"><?=$bossAidsNGP?></span>
-      <?php
-        }
-      ?>
-    </div>
-  </div>
-</div><!-- EOF flex-container-aids -->
 </div>
   
 <!-- !!!BUTTONS -->
