@@ -8,9 +8,9 @@ function replaceAidsWithX () {
   $("#mobsAids").html("&times;");
   $("#bossAids").html("&times;");
 }
-  
-$( document ).ready(function() {
-  
+
+function run() {
+
   var run_rnd = Math.floor((Math.random() * 100) + 1);
   
   // debug
@@ -21,12 +21,7 @@ $( document ).ready(function() {
   $("#rerun_switch_button").prop("title", run_rnd);
   // $("#rerun_switch_button").prop("data-balloon", run_rnd);
   $("#rerun_button").prop("data-balloon", run_rnd);
-  
-  // alert(run_rnd);
-  // $("#jsstatus").show();
-  // $("#jsstatus").text("run_rnd: " + run_rnd);
-  
-  
+    
   // VADER
   if (run_rnd === 1 || run_rnd === 100) {
     if ( $("#bonfire").css("display") === "block" ) {
@@ -57,5 +52,12 @@ $( document ).ready(function() {
   } else {
     // NIX
   }
+
+
+}
+
+$( document ).ready(function() {
+  
+  // run(); // don't use run() on initial page load anymore
   
 });
