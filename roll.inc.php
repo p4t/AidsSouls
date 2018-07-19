@@ -1,6 +1,6 @@
 <?php
 // Make sure nothing is rolled on firt page load
-// Only roll aids etc when $firstPageLoad (= TRUE @index.php) has ben set to FALSE in aidscontent.ajax.php
+// Only roll aids etc when $firstPageLoad (TRUE @index.php) has been set to FALSE in aidscontent.ajax.php
 if ( $firstPageLoad != "TRUE" ) {
   
   // Get random number
@@ -84,7 +84,7 @@ if ( $firstPageLoad != "TRUE" ) {
 
   } // ENDIF
 
-} else { // Ajax Roll Button was used
+} else { // Ajax Roll Button was NOT used, page was initially loaded
   
   // $placeholder = "❌";
   // $placeholder = "R";
@@ -93,6 +93,9 @@ if ( $firstPageLoad != "TRUE" ) {
   
   $mobsAids = $placeholder;
   $bossAids = $placeholder;
+
+  $mobsRNG = $placeholder;
+  $bossRNG = $placeholder;
 
   // Get aids from mobs boss tables for NG+
   $mobsAidsNGP = $placeholder;
