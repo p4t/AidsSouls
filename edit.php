@@ -442,7 +442,13 @@ if ( !empty($_GET["mode"]) && $_GET["mode"] == "config" && !empty($_GET["item"])
           <li><input type="submit" value="Submit"></li>
         </ul>
         
+        <?php
+        if ( $ID <= 6 ) {
+        ?>
         <input type="hidden" name="newAbbr" value="<?=$row["abbr"]?>"><!-- disabled input vallue workaround -->
+        <?php
+        }
+        ?>
         <input type="hidden" name="oldAbbr" value="<?=$row["abbr"]?>">
         <input type="hidden" name="oldActive" value="<?=$row["active"]?>">
         
