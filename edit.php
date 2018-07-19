@@ -5,8 +5,11 @@ require_once( $_SERVER["DOCUMENT_ROOT"] . "/functions.inc.php" );
 require_once( $_SERVER["DOCUMENT_ROOT"] . "/globals.inc.php" );
 
 // DB Hack
-// include_once("del.ajax.php");
+// require_once( "config.db.php" );
+// require_once( "functions.inc.php" );
+// require_once( "globals.inc.php" );
 
+// include_once("del.ajax.php");
 // include_once("inc/edit/aids.inc.php");
 // include_once("inc/edit/kills.inc.php");
 // include_once("inc/edit/backups.inc.php");
@@ -368,7 +371,11 @@ if ( !empty($_GET["mode"]) && $_GET["mode"] == "config" && !empty($_GET["item"])
       
       // rename SQL Tables
       // only if not pre-existing SoulsBorne
-      if ( $ID > 6 ) renameSQLTable($oldAbbr, $newAbbr);
+      if ( $ID > 6 ) {
+        renameSQLTable($oldAbbr, $newAbbr);
+        // create new game folder
+        createGameFolder($newAbbr);
+      }
 
     }
     
