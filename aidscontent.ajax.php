@@ -5,6 +5,7 @@ require_once( $_SERVER["DOCUMENT_ROOT"] . "/functions.inc.php" );
 require_once( $_SERVER["DOCUMENT_ROOT"] . "/globals.inc.php" );
 
 // Aids
+$firstPageLoad = FALSE; // Set to false so roll.inc.php knows to actually roll dice
 include_once( $_SERVER["DOCUMENT_ROOT"] . "/roll.inc.php" );
 include_once( $_SERVER["DOCUMENT_ROOT"] . "/aids.css.php" );
 ?>

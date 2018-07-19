@@ -4,8 +4,11 @@ require_once( $_SERVER["DOCUMENT_ROOT"] . "/config.db.php" );
 require_once( $_SERVER["DOCUMENT_ROOT"] . "/functions.inc.php" );
 require_once( $_SERVER["DOCUMENT_ROOT"] . "/globals.inc.php" );
 
-
 // DB Hack
+// require_once("config.db.php");
+// require_once("functions.inc.php");
+// require_once("globals.inc.php");
+
 // include_once("aids.ajax.php");
 // include_once("jquery_post.php");
 // include_once("edit.ajax.php");
@@ -35,6 +38,7 @@ if (
 }
 
 // Main AIDS Handling
+$firstPageLoad = "TRUE"; // Set to true so roll.inc.php knows the page has only been loaded once and roll button (ajax) hasn't been used
 include_once( $_SERVER["DOCUMENT_ROOT"] . "/roll.inc.php" );
 ?>
 
