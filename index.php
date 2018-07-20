@@ -202,8 +202,8 @@ include_once( "aids.css.php" );
   
   <!-- Rerun? -->
   <div class="flex-item-button">
-    <button class="button" onClick="rerun()" id="rerun_button" title="" data-balloon="" data-balloon-pos="left">
-      <span id="rerun_switch_button">Rerun?</span>
+    <button class="button disabled" onClick="rerun()" id="rerun_button" title="" data-balloon="" data-balloon-pos="left" disabled>
+      <span id="rerun_switch_button disabled">Rerun?</span>
     </button>
   </div>
 
@@ -513,6 +513,7 @@ ENDWHILE
 
 
 <!-- JavaScript/jQuery -->
+<script src="/js/global.js"></script>
 <script src="/js/ajax.js"></script>
 <script src="/js/audio.js"></script>
 <script src="/js/rerun.js"></script>

@@ -25,8 +25,11 @@
       stop_audio();
       
       // Remove disabled from button
+      /*
       $( "#reroll_button" ).prop( "disabled", false );
       $( "#reroll_button" ).removeClass( "disabled" );
+      */
+      switchButton("reroll", "false");
     }
      
     /* DEBUG */

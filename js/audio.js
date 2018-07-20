@@ -144,8 +144,11 @@ function randomSoundEffect() {
       console.log("Event::Audio.started");
       
       // Disable the button as long as Audio is playing
+      /*
       $( "#reroll_button" ).prop( "disabled", true );
       $( "#reroll_button" ).addClass( "disabled" );
+      */
+      switchButton("reroll", "true");
       
       myAudio.onended = function() {
         console.log("Event::Audio.ended");
@@ -153,11 +156,17 @@ function randomSoundEffect() {
         // Audio ended
         // Remove disabled from button
         // @FUNCTION!!!
+        /*
         $( "#reroll_button" ).prop( "disabled", false );
         $( "#reroll_button" ).removeClass( "disabled" );
+        */
+        switchButton("reroll", "false");
         
+        /*
         $( "#rerun_button" ).prop( "disabled", false );
         $( "#rerun_button" ).removeClass( "disabled" );
+        */
+        switchButton("rerun", "false");
 
       };
 
