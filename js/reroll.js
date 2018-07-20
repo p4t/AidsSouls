@@ -45,6 +45,10 @@ function reroll () {
       */
       myAudio.onended = function() {
         // location.reload();
+        // Remove disabled from button
+        $( "#reroll_button" ).prop( "disabled", false );
+        $( "#reroll_button" ).removeClass( "disabled" );
+        
         console.log( "reroll::ajax.reload" );
         $("#aidsAJAX").load("/aidscontent.ajax.php"); // load Aids output
         console.log( "reroll::ajax.reload.finished" );

@@ -51,6 +51,13 @@
   transition: 0.5s;
 }
 
+/* Class for disabling #reroll_button */
+button.disabled,
+button.disabled span
+{
+  cursor: not-allowed;
+}
+
 .button span:after {
   /* content: '\00bb'; */
   content: "🎲";

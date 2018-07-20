@@ -87,7 +87,7 @@ var audio_files  = [
 function ImageExist(url) {
    var img = new Image();
    img.src = url;
-   return img.height != 0;
+   return img.height !== 0;
 }  
   
 
@@ -129,7 +129,7 @@ function randomSoundEffect() {
         
     var myAudio = document.getElementById("audio_"+source);
     
-    if (source == "shrine") {
+    if (source === "shrine") {
       
       if (myAudio.paused) {
         myAudio.play();
@@ -141,6 +141,24 @@ function randomSoundEffect() {
       
     } else {
       myAudio.play();
+      console.log("Event::Audio.started");
+      
+      // Disable the button as long as Audio is playing
+      $( "#reroll_button" ).prop( "disabled", true );
+      $( "#reroll_button" ).addClass( "disabled" );
+      
+      myAudio.onended = function() {
+        console.log("Event::Audio.ended");
+        
+        // Audio ended
+        // Remove disabled from button
+        // @FUNCTION!!!
+        $( "#reroll_button" ).prop( "disabled", false );
+        $( "#reroll_button" ).removeClass( "disabled" );
+
+      };
+
+
     } // END IF SHRINE
     
     
