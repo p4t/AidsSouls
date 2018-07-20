@@ -155,6 +155,9 @@ function randomSoundEffect() {
         // @FUNCTION!!!
         $( "#reroll_button" ).prop( "disabled", false );
         $( "#reroll_button" ).removeClass( "disabled" );
+        
+        $( "#rerun_button" ).prop( "disabled", false );
+        $( "#rerun_button" ).removeClass( "disabled" );
 
       };
 

@@ -49,6 +49,9 @@ function reroll () {
         $( "#reroll_button" ).prop( "disabled", false );
         $( "#reroll_button" ).removeClass( "disabled" );
         
+        $( "#rerun_button" ).prop( "disabled", false );
+        $( "#rerun_button" ).removeClass( "disabled" );
+        
         console.log( "reroll::ajax.reload" );
         $("#aidsAJAX").load("/aidscontent.ajax.php"); // load Aids output
         console.log( "reroll::ajax.reload.finished" );
