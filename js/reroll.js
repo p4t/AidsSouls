@@ -30,6 +30,7 @@ function reroll () {
       play_audio("aids");
 
       var myAudio = document.getElementById("audio_aids");
+      var timeout; // setTimeout callback
       
       // Check if Audio is being played 
       /*
@@ -58,11 +59,38 @@ function reroll () {
         */
         switchButton("rerun", "false");
         
+        clearTimeout(timeout);
+        console.log("Timeout reset");
+        
         console.log( "reroll::ajax.reload" );
         $("#aidsAJAX").load("/aidscontent.ajax.php"); // load Aids output
         console.log( "reroll::ajax.reload.finished" );
       };
     //}
+    
+      /* Check if Audio started */
+      /*
+      if (myAudio.played.length) {
+        console.log("Audio Device working correctly");// This media has already been played
+      } else {
+        //if ( $('#rerun_button').is(':enabled') ) {
+          console.log("Audio doesn't start playing, .load() content");// Never
+          switchButton("reroll", "false");
+          switchButton("rerun", "false");
+          $("#aidsAJAX").load("/aidscontent.ajax.php");
+        //}
+      }
+      */
+
+    // Fail safe if device is not playing audio
+      timeout = setTimeout(function(){
+        console.log("Audio didn't start playing, refresh on Timeout");
+        switchButton("reroll", "false");
+        switchButton("rerun", "false");
+        $("#aidsAJAX").load("/aidscontent.ajax.php");
+      }, 5000);
+    
+    
   });
 }
 

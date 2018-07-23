@@ -100,7 +100,7 @@ $(document).ready(function () {
             // message_status.text("Hinzugefügt.");
             message_status.text(response);
             // hide the message
-            setTimeout(function(){message_status.hide();},30000); // 3000
+            setTimeout(function(){message_status.hide();},3000); // 3000
          }
         
         
@@ -113,12 +113,13 @@ $(document).ready(function () {
         // if (vmobs != "") console.log("debug: "+vmobs);
         
         var post_data;
-        if ( vmobs !== "" ) post_data = vmobs;
-        else if (vboss !== "" ) post_data = vboss;
-        else if ( vweapons !== "" ) post_data = vweapons;
+        if ( vmobs !== "" ) {post_data = vmobs;}
+        else if (vboss !== "" ) {post_data = vboss;}
+        else if ( vweapons !== "" ) {post_data = vweapons;}
         
-        $("#"+response).append("<li>" +post_data+ "</li>");
-        
+        // $("#"+response).append("<li>" +post_data+ "</li>");
+        // $("#"+response).append("<li>" +post_data+ "</li>").hide().fadeIn(2000);
+        $("#"+response).append("<li>" +post_data+ "</li>").children(":last").hide().fadeIn(2000);
         
         });
     } // ENDIF

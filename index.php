@@ -120,7 +120,6 @@ include_once( "aids.css.php" );
 
 
 <body spellcheck="false">
-<button id="aidsAJAXTest" style="width: 100px; height: 50px;">aidsAJAXTest</button>
 
 <?php
   /* DEBUG OUTPUT */
@@ -184,7 +183,7 @@ include_once( "aids.css.php" );
   
   <!-- Reroll / Reload page -->
   <div class="flex-item-button">
-    <button class="button" onClick="reroll()" id="reroll_button" data-balloon="<?=getLatestRoll()?>" data-balloon-pos="right">
+    <button class="button" onClick="reroll()" id="reroll_button">
       <span id="reroll_switch_button">Roll</span>
     </button>
   </div>
@@ -202,8 +201,8 @@ include_once( "aids.css.php" );
   
   <!-- Rerun? -->
   <div class="flex-item-button">
-    <button class="button disabled" onClick="rerun()" id="rerun_button" title="" data-balloon="" data-balloon-pos="left" disabled>
-      <span id="rerun_switch_button disabled">Rerun?</span>
+    <button class="button disabled" onClick="rerun()" id="rerun_button" disabled>
+      <span id="rerun_switch_button" class="disabled">Rerun?</span>
     </button>
   </div>
 
@@ -356,10 +355,8 @@ ENDWHILE
 <hr>
 <footer>
   <nav>
-    <span>
-      User: {Admin} |
-    </span>
-    <a href="/?action=logout">Logout</a> |
+    <!-- <button id="aidsAJAXTest">aidsAJAXTest</button> | -->
+    <a href="#" id="aidsAJAXTest" onClick="return false">aidsAJAXFailsafe</a> |
     <a href="#" id="myBtn">Zuletzt gewürfelt</a> |
     <a href="/edit" target="_blank">Edit</a>
   </nav>

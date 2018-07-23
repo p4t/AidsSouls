@@ -134,14 +134,16 @@ function randomSoundEffect() {
       if (myAudio.paused) {
         myAudio.play();
         $(".play").html("&#10074;&#10074;"); // Pause Button
+        console.log("Bonfire Play");
       } else {
         myAudio.pause();
         $(".play").html("&#9658;"); // Play button
+        console.log("Bonfire Pause");
       }
       
     } else {
       myAudio.play();
-      console.log("Event::Audio.started");
+      console.log("Event::Audio.started: " + source);
       
       // Disable the button as long as Audio is playing
       /*
