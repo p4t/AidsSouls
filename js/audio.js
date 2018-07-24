@@ -147,6 +147,9 @@ function randomSoundEffect() {
         // Remove disabled from button
         switchButton("reroll", "false");
         switchButton("rerun", "false");
+        
+        // show Bonfire
+        if ( source !== "dice" ) {openBonfire();}
 
       };
 
