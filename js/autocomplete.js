@@ -10,7 +10,7 @@ $( document ).ready(function() {
   $.ajax({
     async: false,
     type: "GET",
-    global: false, //???
+    global: false,
     dataType: "json",
     url: "/autocomplete/aids.php",
     success: function (data) {
@@ -23,7 +23,7 @@ $( document ).ready(function() {
   $.ajax({
     async: false,
     type: "GET",
-    global: false, //???
+    global: false,
     dataType: "json",
     url: "/autocomplete.jQuery.php",
     success: function (data) {

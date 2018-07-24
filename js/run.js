@@ -19,8 +19,7 @@ function run() {
   
   // Display run_rnd on hover button
   $("#rerun_switch_button").prop("title", run_rnd);
-  // $("#rerun_switch_button").prop("data-balloon", run_rnd);
-  $("#rerun_button").prop("data-balloon", run_rnd);
+  // $("#rerun_button").prop("data-balloon", run_rnd);
     
   // VADER
   if (run_rnd === 1 || run_rnd === 100) {
@@ -37,7 +36,6 @@ function run() {
   } else if (run_rnd === 66) {
     $("#bonfire").hide();
     $("#rerunroll").show();
-    // $("#rerunroll").html("<img src='/img/curse.png' width='384' height='320' alt='Curse Basilisk'> <br>" + run_rnd);
     $("#rerunroll").html("<img src='/img/curse.png' width='384' height='320' alt='Curse Basilisk'> <br>");
     play_audio("superaids");
     

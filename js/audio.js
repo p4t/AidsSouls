@@ -108,11 +108,6 @@ function randomSoundEffect() {
   
   // $("img#randimgw12").prop("src", src);
   
-  /*
-  $("#status").show();
-  $("#status").text(src);
-  */
-  
   console.log(src);
   
   play_audio(src);
@@ -123,9 +118,6 @@ function randomSoundEffect() {
 
 /* Play Audio */
   function play_audio (source) {
-    
-    // set html via jquery
-    // $("#element").html("<audio autoplay><source src=\"" + thisSound + "\" type=\"audio/mpeg\"><embed src=\"" + thisSound + "\" hidden=\"true\" autostart=\"true\" /></audio>");
         
     var myAudio = document.getElementById("audio_"+source);
     
@@ -146,10 +138,6 @@ function randomSoundEffect() {
       console.log("Event::Audio.started: " + source);
       
       // Disable the button as long as Audio is playing
-      /*
-      $( "#reroll_button" ).prop( "disabled", true );
-      $( "#reroll_button" ).addClass( "disabled" );
-      */
       switchButton("reroll", "true");
       
       myAudio.onended = function() {
@@ -157,61 +145,13 @@ function randomSoundEffect() {
         
         // Audio ended
         // Remove disabled from button
-        // @FUNCTION!!!
-        /*
-        $( "#reroll_button" ).prop( "disabled", false );
-        $( "#reroll_button" ).removeClass( "disabled" );
-        */
         switchButton("reroll", "false");
-        
-        /*
-        $( "#rerun_button" ).prop( "disabled", false );
-        $( "#rerun_button" ).removeClass( "disabled" );
-        */
         switchButton("rerun", "false");
 
       };
 
-
     } // END IF SHRINE
-    
-    
-    /*
-    // Loop Timer
-    // loop only x amount of time (maxPlay) to solve problem with stopping audio when timer is active
-    var played = 0;
-    var maxPlay = 3;
-    
-    myAudio.onplay = function() {
-      // played counter
-      played++;
-    };
-
-    // Loop
-    $(myAudio).bind("ended", function() {
-      if ( // don't loop these audio files
-          source !== "dice" &&
-          source !== "bier" &&
-          source !== "superaids" &&
-          source !== "vader" &&
-          source !== "aids" &&
-          source !== "Biber" &&
-          source !== "Katz" &&
-          source !== "Pat"
-         ) {
-        // reset to start point
-        myAudio.currentTime = 0;
-        if (played < maxPlay) {
-          // myAudio.play();
-          setTimeout(function() { myAudio.play() }, 2000); // 1250
-        } else {
-          played = 0;
-        }
-
-      }
-    });
-    */
-  
+      
   } // ENDFUNCTION
 
 
@@ -234,49 +174,16 @@ function stop_audio () {
   // global audio_files; @randomSoundEffect()
   var i;
   var src;
-  
-  /*
-  // go through all audio_files array and check if one of those is currently playing and if so, stop it
-  for (i = 0; i < audio_files.length; i++) {
-    // src = audio_files[i] + ".mp3";
-    src = "audio_" + audio_files[i];
-    src = document.getElementById(src)
-    
-    // alert(src);
-    // text += cars[i] + "<br>";
-    if (src.currentTime > 0) {
-      src.pause();
-      src.currentTime = 0;
-    }
-  }
-  */
 
   // Get all audio by reading every audio Tag instead of audio_files array from random_sound()
   for (i = 0; i < all_audio.length; i++) {
     // src = audio_files[i] + ".mp3";
     src = all_audio[i];
-    // src = document.getElementById(src)
-    
-    // alert(src);
-    // console.log(src);
-    // text += cars[i] + "<br>";
+
     if (src.currentTime > 0) {
       src.pause();
       src.currentTime = 0;
     }
   }
-  
 
-
-  /*
-  var audio_haha      = document.getElementById("audio_haha");
-  var audio_yes       = document.getElementById("audio_yes");
-  var audio_no        = document.getElementById("audio_no");
-  var audio_superaids = document.getElementById("audio_superaids");
-  
-  if (audio_haha.currentTime > 0) {
-    audio_haha.pause();
-    audio_haha.currentTime = 0;
-  }
-  */
 }

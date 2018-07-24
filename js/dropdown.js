@@ -88,13 +88,11 @@ $( document ).ready(function() {
   $("#dice_switch").change(function () {
     if ( $("#dice_switch").is(":checked") ) {
       // "checked"
-      // alert("DEBUG");
       $("#dice_switch_button").text("W20");
 
       return;
     }
     // "unchecked"
-    // alert("DEBUG");
     $("#dice_switch_button").text("W12");
   });
   
@@ -102,13 +100,11 @@ $( document ).ready(function() {
   $("#rerun_switch").change(function () {
     if ( $("#rerun_switch").is(":checked") ) {
       // "checked"
-      // alert("DEBUG");
       $("#rerun_switch_button").text("Rerun?");
 
       return;
     }
     // "unchecked"
-    // alert("DEBUG");
     $("#rerun_switch_button").text("Run");
   });
   
@@ -117,13 +113,11 @@ $( document ).ready(function() {
   $("#reroll_switch").change(function () {
     if ( $("#reroll_switch").is(":checked") ) {
       // "checked"
-      // alert("DEBUG");
       $("#reroll_switch_button").text("-((()))");
 
       return;
     }
     // "unchecked"
-    // alert("DEBUG");
     $("#reroll_switch_button").text("Roll");
   });
   

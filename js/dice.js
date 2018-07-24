@@ -111,13 +111,6 @@ function pickimg(w = 0) {
 }
 
 
-  /*
-  var src = "/dice/" + images[getRandomInt(0, images.length - 1)];
-  $("img#randimgw12").prop("src", src);
-  */
-  // var src = diceRND[getRandomInt(0, diceRND.length - 1)];
-  
-  
   var src = diceRND[getRandomInt(0, diceRND.length - 1)];
   
   // if stat instead of rnd dice add class to enhance dice img class #randomDiceOut
@@ -127,11 +120,7 @@ function pickimg(w = 0) {
     // console.log("STATS");
       
     $( "#randomDiceOut" ).addClass( "stat" );
-    
-    // $( "img#statIMG" ).prop( "src", "/img/stats/ds1/"+src+".jpg" );
-    // $("#randomDiceOut").html("<img src='/img/stats/ds1/"+src+".jpg'>"+src);
-    // $( "img#statIMG" ).prop( "src", "/img/stats/ds1/"+src+".jpg" );
-    
+        
     // console.log("_GAME: " + _GAME);
     
     $("#randomDiceOut").html( " <div><img src='/img/stats/"+_GAME+"/"+src+".png' alt='"+src+"'></div><div>" + src + "</div> ");
@@ -159,12 +148,6 @@ function pickimg(w = 0) {
   var src = images[getRandomInt(0, images.length - 1)];
   $("#randimgw12").text(src);
   */
-  
-  /* always uncheck checkbox "rerun_only" on every click if bonfire is hidden */
-  /*
-  if ( $("input#dice_switch").is(":checked") && $("#bonfire").css("display") == "block" ) {
-  $("input#dice_switch").prop("checked", false);
-  }
-  */
+
 
 } // ENDFUNCTION

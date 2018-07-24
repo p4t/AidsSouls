@@ -516,13 +516,13 @@ ENDWHILE
 <script src="/js/rerun.js"></script>
 <script src="/js/reroll.js"></script>
 <script src="/js/run.js"></script>
-<script src="/js/changeGame.js"></script>
 <script src="/js/dropdown.js"></script>
-<script src="/js/showRNG.js"></script>
-<script src="/js/bonfire.js"></script>
-<script src="/js/modal.js"></script>
 <script src="/js/autocomplete.js"></script>
 <script src="/js/dice.js"></script>
+<!-- <script src="/js/changeGame.js"></script> -->
+<!-- <script src="/js/showRNG.js"></script> -->
+<!-- <script src="/js/bonfire.js"></script> -->
+<!-- <script src="/js/modal.js"></script> -->
 
 
 <!-- JS readdir -->
@@ -543,92 +543,7 @@ function json_test () {
   $("#json").text(files);
 }
 </script>
-  
-<!-- run.js debug -->
-  <?php
-  /* run.js Debug */
-  /*
-  if ( (!empty($_GET["debug"])) && ($_GET["debug"] == "vader") ) {
-  ?>
-  run_rnd = 1;
-  <?php
-  } else if ( (!empty($_GET["debug"])) && ($_GET["debug"] == "superaids") ) {
-  ?>
-  run_rnd = 99;
-  <?php
-  }
-  ?>
-  
-  <?php
-  if ( !empty($_GET["rnd"]) && is_numeric($_GET["rnd"]) ) {
-  ?>
-  run_rnd = "<?=$_GET["rnd"]?>";
-  <?php
-  }
-  */
-  ?>
 
-<!-- AJAX JSON Test -->
-<script>
-/*
-$( document ).ready(function() {
-  
-  var callback = [];
-  $.ajax({
-    async: false,
-    type: "GET",
-    global: false,
-    dataType: "json",
-    url: "/autocomplete/data.json",
-    success: function (data) {
-      $.each(data, function (index, value) {
-        callback.push(value);
-      });
-      
-      // nest $.each for more than one element
-      /*
-      $.each(data, function(key, value){
-        $.each(value, function(key, value){
-          console.log(key, value);
-        });
-      });
-      */
-
-      /*
-      console.log( data );
-      console.log( "----" );
-      console.log( "aids: " + data["Aids"] );
-      */
-      
-      // callback = data;
-/*
-      callback = data;
-    }
-  });
-  
-  console.log("----");
-  console.log("callback: " + callback["ds1"][0]["weapons"]);
-  
-});
-*/
-</script>
-
-
-<script>
-$( "#aidsAJAXTest" ).click(function() {
-  console.log( "#aidsAJAXTest clicked" );
-  $("#aidsAJAX").load("/aidscontent.ajax.php");
-});
-</script>
 
 </body>
 </html>
-
-<?php
-// Session/Login end
-/*
-} else { 
-  include("login.inc.php");
-}
-*/
-?>

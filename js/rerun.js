@@ -25,10 +25,6 @@
       stop_audio();
       
       // Remove disabled from button
-      /*
-      $( "#reroll_button" ).prop( "disabled", false );
-      $( "#reroll_button" ).removeClass( "disabled" );
-      */
       switchButton("reroll", "false");
     }
      
@@ -49,10 +45,7 @@
       // every rnd value except: 1, 100, 7, 77, 99
       $("#rerunroll").html("¯\\_(ツ)_/¯ <br>" + rnd);
 
-      if ( $("#rerunroll").css("display") === "block" ) {
-        // play_audio("haha");
-        // play_audio("fail");
-        
+      if ( $("#rerunroll").css("display") === "block" ) {        
         // Play Sound
         randomSoundEffect();
         $("#bonfire").hide();
@@ -81,13 +74,5 @@
       */
       
     } // ENDIF
-    
-    /* always uncheck checkbox "rerun_only" on every click if bonfire is hidden */
-    /*
-    if ( $("input#rerun_switch").is(":checked") && $("#bonfire").css("display") == "block" ) {
-      $("input#rerun_switch").prop("checked", false);
-      
-      $("#rerun_switch_button").text("Run"); // Fix Text on the button
-    }
-    */
+
   } // EOF RERUN()
