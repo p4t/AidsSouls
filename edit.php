@@ -113,6 +113,7 @@ require_once( $_SERVER["DOCUMENT_ROOT"] . "/globals.inc.php" );
 
   <span>&nbsp;</span>
 
+  <a href="/edit?show=audio"        <?=( isset($_GET["show"]) && $_GET["show"]  == "audio"        ) ? "class='sidenav-active'" : ""?>>Audio</a>
   <a href="/edit?show=autocomplete" <?=( isset($_GET["show"]) && $_GET["show"]  == "autocomplete" ) ? "class='sidenav-active'" : ""?>>Autocomplete</a>
   <a href="/edit?show=aidsglobal"   <?=( isset($_GET["show"]) && $_GET["show"]  == "aidsglobal"   ) ? "class='sidenav-active'" : ""?>>Global Aids</a>
 
@@ -877,6 +878,7 @@ if ( empty($_REQUEST) || !empty($_GET["show"]) ) :
         // if ( !empty($_GET["show"]) && $_GET["show"] == "logs"         ) include("inc/edit/logs.inc.php");
         if ( !empty($_GET["show"]) && $_GET["show"] == "autocomplete" ) include("inc/edit/autocomplete.inc.php");
         if ( !empty($_GET["show"]) && $_GET["show"] == "aidsglobal"   ) include("inc/edit/aids.global.inc.php");
+        if ( !empty($_GET["show"]) && $_GET["show"] == "audio"        ) include("inc/edit/audio.inc.php");
       
         if ( !empty($_GET["show"]) && $_GET["show"] == "config"       ) include("inc/edit/config.inc.php");
 

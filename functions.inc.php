@@ -893,18 +893,51 @@ function checkIfValueExists ($ID, $table) {
  * Scan dir and list files ordered by create date
  */
 function scan_dir($dir) {
-    $ignored = array('.', '..', '.svn', '.htaccess');
+  $ignored = array(".", "..", ".svn", ".htaccess");
 
-    $files = array();    
-    foreach (scandir($dir) as $file) {
-        if (in_array($file, $ignored)) continue;
-        $files[$file] = filemtime($dir . '/' . $file);
-    }
+  $files = array();    
+  foreach (scandir($dir) as $file) {
+      if (in_array($file, $ignored)) continue;
+      $files[$file] = filemtime($dir . '/' . $file);
+  }
 
-    arsort($files);
-    $files = array_keys($files);
+  arsort($files);
+  $files = array_keys($files);
 
-    return ($files) ? $files : false;
+  return ($files) ? $files : false;
+}
+
+
+
+/*
+ * Scan dir recursively
+ * use DirectoryIterator
+ */
+function scan_dir_recursively($path) {
+  
+  $files = array(); 
+  
+  foreach (new DirectoryIterator($path) as $fileInfo) {
+    if ( $fileInfo->isDot() ) continue;
+    if ( $fileInfo->isFile() ) $files[] = $fileInfo->getFilename();
+  }
+  
+  sort($files);
+  
+  return ($files) ? $files : false;
+
+}
+
+
+/*
+ * Get all folders in given $dir
+ */
+function getDirs($dir) {
+
+  $dirs = glob("$dir/*", GLOB_ONLYDIR);
+  array_unshift($dirs, $dir); // add base folder in front of array
+  
+  return $dirs;
 }
 
 
