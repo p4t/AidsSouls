@@ -149,7 +149,7 @@ function randomSoundEffect() {
         switchButton("rerun", "false");
         
         // show Bonfire
-        if ( source !== "dice" && source !== "vader" && source !== "epicsaxguy" ) {openBonfire();}
+        if ( source !== "dice" && source !== "vader" && source !== "epicsaxguy" && source !== "superaids" ) {openBonfire();}
 
       };
 
