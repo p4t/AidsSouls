@@ -48,10 +48,27 @@ $(function(){
 
 
 function showRNG () {
-    
-  $("#mobsRNG, #bossRNG").toggle();
-  $("#mobsRNGNumber, #bossRNGNumber").toggle();
   
+  /*
+  $("#mobsRNG, #bossRNG").toggle();
+  $("#mobsRNGNumber, #bossRNGNumber").fadeToggle( "slow", "linear" );
+  */
+  // console.log("FLIP CLICK");
+  
+  if ( $( ".dice_wrapper" ).hasClass( "is-flipped" ) ) {
+    // console.log("hasClassTRUE");
+    $("#mobsRNG, #bossRNG").fadeToggle( "slow", "linear" );
+    $("#mobsRNGNumber, #bossRNGNumber").toggle();
+    
+    $( ".dice_wrapper" ).removeClass( "is-flipped" );
+  } else {
+    // console.log("hasClassFALSE");
+    $("#mobsRNG, #bossRNG").toggle();
+    $("#mobsRNGNumber, #bossRNGNumber").fadeToggle( "slow", "linear" );
+
+    $( ".dice_wrapper" ).addClass( "is-flipped" );
+  }
+
 }
 
 

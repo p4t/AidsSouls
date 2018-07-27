@@ -573,8 +573,10 @@ img.dice:hover,
 .die:hover,
 .dice_wrapper:hover
 {
+  /*
   -webkit-transform: rotate(360deg);
   transform: rotate(360deg);
+  */
   
   cursor: pointer;
   
@@ -594,6 +596,10 @@ img.dice:hover,
   border: 1px solid chocolate;
 }
 */
+
+.dice_wrapper.is-flipped {
+  transform: rotateY(180deg);
+}
 
 :root {
   --dice-size: 125px;
@@ -728,6 +734,8 @@ img.dice:hover,
   font-size: 5em;
   
   line-height: var(--dice-size);
+  
+  transform: rotateY(180deg); /* Counter transform from card flip effect */
   
 }
 .diceIMG {

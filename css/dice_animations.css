@@ -11,10 +11,12 @@
   -webkit-animation-fill-mode: both;
   animation-fill-mode: both;
 }
+/*
 .bounceInDownRotate:hover {
   transform: rotate(360deg);
   -webkit-transform: rotate(360deg);
 }
+*/
 @keyframes bounceInDown {
 0%, 60%, 75%, 90%, 100% {
 -webkit-transition-timing-function: cubic-bezier(0.215, 0.610, 0.355, 1.000);
