@@ -39,54 +39,18 @@ html {
 
 
 html {
-  
   font-family: "Trajan", sans-serif;
-  
-  /*
-  font-family: "Sawarabi Mincho",-apple-system,BlinkMacSystemFont,游明朝,"Yu Mincho",YuMincho,"Helvetica Neue","ヒラギノ明朝 ProN W6", HiraMinProN-W6,メイリオ,Meiryo,serif;
-  */
   font-size: 100%;
   
   -webkit-font-smoothing: antialiased; /* Fix for webkit rendering */
 	-webkit-text-size-adjust: 100%; 
   -ms-text-size-adjust: 100%;
-    
-  /* DS3 Wallpaper */
-  /* background: url("/img/bg/ds3.jpg") no-repeat center center fixed; */
-  
-  /* Larry */
-  /*
-  background: url("/img/bg/larry.jpg") no-repeat center center fixed;
-  */
-  
-  /* DS1 Remaster */
-  /* background: url("/img/bg/ds1remaster.jpg") no-repeat center center fixed; */
-  
-  /*
-  background-color: black;
-
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  background-size: cover;
-  */  
-  
-  /* Firefox Cover Fix */
-  /*
-  min-height: 100%;
-  */
 
 	margin: 0;
 	padding: 0;
 	
   color: #fff;
   text-shadow: 1px 1px 1px #000;
-  
-  /*
-  height: 100%;
-  */
-  
-  /* overflow: hidden; */
 }
 
 
@@ -124,15 +88,11 @@ nav {
   text-align: center;
 }
 
-footer { /* :not(body#edit) */
+
+footer {
   text-align: center;
   margin: 25px 0;
-  /*
-  background-color: rgba(0,0,0,0.1);
-  */
 }
-
-
 
 
 strong {
@@ -226,79 +186,6 @@ hr {
 
 
 
-
-
-/* Background Blur*/
-/*
-.background:before {
-  content: "";
-  position: fixed;
-  left: 0;
-  right: 0;
-  z-index: -1;
-  
-  display: block;
-  background-image: url("/img/bg/shrine.jpg");
-  width: 100%;
-  height: 100%;
-  
-  -webkit-filter: blur(2px);
-  -moz-filter: blur(2px);
-  -o-filter: blur(2px);
-  -ms-filter: blur(2px);
-  filter: blur(2px);
-  
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  background-size: cover;
-}
-*/
-
-/*
-.background {
-  position: fixed;
-  left: 0;
-  right: 0;
-  z-index: 0;
-  margin-left: 20px;
-  margin-right: 20px;
-}
-*/
-
-
-
-/* VIDEO BG */
-/*
-#myVideo {
-  position: fixed;
-  right: 0;
-  bottom: 0;
-  min-width: 100%;
-  min-height: 100%;
-  width: auto;
-  height: auto;
-  z-index: -100;
-}
-
-
-.container {
-  position: absolute;
-  margin-left: auto;
-  margin-right: auto;
-  left: 0;
-  right: 0;
-  
-  border: 10px solid rgba(255, 255, 255, 0.5);
-
-	max-width: 1260px;
-	min-width: 780px;
-
-}
-*/
-
-
-
 .container {
 	width: 95%;
 
@@ -348,32 +235,6 @@ div#todo
 
 
 
-#todo {
-  width: 60%;
-  margin: 0 auto;
-  /* text-align: center; */
-  white-space: pre-wrap;
-}
-
-/* Inline Edit Fix */
-#todo:active,
-#todo:focus
-{
-  color: #fff;
-  
-  /* outline-color: #3f292b; */
-  outline-color: #fff;
-  outline-style: 9px dotted;
-}
-
-
-/*
-.bonfire:hover:after {
-  content: "\25BA";
-}
-*/
-
-
 /* Reroll Fade-In */
 .aidscontent, .rerunroll {
   -webkit-animation: fade-in 2s ease;
@@ -389,19 +250,6 @@ div#todo
 @-moz-keyframes fade-in{0%{opacity:0} 100%{opacity:1}}
 @-o-keyframes fade-in{0%{opacity:0} 100%{opacity:1}}
 @keyframes fade-in{0%{opacity:0} 100%{opacity:1}}
-
-
-/*
-.rerunFont {
-  font-size: 3em;
-  font-weight: 600;
-  text-align: center;
-  
-  text-shadow: 2px 2px 3px #000;
-  
-  text-shadow: 1px 1px 25px rgba(239, 35, 60, 0.5), 1px 1px 25px rgba(122, 73, 48, 0.5), -1px -1px 25px rgba(230, 57, 70, 0.5), -1px -1px 88px rgba(217, 4, 41, 0.5);   
-}
-*/
 
 
 .superaids {
@@ -420,10 +268,6 @@ ul.aidsList { /* UP FOR Mobs, Boss, Weapons Aids */
 }
 
 ul.aidsList > li {
-  /*
-  padding-left: 5px;
-  padding-right: 5px;
-  */
   border: 1px solid transparent; /* fix hover */
 }
 
@@ -444,20 +288,10 @@ ul.aidsList > li:focus
   
   outline-color: #3f292b;
   outline-style: 2px dotted;
-  
-  /*
-  background: url("/img/button_bg.png") no-repeat center center fixed;  
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  background-size: cover;
-  */
 }
 
 
 /* DELETE HOVER */
-
-
 .aidsList img {
   color: red;
   display: none;
@@ -474,16 +308,6 @@ ul.aidsList > li:focus
   white-space: nowrap;#######################################
   */
 }
-
-
-/*
-.title:hover .delete,
-.title:hover .edit-data
-{
-  display: block;
-}
-*/
-
 
 
 li.noListStyle {
@@ -531,6 +355,7 @@ li.noListStyle {
   
   cursor: pointer;
 }
+
 #randomDiceOut.stat, .stat {
   width: initial;
   height: initial;
@@ -548,9 +373,7 @@ li.noListStyle {
 }
 
 
-img.dice {
-  /* filter: contrast(0) sepia(50%) hue-rotate(20deg) brightness(1.9) saturate(0.28); */ /* Turn black dice white */
-  
+img.dice {  
   width: 100px;
   height: 100px;
 }
@@ -561,11 +384,6 @@ img.dice,
 .die,
 .dice_wrapper
 {
-  /*
-  overflow: hidden;
-  ///////////////////// WHY!?!?!?!??!?!!?!?!
-  */
-  
   transition-duration: 0.8s;
   transition-property: transform;
 }
@@ -577,25 +395,9 @@ img.dice:hover,
   -webkit-transform: rotate(360deg);
   transform: rotate(360deg);
   */
-  
   cursor: pointer;
-  
 }
 
-/*
-.die {
-  width: 100px;
-  height: 100px;
-  
-  font-size: 5em;
-  line-height: 100px;
-  color: black;
-  text-shadow: 1px 1px 10px black;
-  background: white;   
-  border-radius: 15px;
-  border: 1px solid chocolate;
-}
-*/
 
 .dice_wrapper.is-flipped {
   transform: rotateY(180deg);
@@ -610,23 +412,9 @@ img.dice:hover,
   
   font-family: inherit;
 
-  /*
-  width: var(--dice-size);
-  height: var(--dice-size);
-  line-height: var(--dice-size); /* the same div height */
   width: var(--dice-size);
   height: var(--dice-size);
   line-height: 1em;
-  /*
-  line-height: 125px;
-  */
-  
-  /*
-  font-size: 5em;
-  font-weight: normal;
-  color: white;
-  text-shadow: 1px 1px 10px black;
-  */
   
   opacity: 1;
 
@@ -645,22 +433,6 @@ img.dice:hover,
   -moz-justify-content: center;
   justify-content: center;
   
-  
-
-
-  
-  
-  /*
-  align-content: center;
-  */
-  
-  /* TEST : */
-  /*
-  flex-wrap: nowrap;
-  flex-flow: nowrap;
-  flex-direction: row;
-  */
-  
   padding: 0;
   margin: 0;
 
@@ -673,64 +445,20 @@ img.dice:hover,
 }
 
 
-
-
 /* Center font on mobile fix */
-/*
-.dice_wrapper-font,
-.dice_wrapper-font img,
-*/
 #mobsRNG, #mobsRNG img,
 #bossRNG, #bossRNG img
 {
-  /*
-  margin: 0 auto;
-  */
+  text-align: center; /* center non flex-items */
   
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
-  
-  
-  /*
-  text-align: center;
-  vertical-align: middle;
-  justify-content: center;
-  align-content: center;
-  align-items: center;
-  align-self: center;
-  */
-  /* text-align: center; */
 }
 
-#mobsRNG img {
-   /*
-  outline: 1px solid green;
-  */
-}
-
-
-#mobsRNG,
-#bossRNG
-{
-  /*
-  font-size: 5em;
-  */
-  
-  /*
-  font-weight: normal;
-  color: white;
-  text-shadow: 1px 1px 10px black;
-  */
-  text-align: center; /* center non flex-items */
-}
 
 .diceText {
-  /*
-  width: 125px;
-  height: 125px;
-  */
   font-size: 5em;
   
   line-height: var(--dice-size);
@@ -738,12 +466,6 @@ img.dice:hover,
   transform: rotateY(180deg); /* Counter transform from card flip effect */
   
 }
-.diceIMG {
-}
-
-
-
-
 
 
 /* Append to disable user select */
@@ -753,71 +475,6 @@ img.dice:hover,
   -ms-user-select: none;
   user-select: none;
 }
-
-
-/*
-.animate_rotate {
-    -webkit-animation: animaterotate 0.6s;
-    animation: animaterotate 0.6s
-}
-
-@-webkit-keyframes animaterotate {
-    from {-webkit-transform: scale(0)} 
-    to {-webkit-transform: scale(1)}
-}
-    
-@keyframes animaterotate {
-    from {transform: scale(0)} 
-    to {transform: scale(1)}
-}
-*/
-
-/* DICE ROLL ANIMATION */
-/*
-.animate_rotate {
-    -webkit-animation: spin 1s;
-    animation: spin 1s
-}
-
-@-moz-keyframes spin {
-    from { -moz-transform: rotate(0deg); }
-    to { -moz-transform: rotate(360deg); }
-}
-@-webkit-keyframes spin {
-    from { -webkit-transform: rotate(0deg); }
-    to { -webkit-transform: rotate(360deg); }
-}
-@keyframes spin {
-    from {transform:rotate(0deg);}
-    to {transform:rotate(360deg);}
-}
-*/
-
-
-
-
-
-/***TEST***/
-
-.animate_rotate {
-
-
-    /* The animation part: */
-    animation-name: spin;
-    animation-duration: 1000ms;
-    animation-iteration-count: 1;
-    animation-timing-function: ease-in-out;
-}
-@keyframes spin {
-    from {transform:rotate(0deg);}
-    to {transform:rotate(360deg);}
-}
-
-.rotatingimg{transition: transform 2s;}
-.rotatingimg:hover{transform:rotate(360deg);}
-
-
-
 
 
 img.edit_icon {
@@ -830,25 +487,14 @@ img.edit_icon {
   display: none;
 }
 
-#reroll_hover {
-  
-}
-
 
 #status, #jsstatus {
-  /*
-  color: #006100;
-  */
   color: white;
   background-color: #5cb85c;
   position: fixed;
   left: 0;
   bottom: 0;
   width: 100%;
-  /*
-  background-color: red;
-  color: white;
-  */
   text-align: center;
   display: none;
 }
@@ -866,16 +512,9 @@ img.edit_icon {
   color: white;
   background: rgba(33, 32, 33, 0.75);
   width: 100%;
-  /*
-  background-color: red;
-  color: white;
-  */
   text-align: center;
   display: none;
 }
-
-
-
 
 
 #fullscreen {
@@ -900,9 +539,11 @@ img.edit_icon {
   float: left;
   position: relative;
 }
+
 .itemsContainer:hover .play {
   display: block;
 }
+
 .play {
   position: absolute;
   display: none;
@@ -936,23 +577,20 @@ img.edit_icon {
 }
 
 
-
-
 /* MODAL */
 /* The Modal (background) */
 .modal {
-    display: none; /* Hidden by default */
-    position: fixed; /* Stay in place */
-    z-index: 1; /* Sit on top */
-    left: 0;
-    top: 0;
-    width: 100%; /* Full width */
-    height: 100%; /* Full height */
-    overflow: auto; /* Enable scroll if needed */
-    background-color: rgb(0,0,0); /* Fallback color */
-    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
 }
-
 /* Modal Content/Box */
 .modal-content {
   /* background-color: green; */
@@ -963,7 +601,6 @@ img.edit_icon {
   /* width: 80%; */ /* Could be more or less, depending on screen size */
   /* width: 937px;*/
 }
-
 /* The Close Button */
 .close {
   color: #aaa;
@@ -971,117 +608,21 @@ img.edit_icon {
   font-size: 2em;
   font-weight: bold;
 }
-
 .close:hover,
 .close:focus {
   color: red;
   text-decoration: none;
   cursor: pointer;
 }
-
-
 /* Add Zoom Animation */
 .animate {
     -webkit-animation: animatezoom 0.6s;
     animation: animatezoom 0.6s
-}
-/*
-@-webkit-keyframes animatezoom {
-    from {-webkit-transform: scale(0)} 
-    to {-webkit-transform: scale(1)}
-}
-*/
-    
+}  
 @keyframes animatezoom {
     from {transform: scale(0)} 
     to {transform: scale(1)}
 }
-
-
-
-
-
-
-
-
-
-
-/* COLLAPSIBLE */
-.collapsible {
-  background-color: rgba(0, 0, 0, 0.7);
-  
-  cursor: pointer;
-  padding: 18px;
-  width: 100%;
-  border: none;
-  outline: none;
-  /* font-size: 15px; */
-  
-  justify-content: center;
-  align-content: center;
-  align-items: center;
-  text-align: center;
-
-}
-
-.collapsible-head {
-  font-family: "Trajan";
-  font-size: 1.5em;
-  color: white;
-}
-
-.active, .collapsible:hover {
-  background-color: rgba(0, 0, 0, 0.4);
-}
-
-.collapsible:after {
-  content: '\002B';
-  color: white;
-  font-weight: bold;
-  float: right;
-  margin-left: 5px;
-}
-
-.active:after {
-  content: "\2212";
-}
-
-.collapsible-content {
-  padding: 0 18px;
-  max-height: 0;
-  overflow: hidden;
-  transition: max-height 0.2s ease-out;
-  /*  
-  background-color: #f1f1f1;
-  */
-  /* border: 25px solid transparent; */
-  background-color: rgba(0, 0, 0, 0.4);
-
-  justify-content: center;
-  align-content: center;
-  align-items: center;
-  text-align: center;
-
-}
-
-
-
-  /* Style to reverse the caret icon from pointing downwards to upwards */
-  .caret.caret-up {
-    border-top-width: 0;
-    border-bottom: 4px solid #fff;
-  }
-
-
-
-.amp {
-font-family: Baskerville, 'Goudy Old Style', Palatino, 'Book Antiqua', serif;
-font-style: italic;
-font-weight: normal;
-}
-
-
-
 
 
 .delete,
@@ -1109,6 +650,8 @@ font-weight: normal;
   font-size: 2em;
 }
 
+
+
 /* TABLE EDIT AIDS.PHP ?????? @@@@@@@ DEBUG TODO */
 table.edit td > div img {
   display: none;
@@ -1123,26 +666,7 @@ table.edit td:hover > div img {
   align-items: center;
   justify-content: center;
   
-  
-  /*
-  margin: 20px;
-  */
-  
-  line-height: 1.5em;
-  /*
-  border: 25px solid transparent;
-  border-image: url("/img/border.png") 30 round;
-  
-  background: url("/img/ds3-asset-bg.png") no-repeat center center scroll;
-  
-  -webkit-background-size: 120% 120%;
-  -moz-background-size: 120% 120%;
-  -o-background-size: 120% 120%;
-  background-size: 120% 120%;
-  
-  padding: 15px;
-  */
-  
+  line-height: 1.5em;  
 }
 #config ul {
   background-color: rgba(0,0,0,0.7);
@@ -1155,24 +679,12 @@ table.edit td:hover > div img {
   
 }
 
-#config li {
-  /* margin: 5px; */
-}
-
 
 .killsList {
   /* list-style: circle outside; */
   list-style: square outside;
   display: table;
-  /*
-  font-size: 1.1em;
-  */
-  /*
-  margin: 2px 15px 2px 15px;
-  */
-  /*
-  margin: 0 10px;
-  */
+  
   margin-left: 10px;
 }
 
@@ -1187,12 +699,10 @@ table.edit td:hover > div img {
   z-index: 1;
   top: 0;
   left: 0;
-  /*
-  background-color: #111;
-  */
   background: rgba(17, 17, 17, 0.7);
   overflow-x: hidden;
   transition: 0.5s;
+  
   padding-top: 60px;
 }
 
@@ -1200,9 +710,7 @@ table.edit td:hover > div img {
   font-size: 2em;
   cursor: pointer;
   
-  position: fixed;
-  /* top: 5px; */
-  
+  position: fixed;  
 }
 
 .sidenav a {
@@ -1216,9 +724,6 @@ table.edit td:hover > div img {
 
 .sidenav a:hover {
   color: #f1f1f1;
-  /*
-  background: rgba(0, 0, 0, 0.5);
-  */
 }
 
 .sidenav .closebtn {
@@ -1233,10 +738,6 @@ table.edit td:hover > div img {
   font-size: 1.5em;
   line-height: 2em;
   font-weight: bold;
-  
-  /*
-  text-decoration: underline;
-  */
 }
 .sidenav-active,
 .sidenav-active a,
@@ -1286,22 +787,12 @@ ul.autocomplete {
 }
 
 .number-font {
-  /*
-  font-family: "Kameron", serif;
-  */
   font-family: "Varela Round", sans-serif;
 }
 
 
 
 .max-width-height {
-  /*
-  max-width: 50%;
-  max-height: 50%;
-  
-  width: auto;
-  height: auto;  
-  */
   max-width: 500px;
   max-height: 500px;
 }
