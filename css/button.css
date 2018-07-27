@@ -4,8 +4,6 @@
 .button {
   border-radius: 4px;
   background-color: #3F292B;
-  /* background-color: #434343; */
-  /* background: url("/img/noise-diagonal-trans.png"); */
   background: url("/img/button_bg.png");
   border: none;
   
@@ -17,16 +15,10 @@
   font-size: 1.7em; /* Button Text Font Size */
   padding: 5px;
   
-  /* width: 120px; */
   width: 120px;
   height: 68px;
   
   white-space: nowrap;
-  
-  /*
-  width: 120px;
-  height: 75px;
-  */
   
   transition: all 0.5s;
   cursor: pointer;
@@ -38,10 +30,6 @@
 {
   border: none;
   outline: none;
-  /*
-  outline-color: #3f292b;
-  outline-style: 2px dotted;
-  */
 }
 
 .button span {
@@ -91,13 +79,7 @@ button.disabled span
   font-size: 1.5em; /* Button Text Font Size */
   padding: 1px;
   
-  /*
-  width: 120px;
-  height: 75px;
-  */
-  
   transition: all 0.5s;
   cursor: pointer;
   margin: 1px;
-  
 }

@@ -129,15 +129,7 @@
 
 
 
-#flex-container-edit
-{
-  /*
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  margin: 0 auto;
-  */
+#flex-container-edit {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -155,8 +147,7 @@
   margin: 0 auto;
 }
 
-#flex-container-edit-config
-{
+#flex-container-edit-config {
 	display: flex;
 	flex-direction: column;
 	flex-wrap: wrap;
@@ -166,9 +157,7 @@
 }
 
 
-
-#aidsList
-{
+#aidsList {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
@@ -186,40 +175,25 @@
 
 #flex-container-autocomplete {
   display: flex;
-
   align-items: flex-start;
-
   justify-content: flex-start;
   
 }
 .flex-container-autocomplete-item {
-  /*
-  text-align: center;
-  */
-  
+    
 }
 
 #flex-container-autocomplete {
-    display: flex;
-  
-    flex-direction: row;
-  
-    flex-wrap: wrap;
-
-    justify-content: center;
-
-    align-content: flex-start;
-
-    align-items: flex-start;
-    }
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-content: flex-start;
+  align-items: flex-start;
+}
 
 .flex-container-autocomplete-item {
-
-    order: 0;
-
-    flex: 0 1 auto;
-
-    align-self: auto;
-    }
-
-
+  order: 0;
+  flex: 0 1 auto;
+  align-self: auto;
+}

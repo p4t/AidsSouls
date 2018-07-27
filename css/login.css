@@ -7,19 +7,8 @@
   width: 0 25%;
 }
 
-/*
-#flex-container-login > div, 
-#flex-container-login > form
-{
-  text-align: center;
-}
-
-*/
-
 .flex-item-login {
-  /*
-  width: 50%;
-  */
+
 }
 
 
@@ -66,12 +55,6 @@
   position: relative;
 }
 
-/*
-img.avatar {
-    width: 40%;
-    border-radius: 50%;
-}
-*/
 
 .error {
   margin-top: 25px;

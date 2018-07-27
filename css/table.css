@@ -3,11 +3,7 @@
 
 /* ~~~ Table ~~~ */
 
-table {
-	/* background: #f5f5f5; */
-  /* background: #3F292B; */ /*BG*/
-  /* background: url("/img/ds3-asset-bg.png") center repeat-y; */
-  
+table {  
   width: 80%;
   
   border: 25px solid transparent;
@@ -26,7 +22,6 @@ table {
 	line-height: 24px;
 	margin: 30px auto;
 	text-align: left;
-
 }	
 
 
@@ -54,16 +49,7 @@ td.noStyle {
 
 
 th {
-	/* background: url(noise-diagonal.png), linear-gradient(#000, #000); */
-  /* background: url("/img/noise-diagonal.png"), linear-gradient(#A37B73, #3F292B); */
   background: url("/img/noise-diagonal.png"), linear-gradient(#362417, #3F292B);
-  
-	/*
-  border-left: 1px solid #555;
-	border-right: 1px solid #777;
-	border-top: 1px solid #555;
-	border-bottom: 1px solid #333;
-  */
   
 	box-shadow: inset 0 1px 0 #3F292B;
 	color: #fff;
@@ -73,8 +59,6 @@ th {
 	text-shadow: 0 1px 0 #DB7F67;
   
   font-size: 1.2em;
-  
-  
 }
 
 
@@ -101,12 +85,6 @@ th:last-child {
 }
 
 td {
-  /*
-	border-right: 1px solid #fff;
-	border-left: 1px solid #e8e8e8;
-	border-top: 1px solid #fff;
-	border-bottom: 1px solid #e8e8e8;
-  */
 	padding: 10px 15px;
 	position: relative;
 	transition: all 300ms;
@@ -119,7 +97,6 @@ td:active,
 td:focus
 {
   border: 3px ridge #3f292b;
-  
   
   outline-color: #3f292b;
   outline-style: 2px dotted;
@@ -136,18 +113,6 @@ td.emoji {
   
   /* text-replace: "Biber" "🐻" "Katz" "🐱" "Pat" "💩" "Bonfire" "🔥"; */
 }
-
-/*
-td.emoji a,
-td.emoji a:link,
-td.emoji a:active,
-td.emoji a:focus
-{
-  color: transparent;
-  text-shadow: 0 0 3px #000;
-}
-*/
-
 
 
 @keyframes bounce {
@@ -170,18 +135,9 @@ td.emoji a:focus
 
 
 td.emoji:hover {
-  
-  /* font-size: 10em; */
-  
   animation: bounce 1s
 }
 
-/*
-td.emoji:hover:after {
-  font-size: 1em;
-  content: '+';
-}
-*/
 
 
 
@@ -192,7 +148,6 @@ td:first-child {
 }	
 
 td:last-child {
-	/* border-right: 1px solid #e8e8e8; */
 	box-shadow: inset -1px 0 0 #000;
 }	
 
@@ -304,7 +259,6 @@ table.edit {
   margin-right: 5px;
   
   padding: 0;
-
 }	
 
 table.edit td {

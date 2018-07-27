@@ -1,15 +1,11 @@
 @charset "utf-8";
 
-
 form#edit {
-  /* margin: 50px; */
-  /* top, tight, bottom, left */
   margin: 50px 10px 50px 10px;
   padding: 20px;
   border: 1px dashed #000;
   background-color: rgba(0, 0, 0, 0.7)
 }
-
 
 
 /* FORM */
@@ -19,9 +15,7 @@ input[type="submit"],
 input[type="button"],
 input[type="number"]
 {
-  /*
-  font-family: inherit;
-  */
+
   font-family: "Montserrat", sans-serif;
   font-size: 1em;
   line-height: 1.2em;
@@ -46,11 +40,7 @@ input[type=number]{
 
 /* Dark Souls FOnt for Form on aids.php */
 #flex-container-ajax-form input::placeholder {
-  
   font-family: "Trajan", sans-serif;
-  /*
-  color: pink;
-  */
 }
 
 
@@ -63,150 +53,6 @@ textarea:focus
   outline-style: 2px dotted;
 }
 
-/*
-input:hover,
-textarea:hover {
-  outline-color: red;
-  outline-style: 5px dashed;
-}
-*/
-
-/* CHECKBOX */
-/*
-input[type="checkbox"] {
-  width: 60px; 
-  height: 50px;
-  
-  cursor: pointer;
-  -webkit-appearance: none;
-  appearance: none;  
-  
-  border-radius: 4px;
-  background-color: #3F292B;
-  background: url("/img/curlup.png");
-  
-  margin-bottom: -20px;
-}
-
-input[type="checkbox"]:checked {
-  width: 60px; 
-  height: 50px;
-  
-  cursor: pointer;
-  -webkit-appearance: none;
-  appearance: none;  
-  
-  border-radius: 4px;
-  background-color: #3F292B;
-  background: url("/img/praisethesun.png");
-}
-
-
-input[type="checkbox"]:active,
-input[type="checkbox"]:focus
-{
-  outline: none;
-}
-*/
-
-
-
-
-/* The switch - the box around the slider */
-.switch {
-  position: relative;
-  display: inline-block;
-  width: 60px;
-  height: 34px;
-  
-}
-
-/* Hide default HTML checkbox */
-.switch input {display:none;}
-
-/* The slider */
-.slider {
-  position: absolute;
-  cursor: pointer;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  
-  /* SLIDER BACKGROUND */
-  /* background-color: #2d3035; */
-  /*
-  background-color: rgba(45, 48, 53, 0.1);
-  */
-  background: rgba(85, 85, 85, 0.3);
-  border-radius: 3px;
-  box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.3), 0 1px 0 rgba(0, 0, 0, 0.2); 
-  
-
-  -webkit-transition: .4s;
-  transition: .4s;
-  
-  border: 1px thin #000;
-  
-}
-
-.slider:before {
-  position: absolute;
-  content: "";
-  height: 26px;
-  width: 26px;
-  left: 4px;
-  bottom: 4px;
-  
-  /* SLIDER BUTTON COLOR */
-  background-color: #1d1f21;
-  
-  /*
-  background-color: #212121;
-  */
-  border-radius: 3px;
-  border: 1px thin #000;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3), 0 1px 0 rgba(0, 0, 0, 0.2); 
-  
-  
-  background: url("/img/noise-diagonal-trans2.png");
-  
-  
-  -webkit-transition: .4s;
-  transition: .4s;
-  
-  
-}
-
-input:checked + .slider {
-  /* SLIDER COLOR CHECKED */
-  background-color: #fff;
-}
-
-input:checked + .slider:before {
-  /* SLIDER BUTTON COLOR CHECKED */
-  background-color: #000;
-}
-
-
-input:focus + .slider {
-  box-shadow: 0 0 1px #2196F3;
-}
-
-input:checked + .slider:before {
-  -webkit-transform: translateX(26px);
-  -ms-transform: translateX(26px);
-  transform: translateX(26px);
-}
-
-/* Rounded sliders */
-.slider.round {
-  border-radius: 34px;
-}
-
-.slider.round:before {
-  border-radius: 50%;
-}
 
 
 
@@ -216,11 +62,6 @@ input[type="text"].edit_input {
   width: 250px;
   resize: horizontal;
 }
-
-
-
-
-
 
 
 /** Custom Select **/
@@ -247,17 +88,10 @@ input[type="text"].edit_input {
       padding: 5px 30px 5px 5px;
       font-size: 1.7em;
       font-weight: 300;
-      /*
-      color: #fff;
-      */
       line-height: 60px;
-      /*
-      background: #5c9cd8;
-      background: #212021;
-      */
+      
       border-radius: 4px;
       cursor: pointer;
-      
       
       background-color: #3F292B;
       background: url("/img/button_bg.png");
@@ -265,13 +99,7 @@ input[type="text"].edit_input {
 
       font-family: "OptimusPrinceps";
       color: #fefefe;
-      text-shadow: 1px 1px 5px #bb754d, 1px 1px 10px #7a4930, -1px -1px 5px #bb754d, -1px -1px 10px #7a4930;
-
-      /*
-      text-align: center;
-      padding: 5px;
-      */
-      
+      text-shadow: 1px 1px 5px #bb754d, 1px 1px 10px #7a4930, -1px -1px 5px #bb754d, -1px -1px 10px #7a4930;      
     }
       .custom-select-trigger:after {
         position: absolute;
@@ -296,17 +124,12 @@ input[type="text"].edit_input {
     top: 100%; left: 0; right: 0;
     min-width: 100%;
     margin: 15px 0;
-    /*
-    border: 1px solid #b5b5b5;
-    */
+
     border: 1px solid #000;
     border-radius: 4px;
     box-sizing: border-box;
     box-shadow: 0 2px 1px rgba(0,0,0,.07);
-    /*
-    background: #fff;
-    background: rgba(63, 41, 43, 0.75);
-    */
+
     background: rgba(33, 32, 33, 0.75);
     transition: all .4s ease-in-out;
     
@@ -328,32 +151,22 @@ input[type="text"].edit_input {
       bottom: 100%; right: 25px;
       width: 7px; height: 7px;
       margin-bottom: -4px;
-      /*
-      border-top: 1px solid #b5b5b5;
-      border-left: 1px solid #b5b5b5;
-      */
+
       border-top: 1px solid #000;
       border-left: 1px solid #000;
-      /*
-      background: #fff;
-      */
+
       background: #212021;
       transform: rotate(45deg);
       transition: all .4s ease-in-out;
     }
     .option-hover:before {
-      /*
-      background: #f9f9f9;
-      */
       background: #212021;
     }
     .custom-option {
       position: relative;
       display: block;
       padding: 0 22px;
-      /*
-      border-bottom: 1px solid #b5b5b5;
-      */
+
       border-bottom: 1px solid #000000;
       font-size: 18px;
       font-weight: 600;
@@ -371,9 +184,6 @@ input[type="text"].edit_input {
     }
     .custom-option:hover,
     .custom-option.selection {
-      /*
-      background: #f9f9f9;
-      */
       background: #212021;
     }
 
