@@ -16,7 +16,7 @@
   <div id="bonfire" class="flex-item-aids-middle flicker-in-1 user-select" onClick="play_audio('shrine')">
     <div class="itemsContainer">
       <div class="image"> <a href="#">  <img src="/img/WeirdTepidChital-max-1mb.gif" width="172" height="236" alt="" /> </a></div>
-      <div class="play">&#9658; </div><!-- &#9646; -->
+      <div class="play">&#9658; </div>
     </div>
   </div>
   
@@ -24,12 +24,9 @@
   <div id="w12" class="flex-item-aids-middle" style="display: none;">
     <h2 id="dice_h2" onClick="openBonfire()">W12</h2>
     <div id="diceOnClickAnimate" class="flip-scale-up-diag-1 user-select" onclick="pickimg()">
-      <!-- <img src="/img/stats/ds1/att.jpg" width="45" height="45" alt=""/> -->
       <div id="randomDiceOut">
         &nbsp;
       </div>
-      <!-- <img src="/dice/0.png" class="dice flip-scale-up-diag-1" id="randimgw12" width="100" height="100" alt="Dice"> -->
-      <!-- <div id="randimgw12" style="height: 100px"></div> -->
     </div>
   </div>
   
