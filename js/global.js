@@ -2,6 +2,23 @@
 
 "use strict";
 
+
+// Get active Game
+  var _GAME;
+  $.ajax({
+    async: false,
+    type: "GET",
+    global: false,
+    dataType: "json",
+    url: "/activeGame.json",
+    success: function (data) {
+      _GAME = data;
+    }
+  });
+  
+  console.log("GAME: " + _GAME);
+
+
 function switchButton(source, action) {
 
   if ( action === "false" ) {

@@ -2,22 +2,6 @@
 
 "use strict";
 
-// Get active Game
-  var _GAME;
-  $.ajax({
-    async: false,
-    type: "GET",
-    global: false,
-    dataType: "json",
-    url: "/activeGame.json",
-    success: function (data) {
-      _GAME = data;
-    }
-  });
-  
-  console.log("GAME: " + _GAME);
-
-
 // Random image out of 12
 var dice = [
   "1","2","3","4","5","6","7","8","9","10",
