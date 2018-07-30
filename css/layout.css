@@ -830,6 +830,14 @@ tr.active_game {
   height: auto;
 }
 
+.cursor-move {
+  cursor: move;
+}
+
+/* Class for smaller Fontawesome */
+.fontawesome-small {
+  font-size: 75%;
+}
 
 /* DEBUG */
 /*

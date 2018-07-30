@@ -13,8 +13,8 @@
 <table class="edit tablesorter" id="<?=$mode?>">
   <thead>
     <tr>
-      <th class="th-h" colspan="3">
-        &raquo; <?=ucfirst($table)?>
+      <th class="th-h" colspan="4">
+        &raquo; <?=ucfirst($mode)?>
       </th>
     </tr>
     <tr>
@@ -23,7 +23,7 @@
         <i class="fas fa-sort"></i>
       </th>
       <th scope="col">
-        <strong><?=ucfirst($table)?></strong>
+        <strong><?=ucfirst($mode)?></strong>
         <i class="fas fa-sort"></i>
       </th>
       <th scope="col" class="text-center">
@@ -32,18 +32,19 @@
       </th>
     </tr>
   </thead>
-  <tbody>
+  <tbody id="sortable-<?=$mode?>">
     <?php while ($row = $stmt->fetch(PDO::FETCH_NUM)) : ?>
 
     <tr id="<?=$table?>-<?=$row[0]?>">
-      <td class="text-center number-font">
-        <a href="/edit?mode=<?=$mode?>&ID=<?=$row[0]?>">
-          <strong>
-            <?=$row[1]?>
-          </strong>
-        </a>
+      <td class="text-center number-font cursor-move handle">
+        <!--<a href="/edit?mode=<?//$mode?>&ID=<?//$row[0]?>">-->
+          <i class="fas fa-expand-arrows-alt fontawesome-small"></i>
+            <strong>
+              <?=$row[1]?>
+            </strong>
+        <!--</a>-->
       </td>
-      
+
       <td class="edit_col">
         <div class="title">
           <a href="/edit?mode=<?=$mode?>&ID=<?=$row[0]?>"><?=$row[2]?></a>
@@ -127,3 +128,9 @@
   ENDFOREACH
 ?>
 </div>
+
+
+
+<form action="sortable.ajax.php" method="post" name="sortables"> 
+  <input type="hidden" name="test-log" id="test-log" /> 
+</form>

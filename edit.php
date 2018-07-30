@@ -80,11 +80,21 @@ require_once( $_SERVER["DOCUMENT_ROOT"] . "/globals.inc.php" );
 <!-- jQuery -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<!-- jQuery UI Touch Punch -->
+<script src="/js/jquery.ui.touch-punch.min.js"></script>
 <script src="/js/jquery.tablesorter.js"></script><!-- http://tablesorter.com/docs/ -->
 
 </head>
 
 <body spellcheck="false" id="edit">
+
+<!-- jQuery Sortable Ajax Debug -->
+<!--
+<pre>
+  <div id="info">&nbsp;</div>
+</pre>
+-->
+
 <div id="main">
 
 <!-- SIDENAV -->
@@ -921,6 +931,48 @@ $request_uri = htmlspecialchars($_SERVER["REQUEST_URI"], ENT_QUOTES, "utf-8")
   </nav>
 </footer>
 
+
+<!-- jQuery Sortable Ajax -->
+<script>
+$(document).ready(function() {
+
+  $("#sortable-mobs").sortable({
+    handle : ".handle",
+    placeholder: "ui-state-highlight",
+    update : function () {
+      var order = $("#sortable-mobs").sortable("serialize");
+      // $("#info").load("sortable.ajax.php?"+order);
+      $.get("sortable.ajax.php?"+order);
+      console.log("order: " + order);
+    }
+  });
+  $( "#sortable-mobs" ).disableSelection();
+
+  $("#sortable-boss").sortable({
+    handle : ".handle",
+    placeholder: "ui-state-highlight",
+    update : function () {
+      var order = $("#sortable-boss").sortable("serialize");
+      // $("#info").load("sortable.ajax.php?"+order);
+      $.get("sortable.ajax.php?"+order);
+      console.log("order: " + order);
+    }
+  });
+
+  $("#sortable-weapons").sortable({
+    handle : ".handle",
+    placeholder: "ui-state-highlight",
+    update : function () {
+      var order = $("#sortable-weapons").sortable("serialize");
+      // $("#info").load("sortable.ajax.php?"+order);
+      $.get("sortable.ajax.php?"+order);
+      console.log("order: " + order);
+    }
+  });
+
+});
+</script>
+
 <!-- Sort Alphabetically -->
 <script>
 /*
@@ -1191,7 +1243,6 @@ $(document).ready(function () {
 </script>
 
 <!-- animate-sidenav-icon() -->
-
 <script>
   /*
 $( "#sidenav-icon" ).click(function() {
@@ -1201,7 +1252,7 @@ $( "#sidenav-icon" ).click(function() {
 */
 </script>
 
-  
+
 <!-- Background Image per _GAME -->
 <style>
   html {
