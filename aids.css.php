@@ -107,3 +107,13 @@
 <?php
   }
 ?>
+
+<?php
+  if ( !empty($SYMBOL_CSS) && $SYMBOL_CSS == "TRUE") {
+?>
+  <script>
+    play_audio("MorningStarAids");
+  </script>
+<?php
+  }
+?>

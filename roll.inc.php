@@ -65,7 +65,12 @@ if ( $firstPageLoad != "TRUE" ) {
     if ( $mobsAids == "Invert Controls" || $bossAids == "Invert Controls" ) {
       $INVERT_CSS = "TRUE";
     }
-        
+    
+    // Symbol of Aids
+    if ( $mobsAids == "Symbol of Aids" || $bossAids == "Symbol of Aids" ) {
+      $SYMBOL_CSS = "TRUE";
+    }
+    
     // Shots
     $shots = array("Feige", "Jäscher");
     $bothAids = array($mobsAids, $bossAids);
