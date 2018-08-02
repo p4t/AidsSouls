@@ -37,15 +37,24 @@
 
     .flex-item-aids-left,
     .flex-item-aids-right,
-    #flex-container-aids-text,
+    /* #flex-container-aids-text, */
     #flex-container-roll
     {
       visibility: hidden;
     }
+    
+    #flex-container-aids-text {
+      opacity: 0.1;
+    }
+    #flex-container-aids-text:hover {
+      opacity: 0.25;
+    }
 
     /* Hide text*/
+    /*
     #mobsAids,
     #bossAids,
+    */
     #reroll_switch_button,
     #rerun_switch_button,
     .diceText
@@ -59,7 +68,7 @@
     }
 
     .aidscontent:hover .dice_wrapper,
-    /* Do not show Aids Text on hover */
+    /* Aids Text on hover */
     /*
     .aidscontent:hover #mobsAids,
     .aidscontent:hover #bossAids,
