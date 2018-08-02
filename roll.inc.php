@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 // Make sure nothing is rolled on firt page load
 // Only roll aids etc when $firstPageLoad (TRUE @index.php) has been set to FALSE in aidscontent.ajax.php
 if ( $firstPageLoad != "TRUE" ) {
@@ -14,8 +14,8 @@ if ( $firstPageLoad != "TRUE" ) {
   $bossRNGNGP    = $RNGNGP[1];
 
   // DEBUG
-  // $mobsRNG = 15;
-  // $bossRNG = 5;
+  $mobsRNG = 18;
+  $bossRNG = 18;
 
   // Debug vars from _GET[]
   if ( !empty($_GET["RNG"]) ) {
@@ -58,14 +58,14 @@ if ( $firstPageLoad != "TRUE" ) {
 
     // No HUD
     if ( $mobsAids == "No HUD" || $bossAids == "No HUD" ) {
-      $HUD_CSS = TRUE;
+      $HUD_CSS = "TRUE";
     }
 
     // Invert Controls
     if ( $mobsAids == "Invert Controls" || $bossAids == "Invert Controls" ) {
-      $INVERT_CSS = TRUE;
+      $INVERT_CSS = "TRUE";
     }
-
+        
     // Shots
     $shots = array("Feige", "Jäscher");
     $bothAids = array($mobsAids, $bossAids);
@@ -79,17 +79,15 @@ if ( $firstPageLoad != "TRUE" ) {
       ||
       strpos($bossAids, "Jäscher") !== false
     ) {
-      $BLUR_CSS = TRUE;
+      $BLUR_CSS = "TRUE";
     }
 
   } // ENDIF
 
 } else { // Ajax Roll Button was NOT used, page was initially loaded
   
-  // $placeholder = "❌";
-  // $placeholder = "R";
-  // $placeholder = "🎲";
-  $placeholder = "";
+  $placeholder = "🎲";
+  // $placeholder = "";
   
   $mobsAids = $placeholder;
   $bossAids = $placeholder;

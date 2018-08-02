@@ -1,5 +1,5 @@
 <?php
-  if ( !empty($HUD_CSS) && $HUD_CSS == TRUE ) {
+  if ( !empty($HUD_CSS) && $HUD_CSS == "TRUE" ) {
 ?>
   <style>
     *,
@@ -76,7 +76,7 @@
 
 <?php
 /* Rotate whole site 160° */
-  if ( !empty($INVERT_CSS) && $INVERT_CSS == TRUE ) {
+  if ( !empty($INVERT_CSS) && $INVERT_CSS == "TRUE" ) {
 ?>
   <style>
     #mobsAids, #bossAids
@@ -99,7 +99,7 @@
 
 
 <?php
-  if ( !empty($BLUR_CSS) && $BLUR_CSS == TRUE) {
+  if ( !empty($BLUR_CSS) && $BLUR_CSS == "TRUE" ) {
 ?>
   <style>
     * {filter: blur(1px)}
