@@ -88,13 +88,6 @@ require_once( $_SERVER["DOCUMENT_ROOT"] . "/globals.inc.php" );
 
 <body spellcheck="false" id="edit">
 
-<!-- jQuery Sortable Ajax Debug -->
-<!--
-<pre>
-  <div id="info">&nbsp;</div>
-</pre>
--->
-
 <div id="main">
 
 <!-- SIDENAV -->
@@ -958,6 +951,7 @@ $(document).ready(function() {
       console.log("order: " + order);
     }
   });
+  $( "#sortable-boss" ).disableSelection();
 
   $("#sortable-weapons").sortable({
     handle : ".handle",
@@ -969,6 +963,7 @@ $(document).ready(function() {
       console.log("order: " + order);
     }
   });
+  $( "#sortable-weapons" ).disableSelection();
 
 });
 </script>
