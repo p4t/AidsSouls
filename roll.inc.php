@@ -14,8 +14,8 @@ if ( $firstPageLoad != "TRUE" ) {
   $bossRNGNGP    = $RNGNGP[1];
 
   // DEBUG
-  $mobsRNG = 18;
-  $bossRNG = 18;
+  // $mobsRNG = 18;
+  // $bossRNG = 18;
 
   // Debug vars from _GET[]
   if ( !empty($_GET["RNG"]) ) {
@@ -58,17 +58,17 @@ if ( $firstPageLoad != "TRUE" ) {
 
     // No HUD
     if ( $mobsAids == "No HUD" || $bossAids == "No HUD" ) {
-      $HUD_CSS = "TRUE";
+      $HUD_SFX = "TRUE";
     }
 
     // Invert Controls
     if ( $mobsAids == "Invert Controls" || $bossAids == "Invert Controls" ) {
-      $INVERT_CSS = "TRUE";
+      $INVERT_SFX = "TRUE";
     }
     
     // Symbol of Aids
     if ( $mobsAids == "Symbol of Aids" || $bossAids == "Symbol of Aids" ) {
-      $SYMBOL_CSS = "TRUE";
+      $SYMBOL_SFX = "TRUE";
     }
     
     // Shots
@@ -84,7 +84,7 @@ if ( $firstPageLoad != "TRUE" ) {
       ||
       strpos($bossAids, "Jäscher") !== false
     ) {
-      $BLUR_CSS = "TRUE";
+      $BLUR_SFX = "TRUE";
     }
 
   } // ENDIF
