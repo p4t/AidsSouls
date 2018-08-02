@@ -473,6 +473,7 @@ ENDWHILE
   <audio id="audio_frieza"                  src="/audio/random/frieza.mp3"></audio>
   <audio id="audio_joker"                   src="/audio/random/Joker_Laughing.mp3"></audio>
   <audio id="audio_rlmwhistle"              src="/audio/random/rlmwhistle.mp3"></audio>
+  <audio id="audio_MorningStarAids"         src="/audio/system/MorningStarAids.mp3"></audio>
   
   
   <!-- Shrine Background -->
