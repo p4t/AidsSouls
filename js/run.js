@@ -29,6 +29,7 @@ function run() {
       $("#rerunroll").html("<img src='/img/vader.jpg' width='323' height='203' alt='Vader'> <br>" + run_rnd);
       // Handle Dice and text
       replaceAidsWithX();
+      $("html").css("background-image", "url(/img/bg/kevin.jpg)");
       play_audio("vader");
     }
   
