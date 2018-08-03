@@ -11,15 +11,20 @@
   */
   function rerun() {
     
-    var rnd = Math.floor((Math.random() * 100) + 1);
+    // random number 1-100
+    var rnd       = Math.floor((Math.random() * 100) + 1);
+    // Cache jQuery elements
+    var $bonfire   = $("#bonfire");
+    var $rerunroll = $("#rerunroll");
+    var $w12       = $("#w12");
     
-    if ( $("#rerunroll").css("display") === "none" ) {
-      $("#w12").hide();
-      $("#bonfire").hide(); // ???
-      $("#rerunroll").show();      
+    if ( $rerunroll.css("display") === "none" ) {
+      $w12.hide();
+      $bonfire.hide(); // ???
+      $rerunroll.show();      
     } else {
-      $("#rerunroll").hide();
-      $("#bonfire").show();
+      $rerunroll.hide();
+      $bonfire.show();
       
       // stop audio
       stop_audio();
@@ -32,46 +37,24 @@
     // rnd = 7;
     
     // check for special output in rnd (1, 7, 77, 99, 100)
-    if ( rnd == 7 || rnd == 77 ) {
-      $("#rerunroll").html("<img src='/img/EpicSaxGuy.gif' width='186' height='234' alt='Epic Sax Guy'> <br>" + rnd);        
+    if ( rnd === 7 || rnd === 77 ) {
+      $rerunroll.html("<img src='/img/EpicSaxGuy.gif' width='186' height='234' alt='Epic Sax Guy'> <br>" + rnd);        
 
-      if ( $("#rerunroll").css("display") === "block" ) {
+      if ( $rerunroll.css("display") === "block" ) {
         play_audio("epicsaxguy");
-        $("#bonfire").hide();
+        $bonfire.hide();
         // $("#bonfire").hide();
       }
     } else {
       /* ¯\_(ツ)_/¯ SAD TROMBONE */
       // every rnd value except: 1, 100, 7, 77, 99
-      $("#rerunroll").html("¯\\_(ツ)_/¯ <br>" + rnd);
+      $rerunroll.html("¯\\_(ツ)_/¯ <br>" + rnd);
 
-      if ( $("#rerunroll").css("display") === "block" ) {        
+      if ( $rerunroll.css("display") === "block" ) {        
         // Play Sound
         randomSoundEffect();
-        $("#bonfire").hide();
+        $bonfire.hide();
       }
-
-        
-        // VADER
-        /* } else if (rnd == 1 || rnd == 100) {
-        $("#rerunroll").html("<img src='/img/vader.jpg' width='323' height='203' alt='Vader'> <br>" + rnd);
-
-        if ( $("#rerunroll").css("display") === "block" ) {
-          play_audio("vader");
-          $("#bonfire").hide();
-        }  
-        
-        // SUPERAIDS
-      } else if (rnd == 99) {
-        $("#rerunroll").html("SUPERAIDS<br>" + rnd);
-      
-        if ( $("#rerunroll").css("display") === "block" ) { 
-          play_audio("superaids");
-          $("#bonfire").hide();
-          // $("#rerunroll").load("superaids.inc.php"); // Ajax load superaids php
-        }
-      }
-      */
       
     } // ENDIF
 

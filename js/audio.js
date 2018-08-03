@@ -120,16 +120,17 @@ function randomSoundEffect() {
   function play_audio (source) {
         
     var myAudio = document.getElementById("audio_"+source);
+    var $play    = $(".play");
     
     if (source === "shrine") {
       
       if (myAudio.paused) {
         myAudio.play();
-        $(".play").html("&#10074;&#10074;"); // Pause Button
+        $play.html("&#10074;&#10074;"); // Pause Button
         console.log("Bonfire Play");
       } else {
         myAudio.pause();
-        $(".play").html("&#9658;"); // Play button
+        $play.html("&#9658;"); // Play button
         console.log("Bonfire Pause");
       }
       
