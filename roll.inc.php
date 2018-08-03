@@ -54,7 +54,7 @@ if ( $firstPageLoad != "TRUE" ) {
 
   // Set special Aids CSS variable TRUE
   // @aids.css.php
-  if ( _CSSAIDS == "TRUE" ) { // Only if global is enabled
+  if ( _SFXAIDS == "TRUE" ) { // Only if global is enabled
 
     // No HUD
     if ( $mobsAids == "No HUD" || $bossAids == "No HUD" ) {
