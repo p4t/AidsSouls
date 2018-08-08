@@ -522,10 +522,24 @@ ENDWHILE
 <script src="/js/dropdown.js"></script>
 <script src="/js/autocomplete.js"></script>
 <script src="/js/dice.js"></script>
+<script src="/js/ajax-loading.js"></script>
 <!-- <script src="/js/changeGame.js"></script> -->
 <!-- <script src="/js/showRNG.js"></script> -->
 <!-- <script src="/js/bonfire.js"></script> -->
 <!-- <script src="/js/modal.js"></script> -->
+
+<!-- Ajax loading spinner -->
+<script>
+  //init: automatic monitoring ajax events
+  var loading = $.loading({
+    background : "",
+    // minTime    : 2000,
+    imgPath    : "/img/spinner.svg",
+    imgWidth   : "80px",
+    imgHeight  : "80px",
+    tip        : ""
+  });
+</script>
 
 
 <!-- JS readdir -->
