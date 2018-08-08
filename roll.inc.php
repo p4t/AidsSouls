@@ -84,7 +84,7 @@ if ( $firstPageLoad != "TRUE" ) {
       ||
       strpos($bossAids, "Jäscher") !== false
     ) {
-      $BLUR_SFX = "TRUE";
+      $BLUR_SFX = "FALSE";
     }
 
   } // ENDIF
