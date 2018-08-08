@@ -506,7 +506,7 @@ function replaceIntWithFlasks ($number) {
   if ( $number != 0 ) {    
     $x = 1; 
     while ($x <= $number) {
-      // if ($x % 3 == 1) echo "<br>";
+      if ($x % 5 == 1) echo "<br>";
       echo "<img src=\"img/flask_full.png\" width=\"33\" height=\"46\" alt=\"Flask Full\">"; // full: 123x136 empty: 84x130
       $x++;
     } // ENDWHILE
