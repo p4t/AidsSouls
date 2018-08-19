@@ -2,6 +2,19 @@
 
 "use strict";
 
+// Cache jQuery and global elements
+var $reroll_button = $("#reroll_button");
+var $rerun_button  = $("#rerun_button");
+// var $dice_dropdown = $("#dice_dropdown");
+
+var reroll_button_Orig = "Roll";
+var rerun_button_Orig  = "Rerun";
+
+var sound_indicator = "<i class='fas fa-music'></i>"; // music note
+// <i class='fas fa-play'></i> // play button
+// var $dice_dropdown_Orig  = "🎲";
+
+
 /* Random Audio */
 var audio_files  = [
   "fail",
@@ -138,6 +151,12 @@ function randomSoundEffect() {
       myAudio.play();
       console.log("Event::Audio.started: " + source);
       
+      // Show Play button
+      $reroll_button.hide().html(sound_indicator).fadeIn(1500);
+      $rerun_button.html(sound_indicator);
+      // $dice_dropdown.html(sound_indicator);
+      
+      
       // Disable the button as long as Audio is playing
       switchButton("reroll", "true");
       
@@ -148,6 +167,11 @@ function randomSoundEffect() {
         // Remove disabled from button
         switchButton("reroll", "false");
         switchButton("rerun", "false");
+        
+        // Return original HTML button
+        $reroll_button.html(reroll_button_Orig);
+        $rerun_button.html(rerun_button_Orig);
+        // $dice_dropdown.html($dice_dropdown_Orig);
         
         // show Bonfire
         if ( source !== "dice" && source !== "vader" && source !== "epicsaxguy" && source !== "superaids" ) {openBonfire();}
@@ -187,6 +211,12 @@ function stop_audio () {
     if (src.currentTime > 0) {
       src.pause();
       src.currentTime = 0;
+      
+      // Return original HTML button
+      $reroll_button.html(reroll_button_Orig);
+      $rerun_button.html(rerun_button_Orig);
+      
+      console.log("Event::Audio.stopped.manually");
     }
   }
 
