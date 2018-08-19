@@ -404,102 +404,103 @@ ENDWHILE
   <audio id="audio_superaids"       src="/audio/superaids.mp3"></audio>
   <audio id="audio_bonfirerefresh"  src="/audio/DarkSoulsBonfireRefreshSoundEffect.ogg"></audio>
   <audio id="audio_toggle"          src="/audio/toggle.mp3"></audio>
-  <audio id="audio_fail"            src="/audio/fail.mp3"></audio>
-  <audio id="audio_bier"            src="/audio/bier.mp3"></audio>
-  <audio id="audio_richevanslaugh"  src="/audio/richevanslaugh.mp3"></audio>
+
   
   
   <!-- Scheissendreck -->
-  <audio id="audio_dolphin"               src="/audio/dolphin.mp3"></audio>
-  <audio id="audio_evillaugh"             src="/audio/evillaugh.mp3"></audio>
-  <audio id="audio_hagay"                 src="/audio/hagay.mp3"></audio>
-  <audio id="audio_hahaha(nelson)"        src="/audio/hahaha(nelson).mp3"></audio>
-  <audio id="audio_sadmusic"              src="/audio/sadmusic.mp3"></audio>
-  <audio id="audio_sadmusic2"             src="/audio/sadmusic2.mp3"></audio>
-  <audio id="audio_zackgalifianakislaugh" src="/audio/zackgalifianakislaugh.mp3"></audio>
-  <audio id="audio_alwayssunnybell"       src="/audio/alwayssunnybell.mp3"></audio>
+  <audio preload="none" id="audio_dolphin"               src="/audio/dolphin.mp3"></audio>
+  <audio preload="none" id="audio_evillaugh"             src="/audio/evillaugh.mp3"></audio>
+  <audio preload="none" id="audio_hagay"                 src="/audio/hagay.mp3"></audio>
+  <audio preload="none" id="audio_hahaha(nelson)"        src="/audio/hahaha(nelson).mp3"></audio>
+  <audio preload="none" id="audio_sadmusic"              src="/audio/sadmusic.mp3"></audio>
+  <audio preload="none" id="audio_sadmusic2"             src="/audio/sadmusic2.mp3"></audio>
+  <audio preload="none" id="audio_zackgalifianakislaugh" src="/audio/zackgalifianakislaugh.mp3"></audio>
+  <audio preload="none" id="audio_alwayssunnybell"       src="/audio/alwayssunnybell.mp3"></audio>
   
 
   <!-- The Room -->
-  <audio id="audio_Cheep_1"             src="/audio/TheRoom/Cheep_1.mp3"></audio>
-  <audio id="audio_Cheep_2"             src="/audio/TheRoom/Cheep_2.mp3"></audio>
-  <audio id="audio_IDidNotHitHer"       src="/audio/TheRoom/IDidNotHitHer.mp3"></audio>
-  <audio id="audio_JustAChickenCheep"   src="/audio/TheRoom/JustAChickenCheep.mp3"></audio>
-  <audio id="audio_TearingMeApartLisa"  src="/audio/TheRoom/TearingMeApartLisa.mp3"></audio>
-  <audio id="audio_TommyLaugh_1"        src="/audio/TheRoom/TommyLaugh_1.mp3"></audio>
-  <audio id="audio_TommyLaugh_2"        src="/audio/TheRoom/TommyLaugh_2.mp3"></audio>
-  <audio id="audio_TommyLaugh_3"        src="/audio/TheRoom/TommyLaugh_3.mp3"></audio>
-  <audio id="audio_WhyWhyLisa"          src="/audio/TheRoom/WhyWhyLisa.mp3"></audio>
-  <audio id="audio_YouMustBeKidding"    src="/audio/TheRoom/YouMustBeKidding.mp3"></audio>
+  <audio preload="none" id="audio_Cheep_1"             src="/audio/TheRoom/Cheep_1.mp3"></audio>
+  <audio preload="none" id="audio_Cheep_2"             src="/audio/TheRoom/Cheep_2.mp3"></audio>
+  <audio preload="none" id="audio_IDidNotHitHer"       src="/audio/TheRoom/IDidNotHitHer.mp3"></audio>
+  <audio preload="none" id="audio_JustAChickenCheep"   src="/audio/TheRoom/JustAChickenCheep.mp3"></audio>
+  <audio preload="none" id="audio_TearingMeApartLisa"  src="/audio/TheRoom/TearingMeApartLisa.mp3"></audio>
+  <audio preload="none" id="audio_TommyLaugh_1"        src="/audio/TheRoom/TommyLaugh_1.mp3"></audio>
+  <audio preload="none" id="audio_TommyLaugh_2"        src="/audio/TheRoom/TommyLaugh_2.mp3"></audio>
+  <audio preload="none" id="audio_TommyLaugh_3"        src="/audio/TheRoom/TommyLaugh_3.mp3"></audio>
+  <audio preload="none" id="audio_WhyWhyLisa"          src="/audio/TheRoom/WhyWhyLisa.mp3"></audio>
+  <audio preload="none" id="audio_YouMustBeKidding"    src="/audio/TheRoom/YouMustBeKidding.mp3"></audio>
   
   
   <!-- WoWQuote -->
-  <audio id="audio_200Puls"                   src="/audio/WoWQuote/200Puls.mp3"></audio>
-  <audio id="audio_badesalz1"                 src="/audio/WoWQuote/badesalz1.mp3"></audio>
-  <audio id="audio_badesalzWAS"               src="/audio/WoWQuote/badesalzWAS.mp3"></audio>
-  <audio id="audio_draufdruecken"             src="/audio/WoWQuote/draufdruecken.mp3"></audio>
-  <audio id="audio_drecksack"                 src="/audio/WoWQuote/drecksack.mp3"></audio>
-  <audio id="audio_gehtdicheinscheissdreckan" src="/audio/WoWQuote/gehtdicheinscheissdreckan.mp3"></audio>
-  <audio id="audio_kotzinstreppenhaus"        src="/audio/WoWQuote/kotzinstreppenhaus.mp3"></audio>
-  <audio id="audio_mimimi"                    src="/audio/WoWQuote/mimimi.mp3"></audio>
-  <audio id="audio_mundstuhl"                 src="/audio/WoWQuote/mundstuhl.mp3"></audio>
-  <audio id="audio_blamage"                   src="/audio/WoWQuote/blamage.mp3"></audio>
-  <audio id="audio_scheisse"                  src="/audio/WoWQuote/scheisse.mp3"></audio>
-  <audio id="audio_schwarzerbildschirm"       src="/audio/WoWQuote/schwarzerbildschirm.mp3"></audio>
-  <audio id="audio_wernerflasche"             src="/audio/WoWQuote/wernerflasche.wav"></audio>
-  <audio id="audio_cundflicht"                src="/audio/WoWQuote/cundflicht.mp3"></audio>
+  <audio preload="none" id="audio_200Puls"                   src="/audio/WoWQuote/200Puls.mp3"></audio>
+  <audio preload="none" id="audio_badesalz1"                 src="/audio/WoWQuote/badesalz1.mp3"></audio>
+  <audio preload="none" id="audio_badesalzWAS"               src="/audio/WoWQuote/badesalzWAS.mp3"></audio>
+  <audio preload="none" id="audio_draufdruecken"             src="/audio/WoWQuote/draufdruecken.mp3"></audio>
+  <audio preload="none" id="audio_drecksack"                 src="/audio/WoWQuote/drecksack.mp3"></audio>
+  <audio preload="none" id="audio_gehtdicheinscheissdreckan" src="/audio/WoWQuote/gehtdicheinscheissdreckan.mp3"></audio>
+  <audio preload="none" id="audio_kotzinstreppenhaus"        src="/audio/WoWQuote/kotzinstreppenhaus.mp3"></audio>
+  <audio preload="none" id="audio_mimimi"                    src="/audio/WoWQuote/mimimi.mp3"></audio>
+  <audio preload="none" id="audio_mundstuhl"                 src="/audio/WoWQuote/mundstuhl.mp3"></audio>
+  <audio preload="none" id="audio_blamage"                   src="/audio/WoWQuote/blamage.mp3"></audio>
+  <audio preload="none" id="audio_scheisse"                  src="/audio/WoWQuote/scheisse.mp3"></audio>
+  <audio preload="none" id="audio_schwarzerbildschirm"       src="/audio/WoWQuote/schwarzerbildschirm.mp3"></audio>
+  <audio preload="none" id="audio_wernerflasche"             src="/audio/WoWQuote/wernerflasche.wav"></audio>
+  <audio preload="none" id="audio_cundflicht"                src="/audio/WoWQuote/cundflicht.mp3"></audio>
   
   
   <!-- Presi -->
-  <audio id="audio_presi1"  src="/audio/random/presi1.mp3"></audio>
-  <audio id="audio_presi2"  src="/audio/random/presi2.mp3"></audio>
-  <audio id="audio_presi3"  src="/audio/random/presi3.mp3"></audio>
-  <audio id="audio_presi4"  src="/audio/random/presi4.mp3"></audio>
-  <audio id="audio_presi5"  src="/audio/random/presi5.mp3"></audio>
-  <audio id="audio_presi6"  src="/audio/random/presi6.mp3"></audio>
-  <audio id="audio_presi7"  src="/audio/random/presi7.mp3"></audio>
+  <audio preload="none" id="audio_presi1"  src="/audio/random/presi1.mp3"></audio>
+  <audio preload="none" id="audio_presi2"  src="/audio/random/presi2.mp3"></audio>
+  <audio preload="none" id="audio_presi3"  src="/audio/random/presi3.mp3"></audio>
+  <audio preload="none" id="audio_presi4"  src="/audio/random/presi4.mp3"></audio>
+  <audio preload="none" id="audio_presi5"  src="/audio/random/presi5.mp3"></audio>
+  <audio preload="none" id="audio_presi6"  src="/audio/random/presi6.mp3"></audio>
+  <audio preload="none" id="audio_presi7"  src="/audio/random/presi7.mp3"></audio>
   
   
   <!-- Werner -->
-  <audio id="audio_werner1"     src="/audio/werner/Wo.mp3"></audio>
-  <audio id="audio_werner2"     src="/audio/werner/Wieso.mp3"></audio>
-  <audio id="audio_werner3"     src="/audio/werner/WelchenSchluessel.mp3"></audio>
-  <audio id="audio_werner4"     src="/audio/werner/Waslos.mp3"></audio>
-  <audio id="audio_werner5"     src="/audio/werner/Verscheidenes.mp3"></audio>
-  <audio id="audio_werner6"     src="/audio/werner/SchoenWaschiWaschimachen.mp3"></audio>
-  <audio id="audio_werner7"     src="/audio/werner/Ruelps.mp3"></audio>
-  <audio id="audio_werner8"     src="/audio/werner/RoehrichFurz.mp3"></audio>
-  <audio id="audio_werner9"     src="/audio/werner/Matratzeee.mp3"></audio>
-  <audio id="audio_werner10"    src="/audio/werner/Kaaaaaaaanzler.mp3"></audio>
-  <audio id="audio_werner11"    src="/audio/werner/Kissen.mp3"></audio>
-  <audio id="audio_werner12"    src="/audio/werner/AlleseinDurcheinander.mp3"></audio>
-  <audio id="audio_werner13"    src="/audio/werner/Bettenmachen.mp3"></audio>
-  <audio id="audio_werner14"    src="/audio/werner/Jaaaahaaaaaaaaa.mp3"></audio>
-  <audio id="audio_werner15"    src="/audio/werner/IchbrauchdenSchluessel.mp3"></audio>
-  <audio id="audio_werner16"    src="/audio/werner/HerrBiernot.mp3"></audio>
-  <audio id="audio_werner17"    src="/audio/werner/FuernHeizungskeller.mp3"></audio>
-  <audio id="audio_werner18"    src="/audio/werner/Ellllllfriiiiiiiede.mp3"></audio>
-  <audio id="audio_werner19"    src="/audio/werner/Elfriiiiiiede.mp3"></audio>
-  <audio id="audio_werner20"    src="/audio/werner/Eieieiwoisserdenn.mp3"></audio>
-  <audio id="audio_werner21"    src="/audio/werner/Eckaaaaaat.mp3"></audio>
-  <audio id="audio_werner22"    src="/audio/werner/Decke.mp3"></audio>
-  <audio id="audio_werner23"    src="/audio/werner/DaobenbeiFrauHansen.mp3"></audio>
-  <audio id="audio_werner24"    src="/audio/werner/JedenMorgendasselbeTheater.mp3"></audio>
-  <audio id="audio_werner25"    src="/audio/werner/Rohrbruch.mp3"></audio>
-  <audio id="audio_werner26"    src="/audio/werner/Krankenhaus.mp3"></audio>
-  <audio id="audio_werner27"    src="/audio/werner/Furz.mp3"></audio>
+  <audio preload="none" id="audio_werner1"     src="/audio/werner/Wo.mp3"></audio>
+  <audio preload="none" id="audio_werner2"     src="/audio/werner/Wieso.mp3"></audio>
+  <audio preload="none" id="audio_werner3"     src="/audio/werner/WelchenSchluessel.mp3"></audio>
+  <audio preload="none" id="audio_werner4"     src="/audio/werner/Waslos.mp3"></audio>
+  <audio preload="none" id="audio_werner5"     src="/audio/werner/Verscheidenes.mp3"></audio>
+  <audio preload="none" id="audio_werner6"     src="/audio/werner/SchoenWaschiWaschimachen.mp3"></audio>
+  <audio preload="none" id="audio_werner7"     src="/audio/werner/Ruelps.mp3"></audio>
+  <audio preload="none" id="audio_werner8"     src="/audio/werner/RoehrichFurz.mp3"></audio>
+  <audio preload="none" id="audio_werner9"     src="/audio/werner/Matratzeee.mp3"></audio>
+  <audio preload="none" id="audio_werner10"    src="/audio/werner/Kaaaaaaaanzler.mp3"></audio>
+  <audio preload="none" id="audio_werner11"    src="/audio/werner/Kissen.mp3"></audio>
+  <audio preload="none" id="audio_werner12"    src="/audio/werner/AlleseinDurcheinander.mp3"></audio>
+  <audio preload="none" id="audio_werner13"    src="/audio/werner/Bettenmachen.mp3"></audio>
+  <audio preload="none" id="audio_werner14"    src="/audio/werner/Jaaaahaaaaaaaaa.mp3"></audio>
+  <audio preload="none" id="audio_werner15"    src="/audio/werner/IchbrauchdenSchluessel.mp3"></audio>
+  <audio preload="none" id="audio_werner16"    src="/audio/werner/HerrBiernot.mp3"></audio>
+  <audio preload="none" id="audio_werner17"    src="/audio/werner/FuernHeizungskeller.mp3"></audio>
+  <audio preload="none" id="audio_werner18"    src="/audio/werner/Ellllllfriiiiiiiede.mp3"></audio>
+  <audio preload="none" id="audio_werner19"    src="/audio/werner/Elfriiiiiiede.mp3"></audio>
+  <audio preload="none" id="audio_werner20"    src="/audio/werner/Eieieiwoisserdenn.mp3"></audio>
+  <audio preload="none" id="audio_werner21"    src="/audio/werner/Eckaaaaaat.mp3"></audio>
+  <audio preload="none" id="audio_werner22"    src="/audio/werner/Decke.mp3"></audio>
+  <audio preload="none" id="audio_werner23"    src="/audio/werner/DaobenbeiFrauHansen.mp3"></audio>
+  <audio preload="none" id="audio_werner24"    src="/audio/werner/JedenMorgendasselbeTheater.mp3"></audio>
+  <audio preload="none" id="audio_werner25"    src="/audio/werner/Rohrbruch.mp3"></audio>
+  <audio preload="none" id="audio_werner26"    src="/audio/werner/Krankenhaus.mp3"></audio>
+  <audio preload="none" id="audio_werner27"    src="/audio/werner/Furz.mp3"></audio>
   
   
   <!-- Random -->
-  <audio id="audio_flanders"                src="/audio/random/flanders.mp3"></audio>
-  <audio id="audio_frieza"                  src="/audio/random/frieza.mp3"></audio>
-  <audio id="audio_joker"                   src="/audio/random/Joker_Laughing.mp3"></audio>
-  <audio id="audio_rlmwhistle"              src="/audio/random/rlmwhistle.mp3"></audio>
-  <audio id="audio_MorningStarAids"         src="/audio/system/MorningStarAids.mp3"></audio>
+  <audio preload="none" id="audio_flanders"                src="/audio/random/flanders.mp3"></audio>
+  <audio preload="none" id="audio_frieza"                  src="/audio/random/frieza.mp3"></audio>
+  <audio preload="none" id="audio_joker"                   src="/audio/random/Joker_Laughing.mp3"></audio>
+  <audio preload="none" id="audio_rlmwhistle"              src="/audio/random/rlmwhistle.mp3"></audio>
+  <audio preload="none" id="audio_MorningStarAids"         src="/audio/system/MorningStarAids.mp3"></audio>
+  <audio preload="none" id="audio_fail"            src="/audio/fail.mp3"></audio>
+  <audio preload="none" id="audio_bier"            src="/audio/bier.mp3"></audio>
+  <audio preload="none" id="audio_richevanslaugh"  src="/audio/richevanslaugh.mp3"></audio>
   
   
   <!-- Shrine Background -->
-  <audio id="audio_shrine"          src="/audio/DS1_Firelink_Shrine.mp3"></audio>
+  <audio preload="none" id="audio_shrine"          src="/audio/DS1_Firelink_Shrine.mp3"></audio>
   
   <!--
   <audio id="audio_shrine"          src="/audio/ds3_firelinkshrine.mp3"></audio>
@@ -558,6 +559,20 @@ function json_test () {
 }
 </script>
 
+<!-- Preload big images -->
+<script>
+$( document ).ready(function() {
+
+  $.preloadImages = function() {
+    for (var i = 0; i < arguments.length; i++) {
+      $("<img />").attr("src", arguments[i]);
+    }
+  }
+
+  $.preloadImages("/img/EpicSaxGuy.gif", "/img/curse.png", "/img/vader.jpg", "/dice/icons/parry.gif");
+
+});
+</script>
 
 </body>
 </html>
