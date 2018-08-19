@@ -54,7 +54,7 @@ include_once( $_SERVER["DOCUMENT_ROOT"] . "/roll.inc.php" );
 <title>\[T]/</title>
 <base href="http://ds.fahrzeugatelier.de">
   
-<link rel="stylesheet" href="/css/layout.css" type="text/css" media="screen">
+<link rel="stylesheet" href="/css/layout.min.css" type="text/css" media="screen">
 <link rel="stylesheet" href="/css/flex.css" type="text/css" media="screen">
 <link rel="stylesheet" href="/css/button.css" type="text/css" media="screen">
 <link rel="stylesheet" href="/css/table.css" type="text/css" media="screen">
