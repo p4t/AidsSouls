@@ -82,7 +82,7 @@ require_once( $_SERVER["DOCUMENT_ROOT"] . "/globals.inc.php" );
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <!-- jQuery UI Touch Punch -->
 <script src="/js/jquery.ui.touch-punch.min.js"></script>
-<script src="/js/jquery.tablesorter.js"></script><!-- http://tablesorter.com/docs/ -->
+<script src="/js/jquery.tablesorter.min.js"></script><!-- http://tablesorter.com/docs/ -->
 
 </head>
 
