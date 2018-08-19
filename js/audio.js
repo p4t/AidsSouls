@@ -152,7 +152,7 @@ function randomSoundEffect() {
       console.log("Event::Audio.started: " + source);
       
       // Show Play button
-      $reroll_button.hide().html(sound_indicator);
+      $reroll_button.html(sound_indicator);
       $rerun_button.html(sound_indicator);
       // $dice_dropdown.html(sound_indicator);
       
