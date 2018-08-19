@@ -129,6 +129,9 @@ include_once( "aids.css.php" );
 <!-- jQuery Modal -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
 
+<!-- Ajax Loading Animation -->
+<script src="/js/ajax-loading.js"></script><!-- https://github.com/toplan/ajax-loading-animation -->
+
 </head>
 
 
@@ -510,10 +513,6 @@ ENDWHILE
 <script src="/js/autocomplete.js"></script>
 <script src="/js/dice.js"></script>
 <script src="/js/ajax-loading.js"></script>
-<!-- <script src="/js/changeGame.js"></script> -->
-<!-- <script src="/js/showRNG.js"></script> -->
-<!-- <script src="/js/bonfire.js"></script> -->
-<!-- <script src="/js/modal.js"></script> -->
 
 <!-- Ajax loading spinner -->
 <script>
