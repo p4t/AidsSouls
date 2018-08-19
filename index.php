@@ -60,7 +60,14 @@ include_once( $_SERVER["DOCUMENT_ROOT"] . "/roll.inc.php" );
 <link rel="stylesheet" href="/css/table.css" type="text/css" media="screen">
 <link rel="stylesheet" href="/css/form.css" type="text/css" media="screen">
 <link rel="stylesheet" href="/css/messages.css" type="text/css" media="screen">
+<?php
+  // Enable/Disable CSS ANimations in Edit>>Config for tablet performance
+  if ( _CSSANIMATIONS == "TRUE" ) {
+?>
 <link rel="stylesheet" href="/css/dice_animations.css" type="text/css" media="screen">
+<?php
+  }
+?>
 <link rel="stylesheet" href="/css/mobile.css" type="text/css" media="screen">
 
 <!-- jQuery UI CSS -->
