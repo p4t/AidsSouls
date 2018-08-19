@@ -65,6 +65,9 @@ include_once( $_SERVER["DOCUMENT_ROOT"] . "/roll.inc.php" );
 <!-- jQuery UI CSS -->
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 
+<!-- jQuery Modal -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css">
+
 <!-- Font Awesome -->
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.12/css/all.css" integrity="sha384-G0fIWCsCzJIMAVNQPfjH08cyYaUtMwjJwqiRKxxE/rx96Uroj1BtIQ6MLJuheaO9" crossorigin="anonymous">
 
@@ -81,6 +84,10 @@ include_once( $_SERVER["DOCUMENT_ROOT"] . "/roll.inc.php" );
     -moz-background-size: cover;
     -o-background-size: cover;
     background-size: cover;
+  }
+  .modal {
+    /* background: transparent; */
+    background: rgba(0, 0, 0, 0.5);
   }
 </style>
 
@@ -117,6 +124,9 @@ include_once( "aids.css.php" );
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <!-- jQuery UI Touch Punch -->
 <script src="/js/jquery.ui.touch-punch.min.js"></script>
+
+<!-- jQuery Modal -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
 
 </head>
 
@@ -357,9 +367,8 @@ ENDWHILE
 <hr>
 <footer>
   <nav>
-    <!-- <button id="aidsAJAXTest">aidsAJAXTest</button> | -->
     <a href="#" id="aidsAJAXTest" onClick="return false">aidsAJAXFailsafe</a> |
-    <a href="#" id="myBtn">Zuletzt gewürfelt</a> |
+    <a href="/latestRolls.php" rel="modal:open">Zuletzt gewürfelt</a> |
     <a href="/edit" target="_blank">Edit</a>
   </nav>
 </footer>
@@ -486,29 +495,6 @@ ENDWHILE
   <audio id="audio_shrine"          src="/audio/DarkSoulsBonfireSoundEffect(cropped)LowerVolume.ogg"></audio>
   <audio id="audio_shrine"          src="/audio/DS1_Firelink_Shrine.mp3"></audio>
   -->
-</div>
-
-<!-- LATEST ROLLS MODAL POPUP -->
-<div id="myModal" class="modal animate">
-  <div class="modal-content">
-    <span class="close" style="display: none;"><!-- &times; --></span>
-    <div class="message">
-      <div class="message_line">
-        <?php
-        $data = $pdo->query("SELECT date, IP, mobs, boss FROM rolls WHERE mobs != '' AND boss != '' AND gameID = $GAMEID ORDER BY ID DESC LIMIT 1, 4")->fetchAll(PDO::FETCH_ASSOC);
-        foreach ($data as $value) :
-        ?>
-        <div class="row">
-          <div class="col"><?=$value["mobs"]?></div>
-          <div class="col"><?=$value["boss"]?></div>
-          <!-- <div class="col"><?php//formatDate($value["date"])?></div> -->
-        </div>
-        <?php
-        ENDFOREACH
-        ?> 
-      </div>
-    </div>
-  </div>
 </div>
 
 
