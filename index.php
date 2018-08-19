@@ -99,6 +99,18 @@ include_once( $_SERVER["DOCUMENT_ROOT"] . "/roll.inc.php" );
     /* background: transparent; */
     background: rgba(0, 0, 0, 0.5);
   }
+  /* Fullscreen spinner on first page load */
+  .no-js #loader { display: none;  }
+  .js #loader { display: block; position: absolute; left: 100px; top: 0; }
+  .se-pre-con {
+    position: fixed;
+    left: 0px;
+    top: 0px;
+    width: 100%;
+    height: 100%;
+    z-index: 9999;
+    background: url(/img/spinner.svg) center no-repeat #000;
+  }
 </style>
 
 <?php
@@ -145,6 +157,8 @@ include_once( "aids.css.php" );
 
 
 <body spellcheck="false">
+
+<div class="se-pre-con"></div>
 
 <?php
   /* DEBUG OUTPUT */
@@ -573,6 +587,16 @@ $( document ).ready(function() {
 
 });
 </script>
+
+<!-- Animated spinner on first page load -->
+<script>
+$( document ).ready(function() {
+
+  $(".se-pre-con").fadeOut(2000);
+
+});
+</script>
+
 
 </body>
 </html>
