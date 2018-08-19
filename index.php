@@ -503,6 +503,7 @@ ENDWHILE
 
 
 <!-- JavaScript/jQuery -->
+<!--
 <script src="/js/global.js"></script>
 <script src="/js/ajax.js"></script>
 <script src="/js/audio.js"></script>
@@ -512,7 +513,8 @@ ENDWHILE
 <script src="/js/dropdown.js"></script>
 <script src="/js/autocomplete.js"></script>
 <script src="/js/dice.js"></script>
-<script src="/js/ajax-loading.js"></script>
+-->
+<script src="/js/scripts.min.js"></script>
 
 <!-- Ajax loading spinner -->
 <script>
