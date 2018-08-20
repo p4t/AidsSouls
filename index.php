@@ -263,12 +263,22 @@ if ( _SFXAIDS == "TRUE" ) include_once( $_SERVER["DOCUMENT_ROOT"] . "/aids.css.p
 <hr>
 
   
-<h5 id="Aids">Aids</h5>
-<!-- !!!LIST OF ALL THE AIDS: MOBS BOSS, WEAPONS --> 
+<h5 id="Aids" class="pointer">+Aids</h5>
+<!-- !!!LIST OF ALL THE AIDS: MOBS BOSS, WEAPONS -->
+<div id="aidsListing"></div>
 <?php
-  include_once( $_SERVER["DOCUMENT_ROOT"] . "/aidsListing.tpl.php" );
+  // include_once( $_SERVER["DOCUMENT_ROOT"] . "/aidsListing.tpl.php" );
 ?>
+<script>
+/* Load aidsListing */
+$( "#Aids" ).click(function() {
+  console.log( "#Aids h5 clicked" );
   
+  $(this).text("Aids");
+  
+  $("#aidsListing").load("/aidsListing.tpl.php");
+});
+</script>
   
 <hr>
   

@@ -792,6 +792,10 @@ tr.active_game {
   font-size: 75%;
 }
 
+.pointer {
+  cursor: pointer;
+}
+
 /* DEBUG */
 /*
 * {
