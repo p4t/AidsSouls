@@ -575,6 +575,7 @@ function json_test () {
 
 <!-- Preload big images -->
 <script>
+/*
 $( document ).ready(function() {
 
   $.preloadImages = function() {
@@ -586,6 +587,7 @@ $( document ).ready(function() {
   $.preloadImages("/img/EpicSaxGuy.gif", "/img/curse.png", "/img/vader.jpg", "/dice/icons/parry.gif");
 
 });
+*/
 </script>
 
 <!-- Animated spinner on first page load -->
