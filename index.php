@@ -255,13 +255,11 @@ if ( _SFXAIDS == "TRUE" ) include_once( $_SERVER["DOCUMENT_ROOT"] . "/aids.css.p
 
 </div><!-- EOF #flex-container-roll-->
 
-<!-- Debug Status Msg -->
-<div id="jsstatus">&nbsp;</div>
 
 </div><!-- EOF aidscontent -->
   
   
-<hr>
+<!-- <hr> -->
 
   
 <h5 id="Aids" class="pointer">+Aids</h5>
@@ -281,7 +279,8 @@ $( "#Aids" ).click(function() {
 });
 </script>
   
-<hr>
+
+<!-- <hr> -->
   
 
 <h5 id="Kills" class="pointer">+Kills</h5>
@@ -306,7 +305,7 @@ $( "#Kills" ).click(function() {
 <div id="status">&nbsp;</div>
 
 <!-- FOOTER -->
-<hr>
+<!-- <hr> -->
 <footer>
   <nav>
     <a href="#" id="aidsAJAXTest" onClick="return false">aidsAJAXFailsafe</a> |
@@ -314,7 +313,7 @@ $( "#Kills" ).click(function() {
     <a href="/edit" target="_blank">Edit</a>
   </nav>
 </footer>
-<hr>
+<!-- <hr> -->
   
 
 </div><!-- EOF Content -->
@@ -388,6 +387,7 @@ $( "#Kills" ).click(function() {
   
   
   <!-- Werner -->
+  <!--
   <audio preload="none" id="audio_werner1"     src="/audio/werner/Wo.mp3"></audio>
   <audio preload="none" id="audio_werner2"     src="/audio/werner/Wieso.mp3"></audio>
   <audio preload="none" id="audio_werner3"     src="/audio/werner/WelchenSchluessel.mp3"></audio>
@@ -415,6 +415,7 @@ $( "#Kills" ).click(function() {
   <audio preload="none" id="audio_werner25"    src="/audio/werner/Rohrbruch.mp3"></audio>
   <audio preload="none" id="audio_werner26"    src="/audio/werner/Krankenhaus.mp3"></audio>
   <audio preload="none" id="audio_werner27"    src="/audio/werner/Furz.mp3"></audio>
+  -->
   
   
   <!-- Random -->
@@ -468,25 +469,6 @@ $( "#Kills" ).click(function() {
   });
 </script>
 
-
-<!-- JS readdir -->
-<script>
-var files = <?php $out = array();
-
-$files = scan_dir("audio/werner");
-  foreach ($files as $key => $value) {
-    // echo $value . "<br>";
-    $out[] = $value;
-  }
-      
-echo json_encode($out); ?>;
-
-// alert (files);
-function json_test () {
-  $("#json").toggle();
-  $("#json").text(files);
-}
-</script>
 
 <!-- Preload big images -->
 <script>
