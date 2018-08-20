@@ -115,7 +115,7 @@ include_once( $_SERVER["DOCUMENT_ROOT"] . "/roll.inc.php" );
 
 <?php
 // CSS for special Aids (No HUD, Jäscher + Feige, Invert Controls)
-include_once( "aids.css.php" );
+if ( _SFXAIDS == "TRUE" ) include_once( $_SERVER["DOCUMENT_ROOT"] . "/aids.css.php" );
 ?>
 
 <link rel="apple-touch-icon" sizes="180x180" href="/img/favico/apple-touch-icon.png">
