@@ -75,7 +75,7 @@ include_once( $_SERVER["DOCUMENT_ROOT"] . "/roll.inc.php" );
 <link rel="stylesheet" href="/css/mobile.css" type="text/css" media="screen">
 
 <!-- jQuery UI CSS -->
-<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.min.css">
 
 <!-- jQuery Modal -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css">
@@ -145,7 +145,7 @@ if ( _SFXAIDS == "TRUE" ) include_once( $_SERVER["DOCUMENT_ROOT"] . "/aids.css.p
 
 <!-- jQuery -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js" integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU=" crossorigin="anonymous"></script>
 <!-- jQuery UI Touch Punch -->
 <script src="/js/jquery.ui.touch-punch.min.js"></script>
 
