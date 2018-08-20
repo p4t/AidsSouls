@@ -57,10 +57,10 @@ include_once( $_SERVER["DOCUMENT_ROOT"] . "/roll.inc.php" );
 <base href="http://ds.fahrzeugatelier.de">
   
 <link rel="stylesheet" href="/css/layout.min.css" type="text/css" media="screen">
-<link rel="stylesheet" href="/css/flex.css" type="text/css" media="screen">
-<link rel="stylesheet" href="/css/button.css" type="text/css" media="screen">
-<link rel="stylesheet" href="/css/table.css" type="text/css" media="screen">
-<link rel="stylesheet" href="/css/form.css" type="text/css" media="screen">
+<link rel="stylesheet" href="/css/flex.min.css" type="text/css" media="screen">
+<link rel="stylesheet" href="/css/button.min.css" type="text/css" media="screen">
+<link rel="stylesheet" href="/css/table.min.css" type="text/css" media="screen">
+<link rel="stylesheet" href="/css/form.min.css" type="text/css" media="screen">
 <!--
 <link rel="stylesheet" href="/css/messages.css" type="text/css" media="screen">
 -->
@@ -68,7 +68,7 @@ include_once( $_SERVER["DOCUMENT_ROOT"] . "/roll.inc.php" );
   // Enable/Disable CSS ANimations in Edit>>Config for tablet performance
   if ( _CSSANIMATIONS == "TRUE" ) {
 ?>
-<link rel="stylesheet" href="/css/dice_animations.css" type="text/css" media="screen">
+<link rel="stylesheet" href="/css/dice_animations.min.css" type="text/css" media="screen">
 <?php
   }
 ?>
