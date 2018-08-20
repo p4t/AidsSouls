@@ -158,6 +158,12 @@ if ( _SFXAIDS == "TRUE" ) include_once( $_SERVER["DOCUMENT_ROOT"] . "/aids.css.p
 
 <body spellcheck="false">
 
+<!-- Ajax Roll Debug -->
+<!--
+<a href="#" id="aidsAJAXTest" onClick="return false">aidsAJAXFailsafe</a>
+-->
+
+<!-- Fullscreen Ajax Loading Spinner div -->
 <div class="se-pre-con"></div>
 
 <?php
