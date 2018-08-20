@@ -4,6 +4,8 @@ require_once( $_SERVER["DOCUMENT_ROOT"] . "/config.db.php" );
 require_once( $_SERVER["DOCUMENT_ROOT"] . "/functions.inc.php" );
 require_once( $_SERVER["DOCUMENT_ROOT"] . "/globals.inc.php" );
 ?>
+<h5>Aids</h5>
+
 <form id="form" method="post" onsubmit="return false">
 
 <div class="aidsListing">

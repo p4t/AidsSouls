@@ -160,13 +160,41 @@ if ( _SFXAIDS == "TRUE" ) include_once( $_SERVER["DOCUMENT_ROOT"] . "/aids.css.p
 
 <body spellcheck="false">
 
-<!-- Ajax Roll Debug -->
-<!--
-<a href="#" id="aidsAJAXTest" onClick="return false">aidsAJAXFailsafe</a>
--->
-
 <!-- Fullscreen Ajax Loading Spinner div -->
 <div class="se-pre-con"></div>
+
+
+<!-- SIDENAV -->
+<div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">
+    <!-- &times; -->
+    <i class="fas fa-times"></i>
+  </a>
+
+  <span class="sidenav-toplink">
+    <a href="/edit" target="_blank" data-balloon="Edit" data-balloon-pos="up">
+      Edit <i class="fas fa-external-link-alt"></i>
+    </a>
+  </span>
+
+  <a href="#" id="Aids" onClick="return false">Aids</a>
+  <a href="#" id="Kills" onClick="return false">Kills</a>
+  <a href="/latestRolls.php" rel="modal:open">Zuletzt gewürfelt</a>
+  
+  <a href="#" id="aidsAJAXTest" onClick="return false">AJAXAids</a>
+  
+  <span>&nbsp;</span>
+
+  <a href="/edit?show=config" target="_blank">
+    <i class="fas fa-cog"></i>
+  </a>
+</div>
+
+<span id="sidenav-icon" class="sidenav-icon" onclick="openNav()">
+  <!-- &#9776; --> <!-- Menü -->
+  <i class="fas fa-bars"></i>
+</span>
+
 
 <?php
   /* DEBUG OUTPUT */
@@ -261,60 +289,25 @@ if ( _SFXAIDS == "TRUE" ) include_once( $_SERVER["DOCUMENT_ROOT"] . "/aids.css.p
   
 <!-- <hr> -->
 
-  
-<h5 id="Aids" class="pointer">+Aids</h5>
+
 <!-- !!!LIST OF ALL THE AIDS: MOBS BOSS, WEAPONS -->
-<div id="aidsListing"></div>
-<?php
-  // include_once( $_SERVER["DOCUMENT_ROOT"] . "/aidsListing.tpl.php" );
-?>
-<script>
-/* Load aidsListing */
-$( "#Aids" ).click(function() {
-  console.log( "#Aids h5 clicked" );
-  
-  $(this).text("Aids");
-  
-  $("#aidsListing").load("/aidsListing.tpl.php");
-});
-</script>
-  
+<div id="aidsListing">
+  <!-- aidsListing.tpl.php -->
+</div>
+
+
 
 <!-- <hr> -->
   
 
-<h5 id="Kills" class="pointer">+Kills</h5>
-<!-- Kills Table -->
-<div id="killedBosses"></div>
-<?php
-  // include_once( $_SERVER["DOCUMENT_ROOT"] . "/killedBosses.tpl.php" );
-?>
-<script>
-/* Load aidsListing */
-$( "#Kills" ).click(function() {
-  console.log( "#Kills h5 clicked" );
-  
-  $(this).text("Kills");
-  
-  $("#killedBosses").load("/killedBosses.tpl.php");
-});
-</script>
+<!-- !!!KILLS -->
+<div id="killedBosses">
+  <!-- killedBosses.tpl.php -->
+</div>
 
   
 <!-- Ajax Success Msg fixed -->
 <div id="status">&nbsp;</div>
-
-<!-- FOOTER -->
-<!-- <hr> -->
-<footer>
-  <nav>
-    <a href="#" id="aidsAJAXTest" onClick="return false">aidsAJAXFailsafe</a> |
-    <a href="/latestRolls.php" rel="modal:open">Zuletzt gewürfelt</a> |
-    <a href="/edit" target="_blank">Edit</a>
-  </nav>
-</footer>
-<!-- <hr> -->
-  
 
 </div><!-- EOF Content -->
 </div><!-- EOF Container -->  
@@ -455,6 +448,39 @@ $( "#Kills" ).click(function() {
 <script src="/js/dice.js"></script>
 -->
 <script src="/js/scripts.min.js"></script>
+
+
+<!-- Sidenav -->
+<script>
+function openNav() {
+  $("#mySidenav").css("width", "250px");
+  
+  $("#sidenav-icon").css({'transform': 'rotate(90deg)'});
+}
+
+function closeNav() {
+  $("#mySidenav").css("width", "0");
+  
+  $("#sidenav-icon").css({'transform': 'rotate(0deg)'});
+}
+</script>
+
+<script>
+/* Load aidsListing */
+$( "#Aids" ).click(function() {
+  console.log( "#Aids clicked" );
+    
+  $("#aidsListing").hide().load("/aidsListing.tpl.php").fadeIn();
+});
+
+/* Load kills */
+$( "#Kills" ).click(function() {
+  console.log( "#Kills clicked" );
+    
+  $("#killedBosses").hide().load("/killedBosses.tpl.php").fadeIn();
+});
+</script>
+
 
 <!-- Ajax loading spinner -->
 <script>
