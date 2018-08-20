@@ -74,3 +74,7 @@ require_once( $_SERVER["DOCUMENT_ROOT"] . "/globals.inc.php" );
 </div><!-- EOF flex-container-aidsListing -->
 
 </form>
+
+<!-- Load needed scripts -->
+<script src="/js/ajax.min.js"></script>
+<script src="/js/autocomplete.min.js"></script>

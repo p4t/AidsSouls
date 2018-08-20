@@ -517,7 +517,7 @@ $( document ).ready(function() {
 <script>
 $( document ).ready(function() {
 
-  $(".se-pre-con").fadeOut(2000);
+  $(".se-pre-con").fadeOut();
 
 });
 </script>
