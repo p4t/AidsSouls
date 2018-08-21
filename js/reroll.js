@@ -27,6 +27,11 @@ function reroll () {
         console.log("Timeout reset");
         
         console.log( "reroll::ajax.reload" );
+        
+        // Set text on buttons back to normal manually (hack)
+        $("#reroll_button").text("Roll");
+        $("#rerun_button").text("Rerun");
+        
         $("#aidsAJAX").load("/aidscontent.ajax.php"); // load Aids output
         console.log( "reroll::ajax.reload.finished" );
       };
