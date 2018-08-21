@@ -179,7 +179,7 @@ if ( _SFXAIDS == "TRUE" ) include_once( $_SERVER["DOCUMENT_ROOT"] . "/aids.css.p
 
   <a href="#" id="Aids" onClick="return false">Aids</a>
   <a href="#" id="Kills" onClick="return false">Kills</a>
-  <a href="/latestRolls.php" rel="modal:open">Zuletzt gewürfelt</a>
+  <a href="/latestRolls.php" rel="modal:open">Rolls</a>
   
   <a href="#" id="aidsAJAXTest" onClick="return false">AJAXAids</a>
   
@@ -207,9 +207,7 @@ if ( _SFXAIDS == "TRUE" ) include_once( $_SERVER["DOCUMENT_ROOT"] . "/aids.css.p
 
 <!-- Header -->
 <header>
-  <a href="/">
-    <img src="/img/<?=_GAME?>_logo.png" alt="Dark Souls Logo"> <!--  width="661" height="80" -->
-  </a>
+  <img src="/img/<?=_GAME?>_logo.png" alt="Dark Souls Logo"> <!--  width="661" height="80" -->
   <h4>mit verschärftem AIDS</h4>  
 </header>
 
