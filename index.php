@@ -72,7 +72,7 @@ include_once( $_SERVER["DOCUMENT_ROOT"] . "/roll.inc.php" );
 <?php
   }
 ?>
-<link rel="stylesheet" href="/css/mobile.css" type="text/css" media="screen">
+<link rel="stylesheet" href="/css/mobile.min.css" type="text/css" media="screen">
 
 <!-- jQuery UI CSS -->
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.min.css">
