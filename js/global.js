@@ -143,3 +143,40 @@ $( "#aidsAJAXTest" ).click(function() {
   
   $("#aidsAJAX").load("/aidscontent.ajax.php");
 });
+
+
+
+/* Ajax loading spinner */
+  //init: automatic monitoring ajax events
+  var loading = $.loading({
+    background : "",
+    // minTime    : 2000,
+    imgPath    : "/img/spinner.svg",
+    imgWidth   : "80px",
+    imgHeight  : "80px",
+    tip        : ""
+  });
+
+
+/* Preload big images */
+/*
+$( document ).ready(function() {
+
+  $.preloadImages = function() {
+    for (var i = 0; i < arguments.length; i++) {
+      $("<img />").attr("src", arguments[i]);
+    }
+  }
+
+  $.preloadImages("/img/EpicSaxGuy.gif", "/img/curse.png", "/img/vader.jpg", "/dice/icons/parry.gif");
+
+});
+*/
+
+
+/* Animated spinner on first page load */
+$( document ).ready(function() {
+
+  $(".se-pre-con").fadeOut();
+
+});
