@@ -275,7 +275,7 @@ if ( _SFXAIDS == "TRUE" ) include_once( $_SERVER["DOCUMENT_ROOT"] . "/aids.css.p
   <!-- Rerun? -->
   <div class="flex-item-button">
     <button class="button disabled" onClick="rerun()" id="rerun_button" disabled>
-      <span id="rerun_switch_button" class="disabled">Rerun?</span>
+      <span id="rerun_switch_button" class="disabled"><i class="fas fa-hand-paper"></i></span>
     </button>
   </div>
 
@@ -434,18 +434,15 @@ if ( _SFXAIDS == "TRUE" ) include_once( $_SERVER["DOCUMENT_ROOT"] . "/aids.css.p
 
 
 <!-- JavaScript/jQuery -->
-<!--
-<script src="/js/global.js"></script>
-<script src="/js/ajax.js"></script>
-<script src="/js/audio.js"></script>
-<script src="/js/rerun.js"></script>
-<script src="/js/reroll.js"></script>
-<script src="/js/run.js"></script>
-<script src="/js/dropdown.js"></script>
-<script src="/js/autocomplete.js"></script>
-<script src="/js/dice.js"></script>
--->
-<script src="/js/scripts.min.js"></script>
+<script src="/js/global.min.js"></script>
+<!-- <script src="/js/ajax.js"></script> -->
+<script src="/js/audio.min.js"></script>
+<script src="/js/rerun.min.js"></script>
+<script src="/js/reroll.min.js"></script>
+<script src="/js/run.min.js"></script>
+<script src="/js/dropdown.min.js"></script>
+<!-- <script src="/js/autocomplete.js"></script> -->
+<script src="/js/dice.min.js"></script>
 
 
 <!-- Sidenav -->
@@ -476,47 +473,6 @@ $( "#Kills" ).click(function() {
   console.log( "#Kills clicked" );
     
   $("#killedBosses").hide().load("/killedBosses.tpl.php").fadeIn();
-});
-</script>
-
-
-<!-- Ajax loading spinner -->
-<script>
-  //init: automatic monitoring ajax events
-  var loading = $.loading({
-    background : "",
-    // minTime    : 2000,
-    imgPath    : "/img/spinner.svg",
-    imgWidth   : "80px",
-    imgHeight  : "80px",
-    tip        : ""
-  });
-</script>
-
-
-<!-- Preload big images -->
-<script>
-/*
-$( document ).ready(function() {
-
-  $.preloadImages = function() {
-    for (var i = 0; i < arguments.length; i++) {
-      $("<img />").attr("src", arguments[i]);
-    }
-  }
-
-  $.preloadImages("/img/EpicSaxGuy.gif", "/img/curse.png", "/img/vader.jpg", "/dice/icons/parry.gif");
-
-});
-*/
-</script>
-
-<!-- Animated spinner on first page load -->
-<script>
-$( document ).ready(function() {
-
-  $(".se-pre-con").fadeOut();
-
 });
 </script>
 
