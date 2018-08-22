@@ -80,7 +80,9 @@ header {
 }
 
 header img {
+  /*
   margin-bottom: -18px;
+  */
 }
 
 
@@ -233,6 +235,16 @@ div#todo
   padding: 15px;
 }
 
+
+/* Center #aidscontent via CSS GRID */
+.content {
+  height: 100%;
+  display: grid;
+}
+#aidscontent {
+  margin: auto;
+}
+  
 
 
 /* Reroll Fade-In */
