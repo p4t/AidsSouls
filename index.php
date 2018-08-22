@@ -65,7 +65,7 @@ include_once( $_SERVER["DOCUMENT_ROOT"] . "/roll.inc.php" );
 <link rel="stylesheet" href="/css/messages.css" type="text/css" media="screen">
 -->
 <?php
-  // Enable/Disable CSS ANimations in Edit>>Config for tablet performance
+  // Enable/Disable CSS Animations in Edit>>Config for tablet performance
   if ( _CSSANIMATIONS == "TRUE" ) {
 ?>
 <link rel="stylesheet" href="/css/dice_animations.min.css" type="text/css" media="screen">
@@ -111,7 +111,7 @@ include_once( $_SERVER["DOCUMENT_ROOT"] . "/roll.inc.php" );
     width: 100%;
     height: 100%;
     z-index: 9999;
-    background: url(/img/spinner.svg) center no-repeat #000;
+    background: url("/img/spinner.svg") center no-repeat #000;
   }
 </style>
 
