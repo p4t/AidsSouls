@@ -52,7 +52,8 @@
 
       if ( $rerunroll.css("display") === "block" ) {        
         // Play Sound
-        randomSoundEffect();
+        // randomSoundEffect(); // Disable all the rdn sound for now for tablet performance
+        play_audio("sadtrombone");
         $bonfire.hide();
       }
       

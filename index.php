@@ -312,21 +312,24 @@ if ( _SFXAIDS == "TRUE" ) include_once( $_SERVER["DOCUMENT_ROOT"] . "/aids.css.p
   
 <!-- AUDIO -->
 <div id="audio">
-  <audio id="audio_Biber"           src="/audio/biber.mp3"></audio>
-  <audio id="audio_Katz"            src="/audio/meow.mp3"></audio>
-  <audio id="audio_Pat"             src="/audio/Pat.mp3"></audio>
-  <audio id="audio_sadtrombone"     src="/audio/SadTrombone.mp3"></audio>
-  <audio id="audio_epicsaxguy"      src="/audio/EpicSaxGuy.mp3"></audio>
-  <audio id="audio_vader"           src="/audio/nooo.ogg"></audio>
-  <audio id="audio_dice"            src="/audio/dice.wav"></audio>
-  <audio id="audio_aids"            src="/audio/aids.mp3"></audio>
-  <audio id="audio_superaids"       src="/audio/superaids.mp3"></audio>
-  <audio id="audio_bonfirerefresh"  src="/audio/DarkSoulsBonfireRefreshSoundEffect.ogg"></audio>
-  <audio id="audio_toggle"          src="/audio/toggle.mp3"></audio>
+  <!-- Essential -->
+  <audio id="audio_Biber"             src="/audio/biber.mp3"></audio>
+  <audio id="audio_Katz"              src="/audio/meow.mp3"></audio>
+  <audio id="audio_Pat"               src="/audio/Pat.mp3"></audio>
+  <audio id="audio_sadtrombone"       src="/audio/SadTrombone.mp3"></audio>
+  <audio id="audio_epicsaxguy"        src="/audio/EpicSaxGuy.mp3"></audio>
+  <audio id="audio_vader"             src="/audio/nooo.ogg"></audio>
+  <audio id="audio_dice"              src="/audio/dice.wav"></audio>
+  <audio id="audio_aids"              src="/audio/aids.mp3"></audio>
+  <audio id="audio_superaids"         src="/audio/superaids.mp3"></audio>
+  <audio id="audio_bonfirerefresh"    src="/audio/DarkSoulsBonfireRefreshSoundEffect.ogg"></audio>
+  <audio id="audio_toggle"            src="/audio/toggle.mp3"></audio>
+  <audio id="audio_MorningStarAids"   src="/audio/system/MorningStarAids.mp3"></audio>
 
   
   
   <!-- Scheissendreck -->
+  <!--
   <audio preload="none" id="audio_dolphin"               src="/audio/dolphin.mp3"></audio>
   <audio preload="none" id="audio_evillaugh"             src="/audio/evillaugh.mp3"></audio>
   <audio preload="none" id="audio_hagay"                 src="/audio/hagay.mp3"></audio>
@@ -335,9 +338,11 @@ if ( _SFXAIDS == "TRUE" ) include_once( $_SERVER["DOCUMENT_ROOT"] . "/aids.css.p
   <audio preload="none" id="audio_sadmusic2"             src="/audio/sadmusic2.mp3"></audio>
   <audio preload="none" id="audio_zackgalifianakislaugh" src="/audio/zackgalifianakislaugh.mp3"></audio>
   <audio preload="none" id="audio_alwayssunnybell"       src="/audio/alwayssunnybell.mp3"></audio>
+  -->
   
 
   <!-- The Room -->
+  <!--
   <audio preload="none" id="audio_Cheep_1"             src="/audio/TheRoom/Cheep_1.mp3"></audio>
   <audio preload="none" id="audio_Cheep_2"             src="/audio/TheRoom/Cheep_2.mp3"></audio>
   <audio preload="none" id="audio_IDidNotHitHer"       src="/audio/TheRoom/IDidNotHitHer.mp3"></audio>
@@ -348,9 +353,10 @@ if ( _SFXAIDS == "TRUE" ) include_once( $_SERVER["DOCUMENT_ROOT"] . "/aids.css.p
   <audio preload="none" id="audio_TommyLaugh_3"        src="/audio/TheRoom/TommyLaugh_3.mp3"></audio>
   <audio preload="none" id="audio_WhyWhyLisa"          src="/audio/TheRoom/WhyWhyLisa.mp3"></audio>
   <audio preload="none" id="audio_YouMustBeKidding"    src="/audio/TheRoom/YouMustBeKidding.mp3"></audio>
-  
+  -->
   
   <!-- WoWQuote -->
+  <!--
   <audio preload="none" id="audio_200Puls"                   src="/audio/WoWQuote/200Puls.mp3"></audio>
   <audio preload="none" id="audio_badesalz1"                 src="/audio/WoWQuote/badesalz1.mp3"></audio>
   <audio preload="none" id="audio_badesalzWAS"               src="/audio/WoWQuote/badesalzWAS.mp3"></audio>
@@ -365,9 +371,10 @@ if ( _SFXAIDS == "TRUE" ) include_once( $_SERVER["DOCUMENT_ROOT"] . "/aids.css.p
   <audio preload="none" id="audio_schwarzerbildschirm"       src="/audio/WoWQuote/schwarzerbildschirm.mp3"></audio>
   <audio preload="none" id="audio_wernerflasche"             src="/audio/WoWQuote/wernerflasche.wav"></audio>
   <audio preload="none" id="audio_cundflicht"                src="/audio/WoWQuote/cundflicht.mp3"></audio>
-  
+  -->
   
   <!-- Presi -->
+  <!--
   <audio preload="none" id="audio_presi1"  src="/audio/random/presi1.mp3"></audio>
   <audio preload="none" id="audio_presi2"  src="/audio/random/presi2.mp3"></audio>
   <audio preload="none" id="audio_presi3"  src="/audio/random/presi3.mp3"></audio>
@@ -375,7 +382,7 @@ if ( _SFXAIDS == "TRUE" ) include_once( $_SERVER["DOCUMENT_ROOT"] . "/aids.css.p
   <audio preload="none" id="audio_presi5"  src="/audio/random/presi5.mp3"></audio>
   <audio preload="none" id="audio_presi6"  src="/audio/random/presi6.mp3"></audio>
   <audio preload="none" id="audio_presi7"  src="/audio/random/presi7.mp3"></audio>
-  
+  -->
   
   <!-- Werner -->
   <!--
@@ -410,15 +417,15 @@ if ( _SFXAIDS == "TRUE" ) include_once( $_SERVER["DOCUMENT_ROOT"] . "/aids.css.p
   
   
   <!-- Random -->
+  <!--
   <audio preload="none" id="audio_flanders"                src="/audio/random/flanders.mp3"></audio>
   <audio preload="none" id="audio_frieza"                  src="/audio/random/frieza.mp3"></audio>
   <audio preload="none" id="audio_joker"                   src="/audio/random/Joker_Laughing.mp3"></audio>
   <audio preload="none" id="audio_rlmwhistle"              src="/audio/random/rlmwhistle.mp3"></audio>
-  <audio preload="none" id="audio_MorningStarAids"         src="/audio/system/MorningStarAids.mp3"></audio>
   <audio preload="none" id="audio_fail"            src="/audio/fail.mp3"></audio>
   <audio preload="none" id="audio_bier"            src="/audio/bier.mp3"></audio>
   <audio preload="none" id="audio_richevanslaugh"  src="/audio/richevanslaugh.mp3"></audio>
-  
+  -->
   
   <!-- Shrine Background -->
   <audio preload="none" id="audio_shrine"          src="/audio/DS1_Firelink_Shrine.mp3"></audio>
