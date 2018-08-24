@@ -439,6 +439,13 @@ if ( _SFXAIDS == "TRUE" ) include_once( $_SERVER["DOCUMENT_ROOT"] . "/aids.css.p
   -->
 </div>
 
+<!-- JS Global Vars -->
+<script>
+  var _GAME = <?=_GAME;?>;
+  var availableTagsWeapons  = <?php include("autocomplete.jQuery.php");?>;
+  var availableTagsMobsBoss = <?php include("autocomplete/aids.php");?>;
+  var stats = <?php include("stats.inc.php");?>;
+</script>
 
 <!-- JavaScript/jQuery -->
 <script src="/js/global.min.js"></script>

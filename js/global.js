@@ -4,6 +4,7 @@
 
 
 // Get active Game
+  /*
   var _GAME;
   $.ajax({
     async: false,
@@ -15,18 +16,22 @@
       _GAME = data;
     }
   });
+  */
   
   console.log("GAME: " + _GAME);
 
 
 function switchButton(source, action) {
 
-  if ( action === "false" ) {
-    $( "#"+source+"_button" ).prop( "disabled", false );
-    $( "#"+source+"_button" ).removeClass( "disabled" );
+  // Cache jQuery objects
+  var $source_button = $( "#"+source+"_button" );
+  
+  if ( action === "false" ) {    
+    $source_button.prop( "disabled", false );
+    $source_button.removeClass( "disabled" );
   } else {
-    $( "#"+source+"_button" ).prop( "disabled", true );
-    $( "#"+source+"_button" ).addClass( "disabled" );
+    $source_button.prop( "disabled", true );
+    $source_button.addClass( "disabled" );
   }
   
 }
@@ -34,10 +39,13 @@ function switchButton(source, action) {
 
 function openBonfire () {
   
-  if ( $("#bonfire").css("display") === "none" ) {
+  // Cache jQuery objects
+  var $bonfire = $("#bonfire");
+  
+  if ( $bonfire.css("display") === "none" ) {
     $("#w12").hide();
     $("#rerunroll").hide();
-    $("#bonfire").show();
+    $bonfire.show();
   }
   
 }
@@ -72,18 +80,23 @@ function showRNG () {
   */
   // console.log("FLIP CLICK");
   
-  if ( $( ".dice_wrapper" ).hasClass( "is-flipped" ) ) {
+  // Cache jQuery objects
+  var $dice_wrapper = $( ".dice_wrapper" );
+  var $rng = $("#mobsRNG, #bossRNG");
+  var $rng_number = $("#mobsRNGNumber, #bossRNGNumber");
+  
+  if ( $dice_wrapper.hasClass( "is-flipped" ) ) {
     // console.log("hasClassTRUE");
-    $("#mobsRNG, #bossRNG").fadeToggle( "slow", "linear" );
-    $("#mobsRNGNumber, #bossRNGNumber").toggle();
+    $rng.fadeToggle( "slow", "linear" );
+    $rng_number.toggle();
     
-    $( ".dice_wrapper" ).removeClass( "is-flipped" );
+    $dice_wrapper.removeClass( "is-flipped" );
   } else {
     // console.log("hasClassFALSE");
-    $("#mobsRNG, #bossRNG").toggle();
-    $("#mobsRNGNumber, #bossRNGNumber").fadeToggle( "slow", "linear" );
+    $rng.toggle();
+    $rng_number.fadeToggle( "slow", "linear" );
 
-    $( ".dice_wrapper" ).addClass( "is-flipped" );
+    $dice_wrapper.addClass( "is-flipped" );
   }
 
 }
@@ -138,8 +151,13 @@ $( document ).ready(function() {
 $( "#aidsAJAXTest" ).click(function() {
   console.log( "#aidsAJAXTest clicked" );
   
+  // switch buttons
   switchButton("reroll", "false");
   switchButton("rerun", "false");
+  
+  // Set text on buttons back to normal manually (hack)
+  $("#reroll_button").text("Roll");
+  $("#rerun_button").text("Rerun");
   
   $("#aidsAJAX").load("/aidscontent.ajax.php");
 });

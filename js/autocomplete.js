@@ -6,6 +6,7 @@
 $( document ).ready(function() {
   
   // Mobs & Boss Aids
+  /*
   var availableTagsMobsBoss;
   $.ajax({
     async: false,
@@ -30,6 +31,7 @@ $( document ).ready(function() {
       availableTagsWeapons = data;
     }
   });
+  */
 
   console.log("availableTagsMobsBoss: " + availableTagsMobsBoss);
   console.log("----");
