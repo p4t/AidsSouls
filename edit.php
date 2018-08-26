@@ -35,16 +35,15 @@ require_once( $_SERVER["DOCUMENT_ROOT"] . "/globals.inc.php" );
 <title>\[T]/ the Edit</title>
 <base href="http://ds.fahrzeugatelier.de">
 
-<link rel="stylesheet" href="/css/layout.css" type="text/css" media="screen">
-<link rel="stylesheet" href="/css/flex.css" type="text/css" media="screen">
-<link rel="stylesheet" href="/css/button.css" type="text/css" media="screen">
-<link rel="stylesheet" href="/css/table.css" type="text/css" media="screen">
-<link rel="stylesheet" href="/css/form.css" type="text/css" media="screen">
-<link rel="stylesheet" href="/css/dice_animations.css" type="text/css" media="screen">
-<link rel="stylesheet" href="/css/mobile.css" type="text/css" media="screen">
+<link rel="stylesheet" href="/css/layout.min.css" type="text/css" media="screen">
+<link rel="stylesheet" href="/css/flex.min.css" type="text/css" media="screen">
+<link rel="stylesheet" href="/css/button.min.css" type="text/css" media="screen">
+<link rel="stylesheet" href="/css/table.min.css" type="text/css" media="screen">
+<link rel="stylesheet" href="/css/form.min.css" type="text/css" media="screen">
+<link rel="stylesheet" href="/css/mobile.min.css" type="text/css" media="screen">
   
 <!-- jQuery UI CSS -->
-<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.min.css">
 
 <!-- Font Awesome -->
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.12/css/all.css" integrity="sha384-G0fIWCsCzJIMAVNQPfjH08cyYaUtMwjJwqiRKxxE/rx96Uroj1BtIQ6MLJuheaO9" crossorigin="anonymous">
@@ -79,9 +78,11 @@ require_once( $_SERVER["DOCUMENT_ROOT"] . "/globals.inc.php" );
   
 <!-- jQuery -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
 <!-- jQuery UI Touch Punch -->
 <script src="/js/jquery.ui.touch-punch.min.js"></script>
+  
+<!-- jQuery Tablesorter -->
 <script src="/js/jquery.tablesorter.min.js"></script><!-- http://tablesorter.com/docs/ -->
 
 </head>
@@ -1237,14 +1238,104 @@ $(document).ready(function () {
 });
 </script>
 
-<!-- animate-sidenav-icon() -->
+<!-- Ajax Delete Multi -->
 <script>
-  /*
-$( "#sidenav-icon" ).click(function() {
-  console.log("click");
-  $("#sidenav-icon").css({'transform': 'rotate(90deg)'});
+$(document).ready(function () {
+  $(".checkbox_delete_toggle").click(function () {
+
+    // var delcart = $(".checkbox_delete").data("value");
+    // var deltable = $(".checkbox_delete").data("table"); // DB TABLE
+    var deltable = $(":checkbox:checked").data("table"); // DB TABLE
+    console.log("deltable: " + deltable);
+
+    var id = [];
+
+    $(":checkbox:checked").each(function (i) {
+      // id[i] = $(this).val();
+      id[i] = $(this).data("value");
+    });
+    
+    console.log("ID: " + id);
+
+    if (id.length === 0) { // tell you if the array is empty
+      alert("Please Select atleast one checkbox");
+    } else {
+      // AJAX
+      if (confirm("Are you sure want to delete?")) {
+        $.ajax({
+          type: "POST",
+          url: "del.ajax.php",
+          data: {
+            ID: id,
+            table: deltable
+          },
+          success: function (data) {
+            if (data) {
+              for (var i=0; i<id.length; i++) {
+                $("tr[id=" + deltable + "-" + id[i] + "]").fadeOut();
+              }
+              // debug
+              console.log("SUCCESS: " + data);
+              
+              // uncheck and enable all checkboxes
+              $("form input:checkbox").prop("disabled", false).prop("checked", false)
+              ;
+              
+            } else {
+              // alert ("OHJE");
+              console.log("FAIL: " + data);
+            }
+            // $("#aidsList").load("aids.edit.ajax.php");
+          }
+        });
+      }
+    }
+    // alert($(this).data('value'));
+  });
 });
-*/
+
+</script>
+
+
+<!-- CheckAll Ajax Delete -->
+<script>
+$("#checkAll_mobs").change(function () {
+  // check all checkboxes in this section
+  $("table#mobs input:checkbox").prop("checked", $(this).prop("checked"));
+  // disable other checkboxes
+  $("table:not(#mobs) input:checkbox").prop("disabled", "true");
+});
+$("#checkAll_boss").change(function () {
+  // check all checkboxes in this section
+  $("table#boss input:checkbox").prop("checked", $(this).prop("checked"));
+  // disable other checkboxes
+  $("table:not(#boss) input:checkbox").prop("disabled", "true");
+});
+$("#checkAll_weapons").change(function () {
+  // check all checkboxes in this section
+  $("table#weapons input:checkbox").prop("checked", $(this).prop("checked"));
+  // disable other checkboxes
+  $("table:not(#weapons) input:checkbox").prop("disabled", "true");
+});
+</script>
+
+<!-- Delete Checkboxes -->
+<script>
+$( ".checkbox_delete" ).change(function() {
+  console.log("Checkbox clicked");
+  $(".checkbox_delete_toggle").css("visibility", "visible");
+  
+  // disable other checkboxes
+  var table = $(this).closest("table").attr("id");
+  console.log(table);
+  $("table:not(#"+table+") input:checkbox").prop("disabled", "true");
+  
+  if ( $("table#mobs input:checkbox:checked").length > 0 ) {
+    console.log("CHECKED");
+  } else {
+    console.log("UNCHECKED");
+  }
+});
 </script>
 
 

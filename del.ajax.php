@@ -1,9 +1,13 @@
 <?php
+
+// DEBUG
+// print_r($_POST);
+
 if ( !empty($_POST) ) {
-  // Database
-  require_once("config.db.php");
-  require_once("functions.inc.php");
-  require_once("globals.inc.php");
+  // Lib
+  require_once( $_SERVER["DOCUMENT_ROOT"] . "/config.db.php" );
+  require_once( $_SERVER["DOCUMENT_ROOT"] . "/functions.inc.php" );
+  require_once( $_SERVER["DOCUMENT_ROOT"] . "/globals.inc.php" );
   
   (STRING)$table        = $_POST["table"];
   (STRING)$parentField  = $table . "Name";
@@ -36,13 +40,38 @@ if ( !empty($_POST) ) {
     
   }
   
-  // All other Delete requests
-  $sql = "DELETE FROM $table WHERE ID = :ID";
-  $stmt = $pdo->prepare($sql);
-  $stmt->bindParam(":ID", $ID, PDO::PARAM_INT);
-  $stmt->execute();
+  /* DELETE MULTI */
+  if ( (!empty($_POST["ID"])) ) {
+    // && (count($_POST["ID"]) > 1) // only if there's more than one item to delete
     
-  echo "Success!";
+    // init vars
+    $sql = "";
+    
+    // more than one item to delete
+    if ( sizeof($_POST["ID"]) > 1 ) {
+      foreach($_POST["ID"] as $ID) {
+        $sql .= "DELETE FROM $table WHERE ID = $ID;";
+      }
+    } else { // only one item to delete
+      $sql .= "DELETE FROM $table WHERE ID = $ID;";
+    }
+    
+    if ( !empty($sql) ) {
+      $pdo->exec($sql); // temporarily use exec() because shenanigans
+      echo $sql; // needed success callback msg
+    }
+    
+  } /* else {
+  
+    // All other Delete requests
+    $sql = "DELETE FROM $table WHERE ID = :ID";
+    $stmt = $pdo->prepare($sql);
+    $stmt->bindParam(":ID", $ID, PDO::PARAM_INT);
+    $stmt->execute();
+
+    echo "Success!";
+
+  } */
   
 
 } else {

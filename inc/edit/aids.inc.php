@@ -37,6 +37,13 @@
 
     <tr id="<?=$table?>-<?=$row[0]?>">
       <td class="text-center number-font cursor-move handle">
+        <input type="checkbox" 
+               class="checkbox_delete" 
+               name="dice[]" 
+               value="<?=$row[1]?>"
+               data-value="<?=$row[0]?>"
+               data-table="<?=$table?>"
+        >
         <!--<a href="/edit?mode=<?//$mode?>&ID=<?//$row[0]?>">-->
           <i class="fas fa-expand-arrows-alt fontawesome-small"></i>
             <strong>
@@ -116,13 +123,22 @@
 
 <ul class="text-center">
   <li>
+    <label><input type="checkbox" id="checkAll_<?=$mode?>"></label>
     <input type="number" name="addDice" value="" min="1" max="99" autocomplete="off" placeholder="#">
     <input type="text" id="tags-<?=$mode?>" class="edit_input" name="addEntry" value="" autocomplete="off" maxlength="32" placeholder="Name" required="required">
   </li>
-  <li><input type="submit" value="Submit"></li>
+  <li>
+    <input type="submit" value="Submit">
+    <span class="checkbox_delete_toggle"><!--style="visibility: hidden;"-->
+      <a data-value="<?=$row[0]?>" data-table="<?=$table?>" class="checkbox_delete" data-balloon="Löschen" data-balloon-pos="left">
+        <i class="fas fa-minus-circle fa-lg"></i>
+      </a>
+    </span>
+  </li>
+
 </ul>
 
-</form> 
+</form>
 
 <?php
   ENDFOREACH
