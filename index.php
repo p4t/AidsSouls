@@ -181,7 +181,7 @@ if ( _SFXAIDS == "TRUE" ) include_once( $_SERVER["DOCUMENT_ROOT"] . "/aids.css.p
   <a href="#" id="Kills" onClick="return false">Kills</a>
   <a href="/latestRolls.php" rel="modal:open">Rolls</a>
   
-  <a href="#" id="aidsAJAXTest" onClick="return false">AJAXAids</a>
+  <a href="#" id="aidsAJAXTest" onClick="return false">AJAXRoll</a>
   
   <span>&nbsp;</span>
 
@@ -464,13 +464,15 @@ if ( _SFXAIDS == "TRUE" ) include_once( $_SERVER["DOCUMENT_ROOT"] . "/aids.css.p
 function openNav() {
   $("#mySidenav").css("width", "250px");
   
-  $("#sidenav-icon").css({'transform': 'rotate(90deg)'});
+  // $("#sidenav-icon").css({'transform': 'rotate(90deg)'});
+  $("#sidenav-icon").fadeOut();
 }
 
 function closeNav() {
   $("#mySidenav").css("width", "0");
   
-  $("#sidenav-icon").css({'transform': 'rotate(0deg)'});
+  // $("#sidenav-icon").css({'transform': 'rotate(0deg)'});
+  $("#sidenav-icon").fadeIn();
 }
 </script>
 
