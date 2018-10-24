@@ -4,7 +4,16 @@ require_once( $_SERVER["DOCUMENT_ROOT"] . "/config.db.php" );
 require_once( $_SERVER["DOCUMENT_ROOT"] . "/functions.inc.php" );
 require_once( $_SERVER["DOCUMENT_ROOT"] . "/globals.inc.php" );
 ?>
-<h5>Kills</h5>
+<h5>
+<span id="AjaxCloseKilledBosses" style="cursor: pointer">Kills</span>
+</h5>
+
+<script>
+$( "#AjaxCloseKilledBosses" ).click(function() {
+  console.log( "Hide killedBosses." );
+  $( "#killedBosses" ).hide();
+});
+</script>
 
 <div class="killedBosses">
   <table>

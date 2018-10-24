@@ -4,7 +4,16 @@ require_once( $_SERVER["DOCUMENT_ROOT"] . "/config.db.php" );
 require_once( $_SERVER["DOCUMENT_ROOT"] . "/functions.inc.php" );
 require_once( $_SERVER["DOCUMENT_ROOT"] . "/globals.inc.php" );
 ?>
-<h5>Aids</h5>
+<h5>
+  <span id="AjaxCloseAidsListing" style="cursor: pointer">Aids</span>
+</h5>
+
+<script>
+$( "#AjaxCloseAidsListing" ).click(function() {
+  console.log( "Hide aidsListing." );
+  $( "#aidsListing" ).hide();
+});
+</script>
 
 <form id="form" method="post" onsubmit="return false">
 
